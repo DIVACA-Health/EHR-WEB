@@ -12,8 +12,8 @@ export default function Home() {
     <>
       <div className="min-w-full min-h-screen bg-[linear-gradient(359.87deg,_#3B6FED_-22.88%,_#FFFFFF_63.81%)] flex items-center justify-center">
         <div className="w-4/10 min-h-[80vh] bg-white mt-5 mb-5 rounded-2xl shadow-[0px_10px_20px_0px_rgba(22,37,74,0.16)]">
-          <div className="w-1/4 h-16 bg-blue-100 flex items-center justify-center mb-3 m-auto text-black">
-            <img src="" alt="LOGO" />
+          <div className="w-1/4 h-16 p-2  flex items-center justify-center mb-3 m-auto text-black">
+            <img src="/image/LOGO.png" alt="LOGO" width={200} height={200} />
           </div>
           <div className="h-full w-full flex justify-center">
             <div className="flex flex-col w-4/5 text-black font-normal">
