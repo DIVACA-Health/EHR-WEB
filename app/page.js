@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <div className="min-w-full min-h-screen bg-[linear-gradient(359.87deg,_#3B6FED_-22.88%,_#FFFFFF_63.81%)] flex items-center justify-center">
         <div className="w-4/10 min-h-[80vh] bg-white mt-5 mb-5 rounded-2xl shadow-[0px_10px_20px_0px_rgba(22,37,74,0.16)]">
-          <div className="w-1/4 h-16 p-2  flex items-center justify-center mb-3 m-auto text-black">
+          <div className="w-1/4 h-16 p-2  flex items-center justify-center mb-1 m-auto text-black">
             <img src="/image/LOGO.png" alt="LOGO" width={200} height={200} />
           </div>
           <div className="h-full w-full flex justify-center">
@@ -47,7 +47,7 @@ export default function Home() {
                 <div className="flex flex-col gap-1">
                   <label>Create Password</label>
                   <div className="relative w-full ">
-                    <input className="w-full h-10 pl-3 border border-black rounded-xl" type={showPassword ? "text" : "password"} placeholder="Enter password" />
+                    <input className="w-full h-10 pl-3 border border-black rounded-xl" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700">
                       {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                     </button>
@@ -56,13 +56,13 @@ export default function Home() {
                 <div className="flex flex-col gap-1">
                   <label>Confirm Password</label>
                   <div className="relative w-full ">
-                    <input className="w-full h-10 pl-3 border border-black rounded-xl" type={showPassword1 ? "text" : "password"} placeholder="Confirm password" />
+                    <input className="w-full h-10 pl-3 border border-black rounded-xl" type={showPassword1 ? "text" : "password"} placeholder="Confirm password" required />
                     <button type="button" onClick={() => setShowPassword1(!showPassword1)} className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700">
                       {showPassword1 ? <Eye size={20} /> : <EyeOff size={20} />}
                     </button>
                   </div>
                 </div>
-                <div className="w-full h-10 text-white bg-blue-600 flex items-center justify-center rounded-xl">
+                <div className="w-full h-12 text-white bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer ">
                   <button type="submit">Create Account</button>
                 </div>
               </form>
