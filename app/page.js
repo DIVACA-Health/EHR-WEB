@@ -78,7 +78,7 @@ export default function Home() {
               </form>
               <div className="flex gap-1.5 mt-3 text-center justify-center items-center ">
                 <h2>Already have an account?</h2>
-                <Link href="/">
+                <Link href="/login">
                   <span className="text-blue-600 cursor-pointer">Log In</span>
                 </Link>
               </div>
