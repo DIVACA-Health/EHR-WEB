@@ -6,7 +6,6 @@ import Link from "next/link";
 
 
 const forgotpasswordauthentication = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="w-full h-[100vh] bg-white  flex justify-between text-black font-normal">
@@ -18,14 +17,14 @@ const forgotpasswordauthentication = () => {
                     <button>Back</button>
                 </div>
             </Link>
-            <div className=" h-8/10 w-7/10 flex flex-col  justify-center">
+            <div className=" h-8/10 w-[75%] flex flex-col  justify-center">
                 <div className="mb-[12px] text-center">
                     <h1 className="text-2xl text-center font-bold">Enter OTP</h1>
                 </div>
                 <div className="mb-[25px] text-center w-full flex flex-col items-center justify-center">
-                    <h4 className="text-sm">To reset your password, enter the OTP sent to your email address </h4>
+                    <h4 className="text-sm ">To reset your password, enter the OTP sent to your email address </h4>
                 </div>
-                <div className="w-full flex flex-col items-center justify-center gap-2">
+                <div className="w-full flex flex-col items-center justify-center gap-4 mb-3">
                     <SelectableNumbers/>
                     <div className="flex gap-1">
                         <h4>Didn't get the code?</h4>
@@ -34,7 +33,7 @@ const forgotpasswordauthentication = () => {
                     </div>
                 </div>
 
-                <Link href="/">
+                <Link href="/changepassword">
                   <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
                     <button type="submit">Confirm OTP</button>
                   </div>

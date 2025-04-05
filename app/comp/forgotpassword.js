@@ -13,20 +13,20 @@ const forgotpassword = () => {
     <div className="w-full h-[100vh] bg-white  flex justify-between text-black font-normal">
         <Logopicture/>
         <div className="w-[55%] h-[100vh] m-auto flex flex-col items-center justify-center">
-            <div className=" h-8/10 w-7/10">
-                <Link href="/login">
-                    <div className="mb-[28px] flex gap-1 items-center cursor-pointer">
-                        <img src="/image/back.png" className=" h-[20] w-[20px]" />
-                        <button>Back</button>
-                    </div>
-                </Link>
+            <Link href="/login" className=" w-7/10">
+                <div className=" flex gap-1 items-center cursor-pointer">
+                    <img src="/image/back.png" className=" h-[20] w-[20px]" />
+                    <button>Back</button>
+                </div>
+            </Link>
+            <div className=" h-8/10 w-7/10 flex flex-col  justify-center">
                 <div className="mb-[12px] text-center">
                     <h1 className="text-2xl text-center font-bold">Forgot password</h1>
                 </div>
-                <div className="mb-[40px] text-center w-full flex flex-col items-center justify-center">
+                <div className="mb-[20px] text-center w-full flex flex-col items-center justify-center">
                     <h4 className="text-sm">That’s okay, it happens! Enter your registered email address to get an OTP to reset your password</h4>
                 </div>
-                <div className="h-[43px] w-full flex items-center justify-center mb-[40px]">
+                <div className="h-[43px] w-full flex items-center justify-center mb-[20px]">
                     <input type="email" placeholder="Enter email address" className="w-8/10 h-full border-1 border-black rounded-xl pl-3"></input>
                 </div>
                 <Link href="/forgotpasswordauthentication">
