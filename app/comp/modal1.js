@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Modal1 = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // Don't render if modal is closed
@@ -31,12 +32,15 @@ const Modal1 = ({ isOpen, onClose }) => {
         </p>
 
         {/* Go to Dashboard Button */}
-        <button
-          className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
-          onClick={onClose}
-        >
-          Log in
-        </button>
+        <Link href="/login">
+          <button
+            className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
+            onClick={onClose}
+          >
+            Log in
+          </button>
+        </Link>
+
       </div>
     </div>
   );

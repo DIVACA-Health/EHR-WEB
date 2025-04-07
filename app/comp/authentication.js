@@ -20,11 +20,11 @@ const authentication = () => {
                         <button>Back</button>
                     </div>
                 </Link>
-                <div className="flex flex-col justify-between  h-[40%] items-center mb-10">
+                <div className="flex flex-col justify-between gap-3  h-[40%] items-center mb-20">
                     <h1 className="text-3xl font-semibold">Verify email address</h1>
                     <h4 className="text-lg text-center">Kindly input the 4-digit code sent to your <span className="text-blue-400">zarades@gmail.com</span> </h4>
                     <SelectableNumbers/>
-                    <div className="flex gap-1">
+                    <div className="flex gap-0.5">
                         <h4>Didn't get the code?</h4>
                         <h4>resend in:</h4>
                         <h4 className="text-blue-400">0:59</h4>
