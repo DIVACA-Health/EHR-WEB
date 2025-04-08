@@ -38,7 +38,7 @@ const login = () => {
                   </Link>
 
                 </div>
-                <Link href="/">
+                <Link href="/studentdashboard">
                   <div className="w-full h-12 text-white bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
                     <button type="submit">Log in</button>
                   </div>
