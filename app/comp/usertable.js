@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 export default function UserTable() {
   const [users, setUsers] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // To handle search input
+  const itemsPerPage = 10;
 
   useEffect(() => {
     // Fetch data from backend API
@@ -12,18 +15,52 @@ export default function UserTable() {
       .then(data => setUsers(data));
   }, []);
 
+  // Filter users by status
   const filteredUsers = users.filter(user => {
     if (statusFilter === "all") return true;
     return user.status.toLowerCase() === statusFilter;
   });
 
+  // Filter users by search query (name, ID, or matric number)
+  const searchedUsers = filteredUsers.filter(user => {
+    const query = searchQuery.toLowerCase();
+    return (
+      user.name.toLowerCase().includes(query) ||
+      user.divacaId.toLowerCase().includes(query) ||
+      user.matricNumber.toLowerCase().includes(query)
+    );
+  });
+
+  // Pagination: Calculate start and end index based on currentPage
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedUsers = searchedUsers.slice(startIndex, startIndex + itemsPerPage);
+
+  // Handle next and previous page changes
+  const handleNextPage = () => {
+    if (currentPage * itemsPerPage < searchedUsers.length) {
+      setCurrentPage(prev => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+    }
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(searchedUsers.length / itemsPerPage);
+
   return (
     <div className="p-6 overflow-x-auto">
       {/* Header controls */}
-      <div className="flex flex-wrap items-center justify-between gap-1 h-[10%] mb-4 bg-red-400 ">
+      <div className="flex flex-wrap items-center justify-between h-[10%] mb-4">
         {/* Filter Buttons */}
-        <div className="flex gap-2 h-full bg-green-500 items-center justify-center p-2 border-[1px] border-lack rounded-xl w-[35%]">
-            <h2>Status :</h2>
+        <div className="flex gap-2 h-full items-center justify-center p-2 border-[1px] border-black rounded-xl w-[40%]">
+          <h2>Status:</h2>
           {["all", "active", "inactive"].map(status => (
             <button
               key={status}
@@ -38,16 +75,24 @@ export default function UserTable() {
             </button>
           ))}
         </div>
-        {/* Search Bar */}
-        <div className=' border-[2px] border-black  h-[100%] w-[60%] flex items-center rounded-xl'>
-            <img src="image/Search.png" alt = "img" className=' h-[70%] w-[6%] pl-1'/>
-            <input type='search' placeholder='Search for anything...' className=' h-[80%] w-[90%] pl-3 rounded-r-xl text-black outline-transparent'></input>
-        </div>
 
-    </div>
+        {/* Search Bar */}
+        <div className="flex gap-2 h-full items-center justify-center border-[1px] border-dotted border-black rounded-xl w-[57%] outline-blue-300">
+          <div className="p-3 border-black h-[100%] w-[100%] flex items-center rounded-xl outline-blue-300">
+            <img src="/image/Search.png" alt="search" className="h-[70%] w-[6%] pl-1" />
+            <input
+              type="search"
+              placeholder="Search by name, ID, matric number .etc."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-[80%] w-[90%] pl-3 rounded-r-xl text-black outline-transparent"
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Table */}
-      <table className="w-full border rounded-lg overflow-hidden text-sm">
+      <table className="w-full border-2 border-black rounded-lg overflow-hidden text-sm">
         <thead className="bg-gray-100">
           <tr className="text-left">
             <th className="p-3">Full name</th>
@@ -59,47 +104,75 @@ export default function UserTable() {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user, index) => (
-            <tr key={index} className="border-t">
-              <td className="p-3 flex items-center gap-2">
-                <img
-                  src={user.avatar}
-                  alt="avatar"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                {user.name}
+          {paginatedUsers.length > 0 ? (
+            paginatedUsers.map((user, index) => (
+              <tr key={index} className="border-t">
+                <td className="p-3 flex items-center gap-2">
+                  <img
+                    src={user.avatar}
+                    alt="avatar"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  {user.name}
+                </td>
+                <td className="p-3">{user.divacaId}</td>
+                <td className="p-3">{user.matricNumber}</td>
+                <td className="p-3">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      user.status === "Active"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    {user.status}
+                  </span>
+                </td>
+                <td className="p-3">{user.lastVisit}</td>
+                <td className="p-3 text-lg">🙂</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" className="text-center p-4 text-red-600">
+                No users found matching your search criteria.
               </td>
-              <td className="p-3">{user.divacaId}</td>
-              <td className="p-3">{user.matricNumber}</td>
-              <td className="p-3">
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    user.status === "Active"
-                      ? "bg-green-100 text-green-600"
-                      : "bg-red-100 text-red-600"
-                  }`}
-                >
-                  {user.status}
-                </span>
-              </td>
-              <td className="p-3">{user.lastVisit}</td>
-              <td className="p-3 text-lg">🙂</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
-      {/* Pagination Placeholder */}
+      {/* Pagination */}
       <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
-        <button className="px-3 py-1 border rounded-md">Previous</button>
+        <button
+          onClick={handlePreviousPage}
+          className="px-3 py-1 border rounded-md"
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
         <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map(page => (
-            <button key={page} className="px-3 py-1 border rounded-md">
-              {page}
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageClick(index + 1)}
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-gray-600"
+              }`}
+            >
+              {index + 1}
             </button>
           ))}
         </div>
-        <button className="px-3 py-1 border rounded-md">Next</button>
+
+        <button
+          onClick={handleNextPage}
+          className="px-3 py-1 border rounded-md"
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
