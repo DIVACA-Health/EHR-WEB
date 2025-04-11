@@ -21,12 +21,12 @@ const login = () => {
                 </div>
                 <div className="flex flex-col gap-1 mb-[22px]">
                   <label className="font-normal text-l">Email Address</label>
-                  <input className="w-full h-11 pl-3 border border-black rounded-xl" type="email" placeholder="Email Address" />
+                  <input className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300 " type="email" placeholder="Email Address" />
                 </div>
                 <div className="flex flex-col gap-1 mb-[40px]">
                   <label className="font-normal text-l">Create Password</label>
                   <div className="relative w-full mb-[8px] ">
-                    <input className="w-full h-11 pl-3 border border-black rounded-xl" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
+                    <input className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700">
                       {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                     </button>

@@ -6,6 +6,8 @@ const QueueManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ firstName: '', lastName: '', time: '' });
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeActionIndex, setActiveActionIndex] = useState(null);
+  const [formError, setFormError] = useState('');
   const itemsPerPage = 10;
 
   // Fetch mock data on load
@@ -24,9 +26,26 @@ const QueueManagement = () => {
   }, []);
 
   const handleAddToQueue = () => {
-    setQueue(prev => [...prev, formData]);
+    // Validate if all fields are filled
+    if (!formData.firstName || !formData.lastName || !formData.time) {
+      setFormError('Please fill in all the fields.');
+      return;
+    }
+
+    const formattedTime = formatTime(formData.time);
+    setQueue(prev => [...prev, { ...formData, time: formattedTime }]);
     setFormData({ firstName: '', lastName: '', time: '' });
+    setFormError('');
     setShowModal(false);
+  };
+
+  // Time formatting to include AM/PM
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(':');
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
   // Pagination: Calculate start and end index based on currentPage
@@ -51,6 +70,8 @@ const QueueManagement = () => {
   };
 
   const totalPages = Math.ceil(queue.length / itemsPerPage);
+
+  const isFormValid = formData.firstName && formData.lastName && formData.time;
 
   return (
     <div className='p-6 w-full'>
@@ -81,8 +102,39 @@ const QueueManagement = () => {
                 <td className='p-4'>{item.firstName}</td>
                 <td className='p-4'>{item.lastName}</td>
                 <td className='p-4'>{item.time}</td>
-                <td className='p-4'>
-                  <button className='text-red-500 hover:text-red-700'>⨉</button>
+                <td className='p-4 relative'>
+                  <button
+                    onClick={() =>
+                      setActiveActionIndex((prev) => (prev === index ? null : index))
+                    }
+                    className='text-gray-700 hover:text-black p-1 rounded-full'
+                  >
+                    ⋮
+                  </button>
+
+                  {activeActionIndex === index && (
+                    <div className="absolute top-8 right-0 bg-white shadow-lg rounded-lg w-48 z-10">
+                      <button
+                        onClick={() => {
+                          // Add logic to forward patient files here
+                          setActiveActionIndex(null);
+                        }}
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                      >
+                        Forward patient files
+                      </button>
+                      <button
+                        onClick={() => {
+                          const updatedQueue = queue.filter((_, i) => startIndex + i !== startIndex + index);
+                          setQueue(updatedQueue);
+                          setActiveActionIndex(null);
+                        }}
+                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                      >
+                        Remove from queue
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
@@ -125,7 +177,7 @@ const QueueManagement = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+        <div className='fixed inset-0 bg-[rgba(220,224,235,0.8)]  flex items-center justify-center z-50'>
           <div className='bg-white p-6 rounded-xl w-[90%] md:w-[400px]'>
             <h2 className='text-lg font-bold mb-4'>Add to Queue</h2>
             <input
@@ -148,10 +200,14 @@ const QueueManagement = () => {
               onChange={(e) => setFormData({ ...formData, time: e.target.value })}
               className='w-full mb-3 p-2 border rounded'
             />
+            {/* Show error message */}
+            {formError && <p className="text-red-500 text-sm mt-2">{formError}</p>}
             <div className='flex justify-between mt-4'>
               <button
                 onClick={handleAddToQueue}
-                className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700'>
+                className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700'
+                disabled={!isFormValid} // Disable the button if the form is not valid
+              >
                 Submit
               </button>
               <button

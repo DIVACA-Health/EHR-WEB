@@ -3,6 +3,7 @@ import { useState } from "react";
 import Logopicture from "../comp/logopicture";
 import SelectableNumbers from "./selectednumbers";
 import Link from "next/link";
+import CountdownTimer from "./countdowntimer";
 
 
 const forgotpasswordauthentication = () => {
@@ -29,7 +30,7 @@ const forgotpasswordauthentication = () => {
                     <div className="flex gap-1">
                         <h4>Didn't get the code?</h4>
                         <h4>resend in:</h4>
-                        <h4 className="text-blue-400">0:59</h4>
+                        <CountdownTimer/>
                     </div>
                 </div>
 

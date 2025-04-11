@@ -4,7 +4,7 @@ import Logopicture from "../comp/logopicture";
 import SelectableNumbers from "./selectednumbers";
 import Modal from "./modal";
 import Link from "next/link";
-
+import CountdownTimer from "./countdowntimer";
 
 const authentication = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const authentication = () => {
                     <div className="flex gap-0.5">
                         <h4>Didn't get the code?</h4>
                         <h4>resend in:</h4>
-                        <h4 className="text-blue-400">0:59</h4>
+                        <CountdownTimer/>
                     </div>
                 </div>
                 <div className="w-full h-[45px]">

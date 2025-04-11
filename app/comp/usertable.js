@@ -1,28 +1,39 @@
-"use client"; 
-import { useEffect, useState } from "react";
+"use client";
+import { useEffect, useState, useRef } from "react";
+import { MoreVertical } from "lucide-react";
 
 export default function UserTable() {
   const [users, setUsers] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(""); // To handle search input
+  const [searchQuery, setSearchQuery] = useState("");
+  const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const itemsPerPage = 10;
 
+  const menuRef = useRef();
+
   useEffect(() => {
-    // Fetch data from backend API
-    fetch("/api/user") 
-      .then(res => res.json())
-      .then(data => setUsers(data));
+    fetch("/api/user")
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
   }, []);
 
-  // Filter users by status
-  const filteredUsers = users.filter(user => {
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpenMenuIndex(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredUsers = users.filter((user) => {
     if (statusFilter === "all") return true;
     return user.status.toLowerCase() === statusFilter;
   });
 
-  // Filter users by search query (name, ID, or matric number)
-  const searchedUsers = filteredUsers.filter(user => {
+  const searchedUsers = filteredUsers.filter((user) => {
     const query = searchQuery.toLowerCase();
     return (
       user.name.toLowerCase().includes(query) ||
@@ -31,20 +42,18 @@ export default function UserTable() {
     );
   });
 
-  // Pagination: Calculate start and end index based on currentPage
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedUsers = searchedUsers.slice(startIndex, startIndex + itemsPerPage);
 
-  // Handle next and previous page changes
   const handleNextPage = () => {
     if (currentPage * itemsPerPage < searchedUsers.length) {
-      setCurrentPage(prev => prev + 1);
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(prev => prev - 1);
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
@@ -52,16 +61,21 @@ export default function UserTable() {
     setCurrentPage(page);
   };
 
+  const handleActionClick = (user) => {
+    console.log("Add to patient queue for", user.name);
+    setOpenMenuIndex(null);
+  };
+
   const totalPages = Math.ceil(searchedUsers.length / itemsPerPage);
 
   return (
     <div className="p-6 overflow-x-auto">
-      {/* Header controls */}
+      {/* Header */}
       <div className="flex flex-wrap items-center justify-between h-[10%] mb-4">
-        {/* Filter Buttons */}
+        {/* Filter */}
         <div className="flex gap-2 h-full items-center justify-center p-2 border-[1px] border-black rounded-xl w-[40%]">
           <h2>Status:</h2>
-          {["all", "active", "inactive"].map(status => (
+          {["all", "active", "inactive"].map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
@@ -76,7 +90,7 @@ export default function UserTable() {
           ))}
         </div>
 
-        {/* Search Bar */}
+        {/* Search */}
         <div className="flex gap-2 h-full items-center justify-center border-[1px] border-dotted border-black rounded-xl w-[57%] outline-blue-300">
           <div className="p-3 border-black h-[100%] w-[100%] flex items-center rounded-xl outline-blue-300">
             <img src="/image/Search.png" alt="search" className="h-[70%] w-[6%] pl-1" />
@@ -129,7 +143,27 @@ export default function UserTable() {
                   </span>
                 </td>
                 <td className="p-3">{user.lastVisit}</td>
-                <td className="p-3 text-lg">🙂</td>
+                <td className="relative p-3 text-lg" ref={menuRef}>
+                  <button
+                    onClick={() =>
+                      setOpenMenuIndex((prev) => (prev === index ? null : index))
+                    }
+                    className="p-2 rounded-full hover:bg-gray-100"
+                  >
+                    <MoreVertical size={20} />
+                  </button>
+
+                  {openMenuIndex === index && (
+                    <div className="absolute right-0 mt-2 w-62  z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                      <button
+                        onClick={() => handleActionClick(user)}
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center"
+                      >
+                        Add to patient queue
+                      </button>
+                    </div>
+                  )}
+                </td>
               </tr>
             ))
           ) : (

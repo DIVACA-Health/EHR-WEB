@@ -29,7 +29,7 @@ const StudentVisitsChart = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-white rounded-xl border border-blue-400 shadow-sm w-full max-w-3xl mx-auto">
+    <div className="p-6 bg-white rounded-xl border border-blue-400 shadow-sm w-full  mx-auto">
       <h2 className="text-lg font-semibold mb-4">Student visits over time</h2>
 
       {loading ? (

@@ -34,7 +34,7 @@ const StudentDashboard = () => {
     <div className='flex text-black h-screen'>
       {/* Sidebar: Fixed to the left */}
       <div className='bg-[rgba(12,22,47,1)] w-[20%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
-        <div className='min-h-[10%] flex items-center justify-center w-[80%] bg-red-600]'>
+        <div className='min-h-[15%] flex items-center justify-center w-[70%] bg-red-600]'>
           <img src='/image/DHLOGO.png' alt='logo' className='w-[100px] h-[35px]' />
         </div>
         <div className='min-h-[75%] flex justify-center'>

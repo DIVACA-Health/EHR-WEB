@@ -39,7 +39,7 @@ const SelectableNumbers = () => {
           value={values[index] || ""}
           onChange={(e) => handleChange(index, e.target.value)}
           onKeyDown={(e) => handleKeyDown(index, e)}
-          className="w-16 h-16 text-center border-2 rounded-lg transition-all focus:outline-none border-gray-300 focus:border-blue-500 shadow-blue-300"
+          className="w-16 h-16 text-center border-2 rounded-lg transition-all focus:outline-none border-gray-300 focus:border-blue-500 shadow-sm shadow-blue-300"
         />
       ))}
     </div>
