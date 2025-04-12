@@ -79,7 +79,7 @@ export default function UserTable() {
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1 border rounded-md ${
+              className={`px-3 py-1 cursor-pointer border rounded-md ${
                 statusFilter === status
                   ? "bg-blue-300 text-white"
                   : "bg-white border-gray-300 text-gray-600"
@@ -148,7 +148,7 @@ export default function UserTable() {
                     onClick={() =>
                       setOpenMenuIndex((prev) => (prev === index ? null : index))
                     }
-                    className="p-2 rounded-full hover:bg-gray-100"
+                    className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
                   >
                     <MoreVertical size={20} />
                   </button>
@@ -157,7 +157,7 @@ export default function UserTable() {
                     <div className="absolute right-0 top-0 w-62  z-10 bg-white shadow-md rounded-xl border border-gray-200">
                       <button
                         onClick={() => handleActionClick(user)}
-                        className=" w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center"
+                        className=" w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center cursor-pointer"
                       >
                         Add to patient queue
                       </button>
@@ -180,7 +180,7 @@ export default function UserTable() {
       <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
         <button
           onClick={handlePreviousPage}
-          className="px-3 py-1 border rounded-md"
+          className="px-3 py-1 border cursor-pointer rounded-md"
           disabled={currentPage === 1}
         >
           Previous
@@ -191,7 +191,7 @@ export default function UserTable() {
             <button
               key={index}
               onClick={() => handlePageClick(index + 1)}
-              className={`px-3 py-1 border rounded-md ${
+              className={`px-3 py-1 border cursor-pointer rounded-md ${
                 currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-gray-600"
               }`}
             >
@@ -202,7 +202,7 @@ export default function UserTable() {
 
         <button
           onClick={handleNextPage}
-          className="px-3 py-1 border rounded-md"
+          className="px-3 py-1 border cursor-pointer rounded-md"
           disabled={currentPage === totalPages}
         >
           Next

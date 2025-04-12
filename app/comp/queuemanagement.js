@@ -124,7 +124,7 @@ const QueueManagement = () => {
         <h2 className='text-xl font-bold'>Queue management</h2>
         <button
           onClick={() => setShowModal(true)}
-          className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700'>
+          className='bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700'>
           + Add to queue
         </button>
       </div>
@@ -152,7 +152,7 @@ const QueueManagement = () => {
                     onClick={() =>
                       setActiveActionIndex((prev) => (prev === index ? null : index))
                     }
-                    className='text-gray-700 hover:text-black p-1 rounded-full'
+                    className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
                     ref={actionButtonRef}
                   >
                     ⋮
@@ -188,7 +188,7 @@ const QueueManagement = () => {
       <div className='mt-4 flex justify-between items-center text-sm text-gray-600'>
         <button
           onClick={handlePreviousPage}
-          className='px-3 py-1 border rounded-md'
+          className='px-3 py-1 border rounded-md cursor-pointer'
           disabled={currentPage === 1}
         >
           Previous
@@ -199,7 +199,7 @@ const QueueManagement = () => {
             <button
               key={index}
               onClick={() => handlePageClick(index + 1)}
-              className={`px-3 py-1 border rounded-md ${
+              className={`px-3 py-1 border cursor-pointer rounded-md ${
                 currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'
               }`}
             >
@@ -210,7 +210,7 @@ const QueueManagement = () => {
 
         <button
           onClick={handleNextPage}
-          className='px-3 py-1 border rounded-md'
+          className='px-3 py-1 border cursor-pointer rounded-md'
           disabled={currentPage === totalPages}
         >
           Next
@@ -247,14 +247,14 @@ const QueueManagement = () => {
             <div className='flex justify-between mt-4'>
               <button
                 onClick={handleAddToQueue}
-                className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700'
+                className='bg-green-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700'
                 disabled={!isFormValid} // Disable the button if the form is not valid
               >
                 Submit
               </button>
               <button
                 onClick={() => setShowModal(false)}
-                className='bg-gray-300 px-4 py-2 rounded hover:bg-gray-400'>
+                className='bg-gray-300 px-4 py-2 rounded cursor-pointer hover:bg-gray-400'>
                 Cancel
               </button>
             </div>

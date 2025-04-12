@@ -8,7 +8,7 @@ const studentrecords = () => {
             <div className='w-[75%] text-start'>
               <h3 className='text-2xl font-bold text-black'>Student records</h3>
             </div>
-            <div className='flex gap-1.5 w-[20%] items-center justify-center h-[65%] border-[1px] border-black rounded-xl'>
+            <div className='flex gap-1.5 w-[20%] items-center justify-center h-[65%] border-[1px] border-black rounded-xl cursor-pointer'>
               <img src='/image/document-download.png' alt='download' className='h-[20px] w-[20px]' />
               <h3>Download list</h3>
             </div>

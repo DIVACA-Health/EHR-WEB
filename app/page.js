@@ -45,7 +45,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm ">Role</label>
-                    <select className="w-full h-8 pl-3 pr-3  border-black border-[1px] rounded-[7px]  shadow-sm shadow-gray-600 outline-none">
+                    <select className="w-full h-8 pl-3 pr-3  border-black border-[1px] rounded-[7px]  shadow-sm shadow-gray-600 outline-none cursor-pointer">
                       <option className="text-gray-400">Select Role</option>
                       <option>Doctor</option>
                       <option>Nurse</option>

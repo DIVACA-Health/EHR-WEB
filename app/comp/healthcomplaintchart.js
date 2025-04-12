@@ -29,7 +29,7 @@ const HealthComplaintChart = () => {
       });
   }, []);
 
-  // Optional: fallback colors if API doesn't provide 'color' field
+  // fallback colors if API doesn't provide 'color' field
   const fallbackColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
 
   // Calculate the maximum 'value' to dynamically set Y-axis ticks

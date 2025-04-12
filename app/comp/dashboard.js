@@ -10,11 +10,11 @@ const dashboard = () => {
                 <h2 className='font-bold text-2xl'>Dashboard</h2>
             </div>
             <div className=' flex justify-between items-center gap-1.5 h-full w-[38%]'>
-                <div className='flex gap-1.5 w-[45%] items-center justify-center h-[50%] border-[1px] border-blue-600 rounded-[10px]'>
+                <div className='flex gap-1.5 w-[45%] items-center justify-center h-[50%] border-[1px] border-blue-600 cursor-pointer rounded-[10px]'>
                     <img src='/image/Calendar.png' alt='download' className='h-[20px] w-[20px]' />
                     <h3 className='text-sm font-semibold text-blue-600'>This month</h3>
                 </div>
-                <div className='flex gap-1.5 bg-blue-600 w-[55%] items-center text-white justify-center h-[50%] k rounded-[10px]'>
+                <div className='flex gap-1.5 bg-blue-600 w-[55%] items-center text-white justify-center h-[50%] cursor-pointer rounded-[10px]'>
                     <img src='/image/Vector.png' alt='download' className='h-[20px] w-[20px]' />
                     <h3 className='text-sm text-semibold'>Download report</h3>
                 </div>
@@ -58,7 +58,7 @@ const dashboard = () => {
                 </div>
             </div>
         </div>
-        <div className='mt-10 min-w-full bg-gray-50 flex items-center justify-center'>
+        <div className='mt-10 min-w-full bg-gray-50 flex items-center justify-center '>
             <StudentVisitsChart/>
         </div>
         <div className='mt-10 min-w-full bg-gray-50 flex items-center justify-center mb-20'>

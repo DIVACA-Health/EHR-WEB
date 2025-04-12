@@ -1,11 +1,17 @@
-"use client";
-import React, { useState } from 'react';
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
 import Studentrecords from './studentrecords';
 import QueueManagement from './queuemanagement';
 import Dashboard from './dashboard';
+import { useRouter } from 'next/navigation';
+
+import Link from 'next/link';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const router = useRouter();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,11 +32,22 @@ const StudentDashboard = () => {
     }
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <div className='flex text-black h-screen'>
       {/* Sidebar */}
       <div className='bg-[rgba(12,22,47,1)] w-[23%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
-        <div className='min-h-[15%] flex items-center justify-center w-[70%] bg-red-600]'>
+        <div className='min-h-[15%] flex items-center justify-center w-[70%]'>
           <img src='/image/DHLOGO.png' alt='logo' className='w-[100px] h-[35px]' />
         </div>
         <div className='min-h-[75%] flex justify-center'>
@@ -43,7 +60,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Category.png' alt='dashboard' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full   ${activeTab === 'dashboard' ? 'text-blue-600 font-normal' : 'text-sm' }`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
                   Dashboard
                 </h2>
               </div>
@@ -55,7 +72,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Document.png' alt='student records' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full  ${activeTab === 'students' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
                   Student records
                 </h2>
               </div>
@@ -79,11 +96,10 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Settings.png' alt='settings' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full  ${activeTab === 'settings' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
                   Settings
                 </h2>
               </div>
-
             </nav>
           </div>
         </div>
@@ -102,17 +118,30 @@ const StudentDashboard = () => {
                 className='h-[80%] w-[90%] pl-3 rounded-r-xl text-black outline-transparent'
               />
             </div>
-            <div className='w-[15%] h-full flex items-center'>
-              <div className='border-r-black w-1/2 h-[80%] flex items-center'>
+            <div className='w-[15%] h-full flex items-center relative' ref={dropdownRef}>
+              <div className='border-r border-black w-1/2 h-[80%] flex items-center justify-center cursor-pointer'>
                 <img src='/image/Bell.png' alt='notification' className='h-[90%]' />
               </div>
-              <div className='h-[90%] w-1/2 flex items-center justify-between'>
-                <img src='/image/profileimg.png' alt='profile' className='h-full' />
-                <select>
-                  <option></option>
-                  <option>1</option>
-                  <option>2</option>
-                </select>
+              <div className='h-[90%] w-1/2 flex items-center justify-end relative'>
+                <img
+                  src='/image/profileimg.png'
+                  alt='profile'
+                  className='h-full cursor-pointer'
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                />
+                {showDropdown && (
+                  <div className='absolute top-full right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50'>
+                    <button
+                      onClick={() => router.push('/login')}
+                      className='w-full text-left px-4 py-2 hover:bg-gray-100 text-sm'
+                    >
+                      Sign out
+                    </button>
+                    <button className='w-full text-left px-4 py-2 hover:bg-gray-100 text-sm'>
+                      Option 2
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

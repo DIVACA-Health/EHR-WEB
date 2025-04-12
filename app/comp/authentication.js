@@ -22,7 +22,7 @@ const authentication = () => {
                 </Link>
                 <div className="flex flex-col justify-between gap-3  h-[40%] items-center mb-20">
                     <h1 className="text-3xl font-semibold">Verify email address</h1>
-                    <h4 className="text-lg text-center">Kindly input the 4-digit code sent to your <span className="text-blue-400">zarades@gmail.com</span> </h4>
+                    <h4 className=" text-center">Kindly input the 4-digit code sent to your <span className="text-blue-400">zarades@gmail.com</span> </h4>
                     <SelectableNumbers/>
                     <div className="flex gap-0.5">
                         <h4>Didn't get the code?</h4>
@@ -31,7 +31,7 @@ const authentication = () => {
                     </div>
                 </div>
                 <div className="w-full h-[45px]">
-                    <button type="submit" onClick={() => setIsModalOpen(true)} className="h-full w-full bg-blue-600 text-white font-bold text-center border-2 border-white rounded-2xl cursor-pointer">Verify email address</button>
+                    <button type="submit" onClick={() => setIsModalOpen(true)} className="h-full w-full bg-blue-600 text-white font-normal text-center border-2 border-white rounded-2xl cursor-pointer">Verify email address</button>
                 </div>
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </div>
