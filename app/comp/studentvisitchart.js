@@ -28,33 +28,54 @@ const StudentVisitsChart = () => {
       });
   }, []);
 
+  // Calculate the maximum visits value for dynamic Y-axis scaling
+  const maxVisits = Math.max(...data.map((item) => item.visits));
+
+  // Generate Y-axis tick values (0, 200, 400, 600, 800, 1000)
+  const generateYAxisTicks = () => {
+    const step = 200; // Define the step size
+    const ticks = [];
+    for (let i = 0; i <= Math.ceil(maxVisits / step) * step; i += step) {
+      ticks.push(i);
+    }
+    return ticks;
+  };
+
   return (
-    <div className="p-6 bg-white rounded-xl border border-blue-400 shadow-sm w-full  mx-auto">
-      <h2 className="text-lg font-semibold mb-4">Student visits over time</h2>
+    <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm w-full">
+      <div className='w-full h-10  flex items-center'>
+        <h2 className=" font-semibold   mb-3">Student visits over time</h2>
+      </div>
 
       {loading ? (
         <p>Loading chart...</p>
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
-              </linearGradient>
-            </defs>
+          <defs>
+            <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
+
+            <CartesianGrid stroke="#e5e7eb" strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="week" />
-            <YAxis />
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
+            <YAxis 
+              ticks={generateYAxisTicks()} 
+              domain={[0, 'dataMax + 100']} 
+              padding={{ top: 10, bottom: 25 }} 
+            />
+
             <Tooltip />
             <Area
               type="monotone"
               dataKey="visits"
-              stroke="#2563eb"
-              fillOpacity={1}
+              stroke="#3b82f6"
+              strokeWidth={2}
               fill="url(#colorVisits)"
-              dot={{ fill: '#2563eb', stroke: '#fff', strokeWidth: 2, r: 5 }}
-              activeDot={{ r: 8 }}
+              dot={{ r: 4, fill: '#3b82f6', stroke: '#fff', strokeWidth: 1 }}
+              activeDot={{ r: 6 }}
             />
           </AreaChart>
         </ResponsiveContainer>

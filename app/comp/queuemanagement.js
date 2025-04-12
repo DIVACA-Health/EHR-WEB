@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const QueueManagement = () => {
   const [queue, setQueue] = useState([]);
@@ -9,6 +9,25 @@ const QueueManagement = () => {
   const [activeActionIndex, setActiveActionIndex] = useState(null);
   const [formError, setFormError] = useState('');
   const itemsPerPage = 10;
+
+  const actionButtonRef = useRef(null); // Ref for the action button's dropdown
+
+  // Close the dropdown when clicking outside
+  const handleClickOutside = (event) => {
+    if (actionButtonRef.current && !actionButtonRef.current.contains(event.target)) {
+      setActiveActionIndex(null);
+    }
+  };
+
+  // Add the event listener when the component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Fetch mock data on load
   useEffect(() => {
@@ -32,20 +51,39 @@ const QueueManagement = () => {
       return;
     }
 
+    // Capitalize first and last name
+    const capitalizeName = (name) => {
+      return name
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    };
+
+    const formattedFirstName = capitalizeName(formData.firstName);
+    const formattedLastName = capitalizeName(formData.lastName);
+
+    // Format the time and make AM/PM uppercase
     const formattedTime = formatTime(formData.time);
-    setQueue(prev => [...prev, { ...formData, time: formattedTime }]);
+
+    setQueue(prev => [...prev, { ...formData, firstName: formattedFirstName, lastName: formattedLastName, time: formattedTime }]);
     setFormData({ firstName: '', lastName: '', time: '' });
     setFormError('');
     setShowModal(false);
   };
 
-  // Time formatting to include AM/PM
+  // Time formatting to include AM/PM and make it uppercase
   const formatTime = (time) => {
     const [hours, minutes] = time.split(':');
     const date = new Date();
     date.setHours(hours);
     date.setMinutes(minutes);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+    let formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    
+    // Make sure AM/PM is in uppercase
+    formattedTime = formattedTime.toUpperCase();
+    
+    return formattedTime;
   };
 
   // Pagination: Calculate start and end index based on currentPage
@@ -72,6 +110,13 @@ const QueueManagement = () => {
   const totalPages = Math.ceil(queue.length / itemsPerPage);
 
   const isFormValid = formData.firstName && formData.lastName && formData.time;
+
+  // Fix for removing from queue
+  const handleRemoveFromQueue = (index) => {
+    const updatedQueue = queue.filter((_, i) => startIndex + i !== startIndex + index);
+    setQueue(updatedQueue);
+    setActiveActionIndex(null); // Close dropdown after removal
+  };
 
   return (
     <div className='p-6 w-full'>
@@ -108,28 +153,25 @@ const QueueManagement = () => {
                       setActiveActionIndex((prev) => (prev === index ? null : index))
                     }
                     className='text-gray-700 hover:text-black p-1 rounded-full'
+                    ref={actionButtonRef}
                   >
                     ⋮
                   </button>
 
                   {activeActionIndex === index && (
-                    <div className="absolute top-8 right-0 bg-white shadow-lg rounded-lg w-48 z-10">
+                    <div className="absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10">
                       <button
                         onClick={() => {
                           // Add logic to forward patient files here
                           setActiveActionIndex(null);
                         }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                        className="w-full text-left px-4 py-1 hover:bg-gray-100"
                       >
                         Forward patient files
                       </button>
                       <button
-                        onClick={() => {
-                          const updatedQueue = queue.filter((_, i) => startIndex + i !== startIndex + index);
-                          setQueue(updatedQueue);
-                          setActiveActionIndex(null);
-                        }}
-                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                        onClick={() => handleRemoveFromQueue(index)}
+                        className="w-full text-left px-4 py-1 text-red-600 hover:bg-red-50"
                       >
                         Remove from queue
                       </button>

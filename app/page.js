@@ -13,18 +13,6 @@ export default function Home() {
     <>
       <div className="w-full h-[100vh] bg-white  flex justify-between">
         <Logopicture/>
-        {/* <div className="w-[55%] h-[100vh] flex justify-center items-center ">
-          <div className=" w-7/10 h-full  flex justify-center items-center ">
-            <div className="flex flex-col w-[90%] text-black  ">
-              <div className="flex flex-col gap-1 mb-2  left">
-                <h2 className="text-2xl text-black font-extrabold">Create account</h2>
-                <h4 className="text-sm">Set up your account to experience a seamless health record system.</h4>
-              </div>
-              
-
-            </div>
-          </div>
-        </div> */}
         <div className="w-[55%] h-full  flex justify-center items-center ">
             <div className=" w-[65%] h-[95%]  flex flex-col items-center justify-center">
                 <div className=" h-auto w-full text-black mb-3">

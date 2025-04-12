@@ -73,15 +73,15 @@ export default function UserTable() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between h-[10%] mb-4">
         {/* Filter */}
-        <div className="flex gap-2 h-full items-center justify-center p-2 border-[1px] border-black rounded-xl w-[40%]">
+        <div className="flex gap-2 h-full items-center justify-center p-2 border border-black rounded-xl w-[40%]">
           <h2>Status:</h2>
           {["all", "active", "inactive"].map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-4 py-1 border rounded-md ${
+              className={`px-3 py-1 border rounded-md ${
                 statusFilter === status
-                  ? "bg-blue-600 text-white"
+                  ? "bg-blue-300 text-white"
                   : "bg-white border-gray-300 text-gray-600"
               }`}
             >
@@ -154,10 +154,10 @@ export default function UserTable() {
                   </button>
 
                   {openMenuIndex === index && (
-                    <div className="absolute right-0 mt-2 w-62  z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                    <div className="absolute right-0 top-0 w-62  z-10 bg-white shadow-md rounded-xl border border-gray-200">
                       <button
                         onClick={() => handleActionClick(user)}
-                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center"
+                        className=" w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center"
                       >
                         Add to patient queue
                       </button>

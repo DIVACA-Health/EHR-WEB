@@ -10,15 +10,11 @@ const StudentDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return (
-            <Dashboard/>
-        );
+        return <Dashboard />;
       case 'students':
-        return <Studentrecords/>;
+        return <Studentrecords />;
       case 'queue':
-        return (
-            <QueueManagement/>
-        );
+        return <QueueManagement />;
       case 'settings':
         return (
           <div className='text-center p-10 w-full'>
@@ -32,8 +28,8 @@ const StudentDashboard = () => {
 
   return (
     <div className='flex text-black h-screen'>
-      {/* Sidebar: Fixed to the left */}
-      <div className='bg-[rgba(12,22,47,1)] w-[20%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
+      {/* Sidebar */}
+      <div className='bg-[rgba(12,22,47,1)] w-[23%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
         <div className='min-h-[15%] flex items-center justify-center w-[70%] bg-red-600]'>
           <img src='/image/DHLOGO.png' alt='logo' className='w-[100px] h-[35px]' />
         </div>
@@ -42,46 +38,63 @@ const StudentDashboard = () => {
             <nav className='flex flex-col gap-3 text-white'>
               <div
                 onClick={() => setActiveTab('dashboard')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200
-                ${activeTab === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
-                <img src='/image/Category.png' alt='dashboard' className='h-full w-[20%]' />
-                <h2 className='w-[80%] h-full'>Dashboard</h2>
+                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'dashboard' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                }`}
+              >
+                <img src='/image/Category.png' alt='dashboard' className='h-[22px] w-[20px]' />
+                <h2 className={`w-[80%] h-full   ${activeTab === 'dashboard' ? 'text-blue-600 font-normal' : 'text-sm' }`}>
+                  Dashboard
+                </h2>
               </div>
 
               <div
                 onClick={() => setActiveTab('students')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200
-                ${activeTab === 'students' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
-                <img src='/image/Document.png' alt='student records' className='h-full w-[20%]' />
-                <h2 className='w-[80%] h-full'>Student records</h2>
+                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'students' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                }`}
+              >
+                <img src='/image/Document.png' alt='student records' className='h-[22px] w-[20px]' />
+                <h2 className={`w-[80%] h-full  ${activeTab === 'students' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                  Student records
+                </h2>
               </div>
 
               <div
                 onClick={() => setActiveTab('queue')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200
-                ${activeTab === 'queue' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
-                <img src='/image/Users.png' alt='queue' className='h-full w-[20%]' />
-                <h2 className='w-[80%] h-full'>Queue management</h2>
+                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'queue' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                }`}
+              >
+                <img src='/image/Users.png' alt='queue' className='h-[22px] w-[20px]' />
+                <h2 className={`w-[80%] h-full text-sm ${activeTab === 'queue' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                  Queue management
+                </h2>
               </div>
 
               <div
                 onClick={() => setActiveTab('settings')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200
-                ${activeTab === 'settings' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}>
-                <img src='/image/Settings.png' alt='settings' className='h-1/2 w-[20%]' />
-                <h2 className='w-[80%] h-full'>Settings</h2>
+                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'settings' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                }`}
+              >
+                <img src='/image/Settings.png' alt='settings' className='h-[22px] w-[20px]' />
+                <h2 className={`w-[80%] h-full  ${activeTab === 'settings' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                  Settings
+                </h2>
               </div>
+
             </nav>
           </div>
         </div>
       </div>
 
-      {/* Main Content: Offset for fixed sidebar */}
-      <div className='bg-white w-[80%] ml-[20%] h-screen overflow-y-auto flex flex-col items-center gap-2'>
+      {/* Main Content */}
+      <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center gap-2'>
         {/* Top Bar */}
-        <div className='w-full h-[10%] flex items-center justify-center border-b-[2px] border-black'>
+        <div className='w-full h-[10%] flex items-center justify-center border-b-[1px] border-black shadow-md shadow-gray-400'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
-            <div className='border-[2px] border-black h-[80%] w-[50%] flex items-center rounded-xl'>
+            <div className='border border-black h-[80%] w-[50%] flex items-center rounded-xl'>
               <img src='/image/Search.png' alt='search' className='h-[70%] w-[6%] pl-1' />
               <input
                 type='search'
@@ -105,7 +118,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        {/* Content Renderer */}
+        {/* Rendered Tab Content */}
         <div className='w-full'>{renderContent()}</div>
       </div>
     </div>

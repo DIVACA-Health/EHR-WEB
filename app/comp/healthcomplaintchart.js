@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell, // <-- Make sure this is imported
+  Cell,
 } from 'recharts';
 
 const HealthComplaintChart = () => {
@@ -32,9 +32,24 @@ const HealthComplaintChart = () => {
   // Optional: fallback colors if API doesn't provide 'color' field
   const fallbackColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
 
+  // Calculate the maximum 'value' to dynamically set Y-axis ticks
+  const maxValue = Math.max(...complaints.map((item) => item.value));
+
+  // Generate Y-axis tick values (0, 200, 400, 600, 800, 1000)
+  const generateYAxisTicks = () => {
+    const step = 200; // Define the step size
+    const ticks = [];
+    for (let i = 0; i <= Math.ceil(maxValue / step) * step; i += step) {
+      ticks.push(i);
+    }
+    return ticks;
+  };
+
   return (
     <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-200 w-full mx-auto">
-      <h2 className="text-lg font-bold mb-4">Most common health complaints</h2>
+      <div className='w-full h-10  flex items-center mb-3'>
+        <h2 className=" font-medium mb-4">Most common health complaints</h2>
+      </div>
 
       {loading ? (
         <p>Loading chart...</p>
@@ -42,12 +57,12 @@ const HealthComplaintChart = () => {
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={complaints}>
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis ticks={generateYAxisTicks()} />
             <Tooltip />
             <Bar
               dataKey="value"
-              radius={[4, 4, 0, 0]}
-              label={{ position: 'top' }}
+              radius={[10, 10, 0, 0]}
+              // label={{ position: 'top' }}
             >
               {complaints.map((entry, index) => (
                 <Cell

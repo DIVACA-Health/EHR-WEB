@@ -9,7 +9,7 @@ const dashboard = () => {
             <div className='w-[30%]'>
                 <h2 className='font-bold text-2xl'>Dashboard</h2>
             </div>
-            <div className=' flex justify-between items-center gap-1.5 h-full w-[35%]'>
+            <div className=' flex justify-between items-center gap-1.5 h-full w-[38%]'>
                 <div className='flex gap-1.5 w-[45%] items-center justify-center h-[50%] border-[1px] border-blue-600 rounded-[10px]'>
                     <img src='/image/Calendar.png' alt='download' className='h-[20px] w-[20px]' />
                     <h3 className='text-sm font-semibold text-blue-600'>This month</h3>
@@ -21,37 +21,37 @@ const dashboard = () => {
             </div>
         </div>
         <div className='h-full  w-full m-auto flex items-center  gap-4'>
-            <div className='h-[114px]  w-[25%] flex  rounded  border-[1px] border-black  shadow-gray-700 shadow-b-2xl'>
+            <div className='h-[114px]  w-[25%] flex  rounded  border-[1px] border-none shadow-sm shadow-gray-400'>
                 <div className='h-6/10 w-8/10 flex flex-col m-auto justify-between pl-2 border-l-[3px] border-l-blue-600 '>
                     <h2 className='font-light text-sm text-gray-600'>Total Visits</h2>
-                    <h2 className='font-bold text-2xl'>550</h2>
+                    <h2 className='font-medium  text-xl'>550</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/visitlogo.png' alt='img' width={32} height={32}/>
                 </div>
             </div>
-            <div className='h-[114px] w-[25%] flex  rounded border-[1px] border-black  shadow-gray-700 shadow-b-2xl '>
+            <div className='h-[114px] w-[25%] flex  rounded border-[1px]border-none shadow-sm shadow-gray-400 '>
                 <div className='h-6/10 w-8/10 flex flex-col m-auto justify-between pl-2 border-l-[3px]'style={{ borderColor: 'rgba(247, 167, 82, 1)' }}> 
                     <h2 className='font-light text-sm text-gray-600'>Average waiting time</h2>
-                    <h2 className='font-bold text-2xl'>10 mins</h2>
+                    <h2 className='font-medium  text-xl'>10 mins</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/waitinglogo.png' alt='img' width={32} height={32}/>
                 </div>
             </div>
-            <div className='h-[114px]  w-[25%] flex  rounded border-[1px] border-black  shadow-gray-700 shadow-b-2xl' >
+            <div className='h-[114px]  w-[25%] flex  rounded border-[1px] border-none shadow-sm shadow-gray-400' >
                 <div className='h-6/10 w-8/10 flex flex-col m-auto justify-between pl-2 border-l-[3px]' style={{ borderColor: 'rgba(124, 58, 237, 1)' }}>
                     <h2 className='font-light text-sm text-gray-600'>Most frequent complaint</h2>
-                    <h2 className='font-bold text-2xl'>Maleria</h2>
+                    <h2 className='font-medium text-xl'>Maleria</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/frequentlogo.png' alt='img' width={32} height={32}/>
                 </div>
             </div>
-            <div className='h-[114px]  w-[25%] flex  rounded border-[1px] border-black  shadow-gray-700 shadow-b-2xl '>
+            <div className='h-[114px]  w-[25%] flex  rounded border-[1px] border-none shadow-sm shadow-gray-400 '>
                 <div className='h-6/10 w-8/10 flex flex-col m-auto justify-between pl-2 border-l-[3px]' style={{ borderColor: 'rgba(230, 57, 70, 1)' }}>
                     <h2 className='font-light text-sm text-gray-600'>Peak hours</h2>
-                    <h2 className='font-bold text-2xl'>11am - 2pm </h2>
+                    <h2 className='font-medium  text-xl'>11am - 2pm </h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/peaklogo.png' alt='img' width={32} height={32}/>
