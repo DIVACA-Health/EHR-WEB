@@ -23,19 +23,19 @@ export default function Home() {
                   <form method="post" className="flex flex-col gap-2 w-full ">
                     <div className="flex flex-col gap-0.5 ">
                       <label className=" text-sm">First Name</label>
-                      <input className="w-full h-8 pl-3  border-black border-[1px] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type="text" placeholder="Enter first name" />
+                      <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-600 outline-none" type="text" placeholder="Enter first name" />
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm">Last Name</label>
-                      <input className="w-full h-8 pl-3 border-black border-[1px] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type="text" placeholder="Enter Last name" />
+                      <input className="w-full h-8 pl-3 border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-600 outline-none" type="text" placeholder="Enter Last name" />
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <label className="text-sm">Email Address</label>
-                      <input className="w-full h-8 pl-3  border-black border-[1px] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type="email" placeholder="Email Address" />
+                      <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-600 outline-none" type="email" placeholder="Email Address" />
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm">Phone Number</label>
-                      <div className="relative w-full h-8 pl-3 border-[1px]  border-black rounded-[7px] outline-none items-center flex shadow-sm shadow-gray-600">
+                      <div className="relative w-full h-8 pl-3 border  border-[rgba(240,242,245,1)] rounded-[7px]  outline-none items-center flex shadow-sm shadow-gray-600">
                         <div className="flex gap-0.5 w-1/5">
                           <img src="/image/flag.png" alt="" width={22} height={22} />
                           <h3 className="font-semibold tracking-widest">+234</h3>
@@ -45,7 +45,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm ">Role</label>
-                    <select className="w-full h-8 pl-3 pr-3  border-black border-[1px] rounded-[7px]  shadow-sm shadow-gray-600 outline-none cursor-pointer">
+                    <select className="w-full h-8 pl-3 pr-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-600 outline-none cursor-pointer">
                       <option className="text-gray-400">Select Role</option>
                       <option>Doctor</option>
                       <option>Nurse</option>
@@ -55,7 +55,7 @@ export default function Home() {
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm">Create Password</label>
                       <div className="relative w-full ">
-                        <input className="w-full h-8 pl-3  border-black border-[1px] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
+                        <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
                         <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2 text-gray-500 hover:text-gray-700">
                           {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
@@ -64,7 +64,7 @@ export default function Home() {
                     <div className="flex flex-col gap-0.5">
                       <label className=" text-sm">Confirm Password</label>
                       <div className="relative w-full flex items-center  ">
-                        <input className="w-full h-8 pl-3  border-black border-[1px] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type={showPassword1 ? "text" : "password"} placeholder="Confirm password" required />
+                        <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px] shadow-sm shadow-gray-600 outline-none" type={showPassword1 ? "text" : "password"} placeholder="Confirm password" required />
                         <button type="button" onClick={() => setShowPassword1(!showPassword1)} className="absolute right-3 top-2 text-gray-500 hover:text-gray-700">
                           {showPassword1 ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
