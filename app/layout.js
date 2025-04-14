@@ -5,6 +5,7 @@ import 'typeface-inter';
 
 
 
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata = {

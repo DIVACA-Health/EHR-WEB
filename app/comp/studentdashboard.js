@@ -108,10 +108,10 @@ const StudentDashboard = () => {
       {/* Main Content */}
       <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center gap-2'>
         {/* Top Bar */}
-        <div className='w-full h-[10%] flex items-center justify-center border-b-[1px] border-black shadow-md shadow-gray-400'>
+        <div className='w-full h-[10%] flex items-center justify-center border-b-[1px] border-black shadow-sm shadow-gray-200'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
-            <div className='border border-black h-[80%] w-[50%] flex items-center rounded-xl'>
-              <img src='/image/Search.png' alt='search' className='h-[70%] w-[6%] pl-1' />
+            <div className='border border-black h-[80%] w-[45%] flex items-center rounded-xl'>
+              <img src='/image/Search.png' alt='search' className='h-[22px] w-[25px] pl-1' />
               <input
                 type='search'
                 placeholder='Search for anything...'
@@ -120,7 +120,7 @@ const StudentDashboard = () => {
             </div>
             <div className='w-[15%] h-full flex items-center relative' ref={dropdownRef}>
               <div className='border-r border-black w-1/2 h-[80%] flex items-center justify-center cursor-pointer'>
-                <img src='/image/Bell.png' alt='notification' className='h-[90%]' />
+                <img src='/image/Bell.png' alt='notification' className='h-[25px] w-[20px]' />
               </div>
               <div className='h-[90%] w-1/2 flex items-center justify-end relative'>
                 <img
