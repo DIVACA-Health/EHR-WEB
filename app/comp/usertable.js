@@ -106,22 +106,29 @@ export default function UserTable() {
       </div>
 
       {/* Table */}
-      <table className="w-full border-2 border-black rounded-lg overflow-hidden text-sm">
-        <thead className="bg-gray-100">
+      <table
+        className="w-full border border-gray-300 rounded-xl overflow-hidden text-sm"
+        style={{ borderBottom: "1px solid rgba(145, 145, 145, 1)" }}
+      >
+        <thead className="bg-[#F5F5F5]">
           <tr className="text-left">
-            <th className="p-3">Full name</th>
-            <th className="p-3">DIVACA ID</th>
-            <th className="p-3">Matric number</th>
-            <th className="p-3">Subscription status</th>
-            <th className="p-3">Last visit date</th>
-            <th className="p-3">Action</th>
+            <th className="p-3 font-medium">Full name</th>
+            <th className="p-3 font-medium">DIVACA ID</th>
+            <th className="p-3 font-medium">Matric number</th>
+            <th className="p-3 font-medium">Subscription status</th>
+            <th className="p-3 font-medium">Last visit date</th>
+            <th className="p-3 font-medium">Action</th>
           </tr>
         </thead>
+
         <tbody>
           {paginatedUsers.length > 0 ? (
             paginatedUsers.map((user, index) => (
-              <tr key={index} className="border-t">
-                <td className="p-3 flex items-center gap-2">
+              <tr
+                key={index}
+                className="even:bg-white odd:bg-[#F7F9FC] border-t border-gray-200"
+              >
+                <td className="p-3  flex items-center gap-2">
                   <img
                     src={user.avatar}
                     alt="avatar"
@@ -154,10 +161,10 @@ export default function UserTable() {
                   </button>
 
                   {openMenuIndex === index && (
-                    <div className="absolute right-0 top-0 w-62  z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                    <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
                       <button
                         onClick={() => handleActionClick(user)}
-                        className=" w-full text-left px-4 py-2 hover:bg-gray-100 bg-red-400-rounded-xl flex justify-center items-center cursor-pointer"
+                        className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
                       >
                         Add to patient queue
                       </button>

@@ -108,7 +108,7 @@ const StudentDashboard = () => {
       {/* Main Content */}
       <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center gap-2'>
         {/* Top Bar */}
-        <div className='w-full h-[10%] flex items-center justify-center border-b-[1px] border-black shadow-sm shadow-gray-200'>
+        <div className='w-full h-[78px] bg-red-100 flex items-center justify-center border-b-[1px] border-black shadow-sm shadow-gray-200'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
             <div className='border border-black h-[80%] w-[45%] flex items-center rounded-xl'>
               <img src='/image/Search.png' alt='search' className='h-[22px] w-[25px] pl-1' />
@@ -148,7 +148,7 @@ const StudentDashboard = () => {
         </div>
 
         {/* Rendered Tab Content */}
-        <div className='w-full'>{renderContent()}</div>
+        <div className='w-full h-auto'>{renderContent()}</div>
       </div>
     </div>
   );
