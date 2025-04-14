@@ -9,14 +9,14 @@ const dashboard = () => {
             <div className='w-[30%]'>
                 <h2 className='font-bold text-2xl'>Dashboard</h2>
             </div>
-            <div className=' flex justify-between items-center gap-1.5 h-full w-[35%]'>
-                <div className='flex gap-1.5 w-[45%] items-center justify-center h-[50%] border-[1px] border-blue-600 cursor-pointer rounded-[10px]'>
+            <div className=' flex justify-between items-center gap-1 h-full w-auto'>
+                <div className='flex gap-1.5 w-[154px] items-center justify-center h-[50%] border-[1px] border-blue-600 cursor-pointer rounded-[10px]'>
                     <img src='/image/Calendar.png' alt='download' className='h-[20px] w-[20px]' />
-                    <h3 className='text-sm font-semibold text-blue-600'>This month</h3>
+                    <h3 className='text-sm font-medium text-blue-600'>This month</h3>
                 </div>
-                <div className='flex gap-1.5 bg-blue-600 w-[55%] items-center text-white justify-center h-[50%] cursor-pointer rounded-[10px]'>
+                <div className='flex gap-1.5 bg-blue-600 w-[170px] items-center text-white justify-center h-[50%] cursor-pointer border-none rounded-[10px]'>
                     <img src='/image/Vector.png' alt='download' className='h-[20px] w-[20px]' />
-                    <h3 className='text-sm text-semibold'>Download report</h3>
+                    <h3 className='text-sm text-medium'>Download report</h3>
                 </div>
             </div>
         </div>
@@ -59,11 +59,22 @@ const dashboard = () => {
                 </div>
             </div>
         </div>
-        <div className='mt-10 min-w-full bg-gray-50 flex items-center justify-center '>
-            <StudentVisitsChart/>
+        <div className='mt-10 mb-4 min-w-full  flex flex-col '>
+            <div className='h-[15%] w-full border border-[rgba(240,242,245,1)]  rounded-t-xl flex items-center'>
+                <h2 className=" font-semibold  ml-[24px]">Student visits over time</h2>
+            </div>
+            <div className='h-[85%] w-full '>
+                <StudentVisitsChart/>
+            </div>
+            
         </div>
-        <div className='mt-10 min-w-full bg-gray-50 flex items-center justify-center mb-20'>
-            <HealthComplaintChart/>
+        <div className='mt-10 min-w-full  flex flex-col mb-20'>
+            <div className='h-[15%] w-full border border-[rgba(240,242,245,1)]  rounded-t-xl flex items-center'>
+                <h2 className=" font-semibold  ml-[24px]">Most common health complaints</h2>
+            </div>
+            <div className='h-[85%] w-full '>
+                <HealthComplaintChart/>
+            </div>
         </div>
     </div>
   )

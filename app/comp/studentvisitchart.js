@@ -42,10 +42,7 @@ const StudentVisitsChart = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm w-full ">
-      <div className='w-full h-10  flex items-center'>
-        <h2 className=" font-semibold  mb-3">Student visits over time</h2>
-      </div>
+    <div className="pt-1 pb-4 pl-4 pr-4 bg-white rounded-b-xl  border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(0,0,0,0.02)]  w-full ">
 
       {loading ? (
         <p>Loading chart...</p>

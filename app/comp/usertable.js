@@ -92,8 +92,8 @@ export default function UserTable() {
 
         {/* Search */}
         <div className="flex gap-2 h-full items-center justify-center border-[rgba(240,242,245,1)] rounded-[10px]  w-[57%] outline-blue-300">
-          <div className="p-2 border  border-[rgba(240,242,245,1)] rounded-[7px] h-[100%] w-[100%] flex items-center  outline-blue-300">
-            <img src="/image/Search.png" alt="search" className="h-[20px] w-[25px] pl-1" />
+          <div className="p-2 border  border-[rgba(240,242,245,1)] rounded-[7px] h-[100%] w-[100%] flex items-center gap-1 outline-blue-300">
+            <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px] " />
             <input
               type="search"
               placeholder="Search by name, ID, matric number .etc."
@@ -106,115 +106,131 @@ export default function UserTable() {
       </div>
 
       {/* Table */}
-      <table
-        className="w-full border border-gray-300 rounded-xl overflow-hidden text-sm"
-        style={{ borderBottom: "1px solid rgba(145, 145, 145, 1)" }}
-      >
-        <thead className="bg-[#F5F5F5]">
-          <tr className="text-left">
-            <th className="p-3 font-medium">Full name</th>
-            <th className="p-3 font-medium">DIVACA ID</th>
-            <th className="p-3 font-medium">Matric number</th>
-            <th className="p-3 font-medium">Subscription status</th>
-            <th className="p-3 font-medium">Last visit date</th>
-            <th className="p-3 font-medium">Action</th>
-          </tr>
-        </thead>
+{/* Table */}
+<table
+  className="w-full border border-gray-300 rounded-xl overflow-hidden text-sm"
+  style={{ borderBottom: "1px solid rgba(145, 145, 145, 1)" }}
+>
+  <thead className="bg-[#F5F5F5]">
+    <tr className="text-left">
+      <th className="p-3 font-medium">Full name</th>
+      <th className="p-3 font-medium">DIVACA ID</th>
+      <th className="p-3 font-medium">Matric number</th>
+      <th className="p-3 font-medium">Subscription status</th>
+      <th className="p-3 font-medium">Last visit date</th>
+      <th className="p-3 font-medium">Action</th>
+    </tr>
+  </thead>
 
-        <tbody>
-          {paginatedUsers.length > 0 ? (
-            paginatedUsers.map((user, index) => (
-              <tr
-                key={index}
-                className="even:bg-white odd:bg-[#F7F9FC] border-t border-gray-200"
-              >
-                <td className="p-3  flex items-center gap-2">
-                  <img
-                    src={user.avatar}
-                    alt="avatar"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  {user.name}
-                </td>
-                <td className="p-3">{user.divacaId}</td>
-                <td className="p-3">{user.matricNumber}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      user.status === "Active"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-red-100 text-red-600"
-                    }`}
-                  >
-                    {user.status}
-                  </span>
-                </td>
-                <td className="p-3">{user.lastVisit}</td>
-                <td className="relative p-3 text-lg" ref={menuRef}>
-                  <button
-                    onClick={() =>
-                      setOpenMenuIndex((prev) => (prev === index ? null : index))
-                    }
-                    className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
-                  >
-                    <MoreVertical size={20} />
-                  </button>
-
-                  {openMenuIndex === index && (
-                    <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
-                      <button
-                        onClick={() => handleActionClick(user)}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
-                      >
-                        Add to patient queue
-                      </button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" className="text-center p-4 text-red-600">
-                No users found matching your search criteria.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      {/* Pagination */}
-      <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
-        <button
-          onClick={handlePreviousPage}
-          className="px-3 py-1 border cursor-pointer rounded-md"
-          disabled={currentPage === 1}
+  <tbody>
+    {paginatedUsers.length > 0 ? (
+      paginatedUsers.map((user, index) => (
+        <tr
+          key={index}
+          className="even:bg-white odd:bg-[#F7F9FC] border-t border-gray-200"
         >
-          Previous
-        </button>
-
-        <div className="flex gap-1">
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageClick(index + 1)}
-              className={`px-3 py-1 border cursor-pointer rounded-md ${
-                currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-gray-600"
+          <td className="p-3  flex items-center gap-2">
+            <img
+              src={user.avatar}
+              alt="avatar"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            {user.name}
+          </td>
+          <td className="p-3">{user.divacaId}</td>
+          <td className="p-3">{user.matricNumber}</td>
+          <td className="p-3">
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                user.status === "Active"
+                  ? "bg-green-100 text-green-600"
+                  : "bg-red-100 text-red-600"
               }`}
             >
-              {index + 1}
+              {user.status}
+            </span>
+          </td>
+          <td className="p-3">{user.lastVisit}</td>
+          <td className="relative p-3 text-lg" ref={menuRef}>
+            <button
+              onClick={() =>
+                setOpenMenuIndex((prev) => (prev === index ? null : index))
+              }
+              className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+            >
+              <MoreVertical size={20} />
             </button>
-          ))}
-        </div>
 
-        <button
-          onClick={handleNextPage}
-          className="px-3 py-1 border cursor-pointer rounded-md"
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+            {openMenuIndex === index && (
+              <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                <button
+                  onClick={() => handleActionClick(user)}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
+                >
+                  Add to patient queue
+                </button>
+              </div>
+            )}
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="6" className="text-center p-4 text-red-600">
+          <div className="min-h-[230px] w-full flex justify-center items-center">
+            <div className=" w-[300px] min-h-[210px]">
+              <img
+                src="/image/Frame 1261158510.png"
+                alt="no search history"
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </td>
+      </tr>
+    )}
+
+    {/* Pagination */}
+    <tr className="even:bg-white odd:bg-[#F7F9FC]">
+      <td colSpan="6" className="px-3 py-4">
+        <div className="flex justify-between items-center text-sm text-gray-600">
+          <button
+            onClick={handlePreviousPage}
+            className="px-3 py-1 border cursor-pointer rounded-md"
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+
+          <div className="flex gap-1">
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageClick(index + 1)}
+                className={`px-3 py-1 border cursor-pointer rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-600"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={handleNextPage}
+            className="px-3 py-1 border cursor-pointer rounded-md"
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
   );
 }

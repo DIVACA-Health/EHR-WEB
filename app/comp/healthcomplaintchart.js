@@ -42,11 +42,7 @@ const HealthComplaintChart = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-200 w-full mx-auto">
-      <div className='w-full h-10 flex items-center mb-3'>
-        <h2 className="font-medium mb-4">Most common health complaints</h2>
-      </div>
-
+    <div className="p-6 bg-white rounded-b-xl border border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(0,0,0,0.02)] w-full mx-auto">
       {loading ? (
         <p>Loading chart...</p>
       ) : (

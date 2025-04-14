@@ -119,7 +119,7 @@ const QueueManagement = () => {
   };
 
   return (
-    <div className='p-6 w-full'>
+    <div className='p-6 w-full h-auto'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-bold'>Queue management</h2>
         <button

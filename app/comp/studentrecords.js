@@ -3,7 +3,7 @@ import UserTable from './usertable'
 
 const studentrecords = () => {
   return (
-    <div className='w-[100%] h-auto flex flex-col items-center'>
+    <div className='w-[100%]  flex flex-col items-center'>
         <div className='flex w-[95%] h-[70px] justify-between items-center '>
             <div className='w-[75%] text-start'>
               <h3 className='text-2xl font-bold text-black'>Student records</h3>
