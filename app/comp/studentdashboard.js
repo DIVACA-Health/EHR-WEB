@@ -106,11 +106,11 @@ const StudentDashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center gap-2'>
+      <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center '>
         {/* Top Bar */}
-        <div className='w-full h-[78px]  flex items-center justify-center border  border-[rgba(240,242,245,1)]   shadow-sm shadow-gray-200'>
+        <div className='w-full h-[8%] flex items-center justify-center border  border-[rgba(240,242,245,1)]   shadow-sm shadow-gray-200'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
-            <div className='border  border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center rounded-xl'>
+            <div className='border  border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center '>
               <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px] ' />
               <input
                 type='search'
@@ -126,7 +126,7 @@ const StudentDashboard = () => {
                 <img
                   src='/image/profileimg.png'
                   alt='profile'
-                  className='h-full cursor-pointer'
+                  className='cursor-pointer h-[41px] w-[41px]'
                   onClick={() => setShowDropdown((prev) => !prev)}
                 />
                 {showDropdown && (
@@ -148,7 +148,7 @@ const StudentDashboard = () => {
         </div>
 
         {/* Rendered Tab Content */}
-        <div className='w-full h-auto'>{renderContent()}</div>
+        <div className='w-full h-[92%] '>{renderContent()}</div>
       </div>
     </div>
   );
