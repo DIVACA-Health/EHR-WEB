@@ -73,7 +73,7 @@ export default function UserTable() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between h-[10%] mb-4">
         {/* Filter */}
-        <div className="flex gap-2 h-full items-center justify-center p-2 border border-black rounded-xl w-[40%]">
+        <div className="flex gap-2 h-full items-center justify-center p-2 border  border-[rgba(240,242,245,1)] rounded-[7px]  w-[40%]">
           <h2>Status:</h2>
           {["all", "active", "inactive"].map((status) => (
             <button
@@ -91,15 +91,15 @@ export default function UserTable() {
         </div>
 
         {/* Search */}
-        <div className="flex gap-2 h-full items-center justify-center border-[1px] border-dotted border-black rounded-xl w-[57%] outline-blue-300">
-          <div className="p-3 border-black h-[100%] w-[100%] flex items-center rounded-xl outline-blue-300">
-            <img src="/image/Search.png" alt="search" className="h-[70%] w-[6%] pl-1" />
+        <div className="flex gap-2 h-full items-center justify-center border-[rgba(240,242,245,1)] rounded-[10px]  w-[57%] outline-blue-300">
+          <div className="p-2 border  border-[rgba(240,242,245,1)] rounded-[7px] h-[100%] w-[100%] flex items-center  outline-blue-300">
+            <img src="/image/Search.png" alt="search" className="h-[20px] w-[25px] pl-1" />
             <input
               type="search"
               placeholder="Search by name, ID, matric number .etc."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-[80%] w-[90%] pl-3 rounded-r-xl text-black outline-transparent"
+              className="h-[80%] w-[90%] p-2 rounded-r-xl text-black outline-transparent"
             />
           </div>
         </div>

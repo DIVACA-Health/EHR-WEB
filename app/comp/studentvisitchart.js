@@ -42,7 +42,7 @@ const StudentVisitsChart = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm w-full cursor-pointer">
+    <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm w-full ">
       <div className='w-full h-10  flex items-center'>
         <h2 className=" font-semibold  mb-3">Student visits over time</h2>
       </div>

@@ -8,9 +8,9 @@ const studentrecords = () => {
             <div className='w-[75%] text-start'>
               <h3 className='text-2xl font-bold text-black'>Student records</h3>
             </div>
-            <div className='flex gap-1.5 w-[20%] items-center justify-center h-[65%] border-[1px] border-black rounded-xl cursor-pointer'>
+            <div className='flex gap-2 w-[20%] items-center justify-center h-[65%] border-[1px] border-black rounded-[15px] cursor-pointer'>
               <img src='/image/document-download.png' alt='download' className='h-[20px] w-[20px]' />
-              <h3>Download list</h3>
+              <h3 className='font-medium'>Download list</h3>
             </div>
         </div>
         <div className='h-[166px] w-[95%] bg-blue-950 text-white rounded-xl flex items-center justify-center mt-5 relative bg-cover bg-center' style={{ backgroundImage: "url('/image/Pattern.png')",}}>

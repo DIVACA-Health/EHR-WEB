@@ -29,15 +29,11 @@ const HealthComplaintChart = () => {
       });
   }, []);
 
-  // fallback colors if API doesn't provide 'color' field
   const fallbackColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
+  const maxValue = Math.max(...complaints.map((item) => item.value), 0);
 
-  // Calculate the maximum 'value' to dynamically set Y-axis ticks
-  const maxValue = Math.max(...complaints.map((item) => item.value));
-
-  // Generate Y-axis tick values (0, 200, 400, 600, 800, 1000)
   const generateYAxisTicks = () => {
-    const step = 200; // Define the step size
+    const step = 200;
     const ticks = [];
     for (let i = 0; i <= Math.ceil(maxValue / step) * step; i += step) {
       ticks.push(i);
@@ -47,8 +43,8 @@ const HealthComplaintChart = () => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-200 w-full mx-auto">
-      <div className='w-full h-10  flex items-center mb-3'>
-        <h2 className=" font-medium mb-4">Most common health complaints</h2>
+      <div className='w-full h-10 flex items-center mb-3'>
+        <h2 className="font-medium mb-4">Most common health complaints</h2>
       </div>
 
       {loading ? (
@@ -58,12 +54,8 @@ const HealthComplaintChart = () => {
           <BarChart data={complaints}>
             <XAxis dataKey="name" />
             <YAxis ticks={generateYAxisTicks()} />
-            <Tooltip />
-            <Bar
-              dataKey="value"
-              radius={[10, 10, 0, 0]}
-              // label={{ position: 'top' }}
-            >
+            <Tooltip cursor={{ fill: 'transparent' }} />
+            <Bar dataKey="value" radius={[10, 10, 0, 0]}>
               {complaints.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
