@@ -4,91 +4,240 @@ import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Logopicture from "./comp/logopicture";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    role: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.firstName.trim()) return alert("First name is required");
+    if (!formData.lastName.trim()) return alert("Last name is required");
+    if (!emailRegex.test(formData.email)) return alert("Please enter a valid email address");
+    if (!formData.phone.trim() || !/^[789]\d{9}$/.test(formData.phone.trim()))
+      return alert("Please enter a valid Nigerian phone number (e.g., 8031234567)");
+    if (!formData.role) return alert("Please select a role");
+    if (formData.password.length < 6)
+      return alert("Password must be at least 6 characters long");
+    if (formData.password !== formData.confirmPassword)
+      return alert("Passwords do not match");
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        email: formData.email.trim(),
+        phoneNumber: `+234${formData.phone.trim()}`,
+        role: formData.role,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      };
+
+      const signupRes = await fetch("/api/v1/auth/medical-practitioner-signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const signupData = await signupRes.json();
+
+      if (!signupRes.ok) {
+        throw new Error(signupData.message || "Signup failed");
+      }
+
+      // ✅ Trigger email verification
+      await fetch("/api/v1/auth/request-email-verification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      alert("Signup successful!");
+      router.push(`/authentication?email=${formData.email}`);
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <div className="w-full h-[100vh] bg-white  flex justify-between">
-        <Logopicture/>
-        <div className="w-[55%] h-full  flex justify-center items-center ">
-            <div className=" w-[65%] h-[95%]  flex flex-col items-center justify-center">
-                <div className=" h-auto w-full text-black mb-3">
-                  <h3 className="text-2xl">Create Account</h3>
-                  <h4 className="text-[12px] text-rgba[(98, 98, 98, 1)]">Set up your account to experience a seamless health record system.</h4>
-                </div>
-                <div className=" w-full h-auto text-black">
-                  <form method="post" className="flex flex-col gap-2 w-full ">
-                    <div className="flex flex-col gap-0.5 ">
-                      <label className=" text-sm">First Name</label>
-                      <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-300 outline-none" type="text" placeholder="Enter first name" />
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className=" text-sm">Last Name</label>
-                      <input className="w-full h-8 pl-3 border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-300 outline-none" type="text" placeholder="Enter Last name" />
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className="text-sm">Email Address</label>
-                      <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-300 outline-none" type="email" placeholder="Email Address" />
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className=" text-sm">Phone Number</label>
-                      <div className="relative w-full h-8 pl-3 border  border-[rgba(240,242,245,1)] rounded-[7px]  outline-none items-center flex shadow-sm shadow-gray-300">
-                        <div className="flex gap-0.5 w-1/5">
-                          <img src="/image/flag.png" alt="" width={22} height={22} />
-                          <h3 className="font-semibold tracking-widest">+234</h3>
-                        </div>
-                        <input className="h-8 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none" type="number" placeholder="80 000 000 00" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className=" text-sm ">Role</label>
-                    <select className="w-full h-8 pl-3 pr-3  border  border-[rgba(240,242,245,1)] rounded-[7px]  shadow-sm shadow-gray-300 outline-none cursor-pointer">
-                      <option className="text-gray-400">Select Role</option>
-                      <option>Doctor</option>
-                      <option>Nurse</option>
-                      <option>Health Attendant</option>
-                    </select>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className=" text-sm">Create Password</label>
-                      <div className="relative w-full ">
-                        <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px] shadow-sm shadow-gray-300 outline-none" type={showPassword ? "text" : "password"} placeholder="Enter password" required />
-                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2 text-gray-500 hover:text-gray-700">
-                          {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      <label className=" text-sm">Confirm Password</label>
-                      <div className="relative w-full flex items-center  ">
-                        <input className="w-full h-8 pl-3  border  border-[rgba(240,242,245,1)] rounded-[7px] shadow-sm shadow-gray-300 outline-none" type={showPassword1 ? "text" : "password"} placeholder="Confirm password" required />
-                        <button type="button" onClick={() => setShowPassword1(!showPassword1)} className="absolute right-3 top-2 text-gray-500 hover:text-gray-700">
-                          {showPassword1 ? <Eye size={20} /> : <EyeOff size={20} />}
-                        </button>
-                      </div>
-                    </div>
-                    <Link href="/authentication">
-                      <div className="w-full h-10 text-white text-sm bg-blue-600 flex items-center  justify-center rounded-[7px] shadow-sm shadow-gray-300  cursor-pointer mt-2">
-                        <button type="submit">Create Account</button>
-                      </div>
-                    </Link>
-                  </form>
-                  <div className="flex text-sm gap-0.5 mt-1 text-center justify-center items-center  ">
-                    <h2>Already have an account?</h2>
-                    <Link href="/login">
-                      <span className="text-blue-600 cursor-pointer">Log In</span>
-                    </Link>
-                  </div>
-                  
-                </div>
+    <div className="w-full h-[100vh] bg-white flex justify-between">
+      <Logopicture />
+      <div className="w-[55%] h-full flex justify-center items-center">
+        <div className="w-[65%] h-[95%] flex flex-col items-center justify-center">
+          <div className="h-auto w-full text-black mb-3">
+            <h3 className="text-2xl">Create Account</h3>
+            <h4 className="text-[12px] text-gray-500">
+              Set up your account to experience a seamless health record system.
+            </h4>
+          </div>
 
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full text-black">
+            <InputField label="First Name" name="firstName" type="text" placeholder="Enter first name" onChange={handleChange} />
+            <InputField label="Last Name" name="lastName" type="text" placeholder="Enter last name" onChange={handleChange} />
+            <InputField label="Email Address" name="email" type="email" placeholder="Email Address" onChange={handleChange} />
+
+            <div className="flex flex-col gap-0.5">
+              <label className="text-sm">Phone Number</label>
+              <div className="relative w-full h-8 pl-3 border border-gray-200 rounded-[7px] outline-none flex items-center shadow-sm shadow-gray-300">
+                <div className="flex gap-0.5 w-1/5">
+                  <img src="/image/flag.png" alt="" width={22} height={22} />
+                  <h3 className="font-semibold tracking-widest">+234</h3>
+                </div>
+                <input
+                  name="phone"
+                  type="number"
+                  className="h-8 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none"
+                  placeholder="80 000 000 00"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
+
+            <div className="flex flex-col gap-0.5">
+              <label className="text-sm">Role</label>
+              <select
+                name="role"
+                className="w-full h-8 pl-3 pr-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none cursor-pointer"
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Role</option>
+                <option value="doctor">Doctor</option>
+                <option value="nurse">Nurse</option>
+                <option value="health_attendant">Health Attendant</option>
+              </select>
+            </div>
+
+            <PasswordInput
+              label="Create Password"
+              name="password"
+              placeholder="Enter password"
+              show={showPassword}
+              toggle={() => setShowPassword(!showPassword)}
+              onChange={handleChange}
+            />
+
+            <PasswordInput
+              label="Confirm Password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              show={showPassword1}
+              toggle={() => setShowPassword1(!showPassword1)}
+              onChange={handleChange}
+            />
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full h-10 text-white text-sm bg-blue-600 flex items-center justify-center rounded-[7px] shadow-sm shadow-gray-300 cursor-pointer mt-2 ${
+                loading ? "opacity-70 cursor-not-allowed" : ""
+              }`}
+            >
+              {loading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  />
+                </svg>
+              ) : (
+                "Create Account"
+              )}
+            </button>
+          </form>
+
+          <div className="flex text-sm gap-0.5 mt-1 justify-center items-center text-black">
+            <h2>Already have an account?</h2>
+            <Link href="/login">
+              <span className="text-blue-600 cursor-pointer">Log In</span>
+            </Link>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
+const InputField = ({ label, name, type, placeholder, onChange }) => (
+  <div className="flex flex-col gap-0.5">
+    <label className="text-sm">{label}</label>
+    <input
+      name={name}
+      type={type}
+      placeholder={placeholder}
+      className="w-full h-8 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+      onChange={onChange}
+      required
+    />
+  </div>
+);
+
+const PasswordInput = ({ label, name, placeholder, show, toggle, onChange }) => (
+  <div className="flex flex-col gap-0.5">
+    <label className="text-sm">{label}</label>
+    <div className="relative w-full flex items-center">
+      <input
+        name={name}
+        type={show ? "text" : "password"}
+        placeholder={placeholder}
+        minLength={6}
+        className="w-full h-8 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+        onChange={onChange}
+        required
+      />
+      <button
+        type="button"
+        onClick={toggle}
+        className="absolute right-3 top-2 text-gray-500 hover:text-gray-700"
+      >
+        {show ? <Eye size={20} /> : <EyeOff size={20} />}
+      </button>
+    </div>
+  </div>
+);

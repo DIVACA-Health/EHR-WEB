@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose }) => {
         </p>
 
         {/* Go to Dashboard Button */}
-        <Link href="/studentdashboard">
+        <Link href="/login">
           <button
             className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-normal rounded-lg shadow-md hover:bg-blue-700 transition"
             onClick={onClose}

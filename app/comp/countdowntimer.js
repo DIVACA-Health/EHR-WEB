@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(60); // 1 minute = 60 seconds
-  const [formattedTime, setFormattedTime] = useState('1:00');
+const CountdownTimer = ({ duration = 60, onComplete }) => {
+  const [timeLeft, setTimeLeft] = useState(duration);
+  const [formattedTime, setFormattedTime] = useState('');
 
   useEffect(() => {
-    if (timeLeft <= 0) return; // Stop timer when it reaches 0
+    if (timeLeft <= 0) {
+      onComplete && onComplete(); // call onComplete if provided
+      return;
+    }
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
-    return () => clearInterval(timer); // Clear the timer on component unmount
-  }, [timeLeft]);
+    return () => clearInterval(timer);
+  }, [timeLeft, onComplete]);
 
   useEffect(() => {
-    // Update formatted time when `timeLeft` changes
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     setFormattedTime(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
   }, [timeLeft]);
 
   return (
-    <div className="text-center text-blue-300">
+    <div className="text-center text-blue-400">
       <p>{formattedTime}</p>
     </div>
   );

@@ -1,40 +1,45 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const SelectableNumbers = () => {
+const SelectableNumbers = ({ setVerificationCode, otp }) => {
   const [values, setValues] = useState({});
+
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
-    // Only allow single digits (0-9)
     if (!/^\d?$/.test(value)) return;
 
-    setValues((prev) => ({
-      ...prev,
+    const updatedValues = {
+      ...values,
       [index]: value,
-    }));
+    };
 
-    // Move to the next input if a number is entered
+    setValues(updatedValues);
+
+    // Move to the next input if a digit is entered
     if (value !== "" && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
   };
 
   const handleKeyDown = (index, e) => {
-    // Backspace clears and moves to the previous input
-    if (e.key === "Backspace" && values[index] === "") {
-      if (index > 0) {
-        inputRefs.current[index - 1].focus();
-      }
+    if (e.key === "Backspace" && !values[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
     }
   };
+
+  // Update parent with the full code whenever `values` changes
+  useEffect(() => {
+    const code = [0, 1, 2, 3].map((i) => values[i] || "").join("");
+    setVerificationCode(code);
+  }, [values, setVerificationCode]);
 
   return (
     <div className="flex gap-4">
       {[0, 1, 2, 3].map((index) => (
         <input
           key={index}
-          type="text" // Prevents up/down arrows for number input
-          maxLength={1} // Ensures only one digit can be entered
+          type="text"
+          maxLength={1}
           ref={(el) => (inputRefs.current[index] = el)}
           value={values[index] || ""}
           onChange={(e) => handleChange(index, e.target.value)}
