@@ -59,7 +59,7 @@ export default function Home() {
         confirmPassword: formData.confirmPassword,
       };
 
-      const signupRes = await fetch("/api/v1/auth/medical-practitioner-signup", {
+      const signupRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/medical-practitioner-signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -72,7 +72,7 @@ export default function Home() {
       }
 
       // ✅ Trigger email verification
-      await fetch("/api/v1/auth/request-email-verification", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/request-email-verification`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
