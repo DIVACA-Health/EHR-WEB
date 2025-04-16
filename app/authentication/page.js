@@ -1,8 +1,12 @@
-import Authentication from "../comp/authentication"
-const page = () => {
-  return (
-    <Authentication/>
-  )
-}
+export const dynamic = "force-dynamic";
 
-export default page
+import { Suspense } from "react";
+import Authentication from '../comp/authentication';
+
+export default function AuthenticationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Authentication />
+    </Suspense>
+  );
+}

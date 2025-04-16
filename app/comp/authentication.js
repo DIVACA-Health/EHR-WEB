@@ -1,5 +1,5 @@
-
 "use client";
+
 import { useState } from "react";
 import Logopicture from "../comp/logopicture";
 import SelectableNumbers from "./selectednumbers";
@@ -15,10 +15,9 @@ const Authentication = () => {
   const [email, setEmail] = useState(emailFromQuery || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timerDone, setTimerDone] = useState(false);
-  const [timerKey, setTimerKey] = useState(0); // to reset timer
-  const [verificationCode, setVerificationCode] = useState(""); // state to hold the entered verification code
+  const [timerKey, setTimerKey] = useState(0);
+  const [verificationCode, setVerificationCode] = useState("");
 
-  // Function to resend the verification code
   const resendVerificationCode = async () => {
     try {
       const res = await fetch("api/v1/auth/request-email-verification", {
@@ -31,20 +30,17 @@ const Authentication = () => {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Verification request failed");
-      }
+      if (!res.ok) throw new Error(data.message || "Verification request failed");
 
       alert("Verification code sent!");
       setTimerDone(false);
-      setTimerKey((prev) => prev + 1); // reset timer key to force the timer to restart
+      setTimerKey((prev) => prev + 1);
     } catch (error) {
       console.error("Verification Error:", error);
       alert(error.message);
     }
   };
 
-  // Function to handle email verification
   const handleSubmit = async () => {
     try {
       const res = await fetch("/api/v1/auth/verify-email", {
@@ -52,19 +48,15 @@ const Authentication = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, code: verificationCode }), // Using the entered code
+        body: JSON.stringify({ email, code: verificationCode }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Email verification failed");
-      }
-
-      console.log(verificationCode)
+      if (!res.ok) throw new Error(data.message || "Email verification failed");
 
       alert("Email successfully verified!");
-      setIsModalOpen(true); // Open modal after successful verification
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Verification Error:", error);
       alert(error.message);
@@ -90,7 +82,7 @@ const Authentication = () => {
               <span className="text-blue-400">{email}</span>
             </h4>
 
-            <SelectableNumbers setVerificationCode={setVerificationCode} /> {/* Passing setter function to child component */}
+            <SelectableNumbers setVerificationCode={setVerificationCode} />
 
             <div className="flex gap-1 items-center text-sm">
               <h4>Didn't get the code?</h4>
@@ -104,7 +96,11 @@ const Authentication = () => {
               ) : (
                 <>
                   <h4>Resend in:</h4>
-                  <CountdownTimer key={timerKey} duration={30} onComplete={() => setTimerDone(true)} />
+                  <CountdownTimer
+                    key={timerKey}
+                    duration={30}
+                    onComplete={() => setTimerDone(true)}
+                  />
                 </>
               )}
             </div>
@@ -113,7 +109,7 @@ const Authentication = () => {
           <div className="w-full h-[45px]">
             <button
               type="submit"
-              onClick={handleSubmit} // Handle the submission only if API is successful
+              onClick={handleSubmit}
               className="h-full w-full bg-blue-600 text-white font-normal text-center border-2 border-white rounded-2xl cursor-pointer"
             >
               Verify email address
