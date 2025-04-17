@@ -7,6 +7,7 @@ import Modal from "./modal";
 import Link from "next/link";
 import CountdownTimer from "./countdowntimer";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const Authentication = () => {
   const searchParams = useSearchParams();
@@ -32,12 +33,12 @@ const Authentication = () => {
 
       if (!res.ok) throw new Error(data.message || "Verification request failed");
 
-      alert("Verification code sent!");
+      toast.success("Verification code sent!");
       setTimerDone(false);
       setTimerKey((prev) => prev + 1);
     } catch (error) {
       console.error("Verification Error:", error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -55,11 +56,11 @@ const Authentication = () => {
 
       if (!res.ok) throw new Error(data.message || "Email verification failed");
 
-      alert("Email successfully verified!");
+      toast.success("Email successfully verified!");
       setIsModalOpen(true);
     } catch (error) {
       console.error("Verification Error:", error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

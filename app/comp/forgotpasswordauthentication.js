@@ -6,22 +6,17 @@ import SelectableNumbers from "./selectednumbers";
 import Link from "next/link";
 import CountdownTimer from "./countdowntimer";
 import { useRouter } from "next/navigation";
-
+import { toast } from "react-hot-toast"; // ✅ Import toast
 
 const ForgotPasswordAuthentication = () => {
   const [otp, setOtp] = useState("");
   const [timerDone, setTimerDone] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [email, setEmail] = useState("");
   const router = useRouter();
-
-
   const searchParams = useSearchParams();
 
-  // Fetch email from query string when component mounts
   useEffect(() => {
     const emailFromQuery = searchParams.get("email");
     if (emailFromQuery) {
@@ -30,9 +25,12 @@ const ForgotPasswordAuthentication = () => {
   }, [searchParams]);
 
   const handleOtpSubmit = async () => {
+    if (!otp || otp.length < 4) {
+      toast.error("Please enter a valid OTP");
+      return;
+    }
+
     setLoading(true);
-    setErrorMessage("");
-    setSuccessMessage("");
 
     try {
       const res = await fetch("/api/v1/auth/verify-reset-otp/email", {
@@ -49,22 +47,19 @@ const ForgotPasswordAuthentication = () => {
         throw new Error(data.message || "OTP verification failed");
       }
 
-      setSuccessMessage("OTP successfully verified! You can now reset your password.");
+      toast.success("OTP successfully verified!");
       router.push(`/changepassword?email=${encodeURIComponent(email)}`);
     } catch (error) {
-      setErrorMessage(error.message || "An error occurred while verifying OTP.");
+      toast.error(error.message || "An error occurred while verifying OTP.");
     } finally {
       setLoading(false);
     }
   };
 
   const resendVerificationCode = async () => {
-    setTimerDone(false); // Reset the timer when resend is triggered
-    setTimerKey((prev) => prev + 1); // Key update to reset CountdownTimer
-
+    setTimerDone(false);
+    setTimerKey((prev) => prev + 1);
     setLoading(true);
-    setErrorMessage("");
-    setSuccessMessage("");
 
     try {
       const res = await fetch("/api/v1/auth/forgot-password/email", {
@@ -81,9 +76,9 @@ const ForgotPasswordAuthentication = () => {
         throw new Error(data.message || "Failed to resend OTP");
       }
 
-      setSuccessMessage("OTP has been resent to your email.");
+      toast.success("OTP has been resent to your email.");
     } catch (error) {
-      setErrorMessage(error.message || "An error occurred while resending OTP.");
+      toast.error(error.message || "An error occurred while resending OTP.");
     } finally {
       setLoading(false);
     }
@@ -133,10 +128,6 @@ const ForgotPasswordAuthentication = () => {
               )}
             </div>
           </div>
-
-          {/* Error or success message */}
-          {errorMessage && <div className="text-red-500 text-sm mb-4">{errorMessage}</div>}
-          {successMessage && <div className="text-green-500 text-sm mb-4">{successMessage}</div>}
 
           <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border cursor-pointer mt-3">
             <button type="submit" onClick={handleOtpSubmit} disabled={loading}>

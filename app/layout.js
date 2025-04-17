@@ -2,8 +2,7 @@ import { Inter } from 'next/font/google';
 import "./globals.css";
 import { icons } from "lucide-react";
 import 'typeface-inter';
-
-
+import { Toaster } from "react-hot-toast";
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -21,6 +20,7 @@ export default function RootLayout({ children }) {
       <body
         className={inter.variable}
       >
+         <Toaster position="top-center" reverseOrder={false} />
         {children}
       </body>
     </html>

@@ -3,12 +3,12 @@ import Logopicture from "../comp/logopicture";
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "react-hot-toast"; // ✅ Import toast
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState(""); // State to hold email
   const [password, setPassword] = useState(""); // State to hold password
-  const [errorMessage, setErrorMessage] = useState(""); // State to handle errors
   const [loading, setLoading] = useState(false); // State to manage loading state
 
   // Function to handle login
@@ -16,7 +16,6 @@ const Login = () => {
     e.preventDefault(); // Prevent default form submission
 
     setLoading(true); // Show loading spinner or disable button
-    setErrorMessage(""); // Clear previous errors
 
     try {
       const res = await fetch("/api/v1/auth/medLogin", {
@@ -42,6 +41,9 @@ const Login = () => {
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("user", JSON.stringify(user));
 
+      // Success message and redirection
+      toast.success("Login successful!");
+      
       // Redirect based on role
       switch (user.role) {
         case "health_attendant":
@@ -54,12 +56,12 @@ const Login = () => {
           window.location.href = "/doctor-dashboard";
           break;
         default:
-          alert("Unknown role. Please contact admin.");
+          toast.error("Unknown role. Please contact admin.");
           break;
       }
     } catch (error) {
       console.error("Login Error:", error);
-      setErrorMessage(error.message); // Set error message to show in UI
+      toast.error(error.message || "Login failed");
     } finally {
       setLoading(false); // Reset loading state
     }
@@ -110,12 +112,6 @@ const Login = () => {
                 <button>Forgot password?</button>
               </div>
             </Link>
-          </div>
-
-          <div>
-            {errorMessage && (
-              <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
-            )}
           </div>
 
           <div className="w-full h-12 text-white bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">

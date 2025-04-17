@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Logopicture from "./comp/logopicture";
 import { useRouter } from "next/navigation";
+import { toast, Toaster } from "react-hot-toast";
 
 export default function Home() {
   const router = useRouter();
@@ -35,16 +36,16 @@ export default function Home() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.firstName.trim()) return alert("First name is required");
-    if (!formData.lastName.trim()) return alert("Last name is required");
-    if (!emailRegex.test(formData.email)) return alert("Please enter a valid email address");
+    if (!formData.firstName.trim()) return toast.error("First name is required");
+    if (!formData.lastName.trim()) return toast.error("Last name is required");
+    if (!emailRegex.test(formData.email)) return toast.error("Please enter a valid email address");
     if (!formData.phone.trim() || !/^[789]\d{9}$/.test(formData.phone.trim()))
-      return alert("Please enter a valid Nigerian phone number (e.g., 8031234567)");
-    if (!formData.role) return alert("Please select a role");
+      return toast.error("Please enter a valid Nigerian phone number (e.g., 8031234567)");
+    if (!formData.role) return toast.error("Please select a role");
     if (formData.password.length < 6)
-      return alert("Password must be at least 6 characters long");
+      return toast.error("Password must be at least 6 characters long");
     if (formData.password !== formData.confirmPassword)
-      return alert("Passwords do not match");
+      return toast.error("Passwords do not match");
 
     try {
       setLoading(true);
@@ -71,7 +72,6 @@ export default function Home() {
         throw new Error(signupData.message || "Signup failed");
       }
 
-      // ✅ Trigger email verification
       await fetch("/api/v1/auth/request-email-verification", {
         method: "POST",
         headers: {
@@ -80,11 +80,11 @@ export default function Home() {
         body: JSON.stringify({ email: formData.email }),
       });
 
-      alert("Signup successful!");
+      toast.success("Signup successful!");
       router.push(`/authentication?email=${formData.email}`);
     } catch (error) {
       console.error("Signup error:", error);
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -92,6 +92,7 @@ export default function Home() {
 
   return (
     <div className="w-full h-[100vh] bg-white flex justify-between">
+      <Toaster position="top-center" />
       <Logopicture />
       <div className="w-[55%] h-full flex justify-center items-center">
         <div className="w-[65%] h-[95%] flex flex-col items-center justify-center">
