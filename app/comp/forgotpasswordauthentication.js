@@ -89,11 +89,12 @@ const ForgotPasswordAuthentication = () => {
       <Logopicture />
       <div className="w-[55%] h-[100vh] m-auto flex flex-col items-center justify-center">
         <Link href="/login" className="w-7/10">
-          <div className="flex gap-1 items-center cursor-pointer">
-            <img src="/image/back.png" className="h-[20px] w-[20px]" alt="Back" />
+          <div className="flex gap-3 items-center cursor-pointer">
+            <img src="/image/back.png" className="h-[12px] w-[18px]" alt="Back" />
             <button>Back</button>
           </div>
         </Link>
+        
         <div className="h-8/10 w-[75%] flex flex-col justify-center">
           <div className="mb-[12px] text-center">
             <h1 className="text-2xl font-bold">Enter OTP</h1>

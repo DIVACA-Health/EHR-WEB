@@ -81,7 +81,7 @@ const Login = () => {
           <div className="flex flex-col gap-1 mb-[22px]">
             <label className="font-normal text-l">Email Address</label>
             <input
-              className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300"
+              className="w-full h-11 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
               type="email"
               placeholder="Email Address"
               value={email}
@@ -92,7 +92,7 @@ const Login = () => {
             <label className="font-normal text-l">Create Password</label>
             <div className="relative w-full mb-[8px]">
               <input
-                className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300"
+                className="w-full h-11 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 required
