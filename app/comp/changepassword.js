@@ -84,7 +84,7 @@ const ChangePassword = () => {
               <label className="text-sm">Create new Password</label>
               <div className="relative w-full">
                 <input
-                  className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300"
+                  className="w-full h-11 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   required
@@ -105,7 +105,7 @@ const ChangePassword = () => {
               <label className="text-sm">Confirm new Password</label>
               <div className="relative w-full">
                 <input
-                  className="w-full h-11 pl-3 border border-black rounded-xl outline-blue-300"
+                  className="w-full h-11 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
                   type={showPassword1 ? "text" : "password"}
                   placeholder="Confirm password"
                   required
