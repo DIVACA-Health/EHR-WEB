@@ -12,18 +12,19 @@ const ChangePassword = () => {
   const [isModal1Open, setIsModal1Open] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setnewPassword] = useState("");
+  const [confirmNewPassword, setconfirmNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const resetToken = searchParams.get("resetToken");
 
   const handleResetPassword = async () => {
-    if (!password || !confirmPassword) {
+    if (!newPassword || !confirmNewPassword) {
       toast.error("Please fill in both fields.");
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmNewPassword) {
       toast.error("Passwords do not match.");
       return;
     }
@@ -33,13 +34,15 @@ const ChangePassword = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const res = await fetch("/api/v1/auth/reset-password/token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ resetToken, password, confirmPassword }),
+        body: JSON.stringify({ resetToken, newPassword, confirmNewPassword }),
       });
 
       const data = await res.json();
@@ -52,6 +55,8 @@ const ChangePassword = () => {
       setIsModal1Open(true);
     } catch (error) {
       toast.error(error.message || "An error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,8 +88,8 @@ const ChangePassword = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={newPassword}
+                  onChange={(e) => setnewPassword(e.target.value)}
                 />
                 <button
                   type="button"
@@ -104,8 +109,8 @@ const ChangePassword = () => {
                   type={showPassword1 ? "text" : "password"}
                   placeholder="Confirm password"
                   required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmNewPassword}
+                  onChange={(e) => setconfirmNewPassword(e.target.value)}
                 />
                 <button
                   type="button"
@@ -119,8 +124,12 @@ const ChangePassword = () => {
           </div>
 
           <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
-            <button type="submit" onClick={handleResetPassword}>
-              Reset password
+            <button
+              type="submit"
+              onClick={handleResetPassword}
+              disabled={loading}
+            >
+              {loading ? "Resetting..." : "Reset password"}
             </button>
           </div>
 
