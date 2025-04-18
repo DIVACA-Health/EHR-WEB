@@ -49,6 +49,8 @@ const ForgotPasswordAuthentication = () => {
 
       toast.success("OTP successfully verified!");
       router.push(`/changepassword?email=${encodeURIComponent(email)}`);
+      router.push(`/changepassword?resetToken=${data.resetToken}`);
+
     } catch (error) {
       toast.error(error.message || "An error occurred while verifying OTP.");
     } finally {
