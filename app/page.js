@@ -94,23 +94,23 @@ export default function Home() {
     <div className="w-full h-[100vh] bg-white flex justify-between">
       <Toaster position="top-center" />
       <Logopicture />
-      <div className="w-[55%] h-full flex justify-center items-center">
-        <div className="w-[65%] h-[95%] flex flex-col items-center justify-center">
+      <div className="w-[55%] h-[99%] flex justify-center items-center">
+        <div className="w-[65%] h-[95%] flex flex-col items-center justify-center  ">
           <div className="h-auto w-full text-black mb-3">
-            <h3 className="text-2xl">Create Account</h3>
-            <h4 className="text-[12px] text-gray-500">
+            <h3 className="text-2xl xl:text-3xl ">Create Account</h3>
+            <h4 className="text-[12px] xl:text-sm text-gray-500">
               Set up your account to experience a seamless health record system.
             </h4>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full text-black">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2 xl:gap-3 w-full text-black">
             <InputField label="First Name" name="firstName" type="text" placeholder="Enter first name" onChange={handleChange} />
             <InputField label="Last Name" name="lastName" type="text" placeholder="Enter last name" onChange={handleChange} />
             <InputField label="Email Address" name="email" type="email" placeholder="Email Address" onChange={handleChange} />
 
             <div className="flex flex-col gap-0.5">
               <label className="text-sm">Phone Number</label>
-              <div className="relative w-full h-8 pl-3 border border-gray-200 rounded-[7px] outline-none flex items-center shadow-sm shadow-gray-300">
+              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[7px] outline-none flex items-center shadow-sm shadow-gray-300">
                 <div className="flex gap-0.5 w-1/5">
                   <img src="/image/flag.png" alt="" width={22} height={22} />
                   <h3 className="font-semibold tracking-widest">+234</h3>
@@ -118,7 +118,7 @@ export default function Home() {
                 <input
                   name="phone"
                   type="number"
-                  className="h-8 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none"
+                  className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none"
                   placeholder="80 000 000 00"
                   onChange={handleChange}
                   required
@@ -130,7 +130,7 @@ export default function Home() {
               <label className="text-sm">Role</label>
               <select
                 name="role"
-                className="w-full h-8 pl-3 pr-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none cursor-pointer"
+                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none cursor-pointer"
                 onChange={handleChange}
                 required
               >
@@ -212,7 +212,7 @@ const InputField = ({ label, name, type, placeholder, onChange }) => (
       name={name}
       type={type}
       placeholder={placeholder}
-      className="w-full h-8 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
       onChange={onChange}
       required
     />
@@ -228,7 +228,7 @@ const PasswordInput = ({ label, name, placeholder, show, toggle, onChange }) => 
         type={show ? "text" : "password"}
         placeholder={placeholder}
         minLength={6}
-        className="w-full h-8 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
         onChange={onChange}
         required
       />

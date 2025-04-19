@@ -1,7 +1,7 @@
 
 const Logopicture = () => {
   return (
-    <div className="w-[43%] h-[98%] rounded-2xl m-auto flex items-center justify-center bg-container relative bg-cover bg-center " style={{ backgroundImage: "url('/image/RIGHTIMAGE.png')" }}>
+    <div className="w-[43%] h-[98%]    rounded-2xl m-auto flex items-center justify-center bg-container relative bg-cover bg-center " style={{ backgroundImage: "url('/image/RIGHTIMAGE.png')" }}>
         <div className="absolute inset-0 bg-[rgba(20,37,79,0.8)] rounded-2xl z-10"></div>
         <div className="relative z-20 p-4 text-white h-full w-full flex items-center justify-center">
         <div className=" min-h-[90%] w-[85%] flex flex-col justify-between " >
