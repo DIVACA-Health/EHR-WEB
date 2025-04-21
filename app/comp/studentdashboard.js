@@ -1,10 +1,10 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import Studentrecords from './studentrecords';
 import QueueManagement from './queuemanagement';
 import Dashboard from './dashboard';
 import { useRouter } from 'next/navigation';
-
 import Link from 'next/link';
 
 const StudentDashboard = () => {
@@ -12,6 +12,16 @@ const StudentDashboard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const router = useRouter();
+
+  // ✅ Access token protection
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+
+    // If token is missing, redirect to login page
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -108,10 +118,10 @@ const StudentDashboard = () => {
       {/* Main Content */}
       <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center '>
         {/* Top Bar */}
-        <div className='w-full h-[8%] flex items-center justify-center border  border-[rgba(240,242,245,1)]   shadow-sm shadow-gray-200'>
+        <div className='w-full h-[8%] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-sm shadow-gray-200'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
-            <div className='border  border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center '>
-              <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px] ' />
+            <div className='border border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center'>
+              <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px]' />
               <input
                 type='search'
                 placeholder='Search for anything...'
@@ -132,7 +142,11 @@ const StudentDashboard = () => {
                 {showDropdown && (
                   <div className='absolute top-full right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50'>
                     <button
-                      onClick={() => router.push('/login')}
+                      onClick={() => {
+                        localStorage.removeItem("access_token");
+                        localStorage.removeItem("user");
+                        router.push('/login');
+                      }}
                       className='w-full text-left px-4 py-2 hover:bg-gray-100 text-sm'
                     >
                       Sign out
