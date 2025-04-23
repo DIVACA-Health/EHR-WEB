@@ -10,7 +10,7 @@ const QueueDetailPage = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch('http://localhost:3000/api/queue', { cache: 'no-store' });
+      const res = await fetch('/api/queue', { cache: 'no-store' });
       const data = await res.json();
       const foundUser = data.find(item => item.divacaId === params.id);
       setUser(foundUser);
