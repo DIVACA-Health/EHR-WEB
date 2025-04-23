@@ -50,7 +50,7 @@ const Login = () => {
           window.location.href = "/studentdashboard";
           break;
         case "nurse":
-          window.location.href = "/nurse-dashboard";
+          window.location.href = "/nursedashboard";
           break;
         case "doctor":
           window.location.href = "/doctor-dashboard";
