@@ -61,16 +61,16 @@ const QueueDetailPage = () => {
                 {/* Grid */}
                 <div className="grid grid-cols-3 gap-6">
                   {/* Box 1 - Vitals */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
+                  <div className="bg-gray-50 p-4 rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200">
                     <div className=' min-h-[84px] w-[90%] flex gap-4'>
                         <div className='w-[30%] h-full'>
                         <img src={user.avatar} alt={user.name} className="w-full h-full rounded-full"/>
                         </div>
-                        <div className='flex flex-col gap-1 h-full w-[70%]'>
+                        <div className='flex flex-col gap-1 h-full w-fit'>
                             <h1>{user.name}</h1>
                             <h1>ID : {user.divacaId}</h1>
                             <span
-                      className={` flex text-center px-2 py-1 text-xs rounded ${
+                      className={` flex text-center px-2 py-1 text-xs rounded-xl w-fit ${
                         user.status === 'Waiting'
                           ? 'bg-yellow-200 text-yellow-800'
                           : user.status === 'In consultation'
@@ -89,7 +89,7 @@ const QueueDetailPage = () => {
                             <h1>Matric Number</h1>
                             <h1 className='text-bold'>{user.matricNumber}</h1>
                         </div>
-                        <div>
+                        <div className='w-[60%] '>
                             <h1>Phone number</h1>
                             <h1>{user.phoneNumber}</h1>
                         </div>
@@ -99,17 +99,17 @@ const QueueDetailPage = () => {
                             <h1>Date of birth</h1>
                             <h1>{user.matricNumber}</h1>
                         </div>
-                        <div>
+                        <div className='w-[60%] '>
                             <h1>Email</h1>
-                            <h1>{user.phoneNumber}</h1>
+                            <h1 className='text-sm'>{user.email}</h1>
                         </div>
                     </div>
                     <div className='flex justify-between items-center mb-2'>
                         <div>
                             <h1>Age</h1>
-                            <h1>{user.matricNumber}</h1>
+                            <h1>{user.age}</h1>
                         </div>
-                        <div>
+                        <div className='w-[60%] '>
                             <h1>Address</h1>
                             <h1>{user.phoneNumber}</h1>
                         </div>
@@ -118,39 +118,181 @@ const QueueDetailPage = () => {
                   </div>
 
                   {/* Box 2 - Notes */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
-                    <h2 className="font-semibold text-base mb-2 text-gray-700">Notes</h2>
-                    <p>Dr. Michael Ekene - Treatment note - 14-09-2024</p>
-                    <p>Dr. Michael Ekene - Treatment note - 14-09-2024</p>
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit">
+                    <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
+                        <div className='flex pl-2 pr-2 justify-between items-center w-full h-14 '>
+                            <div className='flex gap-3 items-center'>
+                                <img src='/image/Frame 1261158733.png' alt='img' height={38} width={38} />
+                                <h2 className='text-lg'>Vitals</h2>
+                            </div>
+                            <div>
+                                <img src='/image/Plus.png' alt='icon' width={25} height={25} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-4 text-sm font-lighter'>
+                        <div className='flex justify-between items-center mb-2'>
+                            <div>
+                                <h1>Heart rate (bpm)</h1>
+                                <h1>{user.age}</h1>
+                            </div>
+                            <div className='w-[50%] '>
+                                <h1>Blood pressure (mmHg)</h1>
+                                <h1>{user.age}</h1>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center mb-2'>
+                            <div>
+                                <h1>Temperature (°C)</h1>
+                                <h1>{user.age}</h1>
+                            </div>
+                            <div className='w-[50%] '>
+                                <h1>Weight (kg)</h1>
+                                <h1>{user.age}</h1>
+                            </div>
+                        </div>
+                    </div>
                   </div>
 
                   {/* Box 3 - Health History */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
-                    <h2 className="font-semibold text-base mb-2 text-gray-700">Health History</h2>
-                    <p>Malaria & Typhoid - 14-09-2024</p>
-                    <p>Food Poisoning - 14-09-2024</p>
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit">
+                    <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
+                        <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
+                            <div className='flex gap-3 items-center'>
+                                <img src='/image/Frame 1261158733 (1).png' alt='img' height={38} width={38} />
+                                <h2 className='text-lg'>Notes / Documents</h2>
+                            </div>
+                            <div>
+                                <img src='/image/Plus.png' alt='icon' width={25} height={25} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-4 text-sm font-lighter'>
+                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                                <h1>Treatment note</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end'>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center mb-2'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                                <h1>Treatment note</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end'>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                    </div>
                   </div>
 
                   {/* Box 4 - Prescriptions */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
-                    <h2 className="font-semibold text-base mb-2 text-gray-700">Prescription History</h2>
-                    <p>Penicillin - 14-09-2024</p>
-                    <p>Blood Tonic - 14-09-2024</p>
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit">
+                    <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
+                        <div className='flex pl-2 pr-2 justify-start items-center w-full h-14'>
+                            <div className='flex gap-3 items-center'>
+                                <img src='/image/Frame 1261158733 (1).png' alt='img' height={38} width={38} />
+                                <h2 className='text-lg'>Health history</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-4 text-sm font-lighter'>
+                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-10'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end '>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center mb-2 h-10'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end'>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                    </div>
                   </div>
 
                   {/* Box 5 - Allergies */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
-                    <h2 className="font-semibold text-base mb-2 text-gray-700">Allergies</h2>
-                    <p>Ibuprofen - Mild</p>
-                    <p>Penicillin - Severe</p>
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[80px]">
+                    <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
+                        <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
+                            <div className='flex gap-3 items-center'>
+                                <img src='/image/Frame 1261158733 (2).png' alt='img' height={38} width={38} />
+                                <h2 className='text-lg'>Prescription history</h2>
+                            </div>
+                            <div>
+                                <img src='/image/Plus.png' alt='icon' width={25} height={25} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-4 text-sm font-lighter'>
+                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                                <h1>Treatment note</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end'>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center mb-2 h-10'>
+                            <div>
+                                <h1>Dr Michael Ekene</h1>
+                                <h1>Treatment note</h1>
+                            </div>
+                            <div className='w-[50%] flex justify-end'>
+                                <h1>14-09-2024</h1>
+                            </div>
+                        </div>
+                    </div>
                   </div>
 
                   {/* Box 6 - Basic Info */}
-                  <div className="bg-gray-50 p-4 shadow rounded border">
-                    <h2 className="font-semibold text-base mb-2 text-gray-700">Overview</h2>
-                    <p>Full Name: {user.name}</p>
-                    <p>Divaca ID: {user.divacaId}</p>
-                    <p>Status: {user.status}</p>
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[80px]">
+                    <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
+                        <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
+                            <div className='flex gap-3 items-center'>
+                                <img src='/image/Frame1261158733(3).png' alt='img' height={38} width={38} />
+                                <h2 className='text-lg'>Allergies</h2>
+                            </div>
+                            <div>
+                                <img src='/image/Plus.png' alt='icon' width={25} height={25} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-4 text-sm font-lighter'>
+                        <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                            <div>Ibuprofen</div>
+                            <div className='w-[30%] flex justify-end'>
+                                <div className='rounded-xl bg-green-200 h-fit w-fit p-1 border-[1px] border-black'>
+                                    <h1 className='text-sm'>Mild</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center w-full h-10 border-b-[1px] border-b-black'>
+                            <div>Ibuprofen</div>
+                            <div className='w-[30%] flex justify-end'>
+                                <div className='rounded-xl bg-green-200 h-fit w-fit p-1 border-[1px] border-black'>
+                                    <h1 className='text-sm'>Mild</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex justify-between items-center w-full  h-10 '>
+                            <div>Penicillin</div>
+                            <div className='w-[30%] flex justify-end'>
+                                <div className='rounded-xl bg-red-200 h-fit w-fit p-1 border-[1px] border-black'>
+                                    <h1 className='text-sm'>Severe</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>

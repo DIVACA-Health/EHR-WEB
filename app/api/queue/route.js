@@ -6,6 +6,9 @@ export async function GET() {
       matricNumber: "140378926",
       status: "Waiting",
       lastVisit: "24-02-2025",
+      phoneNumber : "09037976718",
+      age: "50",
+      email: "jA@gmail.com",
       avatar: "https://i.pravatar.cc/100?img=1",
     },
     {
@@ -14,6 +17,9 @@ export async function GET() {
       matricNumber: "190283746",
       status: "In consultation",
       lastVisit: "20-01-2025",
+      phoneNumber : "09037976718",
+      age: "50",
+      email: "TB@gmail.com",
       avatar: "https://i.pravatar.cc/100?img=2",
     },
     {
@@ -22,6 +28,9 @@ export async function GET() {
       matricNumber: "120394857",
       status: "Returned to health attendant",
       lastVisit: "12-03-2025",
+      phoneNumber : "09037976718",
+      age: "50",
+      email: "AU@gmail.com",
       avatar: "https://i.pravatar.cc/100?img=3",
     },
   ];
