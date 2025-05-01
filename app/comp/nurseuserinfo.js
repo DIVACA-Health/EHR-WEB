@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Nursenotes from "./nursenotes"
 
 const QueueDetailPage = () => {
   const params = useParams();
@@ -31,8 +32,8 @@ const QueueDetailPage = () => {
 
   return (
     <div className='w-[95%] m-auto mt-6'>
-      <h1 className='text-xl font-bold mb-4'>Student Health Record</h1>
-
+    <h1 className=' mb-4 text-[12px] font-light'> Queue management - Student Health Record </h1>
+      <h1 className='text-xl font-medium mb-5'>Student Health Record</h1>
       {/* Tabs */}
       <div className='flex space-x-6 border-b border-gray-300 mb-4 text-sm font-medium'>
         {tabs.map(tab => (
@@ -51,13 +52,13 @@ const QueueDetailPage = () => {
       </div>
 
       {/* Content Section */}
-      <div className='bg-white p-6 rounded shadow text-sm'>
+      <div className='bg-white   text-sm'>
         {!user ? (
           <div>Loading user...</div>
         ) : (
           <>
             {activeSection === 'overview' && (
-              <div className='space-y-4'>
+              <div className='space-y-4 pt-4'>
                 {/* Grid */}
                 <div className="grid grid-cols-3 gap-6">
                   {/* Box 1 - Vitals */}
@@ -69,8 +70,7 @@ const QueueDetailPage = () => {
                         <div className='flex flex-col gap-1 h-full w-fit'>
                             <h1>{user.name}</h1>
                             <h1>ID : {user.divacaId}</h1>
-                            <span
-                      className={` flex text-center px-2 py-1 text-xs rounded-xl w-fit ${
+                            <span className={` flex text-center px-2 py-1 text-xs rounded-xl w-fit ${
                         user.status === 'Waiting'
                           ? 'bg-yellow-200 text-yellow-800'
                           : user.status === 'In consultation'
@@ -80,16 +80,15 @@ const QueueDetailPage = () => {
                           : 'bg-gray-200 text-gray-800'
                       }`}
                     >
-                      {user.status}
-                    </span>
+                            {user.status} </span>
                         </div>
                     </div>
                     <div className='flex justify-between items-center mb-2'>
                         <div>
                             <h1>Matric Number</h1>
-                            <h1 className='text-bold'>{user.matricNumber}</h1>
+                            <h1 >{user.matricNumber}</h1>
                         </div>
-                        <div className='w-[60%] '>
+                        <div className=' '>
                             <h1>Phone number</h1>
                             <h1>{user.phoneNumber}</h1>
                         </div>
@@ -99,7 +98,7 @@ const QueueDetailPage = () => {
                             <h1>Date of birth</h1>
                             <h1>{user.matricNumber}</h1>
                         </div>
-                        <div className='w-[60%] '>
+                        <div>
                             <h1>Email</h1>
                             <h1 className='text-sm'>{user.email}</h1>
                         </div>
@@ -109,7 +108,7 @@ const QueueDetailPage = () => {
                             <h1>Age</h1>
                             <h1>{user.age}</h1>
                         </div>
-                        <div className='w-[60%] '>
+                        <div >
                             <h1>Address</h1>
                             <h1>{user.phoneNumber}</h1>
                         </div>
@@ -118,7 +117,7 @@ const QueueDetailPage = () => {
                   </div>
 
                   {/* Box 2 - Notes */}
-                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit">
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit ">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14 '>
                             <div className='flex gap-3 items-center'>
@@ -136,8 +135,8 @@ const QueueDetailPage = () => {
                                 <h1>Heart rate (bpm)</h1>
                                 <h1>{user.age}</h1>
                             </div>
-                            <div className='w-[50%] '>
-                                <h1>Blood pressure (mmHg)</h1>
+                            <div className=' '>
+                                <h1>Blood pressure</h1>
                                 <h1>{user.age}</h1>
                             </div>
                         </div>
@@ -146,7 +145,7 @@ const QueueDetailPage = () => {
                                 <h1>Temperature (°C)</h1>
                                 <h1>{user.age}</h1>
                             </div>
-                            <div className='w-[50%] '>
+                            <div className=''>
                                 <h1>Weight (kg)</h1>
                                 <h1>{user.age}</h1>
                             </div>
@@ -220,7 +219,7 @@ const QueueDetailPage = () => {
                   </div>
 
                   {/* Box 5 - Allergies */}
-                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[80px]">
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[75px]">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>
@@ -255,7 +254,7 @@ const QueueDetailPage = () => {
                   </div>
 
                   {/* Box 6 - Basic Info */}
-                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[80px]">
+                  <div className="bg-gray-50  rounded-xl border border-[rgba(240,242,245,1)] shadow shadow-gray-200 h-fit -mt-[60px]">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>
@@ -299,21 +298,107 @@ const QueueDetailPage = () => {
             )}
 
             {activeSection === 'personal' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Personal Information</h2>
-                <p><strong>Matric Number:</strong> {user.matricNumber}</p>
-                <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Phone:</strong> {user.phone}</p>
-                <p><strong>Address:</strong> {user.address}</p>
+              <div className=' w-full flex flex-col h-fit rounded-xl border'>
+                <div className='h-[70px]  w-full  flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235, 235, 235, 1)] mb-4'>
+                    <div className='flex gap-3 items-center'>
+                        <div>
+                            <img src='/image/usericon.png' alt='icon' height={36} width={36}/>
+                        </div> 
+                        <div>
+                            <h1 className='font-medium text-lg'>Personal information</h1>
+                        </div>
+                    </div>
+                    <div>
+                        <span className={` flex text-center px-2 py-1 text-xs rounded-xl w-fit ${
+                            user.status === 'Waiting'
+                            ? 'bg-yellow-200 text-yellow-800'
+                            : user.status === 'In consultation'
+                            ? 'bg-blue-200 text-blue-800'
+                            : user.status === 'Returned to health attendant'
+                            ? 'bg-green-200 text-green-800'
+                            : 'bg-gray-200 text-gray-800'
+                        }`}
+                        >
+                                {user.status} </span>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>First Name</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Last Name</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Divaca ID</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Matric number</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Phone number</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Email address</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Date of birth</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Age</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-4'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Address</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='font-medium text-sm text-black'>Emergency contact</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                    </div>
+                </div>
+
               </div>
             )}
 
             {activeSection === 'notes' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Notes</h2>
-                <p>Dr. Michael Ekene - Treatment note - 14-09-2024</p>
-                <p>Dr. Michael Ekene - Treatment note - 14-09-2024</p>
-              </div>
+                <Nursenotes/>
+
             )}
 
             {activeSection === 'vitals' && (
