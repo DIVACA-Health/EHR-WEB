@@ -270,24 +270,24 @@ const QueueDetailPage = () => {
                         <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
                             <div>Ibuprofen</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-green-200 h-fit w-fit p-1 border-[1px] border-black'>
-                                    <h1 className='text-sm'>Mild</h1>
+                                <div className='rounded-xl bg-green-200 h-fit w-fit  border-[1px] border-black'>
+                                    <h1 className='text-sm pl-1 pr-1'>Mild</h1>
                                 </div>
                             </div>
                         </div>
                         <div className='flex justify-between items-center w-full h-10 border-b-[1px] border-b-black'>
                             <div>Ibuprofen</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-green-200 h-fit w-fit p-1 border-[1px] border-black'>
-                                    <h1 className='text-sm'>Mild</h1>
+                                <div className='rounded-xl bg-green-200 h-fit w-fit  border-[1px] border-black'>
+                                    <h1 className='text-sm pl-1 pr-1'>Mild</h1>
                                 </div>
                             </div>
                         </div>
                         <div className='flex justify-between items-center w-full  h-10 '>
                             <div>Penicillin</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-red-200 h-fit w-fit p-1 border-[1px] border-black'>
-                                    <h1 className='text-sm'>Severe</h1>
+                                <div className='rounded-xl bg-red-200 h-fit w-fit  border-[1px] border-black'>
+                                    <h1 className='text-sm pl-1 pr-1'>Severe</h1>
                                 </div>
                             </div>
                         </div>
@@ -298,8 +298,8 @@ const QueueDetailPage = () => {
             )}
 
             {activeSection === 'personal' && (
-              <div className=' w-full flex flex-col h-fit rounded-xl border'>
-                <div className='h-[70px]  w-full  flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235, 235, 235, 1)] mb-4'>
+              <div className=' w-full flex flex-col h-fit rounded-[12px] border-[1px] border-[rgba(235,235,235,1)] shadow-sm shadow-[rgba(198,198,198,0.1)] '>
+                <div className='h-[70px]  w-full rounded-t-[12px] flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-b-[rgba(235,235,235,1)] mb-4 shadow-b shadow-sm'>
                     <div className='flex gap-3 items-center'>
                         <div>
                             <img src='/image/usericon.png' alt='icon' height={36} width={36}/>
@@ -322,74 +322,74 @@ const QueueDetailPage = () => {
                                 {user.status} </span>
                     </div>
                 </div>
-                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>First Name</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>First Name</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>Last Name</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Last Name</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
-                    </div>
-                </div>
-                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
-                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
-                        <label>
-                            <h1 className='font-medium text-sm text-black'>Divaca ID</h1>
-                        </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
-                    </div>
-                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
-                        <label>
-                            <h1 className='font-medium text-sm text-black'>Matric number</h1>
-                        </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
-                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>Phone number</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Divaca ID</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>Email address</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Matric number</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
-                    </div>
-                </div>
-                <div className='w-[95%] m-auto h-fit flex gap-5 mb-2'>
-                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
-                        <label>
-                            <h1 className='font-medium text-sm text-black'>Date of birth</h1>
-                        </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
-                    </div>
-                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
-                        <label>
-                            <h1 className='font-medium text-sm text-black'>Age</h1>
-                        </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
-                <div className='w-[95%] m-auto h-fit flex gap-5 mb-4'>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>Address</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Phone number</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
-                            <h1 className='font-medium text-sm text-black'>Emergency contact</h1>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Email address</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-2xl  bg-gray-200 cursor-default h-[52px] shadow-sm"/>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Date of birth</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Age</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                    </div>
+                </div>
+                <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Address</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                    </div>
+                    <div className='w-1/2 h-fit flex flex-col gap-2 '>
+                        <label>
+                            <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Emergency contact</h1>
+                        </label>
+                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
 
@@ -397,7 +397,7 @@ const QueueDetailPage = () => {
             )}
 
             {activeSection === 'notes' && (
-                <Nursenotes/>
+                <Nursenotes user={user} />
 
             )}
 
