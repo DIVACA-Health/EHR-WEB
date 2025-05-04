@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Nursenotes from "./nursenotes"
+import Nursevitals from './nursevitals';
 
 const QueueDetailPage = () => {
   const params = useParams();
@@ -299,7 +300,7 @@ const QueueDetailPage = () => {
 
             {activeSection === 'personal' && (
               <div className=' w-full flex flex-col h-fit rounded-[12px] border-[1px] border-[rgba(235,235,235,1)] shadow-sm shadow-[rgba(198,198,198,0.1)] '>
-                <div className='h-[70px]  w-full rounded-t-[12px] flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-b-[rgba(235,235,235,1)] mb-4 shadow-b shadow-sm'>
+                <div className='h-[70px]  w-full rounded-t-[12px] flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-b-[rgba(235,235,235,1)] mb-4 shadow-b shadow-xs'>
                     <div className='flex gap-3 items-center'>
                         <div>
                             <img src='/image/usericon.png' alt='icon' height={36} width={36}/>
@@ -402,13 +403,7 @@ const QueueDetailPage = () => {
             )}
 
             {activeSection === 'vitals' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Vitals</h2>
-                <p>Heart Rate: 89 bpm</p>
-                <p>Blood Pressure: 120/80 mmHg</p>
-                <p>Temperature: 98.6 °F</p>
-                <p>Weight: 78 kg</p>
-              </div>
+                <Nursevitals/>
             )}
 
             {activeSection === 'allergies' && (
