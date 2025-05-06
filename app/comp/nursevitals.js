@@ -8,7 +8,7 @@ const nursevitals = () => {
         <div className='border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-sm rounded-[12px]'>
             <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-xs mb-4 rounded-t-[12px] '>
                 <div className='flex gap-3 items-center'>
-                    <img src='/image/usericon.png' alt='icon' height={36} width={36} />
+                    <img src='/image/vitalsicon.png' alt='icon' height={36} width={36} />
                     <h1 className='font-medium text-lg'>Vitals</h1>
                 </div>
                 <button className='bg-blue-600 flex gap-[8px] w-[175px] h-[44px] items-center justify-center text-white rounded-[8px]'onClick={() => setShowSidebar(true)}><img src='/image/Plus.png' alt='icon' width={25} height={25} /><h1 className='text-[14px]'>Record New vitals</h1></button>

@@ -47,7 +47,7 @@ export default function NoteManager() {
       {/* Header */}
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-xs mb-4 rounded-t-[12px]'>
         <div className='flex gap-3 items-center'>
-          <img src='/image/usericon.png' alt='icon' height={36} width={36} />
+          <img src='/image/notesicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Notes</h1>
         </div>
         <button

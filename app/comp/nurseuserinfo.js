@@ -4,11 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Nursenotes from "./nursenotes"
 import Nursevitals from './nursevitals';
+import Nurseallergies from './nurseallergies'
+import Nursehealthhistory from './nursehealthhistory.js'
+import Nurseprescription from './nurseprescription';
 
 const QueueDetailPage = () => {
   const params = useParams();
   const [user, setUser] = useState(null);
   const [activeSection, setActiveSection] = useState('overview');
+  const fullName = user?.name || '';
+    const [firstName, ...rest] = fullName.trim().split(' ');
+    const lastName = rest.join(' ');
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,7 +78,7 @@ const QueueDetailPage = () => {
                         <div className='flex flex-col gap-1 h-full w-fit'>
                             <h1>{user.name}</h1>
                             <h1>ID : {user.divacaId}</h1>
-                            <span className={` flex text-center px-2 py-1 text-xs rounded-xl w-fit ${
+                            <span className={` flex text-center px-2 py-1 text-[9px] font-bold rounded-xl w-fit ${
                         user.status === 'Waiting'
                           ? 'bg-yellow-200 text-yellow-800'
                           : user.status === 'In consultation'
@@ -328,13 +335,13 @@ const QueueDetailPage = () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>First Name</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={firstName} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Last Name</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={lastName}readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
                 <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
@@ -342,13 +349,13 @@ const QueueDetailPage = () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Divaca ID</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.divacaId} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Matric number</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.matricNumber} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
                 <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
@@ -362,7 +369,7 @@ const QueueDetailPage = () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Email address</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.email} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
                 <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
@@ -376,7 +383,7 @@ const QueueDetailPage = () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Age</h1>
                         </label>
-                        <input type="text" value="This is not editable" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.age} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
                 <div className='w-[95%] m-auto h-fit flex gap-5 mb-5'>
@@ -399,7 +406,6 @@ const QueueDetailPage = () => {
 
             {activeSection === 'notes' && (
                 <Nursenotes user={user} />
-
             )}
 
             {activeSection === 'vitals' && (
@@ -407,33 +413,15 @@ const QueueDetailPage = () => {
             )}
 
             {activeSection === 'allergies' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Allergies</h2>
-                <ul className='list-disc ml-5'>
-                  <li>Ibuprofen - Mild</li>
-                  <li>Penicillin - Severe</li>
-                </ul>
-              </div>
+                <Nurseallergies/>
             )}
 
             {activeSection === 'health' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Health History</h2>
-                <ul className='list-disc ml-5'>
-                  <li>Malaria & Typhoid - 14-09-2024</li>
-                  <li>Food Poisoning - 14-09-2024</li>
-                </ul>
-              </div>
+                <Nursehealthhistory/>
             )}
 
             {activeSection === 'prescriptions' && (
-              <div>
-                <h2 className='text-lg font-semibold mb-2'>Prescription History</h2>
-                <ul className='list-disc ml-5'>
-                  <li>Penicillin - 14-09-2024</li>
-                  <li>Blood Tonic - 14-09-2024</li>
-                </ul>
-              </div>
+                <Nurseprescription/>
             )}
           </>
         )}
