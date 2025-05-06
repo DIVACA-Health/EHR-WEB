@@ -69,11 +69,11 @@ export default function UserTable() {
   const totalPages = Math.ceil(searchedUsers.length / itemsPerPage);
 
   return (
-    <div className="p-6 overflow-x-auto">
+    <div className="p-6 overflow-x-auto ">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between h-[10%] mb-4">
+      <div className="flex gap-5 items-center  h-[10%] mb-4">
         {/* Filter */}
-        <div className="flex gap-2 h-full items-center justify-center p-2 border  border-[rgba(240,242,245,1)] rounded-[7px]  w-[40%]">
+        <div className="flex gap-2 h-full items-center justify-center p-2 border  border-[rgba(240,242,245,1)] rounded-[7px]  w-fit">
           <h2>Status:</h2>
           {["all", "active", "inactive"].map((status) => (
             <button
@@ -81,8 +81,8 @@ export default function UserTable() {
               onClick={() => setStatusFilter(status)}
               className={`px-3 py-1 cursor-pointer border rounded-md ${
                 statusFilter === status
-                  ? "bg-blue-300 text-white"
-                  : "bg-white border-gray-300 text-gray-600"
+                  ? "bg-[#ECF1FF] text-[#3B6FED]"
+                  : "bg-white border-[#ECECEC] text-[#B1B1B1]"
               }`}
             >
               {status[0].toUpperCase() + status.slice(1)}
@@ -91,7 +91,7 @@ export default function UserTable() {
         </div>
 
         {/* Search */}
-        <div className="flex gap-2 h-full items-center justify-center border-[rgba(240,242,245,1)] rounded-[10px]  w-[57%] outline-blue-300">
+        <div className="flex gap-2 h-full items-center justify-center border-[rgba(240,242,245,1)] rounded-[10px]  w-full outline-blue-300">
           <div className="p-2 border  border-[rgba(240,242,245,1)] rounded-[7px] h-[100%] w-[100%] flex items-center gap-1 outline-blue-300">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px] " />
             <input
@@ -106,14 +106,13 @@ export default function UserTable() {
       </div>
 
       {/* Table */}
-{/* Table */}
 <table
-  className="w-full border border-gray-300 rounded-xl overflow-hidden text-sm"
+  className="w-full border-[1px] border-[rgba(228,228,228,1)] rounded-xl overflow-hidden text-sm shadow-sm shadow-[rgba(228,228,228,1)] "
   style={{ borderBottom: "1px solid rgba(145, 145, 145, 1)" }}
 >
-  <thead className="bg-[#F5F5F5]">
+  <thead className="bg-[#FFFFFF]">
     <tr className="text-left">
-      <th className="p-3 font-medium">Full name</th>
+      <th className="p-3 font-medium pl-8 ">Full name</th>
       <th className="p-3 font-medium">DIVACA ID</th>
       <th className="p-3 font-medium">Matric number</th>
       <th className="p-3 font-medium">Subscription status</th>
@@ -127,9 +126,9 @@ export default function UserTable() {
       paginatedUsers.map((user, index) => (
         <tr
           key={index}
-          className="even:bg-white odd:bg-[#F7F9FC] border-t border-gray-200"
+          className="even:bg-[#FFFFFF] odd:bg-[#FAFAFA] border-t border-gray-200"
         >
-          <td className="p-3  flex items-center gap-2">
+          <td className="p-3  flex items-center gap-2 ml-3">
             <img
               src={user.avatar}
               alt="avatar"
@@ -158,7 +157,7 @@ export default function UserTable() {
               }
               className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
             >
-              <MoreVertical size={20} />
+              <img src="/image/More circle.png" alt="img" height={20} width={20}/>
             </button>
 
             {openMenuIndex === index && (
@@ -191,12 +190,12 @@ export default function UserTable() {
     )}
 
     {/* Pagination */}
-    <tr className="even:bg-white odd:bg-[#F7F9FC]">
+    <tr className="even:bg-white odd:bg-[#FAFAFA]">
       <td colSpan="6" className="px-3 py-4">
         <div className="flex justify-between items-center text-sm text-gray-600">
           <button
             onClick={handlePreviousPage}
-            className="px-3 py-1 border cursor-pointer rounded-md"
+            className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
             disabled={currentPage === 1}
           >
             Previous
@@ -207,10 +206,10 @@ export default function UserTable() {
               <button
                 key={index}
                 onClick={() => handlePageClick(index + 1)}
-                className={`px-3 py-1 border cursor-pointer rounded-md ${
+                className={`px-4 py-2 border-none rounded-[8px]  cursor-pointer  ${
                   currentPage === index + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-600"
+                    ? "bg-[#EBEBEB] text-[#242424]"
+                    : "bg-[#FAFAFA] text-gray-600"
                 }`}
               >
                 {index + 1}
@@ -220,7 +219,7 @@ export default function UserTable() {
 
           <button
             onClick={handleNextPage}
-            className="px-3 py-1 border cursor-pointer rounded-md"
+             className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
             disabled={currentPage === totalPages}
           >
             Next

@@ -141,7 +141,7 @@ const QueueManagement = () => {
   const isFormValid = formData.firstName && formData.lastName;
 
   return (
-    <div className='p-6 w-full h-full'>
+    <div className='p-6 w-full h-full m-auto'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-bold'>Queue management</h2>
         <button
@@ -158,37 +158,37 @@ const QueueManagement = () => {
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
         </div>
       ) : (
-        <div className='overflow-x-auto bg-white rounded-xl border border-gray-300'>
+        <div className='overflow-x-auto  rounded-xl border-[0.8px] border-[#E4E4E4] bg-[#FFFFFF] '>
           <table className='min-w-full table-auto text-sm'>
             <thead>
               <tr className='border-b'>
-                <th className='text-left p-4'>S/N</th>
-                <th className='text-left p-4'>First name</th>
-                <th className='text-left p-4'>Last name</th>
-                <th className='text-left p-4'>Time</th>
-                <th className='text-left p-4'>Action</th>
+                <th className=' p-4  text-center'>S/N</th>
+                <th className=' text-center p-4'>First name</th>
+                <th className=' text-center p-4'>Last name</th>
+                <th className=' text-center p-4'>Time</th>
+                <th className='text-center p-4'>Action</th>
               </tr>
             </thead>
             <tbody>
               {paginatedQueue.map((item, index) => (
-                <tr key={item.id} className={`${index % 2 === 0 ? 'bg-gray-100' : ''}`}>
-                  <td className='p-4'>{startIndex + index + 1}</td> 
-                  <td className='p-4'>{item.firstName}</td>
-                  <td className='p-4'>{item.lastName}</td>
-                  <td className='p-4'>
+                <tr key={item.id} className={`${index % 2 === 0 ? 'bg-[#FAFAFA]' : ''}`}>
+                  <td className='p-4  text-center'>{startIndex + index + 1}</td> 
+                  <td className='p-4 text-center'>{item.firstName}</td>
+                  <td className='p-4  text-center'>{item.lastName}</td>
+                  <td className='p-4 text-center'>
                     {new Date(item.timeAdded).toLocaleTimeString([], {
                       hour: '2-digit',
                       minute: '2-digit',
                       hour12: true,
                     }).toUpperCase()}
                   </td>
-                  <td className='p-4 relative'>
+                  <td className='p-4 relative flex justify-center items-center'>
                     <button
                       onClick={() => setActiveActionIndex((prev) => (prev === index ? null : index))}
                       className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
                       ref={(el) => (actionButtonRefs.current[index] = el)}
                     >
-                      ⋮
+                      <img src="/image/More circle.png" alt="img" height={20} width={20}/>
                     </button>
 
                     {activeActionIndex === index && (
@@ -225,7 +225,7 @@ const QueueManagement = () => {
       <div className='mt-4 flex justify-between items-center text-sm text-gray-600 mb-5'>
         <button
           onClick={() => currentPage > 1 && setCurrentPage(prev => prev - 1)}
-          className='px-3 py-1 border rounded-md'
+           className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
           disabled={currentPage === 1}
         >
           Previous
@@ -243,7 +243,7 @@ const QueueManagement = () => {
         </div>
         <button
           onClick={() => currentPage < totalPages && setCurrentPage(prev => prev + 1)}
-          className='px-3 py-1 border rounded-md'
+           className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
           disabled={currentPage === totalPages}
         >
           Next
