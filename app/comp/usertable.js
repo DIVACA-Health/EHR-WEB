@@ -111,13 +111,13 @@ export default function UserTable() {
   style={{ borderBottom: "1px solid rgba(145, 145, 145, 1)" }}
 >
   <thead className="bg-[#FFFFFF]">
-    <tr className="text-left">
-      <th className="p-3 font-medium pl-8 ">Full name</th>
-      <th className="p-3 font-medium">DIVACA ID</th>
-      <th className="p-3 font-medium">Matric number</th>
-      <th className="p-3 font-medium">Subscription status</th>
-      <th className="p-3 font-medium">Last visit date</th>
-      <th className="p-3 font-medium">Action</th>
+    <tr className="text-left text-[#626262]">
+      <th className="p-4 font-medium text-[13px] pl-8 ">Full name</th>
+      <th className="p-4 font-medium text-[13px]">DIVACA ID</th>
+      <th className="p-4 font-medium text-[13px]">Matric number</th>
+      <th className="p-4 font-medium text-[13px]">Subscription status</th>
+      <th className="p-4 font-medium text-[13px]">Last visit date</th>
+      <th className="p-4 font-medium text-[13px]">Action</th>
     </tr>
   </thead>
 

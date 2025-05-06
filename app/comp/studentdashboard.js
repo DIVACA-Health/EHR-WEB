@@ -65,8 +65,8 @@ const StudentDashboard = () => {
             <nav className='flex flex-col gap-3 text-white'>
               <div
                 onClick={() => setActiveTab('dashboard')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'dashboard' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'dashboard' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
                 }`}
               >
                 <img src='/image/Category.png' alt='dashboard' className='h-[22px] w-[20px]' />
@@ -77,8 +77,8 @@ const StudentDashboard = () => {
 
               <div
                 onClick={() => setActiveTab('students')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'students' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'students' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
                 }`}
               >
                 <img src='/image/Document.png' alt='student records' className='h-[22px] w-[20px]' />
@@ -89,8 +89,8 @@ const StudentDashboard = () => {
 
               <div
                 onClick={() => setActiveTab('queue')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'queue' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'queue' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
                 }`}
               >
                 <img src='/image/Users.png' alt='queue' className='h-[22px] w-[20px]' />
@@ -101,8 +101,8 @@ const StudentDashboard = () => {
 
               <div
                 onClick={() => setActiveTab('settings')}
-                className={`flex gap-2 items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'settings' ? 'bg-blue-100' : 'hover:bg-blue-100'
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'settings' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
                 }`}
               >
                 <img src='/image/Settings.png' alt='settings' className='h-[22px] w-[20px]' />

@@ -146,9 +146,12 @@ const QueueManagement = () => {
         <h2 className='text-xl font-bold'>Queue management</h2>
         <button
           onClick={() => setShowModal(true)}
-          className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700'
+          className='bg-blue-600 text-white w-[174px] h-[44px] rounded-[8px] hover:bg-blue-700 flex items-center justify-center gap-3'
         >
-          + Add to queue
+          <img src='/image/whiteplus.png' height={20} width={20}/>
+          <h1 className='text-[14px]'>
+            Add to queue
+          </h1>
         </button>
       </div>
 
@@ -235,7 +238,7 @@ const QueueManagement = () => {
             <button
               key={i}
               onClick={() => handlePageClick(i + 1)}
-              className={`px-3 py-1 border rounded-md ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+              className={`px-3 py-1 border rounded-md ${currentPage === i + 1 ? 'bg-[#EBEBEB] text-[#242424]' : 'bg-[#FAFAFA] text-gray-600'}`}
             >
               {i + 1}
             </button>
@@ -252,35 +255,45 @@ const QueueManagement = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className='fixed inset-0 bg-[rgba(220,224,235,0.8)] flex items-center justify-center z-50'>
-          <div className='bg-white p-6 rounded-xl w-[90%] md:w-[400px]'>
-            <h2 className='text-lg font-bold mb-4'>Add to Queue</h2>
-            <input
-              type='text'
-              placeholder='First name'
-              value={formData.firstName}
-              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-              className='w-full mb-3 p-2 border rounded'
-            />
-            <input
-              type='text'
-              placeholder='Last name'
-              value={formData.lastName}
-              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-              className='w-full mb-3 p-2 border rounded'
-            />
+        <div className='fixed inset-0 bg-[#0C162F99] flex items-center justify-center z-50'>
+          <div className='bg-white rounded-[12px] w-[80%] md:w-[500px]'>
+            <div className='h-[64px] w-full border-b-[0.8px] border-[#F0F2F5] rounded-t-[12px] flex items-center pl-6' >
+              <h2 className='text-lg font-bold '>Add to Queue</h2>
+            </div>
+            <div className='h-[190px] w-[90%] m-auto flex flex-col items-center justify-center '>
+              <label className=' w-full mb-1 mt-2 font-medium text-[14px]'>
+                First Name
+              </label>
+              <input
+                type='text'
+                placeholder='First name'
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                className='w-full mb-3 p-2 border-[1px] rounded-[12px] border-[#D0D5DD] h-[52px] outline-none'
+              />
+              <label className=' w-full mb-1 mt-1 font-medium text-[14px]'>
+                Last Name
+              </label>
+              <input
+                type='text'
+                placeholder='Last name'
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                className='w-full mb-3 p-2 border-[1px] rounded-[12px] border-[#D0D5DD] h-[52px] outline-none'
+              />
+            </div>
             {formError && <p className='text-red-600 text-sm'>{formError}</p>}
-            <div className='flex justify-end gap-2 mt-4'>
+            <div className='flex justify-end items-center gap-3 pr-4  h-[55px] rounded-b-[12px] border-t-[0.8px] border-[#F0F2F5] '>
               <button
                 onClick={() => setShowModal(false)}
-                className='px-4 py-2 text-sm text-gray-600 bg-gray-100 rounded'
+                className='h-[70%] p-2 text-sm w-[60px] rounded-[8px] text-gray-600 bg-gray-100 '
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddToQueue}
                 disabled={!isFormValid || isSubmitting}
-                className={`px-4 py-2 text-sm text-white rounded ${isFormValid && !isSubmitting ? 'bg-blue-600' : 'bg-gray-400'}`}
+                className={`h-[70%] w-[190px] p-2 text-sm text-white rounded-[8px] ${isFormValid && !isSubmitting ? 'bg-[#3B6FED]' : 'bg-gray-400'}`}
               >
                 {isSubmitting ? 'Adding...' : 'Add to queue'}
               </button>
