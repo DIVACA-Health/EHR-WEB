@@ -62,7 +62,7 @@ const dashboard = () => {
                 </div>
             </div>
         </div>
-        <div className='mt-10 mb-4 min-w-full  flex flex-col '>
+        <div className='mt-10  min-w-full  flex flex-col '>
             <div className='min-h-[15%] w-full border border-[rgba(240,242,245,1)]  rounded-t-xl flex items-center'>
                 <h2 className=" font-semibold  ml-[24px] pt-4 pb-4">Student visits over time</h2>
             </div>

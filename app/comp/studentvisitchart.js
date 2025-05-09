@@ -42,7 +42,7 @@ const StudentVisitsChart = () => {
   };
 
   return (
-    <div className="pt-1 pb-4 pl-4 pr-4 bg-white rounded-b-xl  border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(0,0,0,0.02)]  w-full ">
+    <div className="pb-6 pt-6 pr-4 pl-4 bg-white rounded-b-xl  border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(0,0,0,0.02)]  w-full ">
 
       {loading ? (
         <p>Loading chart...</p>

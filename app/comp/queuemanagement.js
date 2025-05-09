@@ -140,6 +140,8 @@ const QueueManagement = () => {
   const totalPages = Math.ceil(queue.length / itemsPerPage);
   const isFormValid = formData.firstName && formData.lastName;
 
+  
+
   return (
     <div className='p-6 w-full h-full m-auto'>
       <div className='flex justify-between items-center mb-4'>

@@ -8,6 +8,7 @@ import Nursequeuemanagement from '@/app/comp/nursequeuemanagement';
 import Dashboard from '@/app/comp/dashboard';
 import { useRouter } from 'next/navigation';
 import Nurseuserinfo from '@/app/comp/nurseuserinfo';
+import Settings from '@/app/comp/settings';
 
 const queueDetailPage = () => {
   const [activeTab, setActiveTab] = useState(null);
@@ -36,11 +37,7 @@ const queueDetailPage = () => {
       case 'queue':
         return <Nursequeuemanagement />;
       case 'settings':
-        return (
-          <div className='text-center p-10 w-full'>
-            <h1 className='text-2xl font-bold'>Settings Section</h1>
-          </div>
-        );
+        return <Settings/>;
       default:
         return null;
     }

@@ -4,12 +4,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import Studentrecords from './studentrecords';
 import QueueManagement from './queuemanagement';
 import Dashboard from './dashboard';
+import Settings from './settings';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef(null);
   const router = useRouter();
 
@@ -30,12 +32,10 @@ const StudentDashboard = () => {
       case 'students':
         return <Studentrecords />;
       case 'queue':
-        return <QueueManagement />;
+        return <QueueManagement searchTerm={searchTerm} />;
       case 'settings':
         return (
-          <div className='text-center p-10 w-full'>
-            <h1 className='text-2xl font-bold'>Settings Section</h1>
-          </div>
+          <Settings/>
         );
       default:
         return null;
@@ -125,6 +125,8 @@ const StudentDashboard = () => {
               <input
                 type='search'
                 placeholder='Search for anything...'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className='h-full w-[90%] pl-3 rounded-r-xl text-black outline-none'
               />
             </div>

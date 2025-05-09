@@ -7,6 +7,7 @@ import Studentrecords from './studentrecords';
 import Nursequeuemanagement from './nursequeuemanagement';
 import Dashboard from './dashboard';
 import { useRouter } from 'next/navigation';
+import Settings  from './settings';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -29,10 +30,7 @@ const StudentDashboard = () => {
       case 'queue':
         return <Nursequeuemanagement />;
       case 'settings':
-        return (
-          <div className='text-center p-10 w-full'>
-            <h1 className='text-2xl font-bold'>Settings Section</h1>
-          </div>
+        return (<Settings/>
         );
       default:
         return null;
