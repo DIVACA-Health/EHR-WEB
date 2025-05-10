@@ -31,9 +31,6 @@ export default function NoteManager() {
     setSelectedTag('');
   };
 
-
-  
-
   const handleAddTag = () => {
     if (selectedTag && !tags.includes(selectedTag)) {
       setTags([...tags, selectedTag]);

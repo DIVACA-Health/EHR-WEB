@@ -7,10 +7,36 @@ export default function VitalsTable() {
 
   useEffect(() => {
     const fetchVitals = async () => {
-      const res = await fetch('/api/vitals');
-      const data = await res.json();
-      setVitals(data);
+      const token = localStorage.getItem("access_token");
+
+      if (!token) {
+        console.error("No access token found");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/v1/vitals/student/2", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const result = await res.json();
+        console.log('Vitals API response:', result);
+
+        if (Array.isArray(result)) {
+          setVitals(result);
+        } else if (Array.isArray(result.data)) {
+          setVitals(result.data);
+        } else {
+          console.error('Unexpected API response format:', result);
+        }
+      } catch (error) {
+        console.error('Failed to fetch vitals:', error);
+      }
     };
+
     fetchVitals();
   }, []);
 
@@ -18,10 +44,10 @@ export default function VitalsTable() {
     <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
       <table className="min-w-full text-sm text-left">
         <thead className="bg-gray-100 text-gray-700">
-          <tr className="text-[12px] font-normal ">
-            <th className="px-4 py-4  text-center">Date</th>
-            <th className="px-4 py-4  text-center">Heart rate (bpm)</th>
-            <th className="px-4 py-4  text-center">Blood pressure (mmHg)</th>
+          <tr className="text-[12px] font-normal">
+            <th className="px-4 py-4 text-center">Date</th>
+            <th className="px-4 py-4 text-center">Heart rate (bpm)</th>
+            <th className="px-4 py-4 text-center">Blood pressure (mmHg)</th>
             <th className="px-4 py-4 text-center">Temperature (°C)</th>
             <th className="px-4 py-4 text-center">Weight (kg)</th>
             <th className="px-4 py-4 text-center">Recorded by</th>
@@ -29,20 +55,18 @@ export default function VitalsTable() {
         </thead>
         <tbody className="divide-y divide-gray-200 text-[14px]">
           {vitals.map((vital, index) => (
-            <tr
-              key={index}
-              className="odd:bg-white even:bg-gray-50" // <-- Alternating row colors
-            >
-              <td className="px-6 py-4 text-[14px] w-[150px] text-center">{vital.date}</td>
-              <td className="px-6 py-4 text-[14px] w-[160px] text-center">{vital.heartRate}</td>
-              <td className="px-6 py-4 text-[14px] w-[190px] text-center">{vital.bloodPressure}</td>
-              <td className="px-6 py-4 text-[14px] w-[140px] text-center">{vital.temperature}</td>
-              <td className="px-6 py-4 text-[14px] w-[160px] text-center">{vital.weight}</td>
-              <td className="px-6 py-4 text-[14px] w-[190px] text-center">{vital.recordedBy}</td>
+            <tr key={index} className="odd:bg-white even:bg-gray-50">
+              <td className="px-6 py-4 text-center">{vital.date}</td>
+              <td className="px-6 py-4 text-center">{vital.heartRate}</td>
+              <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
+              <td className="px-6 py-4 text-center">{vital.temperature}</td>
+              <td className="px-6 py-4 text-center">{vital.weight}</td>
+              <td className="px-6 py-4 text-center">
+                Nurse {vital.recorder?.firstName} {vital.recorder?.lastName}
+              </td>
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );

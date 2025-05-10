@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
@@ -9,6 +9,7 @@ export default function NurseQueueManagement() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const router = useRouter();
 
   const handleRowClick = (userId) => {
@@ -40,6 +41,17 @@ export default function NurseQueueManagement() {
     }
   }, [selectedStatus, data]);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Close dropdown if click is outside the dropdown
+      if (!e.target.closest('.menu-container')) {
+        setOpenMenuIndex(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const statusCounts = {
     all: data.length,
     waiting: data.filter((item) => item.status === 'Waiting').length,
@@ -65,10 +77,10 @@ export default function NurseQueueManagement() {
         {statusOptions.map((option) => (
           <button
             key={option.value}
-            className={`px-4 py-1 rounded text-sm font-medium ${
+            className={`px-4 py-1 rounded text-sm font-light ${
               selectedStatus === option.value
-                ? 'bg-transparent border-b-[2px] rounded-none border-e-blue-400 text-blue-400'
-                : 'bg-transparent text-gray-700'
+                ? 'bg-transparent border-b-[2px] rounded-none border-e-[#3B6FED] text-[#3B6FED]'
+                : 'bg-transparent text-[#898989]'
             }`}
             onClick={() => setSelectedStatus(option.value)}
           >
@@ -82,17 +94,19 @@ export default function NurseQueueManagement() {
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-gray-100 border-b">
             <tr>
+              <th className="px-4 py-3">S/N</th>
               <th className="px-4 py-3">Full Name</th>
               <th className="px-4 py-3">Divaca ID</th>
               <th className="px-4 py-3">Matric No.</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Last Visit</th>
+              <th className="px-4 py-3">Action</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="5" className="px-4 py-6 text-center">
+                <td colSpan="7" className="px-4 py-6 text-center">
                   Loading...
                 </td>
               </tr>
@@ -100,10 +114,13 @@ export default function NurseQueueManagement() {
               filteredData.map((user, idx) => (
                 <tr
                   key={idx}
-                  onClick={() => handleRowClick(user.divacaId)}
-                  className="border-t hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="border-t hover:bg-gray-50 transition-colors"
                 >
-                  <td className="px-4 py-3 flex items-center gap-3">
+                  <td className="px-4 py-3">{idx + 1}</td>
+                  <td
+                    className="px-4 py-3 flex items-center gap-3 cursor-pointer"
+                    onClick={() => handleRowClick(user.divacaId)}
+                  >
                     <img
                       src={user.avatar}
                       alt={user.name}
@@ -129,11 +146,36 @@ export default function NurseQueueManagement() {
                     </span>
                   </td>
                   <td className="px-4 py-3">{user.lastVisit}</td>
+                  <td className="relative p-3 text-lg menu-container">
+                    <button
+                      onClick={() =>
+                        setOpenMenuIndex((prev) => (prev === idx ? null : idx))
+                      }
+                      className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+                    >
+                      <img
+                        src="/image/More circle.png"
+                        alt="More options"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                    {openMenuIndex === idx && (
+                      <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                        <button
+                          onClick={() => toast.success(`${user.name} added to patient queue`)}
+                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
+                        >
+                          Add to patient queue
+                        </button>
+                      </div>
+                    )}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="px-4 py-6 text-center text-gray-500">
+                <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
                   No queue data available.
                 </td>
               </tr>
