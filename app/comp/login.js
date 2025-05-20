@@ -115,7 +115,7 @@ const Login = () => {
           </div>
 
           <div className="w-full h-12 text-white bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
-            <button type="submit" onClick={handleLogin} disabled={loading}>
+            <button type="submit" onClick={handleLogin} disabled={loading} className=' w-full h-full rounded-xl cursor-pointer'>
               {loading ? "Logging in..." : "Log in"}
             </button>
           </div>
