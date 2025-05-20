@@ -5,7 +5,7 @@ import Sidebar from './sidebar';
 import Topbar from './topbar';
 import Studentrecords from './studentrecords';
 import Nursequeuemanagement from './nursequeuemanagement';
-import Dashboard from './dashboard';
+import Dashboard from './dashboardnurse';
 import { useRouter } from 'next/navigation';
 import Settings  from './settings';
 

@@ -143,8 +143,13 @@ const Support = () => {
               </div>
             </div>
           )}
+
         </div>
     </div>
+
+    <div className='w-[98%] flex items-center justify-end mb-10 '>
+            <button className='w-[276px] h-[52px] bg-[#3B6FED] rounded-[8px] text-white'>Submit support request</button>
+          </div>
     
   </div>
   )

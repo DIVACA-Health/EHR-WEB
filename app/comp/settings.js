@@ -74,7 +74,7 @@ const SettingsPage = () => {
         </div>
       </div>
 
-      <div className="mt-[30px] pl-7 pr-7">{renderTab()}</div>
+      <div className="mt-[30px] pl-7 pr-7 pb-0.5">{renderTab()}</div>
     </div>
   );
 };
