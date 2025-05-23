@@ -53,7 +53,7 @@ const Login = () => {
           window.location.href = "/nursedashboard";
           break;
         case "doctor":
-          window.location.href = "/doctor-dashboard";
+          window.location.href = "/doctorsdashboard";
           break;
         default:
           toast.error("Unknown role. Please contact admin.");

@@ -1,17 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Sidebar from '@/app/comp/sidebar';
-import Topbar from '@/app/comp/topbar';
-import Studentrecords from '@/app/comp/studentrecords';
-import Nursequeuemanagement from '@/app/comp/nursequeuemanagement';
-import Dashboard from '@/app/comp/dashboardnurse';
+import Sidebar from './sidebar';
+import Topbar from './topbar';
+import Studentrecords from './studentrecords';
+import Nursequeuemanagement from './nursequeuemanagement';
+import Dashboard from './dashboarddoctor';
 import { useRouter } from 'next/navigation';
-import Nurseuserinfo from '@/app/comp/nurseuserinfo';
-import Settings from '@/app/comp/settings';
+import Settings  from './settings';
 
-const queueDetailPage = () => {
-  const [activeTab, setActiveTab] = useState(null);
+const StudentDashboard = () => {
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
 
@@ -23,12 +22,6 @@ const queueDetailPage = () => {
   }, []);
 
   const renderContent = () => {
-    if (!activeTab) {
-      return (
-        <Nurseuserinfo/>
-      );
-    }
-  
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
@@ -37,12 +30,12 @@ const queueDetailPage = () => {
       case 'queue':
         return <Nursequeuemanagement />;
       case 'settings':
-        return <Settings/>;
+        return (<Settings/>
+        );
       default:
         return null;
     }
   };
-  
 
   return (
     <div className='flex text-black h-screen'>
@@ -55,4 +48,4 @@ const queueDetailPage = () => {
   );
 };
 
-export default queueDetailPage;
+export default StudentDashboard;

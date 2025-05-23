@@ -66,7 +66,7 @@ const dashboard = () => {
         <div className='bg-red-500 h-[432px] w-full mb-5 rounded-[12px]'>
             <div className='w-full bg-blue-500 h-[12%] flex items-center justify-between rounded-t-[12px]'>
                 <div className='ml-3'>
-                    <h2>Patient Queue List (Waiting)</h2>
+                    <h2>Patient Queue List</h2>
                 </div>
                 <div className='text-[#3B6FED] flex items-center gap-1 mr-4'>
                     <h2>view  all</h2>
@@ -74,27 +74,44 @@ const dashboard = () => {
                 </div>
             </div>
         </div>
-        <div className='bg-red-500 h-[325px] w-full mb-5 rounded-[12px]'>
-            <div className='w-full bg-blue-500 h-[15%] flex items-center justify-between rounded-t-[12px]'>
-                <div className='ml-3'>
-                    <h2>Pending Referrals</h2>
-                </div>
-                <div className='text-[#3B6FED] flex items-center gap-1 mr-4'>
-                    <h2>view  all</h2>
-                    <img src='/image/rightarrow.png' alt='img' height={9} width={16}/>
+        <div className='h-[158px] w-full  rounded-[12px] mb-10'>
+            <div className='w-full  h-[30%] flex  tems-center justify-between rounded-t-[12px]'>
+                <div className='ml-2'>
+                    <h2 className='text-xl font-medium'>Personal Performance Summary</h2>
                 </div>
             </div>
-        </div>
-        <div className='bg-red-500 h-[432px] w-full mb-10 rounded-[12px]'>
-            <div className='w-full bg-blue-500 h-[12%] flex items-center justify-between rounded-t-[12px]'>
-                <div className='ml-3'>
-                    <h2>Recent interactions</h2>
+            <div className='h-[70%] w-full  flex gap-4 mb-10'>
+                    <div className='h-full w-[33%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]'>
+                        <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#F7A752] m-auto rounded-r-[8px]'></div>
+                        <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-2  '>
+                            <h2 className='font-extralight text-[14px] text-[#898989]'>Patients seen today</h2>
+                            <h2 className='font-medium  text-xl'>25</h2>
+                        </div>
+                        {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
+                            <img src='/image/Frame 1261158598@2x.png' alt='img' width={32} height={32}/>
+                        </div> */}
+                    </div>
+                    <div className='h-full w-[33%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]'>
+                        <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#3B6FED] m-auto rounded-r-[8px]'></div>
+                        <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-2 '> 
+                            <h2 className='font-extralight text-[14px] text-[#898989]'>Avg consultation time</h2>
+                            <h2 className='font-medium  text-xl'>18 mins</h2>
+                        </div>
+                        {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
+                            <img src='/image/Frame 1261158733.png' alt='img' width={32} height={32}/>
+                        </div> */}
+                    </div>
+                    <div className='h-full w-[33%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]' >
+                        <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
+                        <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-1' >
+                            <h2 className='font-extralight text-[14px] text-[#898989]'>Prescriptions issued</h2>
+                            <h2 className='font-medium text-xl'>5</h2>
+                        </div>
+                        {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
+                            <img src='/image/Frame 1261158598.png' alt='img' width={32} height={32}/>
+                        </div> */}
+                    </div>
                 </div>
-                <div className='text-[#3B6FED] flex items-center gap-1 mr-4'>
-                    <h2>view  all</h2>
-                    <img src='/image/rightarrow.png' alt='img' height={9} width={16}/>
-                </div>
-            </div>
         </div>
 
     </div>
