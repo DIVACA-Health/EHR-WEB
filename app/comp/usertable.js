@@ -13,10 +13,24 @@ export default function UserTable() {
   const menuRef = useRef();
 
   useEffect(() => {
-    fetch("/api/user")
+    fetch("/api/v1/students")
       .then((res) => res.json())
-      .then((data) => setUsers(data));
+      .then((response) => {
+        const transformedUsers = response.data.map((student) => ({
+          name: `${student.firstName} ${student.lastName}`,
+          avatar: student.profileImage || "/image/default-avatar.png",
+          divacaId: `STU-${student.id}`, // You can customize this or remove if not needed
+          matricNumber: student.matricNumber || "N/A",
+          status: student.isActive ? "Active" : "Inactive",
+          lastVisit: student.updatedAt
+            ? new Date(student.updatedAt).toLocaleDateString()
+            : "N/A",
+        }));
+        setUsers(transformedUsers);
+      })
+      .catch((err) => console.error("Failed to fetch students:", err));
   }, []);
+  
 
   useEffect(() => {
     const handleClickOutside = (e) => {
