@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import Nursevitalstable from './nursevitalstable';
 
-const NurseVitals = () => {
+const NurseVitals = ({ studentId }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [vitalsData, setVitalsData] = useState({
     heartRate: '',
@@ -9,6 +10,10 @@ const NurseVitals = () => {
     temperature: '',
     weight: '',
   });
+
+  console.log('Student ID:', studentId); // Debugging
+
+  const [isLoading, setIsLoading] = useState(false); 
 
   // Function to handle form field changes
   const handleInputChange = (e) => {
@@ -30,14 +35,20 @@ const NurseVitals = () => {
     }
 
     try {
+      // Include the studentId in the payload
+      const payload = {
+        ...vitalsData,
+        studentId, // Add studentId to the payload
+      };
+
       // Send vitals data to the API
       const response = await fetch('/api/v1/vitals', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(vitalsData),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -72,10 +83,10 @@ const NurseVitals = () => {
       }
 
       try {
-        const response = await fetch('/api/v1/vitals/student/2', {
+        const response = await fetch(`/api/v1/vitals/student/${studentId}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
@@ -98,7 +109,7 @@ const NurseVitals = () => {
     }
 
     fetchVitals();
-  }, []);
+  }, [studentId]);
 
   return (
     <div>
@@ -113,7 +124,7 @@ const NurseVitals = () => {
             onClick={() => setShowSidebar(true)}
           >
             <img src="/image/Plus.png" alt="icon" width={25} height={25} />
-            <h1 className="text-[14px]">Record New vitals</h1>
+            <h1 className="text-[14px]">Record New Vitals</h1>
           </button>
         </div>
         <div className="flex gap-3 p-4">
@@ -171,7 +182,7 @@ const NurseVitals = () => {
           onClick={() => setShowSidebar(false)}
         >
           <div
-            className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50"
+            className="absolute right-0 top-0 h-full w-[55%]  shadow-lg z-50 bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm">
@@ -180,7 +191,8 @@ const NurseVitals = () => {
                 ×
               </button>
             </div>
-            <form className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] " onSubmit={handleSubmit}>
+            <form className="min-h-[88%] flex flex-col justify-between pl-7 pr-7 gap-[14px] " onSubmit={handleSubmit}>
+              <div className='w-full min-h-[90%]   '>
               <div className="flex h-[75px] flex-col justify-between">
                 <label className="text-[13px] text-[rgba(137,137,137,1)]">Heart Rate</label>
                 <input
@@ -228,15 +240,21 @@ const NurseVitals = () => {
                   className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
-            </form>
-            <div className="w-full flex justify-end items-center h-[54px] border-t-[2px] border-[#F0F2F5] ">
-                <button
-                  type="submit"
-                  className="w-[137px] bg-[#3B6FED] h-[44px] rounded-[8px] text-white font-medium text-[14px] mr-5"
-                >
-                  Save Vitals
-                </button>
               </div>
+              <div className="w-full h-[57px] flex justify-end items-center  border-t-[2px] border-[#F0F2F5] ">
+                <button
+                type="submit"
+                className="w-[137px] bg-[#3B6FED] h-[44px] rounded-[8px] text-white font-medium text-[14px] mr-5 flex items-center justify-center"
+                disabled={isLoading} 
+              >
+                {isLoading ? (
+                  <div className="loader border-t-transparent border-white border-2 w-4 h-4 rounded-full animate-spin"></div>
+                ) : (
+                  'Save Vitals'
+                )}
+              </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

@@ -29,16 +29,7 @@ const NurseHealthHistory = () => {
           <img src='/image/healthicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Allergies</h1>
         </div>
-        <button
-          className='bg-blue-600 flex gap-[8px] w-[195px] h-[44px] items-center justify-center text-white rounded-[8px]'
-          onClick={() => {
-            setSelectedVital(null);
-            setShowSidebar(true);
-          }}
-        >
-          <img src='/image/Plus.png' alt='icon' width={25} height={25} />
-          <h1 className='text-[14px]'>Record New Allergies</h1>
-        </button>
+
       </div>
 
       <div className="overflow-x-auto border border-gray-200">
@@ -73,7 +64,7 @@ const NurseHealthHistory = () => {
 
         {showSidebar && (
           <div
-            className="fixed inset-0 bg-amber-100 bg-opacity-20 z-40"
+            className="fixed inset-0 z-40 bg-[#0C162F99]"
             onClick={() => setShowSidebar(false)}
           >
             <div
@@ -150,7 +141,7 @@ const NurseHealthHistory = () => {
                                     </div>
                                     <div className="flex justify-between px-4 py-3">
                                         <span>Description</span>
-                                        <button className="text-blue-600 hover:underline">View</button>
+                                        <button className='text-[#3B6FED] bg-[#F3F6FF] h-[28px] w-[54px] rounded-[4px]'>View</button>
                                     </div>
                                     <div className="flex justify-between px-4 py-3">
                                         <span>Possible Cause</span>

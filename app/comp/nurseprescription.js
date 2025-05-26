@@ -61,7 +61,7 @@ const nurseprescription = () => {
             </table>
             {showSidebar && (
               <div
-                className="fixed inset-0 bg-amber-100 bg-opacity-20 z-40"
+                className="fixed inset-0 z-40 bg-[#0C162F99]"
                 onClick={() => setShowSidebar(false)}
               >
                 <div
@@ -96,7 +96,7 @@ const nurseprescription = () => {
                         
                                 {/* Collapsible content */}
                                 {isOpen1 && (
-                                    <div className="divide-y text-sm bg-white pl-4 pr-4 pt-2 pb-2">
+                                    <div className="divide-y text-sm  pl-4 pr-4 pt-2 pb-2 rounded-b-[8px]">
                                         <div className="flex justify-between px-4 py-3">
                                             <span>Medication </span>
                                             <span className="text-gray-700 font-medium">Paracetamol (500mg)</span>
@@ -107,8 +107,7 @@ const nurseprescription = () => {
                                         </div>
                                         <div className="flex justify-between px-4 py-3 h-auto">
                                             <span className='w-3/10'>Instructions</span>
-                                            <span className="text-gray-700 font-medium w-7/10">Take with a full glass of water. Can be taken with or without food, but taking it with a meal may help prevent stomach upset.
-                                            Do not skip doses.</span>
+                                            <button className='text-[#3B6FED] bg-[#F3F6FF] h-[28px] w-[54px] rounded-[4px]'>View</button>
                                         </div>
                                         <div className="flex justify-between px-4 py-3">
                                             <span>Medication 2</span>
@@ -120,8 +119,7 @@ const nurseprescription = () => {
                                         </div>
                                         <div className="flex justify-between px-4 py-3 h-auto">
                                             <span className='w-3/10'>Instructions</span>
-                                            <span className="text-gray-700 font-medium w-7/10">Take with a full glass of water. Can be taken with or without food, but taking it with a meal may help prevent stomach upset.
-                                            Do not skip doses.</span>
+                                            <button className='text-[#3B6FED] bg-[#F3F6FF] h-[28px] w-[54px] rounded-[4px]'>View</button>
                                         </div>
                                     </div>
                                 )}
