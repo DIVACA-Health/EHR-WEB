@@ -48,8 +48,8 @@ export default function NurseQueueManagement() {
       return;
     }
 
-    const checkUrl = `/api/v1/queue1/${userId}/current`;
-    const navigateUrl = `/queue/${userId}`; // Updated to point to real route
+    const checkUrl = `/api/v1/queue/${userId}/current`;
+    const navigateUrl = `/queue1/${userId}`; // Updated to point to real route
 
     try {
       const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
@@ -162,7 +162,7 @@ export default function NurseQueueManagement() {
           <thead className="bg-gray-100 border-b">
             <tr>
               <th className="px-4 py-3">S/N</th>
-              <th className="px-4 py-3">Full Name</th>
+              <th className="px-4 py-3">Full Name1</th>
               <th className="px-4 py-3">Divaca ID</th>
               <th className="px-4 py-3">Matric No.</th>
               <th className="px-4 py-3">Status</th>

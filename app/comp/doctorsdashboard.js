@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './sidebar';
 import Topbar from './topbar';
 import Studentrecords from './studentrecords';
-import Nursequeuemanagement from './nursequeuemanagement';
+import Doctorqueuemanagement from './doctorsqueuemanagement';
 import Dashboard from './dashboarddoctor';
 import { useRouter } from 'next/navigation';
 import Settings  from './settings';
@@ -28,7 +28,7 @@ const StudentDashboard = () => {
       case 'students':
         return <Studentrecords />;
       case 'queue':
-        return <Nursequeuemanagement />;
+        return <Doctorqueuemanagement />;
       case 'settings':
         return (<Settings/>
         );
