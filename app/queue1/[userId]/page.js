@@ -7,7 +7,7 @@ import Studentrecords from '@/app/comp/studentrecords';
 import Doctorqueuemanagement from '@/app/comp/doctorsqueuemanagement';
 import Dashboard from '@/app/comp/dashboarddoctor';
 import { useRouter } from 'next/navigation';
-import Nurseuserinfo from '@/app/comp/nurseuserinfo';
+import Doctoruserinfo from '@/app/comp/doctoruserinfo';
 import Settings from '@/app/comp/settings';
 
 const queueDetailPage = () => {
@@ -25,7 +25,7 @@ const queueDetailPage = () => {
   const renderContent = () => {
     if (!activeTab) {
       return (
-        <Nurseuserinfo/>
+        <Doctoruserinfo/>
       );
     }
   
