@@ -72,7 +72,29 @@ const nurseallergies = () => {
               <button onClick={() => setShowSidebar(false)} className="text-xl">×</button>
             </div>
             <form className='min-h-[81%] flex flex-col   pl-7 pr-7 gap-[14px]'>
-
+                <div>
+                    <label>Allergy type</label>
+                    <select>
+                        <option>Select allergy type</option>
+                        <option>Medication</option>
+                        <option>Nuts</option>
+                        <option>Food</option>
+                        <option>Environment</option>
+                        <div>
+                            <div>
+                                <div>Other</div>
+                                <div>
+                                    <input type='text' className=''></input>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <button>Add custom allergy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </select>
+                </div>
             </form>
             {/* Footer Save Button */}
             <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm'>

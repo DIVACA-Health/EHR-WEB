@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Nursevitals from './nursevitals';
-import NurseHealthHistory from './nursehealthhistory';
-import Nurseprescription from './nurseprescription';
+import NurseHealthHistory from './doctorhealthhistory';
+import Nurseprescription from './doctorprescription';
 
 const fetchWithAuth = async (url, options = {}) => {
     const token = localStorage.getItem('access_token');
