@@ -5,7 +5,7 @@ import Sidebar from '@/app/comp/sidebar';
 import Topbar from '@/app/comp/topbar';
 import Studentrecords from '@/app/comp/studentrecords';
 import Doctorqueuemanagement from '@/app/comp/doctorsqueuemanagement';
-import Dashboard from '@/app/comp/dashboardnurse';
+import Dashboard from '@/app/comp/dashboarddoctor';
 import { useRouter } from 'next/navigation';
 import Nurseuserinfo from '@/app/comp/nurseuserinfo';
 import Settings from '@/app/comp/settings';
