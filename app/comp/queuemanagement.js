@@ -115,6 +115,28 @@ const QueueManagement = () => {
     }
   };
 
+  const handleForwardFiles = async (id) => {
+  try {
+    const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+      method: 'PUT', // or 'PUT' if your API expects that
+      body: JSON.stringify({ status: "Waiting" }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      toast.error(`Failed to forward files: ${errorText}`);
+      return;
+    }
+
+    toast.success('Files forwarded successfully');
+    setActiveActionIndex(null);
+    fetchQueue();
+  } catch (err) {
+    console.error('Failed to forward files:', err);
+    toast.error('An error occurred while forwarding files.');
+  }
+};
+
   const handleRemoveFromQueue = async (id) => {
     const toastId = toast.loading('Removing from queue...');
     try {
@@ -197,12 +219,11 @@ const QueueManagement = () => {
                     {activeActionIndex === index && (
                       <div
                         ref={(el) => (dropdownRefs.current[index] = el)}
-                        className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10'
+                        className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10 text-left'
                       >
                         <button
                           onClick={() => {
-                            setActiveActionIndex(null);
-                            toast.success('Files forwarded successfully');
+                            handleForwardFiles(item.id);
                           }}
                           className='w-full text-left px-4 py-1 hover:bg-gray-100'
                         >

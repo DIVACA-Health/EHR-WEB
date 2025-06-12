@@ -10,12 +10,53 @@ const NurseVitals = ({ studentId }) => {
     temperature: '',
     weight: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [tableKey, setTableKey] = useState(0);
 
-  console.log('Student ID:', studentId); // Debugging
+  // Fetch vitals data (for cards)
+  const fetchVitals = async () => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      console.error('No access token found!');
+      return;
+    }
 
-  const [isLoading, setIsLoading] = useState(false); 
+    try {
+      const response = await fetch(`/api/v1/vitals/student/${studentId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-  // Function to handle form field changes
+      const data = await response.json();
+      if (data && data.length > 0) {
+        const vitals = data[0];
+        setVitalsData({
+          heartRate: vitals.heartRate,
+          bloodPressure: vitals.bloodPressure,
+          temperature: vitals.temperature,
+          weight: vitals.weight,
+        });
+      } else {
+        setVitalsData({
+          heartRate: '',
+          bloodPressure: '',
+          temperature: '',
+          weight: '',
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching vitals:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVitals();
+  }, [studentId]);
+
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setVitalsData((prevData) => ({
@@ -24,7 +65,17 @@ const NurseVitals = ({ studentId }) => {
     }));
   };
 
-  // Function to handle form submission
+  // Reset form fields
+  const resetForm = () => {
+    setVitalsData({
+      heartRate: '',
+      bloodPressure: '',
+      temperature: '',
+      weight: '',
+    });
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,14 +85,17 @@ const NurseVitals = ({ studentId }) => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      // Include the studentId in the payload
       const payload = {
-        ...vitalsData,
-        studentId, // Add studentId to the payload
+        studentId: Number(studentId),
+        heartRate: vitalsData.heartRate !== '' ? Number(vitalsData.heartRate) : null,
+        bloodPressure: vitalsData.bloodPressure,
+        temperature: vitalsData.temperature !== '' ? Number(vitalsData.temperature) : null,
+        weight: vitalsData.weight !== '' ? Number(vitalsData.weight) : null,
       };
 
-      // Send vitals data to the API
       const response = await fetch('/api/v1/vitals', {
         method: 'POST',
         headers: {
@@ -53,63 +107,19 @@ const NurseVitals = ({ studentId }) => {
 
       if (response.ok) {
         console.log('Vitals saved successfully!');
+        await fetchVitals(); // Refresh the cards
+        setTableKey(prev => prev + 1); // Refresh the table
         setShowSidebar(false); // Close sidebar after success
-        resetForm(); // Reset form fields after successful submission
+        resetForm(); // Reset form fields
       } else {
         console.error('Failed to save vitals');
       }
     } catch (error) {
       console.error('Error saving vitals:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  // Function to reset form fields
-  const resetForm = () => {
-    setVitalsData({
-      heartRate: '',
-      bloodPressure: '',
-      temperature: '',
-      weight: '',
-    });
-  };
-
-  // Fetch vitals data on component mount
-  useEffect(() => {
-    async function fetchVitals() {
-      const token = localStorage.getItem('access_token');
-      if (!token) {
-        console.error('No access token found!');
-        return;
-      }
-
-      try {
-        const response = await fetch(`/api/v1/vitals/student/${studentId}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        const data = await response.json();
-        if (data && data.length > 0) {
-          const vitals = data[0];
-          setVitalsData({
-            heartRate: vitals.heartRate,
-            bloodPressure: vitals.bloodPressure,
-            temperature: vitals.temperature,
-            weight: vitals.weight,
-          });
-        } else {
-          console.error('No vitals data found in the response.');
-        }
-      } catch (error) {
-        console.error('Error fetching vitals:', error);
-      }
-    }
-
-    fetchVitals();
-  }, [studentId]);
 
   return (
     <div>
@@ -171,7 +181,7 @@ const NurseVitals = ({ studentId }) => {
       <div className="mt-5 flex flex-col gap-3">
         <h1 className="text-[18px] text-[rgba(59,59,59,1)] font-normal">Vitals History</h1>
         <div className="w-full h-auto mb-10">
-          <Nursevitalstable />
+          <Nursevitalstable key={tableKey} studentId={studentId} />
         </div>
       </div>
 

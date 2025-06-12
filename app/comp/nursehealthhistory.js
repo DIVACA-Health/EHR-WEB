@@ -1,16 +1,49 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const NurseHealthHistory = () => {
+const fetchWithAuth = async (url, options = {}) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      console.error('Authorization token is missing.');
+      throw new Error('Authorization token is missing.');
+    }
+  
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    };
+  
+    try {
+      console.log('Request URL:', url);
+      console.log('Request Headers:', headers);
+      const res = await fetch(url, { ...options, headers });
+      console.log('Response Status:', res.status);
+      console.log('Response Body:', await res.clone().text()); // Clone to log response body
+      if (res.status === 401) {
+        console.error('Unauthorized: Invalid or expired token.');
+        throw new Error('Unauthorized: Invalid or expired token.');
+      }
+      return res;
+    } catch (error) {
+      console.error('Error in fetchWithAuth:', error);
+      throw error;
+    }
+  };
+
+const NurseHealthHistory = ({ studentId }) => {
   const [vitals, setVitals] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedVital, setSelectedVital] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
+  const [activeActionIndex, setActiveActionIndex] = useState(null);
+    const actionButtonRefs = useRef({});
+    const dropdownRefs = useRef({});
 
   useEffect(() => {
     const fetchVitals = async () => {
-      const res = await fetch('/api/vitals');
+      const res = await fetchWithAuth(`/api/v1/vitals/student/${studentId}`)
       const data = await res.json();
       setVitals(data);
     };
@@ -27,7 +60,7 @@ const NurseHealthHistory = () => {
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] rounded-t-[12px] border-[rgba(235,235,235,1)] shadow-xs'>
         <div className='flex gap-3 items-center'>
           <img src='/image/healthicon.png' alt='icon' height={36} width={36} />
-          <h1 className='font-medium text-lg'>Allergies</h1>
+          <h1 className='font-medium text-lg'>Health history</h1>
         </div>
 
       </div>
@@ -37,11 +70,10 @@ const NurseHealthHistory = () => {
           <thead className="bg-gray-100 text-gray-700">
             <tr className="text-[12px] font-normal">
               <th className="px-4 py-4 text-center">Date</th>
-              <th className="px-4 py-4 text-center">Heart rate (bpm)</th>
-              <th className="px-4 py-4 text-center">Blood pressure (mmHg)</th>
-              <th className="px-4 py-4 text-center">Temperature (°C)</th>
-              <th className="px-4 py-4 text-center">Weight (kg)</th>
-              <th className="px-4 py-4 text-center">Recorded by</th>
+              <th className="px-4 py-4 text-center">Doctor</th>
+              <th className="px-4 py-4 text-center">Diagnosis</th>
+              <th className="px-4 py-4 text-center">Notes</th>
+              <th className="px-4 py-4 text-center">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-[14px]">
@@ -55,8 +87,37 @@ const NurseHealthHistory = () => {
                 <td className="px-6 py-4 text-center">{vital.heartRate}</td>
                 <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
                 <td className="px-6 py-4 text-center">{vital.temperature}</td>
-                <td className="px-6 py-4 text-center">{vital.weight}</td>
-                <td className="px-6 py-4 text-center">{vital.recordedBy}</td>
+                                  <td className='p-4 relative flex justify-center items-center'>
+                    <button
+                      onClick={() => setActiveActionIndex((prev) => (prev === index ? null : index))}
+                      className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
+                      ref={(el) => (actionButtonRefs.current[index] = el)}
+                    >
+                      <img src="/image/More circle.png" alt="img" height={20} width={20}/>
+                    </button>
+
+                    {activeActionIndex === index && (
+                      <div
+                        ref={(el) => (dropdownRefs.current[index] = el)}
+                        className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10 text-left'
+                      >
+                        <button
+                          onClick={() => {
+                            handleForwardFiles(item.id);
+                          }}
+                          className='w-full text-left px-4 py-1 hover:bg-gray-100'
+                        >
+                          Forward patient files
+                        </button>
+                        <button
+                          onClick={() => handleRemoveFromQueue(item.id)}
+                          className='w-full text-left px-4 py-1 text-red-600 hover:bg-red-50'
+                        >
+                          Remove from queue
+                        </button>
+                      </div>
+                    )}
+                  </td>
               </tr>
             ))}
           </tbody>

@@ -18,11 +18,8 @@ const fetchWithAuth = async (url, options = {}) => {
   };
 
   try {
-    console.log('Request URL:', url);
-    console.log('Request Headers:', headers);
     const res = await fetch(url, { ...options, headers });
-    console.log('Response Status:', res.status);
-    console.log('Response Body:', await res.clone().text()); // Clone to log response body
+ // Clone to log response body
     if (res.status === 401) {
       console.error('Unauthorized: Invalid or expired token.');
       throw new Error('Unauthorized: Invalid or expired token.');
@@ -70,18 +67,19 @@ export default function NurseQueueManagement() {
   useEffect(() => {
     const fetchQueueData = async () => {
       try {
-        const res = await fetchWithAuth('/api/v1/queue/');
+        const res = await fetchWithAuth('/api/v1/queue/medical-overview');
         if (!res.ok) throw new Error("Failed to fetch queue data");
         const result = await res.json();
 
         const transformed = result.map((item) => ({
-          name: `${item.firstName} ${item.lastName}`,
-          divacaId: item.userId,
-          matricNumber: item.studentId || 'N/A',
-          status: item.status,
-          lastVisit: new Date(item.timeAdded).toLocaleDateString(),
-          avatar: item.avatar || '/image/avatar.png',
-        }));
+          name: `${item.personalInfo.firstName} ${item.personalInfo.lastName}`,
+          divacaId: item.student.id, // or item.student.matricNumber if you want the matric number here
+          matricNumber: item.student.matricNumber || 'N/A',
+          status: item.queueInfo.status,
+          lastVisit: new Date(item.queueInfo.timeAdded).toLocaleDateString(),
+          avatar: item.personalInfo.avatar || '/image/profileimg.png',
+          queueId: item.queueInfo.id, // <-- Add this if you need to PATCH/PUT status later
+            }));
 
         setData(transformed);
         setLoading(false);
@@ -188,10 +186,10 @@ export default function NurseQueueManagement() {
                   <td className="px-4 py-3">
                     <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                       user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[0.8px] border-[#E99633]' :
-                      user.status === 'In consultation' ? 'bg-blue-200 text-blue-800' :
-                      user.status === 'Forwarded to doctor' ? 'bg-blue-200 text-pink-800' :
-                      user.status === 'Emergency' ? 'bg-blue-200 text-red-800' :
-                      user.status === 'Returned to health attendant' ? 'bg-green-200 text-green-800' :
+                      user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[0.8px] border-[#3B6FED]' :
+                      user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[0.8px] border-[#218838]' :
+                      user.status === 'Emergency' ? 'bg-[#ECFFF0] text-[#e24312] border-[0.8px] border-[#e24312]' :
+                      user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[0.8px] border-[#2000C2]' :
                       'bg-gray-200 text-gray-800'
                     }`}>
                       {user.status}

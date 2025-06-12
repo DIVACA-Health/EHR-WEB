@@ -1,8 +1,37 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+const fetchWithAuth = async (url, options = {}) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      console.error('Authorization token is missing.');
+      throw new Error('Authorization token is missing.');
+    }
+  
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    };
+  
+    try {
+      console.log('Request URL:', url);
+      console.log('Request Headers:', headers);
+      const res = await fetch(url, { ...options, headers });
+      console.log('Response Status:', res.status);
+      console.log('Response Body:', await res.clone().text()); // Clone to log response body
+      if (res.status === 401) {
+        console.error('Unauthorized: Invalid or expired token.');
+        throw new Error('Unauthorized: Invalid or expired token.');
+      }
+      return res;
+    } catch (error) {
+      console.error('Error in fetchWithAuth:', error);
+      throw error;
+    }
+  };
 
-const nurseprescription = () => {
+const nurseprescription = ({ studentId }) => {
   const [vitals, setVitals] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedVital, setSelectedVital] = useState(null);
@@ -11,7 +40,7 @@ const nurseprescription = () => {
 
   useEffect(() => {
     const fetchVitals = async () => {
-      const res = await fetch('/api/vitals');
+      const res = await fetchWithAuth(`/api/v1/vitals/student/${studentId}`)
       const data = await res.json();
       setVitals(data);
     };

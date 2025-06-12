@@ -19,11 +19,7 @@ const fetchWithAuth = async (url, options = {}) => {
     };
   
     try {
-      console.log('Request URL:', url);
-      console.log('Request Headers:', headers);
       const res = await fetch(url, { ...options, headers });
-      console.log('Response Status:', res.status);
-      console.log('Response Body:', await res.clone().text()); // Clone to log response body
       if (res.status === 401) {
         console.error('Unauthorized: Invalid or expired token.');
         throw new Error('Unauthorized: Invalid or expired token.');

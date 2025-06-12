@@ -24,7 +24,8 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 /* Hide number input arrows (for Chrome, Safari, Edge, Opera) */

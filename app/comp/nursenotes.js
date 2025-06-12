@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const sampleTags = [
-  { label: "Follow-up", color: "blue" },
-  { label: "Malaria", color: "blue" },
-  { label: "Medications", color: "blue" },
-  { label: "Typhoid", color: "blue" },
-  { label: "Admitted", color: "red" },
-  { label: "Cough", color: "blue" },
-  { label: "Discharged", color: "green" },
+  'Follow-up', 'Malaria', 'Medications', 'Typhoid', 'Admitted', 'Discharged',
 ];
 
-export default function NoteManager() {
+const tagColors = ['#1E40AF', '#059669', '#D97706', '#EAB308', '#A855F7', '#EF4444'];
+
+export default function NoteManager({ studentId }) {
   const [showSidebar, setShowSidebar] = useState(false);
   const [notes, setNotes] = useState([]);
   const [noteTitle, setNoteTitle] = useState('');
@@ -18,25 +14,117 @@ export default function NoteManager() {
   const [tags, setTags] = useState([]);
   const [showTagSelector, setShowTagSelector] = useState(false);
   const [selectedTag, setSelectedTag] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [customTag, setCustomTag] = useState('');
+  const [selectedColor, setSelectedColor] = useState(tagColors[0]);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSaveNote = () => {
-    if (!noteTitle.trim()) return;
-    const newNote = { title: noteTitle.trim(), tags, body: noteBody.trim() };
-    setNotes([...notes, newNote]);
-    setNoteTitle('');
-    setNoteBody('');
-    setTags([]);
-    setShowSidebar(false);
-    setShowTagSelector(false);
-    setSelectedTag('');
+  // Fetch notes from API when component mounts or studentId changes
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        const res = await fetch(`https://ehr-backend-4vx2.onrender.com/api/v1/notes/${studentId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setNotes(Array.isArray(data) ? data : (data.data || []));
+        } else {
+          setNotes([]);
+        }
+      } catch (err) {
+        setNotes([]);
+      }
+    };
+    if (studentId) fetchNotes();
+  }, [studentId]);
+
+  // Send note to API and update notes from API after save
+  const handleSaveNote = async () => {
+    if (!noteTitle.trim() || !noteBody.trim()) return;
+
+    setIsSaving(true);
+
+    const payload = {
+      title: noteTitle.trim(),
+      content: noteBody.trim(),
+      tags: selectedTags.map(t => t.toLowerCase()),
+      studentId: Number(studentId),
+    };
+
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch('/api/v1/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        // Refetch notes from API after successful save
+        const fetchNotes = async () => {
+          try {
+            const res = await fetch(`/api/v1/notes/${studentId}`, {
+              headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+            });
+            if (res.ok) {
+              const data = await res.json();
+              setNotes(Array.isArray(data) ? data : (data.data || []));
+            }
+          } catch {}
+        };
+        await fetchNotes();
+        setNoteTitle('');
+        setNoteBody('');
+        setTags([]);
+        setSelectedTags([]);
+        setShowSidebar(false);
+        setShowTagSelector(false);
+        setSelectedTag('');
+        setCustomTag('');
+      } else {
+        alert('Failed to save note');
+      }
+    } catch (err) {
+      alert('Error saving note');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleAddTag = () => {
-    if (selectedTag && !tags.includes(selectedTag)) {
-      setTags([...tags, selectedTag]);
+    if (selectedTag && !selectedTags.includes(selectedTag)) {
+      setSelectedTags([...selectedTags, selectedTag]);
     }
     setSelectedTag('');
     setShowTagSelector(false);
+  };
+
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const handleAddCustomTag = () => {
+    if (customTag && !selectedTags.includes(customTag)) {
+      setSelectedTags([...selectedTags, customTag]);
+      setCustomTag('');
+    }
+  };
+
+  const removeTag = (tag) => {
+    setSelectedTags(selectedTags.filter(t => t !== tag));
   };
 
   return (
@@ -59,37 +147,32 @@ export default function NoteManager() {
       {/* Notes List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-10 p-3">
         {notes.map((note, index) => (
-          <div key={index} className="bg-white  rounded shadow">
-            <div className=' flex bg-[rgba(243,246,255,1)] w-full border-[0.8px] border-[rgba(243,246,255,1)] shadow-b-sm  p-3 rounded-t '>
-                <div className='flex flex-col gap-2'>
-                    <h3 className="font-semibold text-lg">{note.title}</h3>
-                    <h3>nurse :</h3>
-                </div>
-                <div></div>
+          <div key={index} className="bg-white rounded shadow">
+            <div className='flex bg-[rgba(243,246,255,1)] w-full border-[0.8px] border-[rgba(243,246,255,1)] shadow-b-sm p-3 rounded-t'>
+              <div className='flex flex-col gap-2'>
+                <h3 className="font-semibold text-lg">{note.title}</h3>
+                <h3>nurse :</h3>
+              </div>
             </div>
             <div className="flex flex-wrap gap-2 mt-2 pl-4 pt-2">
-                <h1>Tags :</h1>
-              {note.tags.map((tag, i) => {
-                const tagInfo = sampleTags.find((t) => t.label === tag);
-                const color = tagInfo?.color || "gray";
-                return (
-                  <span
-                    key={i}
-                    className={`px-3 py-1 rounded-full text-xs text-white bg-${color}-500`}
-                  >
-                 {tag}
-                  </span>
-                );
-              })}
+              <h1>Tags :</h1>
+              {(note.tags || []).map((tag, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 rounded-full text-xs text-white bg-blue-500"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
-            <p className="mt-2 text-sm text-gray-700 p-4">{note.body}</p>
+            <p className="mt-2 text-sm text-gray-700 p-4">{note.content || note.body}</p>
           </div>
         ))}
       </div>
 
       {/* Sidebar Form */}
       {showSidebar && (
-        <div className="fixed inset-0 bg-amber-100 bg-opacity-20 z-40" onClick={() => setShowSidebar(false)}>
+        <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowSidebar(false)}>
           <div 
             className="absolute right-0 top-0 h-full w-[60%] bg-white shadow-lg z-50"
             onClick={(e) => e.stopPropagation()}
@@ -111,61 +194,78 @@ export default function NoteManager() {
                 />
               </div>
 
-              {/* Selected Tags */}
               <div className='mb-3'>
                 <h1 className='text-sm font-medium mb-2'>Tags:</h1>
                 <div className='flex flex-wrap gap-2 mb-2'>
-                  {tags.map((tag, i) => {
-                    const tagInfo = sampleTags.find((t) => t.label === tag);
-                    const color = tagInfo?.color || "gray";
-                    return (
-                      <span
-                        key={i}
-                        className={`px-3 py-1 rounded-full text-xs text-white bg-${color}-500`}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })}
+                  {selectedTags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-1 h-[30px] rounded-full text-xs flex items-center gap-1"
+                      style={{ backgroundColor: tagColors[i % tagColors.length], color: '#fff' }}
+                    >
+                      {tag}
+                      <button onClick={() => removeTag(tag)} className="ml-1 text-white">×</button>
+                    </span>
+                  ))}
+                  <button
+                    className="flex items-center px-2 py-1 border rounded-full text-xs text-gray-700 bg-gray-100"
+                    onClick={() => setShowTagSelector(!showTagSelector)}
+                    type="button"
+                  >
+                    <span className="mr-1">＋</span> Add tag
+                  </button>
                 </div>
 
-                {/* Add Tag Button */}
-                <div
-                  className='flex bg-gray-100 rounded-2xl w-[103px] p-1.5 items-center justify-center gap-1 border-[0.8px] border-[rgba(98, 98, 98, 1)] cursor-pointer'
-                  onClick={() => setShowTagSelector(true)}
-                >
-                  <img src='/image/Plus.png' alt='img' height={16} width={16}/>
-                  <h1 className='text-[12px]'>Add Tag</h1>
-                </div>
-
-                {/* Tag Selector */}
                 {showTagSelector && (
-                  <div className='mt-3 flex gap-2 items-center'>
-                    <select
-                      value={selectedTag}
-                      onChange={(e) => setSelectedTag(e.target.value)}
-                      className='border border-gray-300 rounded px-3 py-1 text-sm'
-                    >
-                      <option value="">Select a tag</option>
-                      {sampleTags.map(tag => (
-                        <option key={tag.label} value={tag.label}>{tag.label}</option>
+                  <div className="p-4 border rounded max-w-md bg-white shadow">
+                    <label className="block mb-2 font-medium">Tags:</label>
+                    <input
+                      type="text"
+                      value={customTag}
+                      onChange={(e) => setCustomTag(e.target.value)}
+                      placeholder="Enter a health / patient tag (eg. Malaria)"
+                      className="w-full border border-gray-300 px-3 py-1 rounded outline-blue-600 mb-2"
+                    />
+                    <div className="flex gap-2 mb-2">
+                      {tagColors.map(color => (
+                        <button
+                          key={color}
+                          type="button"
+                          className={`w-5 h-5 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-white'}`}
+                          style={{ backgroundColor: color }}
+                          onClick={() => setSelectedColor(color)}
+                        />
                       ))}
-                    </select>
+                    </div>
                     <button
-                      onClick={handleAddTag}
-                      className='bg-blue-600 text-white px-3 py-1 rounded text-sm'
+                      type="button"
+                      onClick={handleAddCustomTag}
+                      className="mb-2 px-2 py-1 border rounded text-sm"
                     >
-                      Add
+                      Add tag
                     </button>
+                    <div>
+                      {sampleTags.map((tag) => (
+                        <div
+                          key={tag}
+                          onClick={() => toggleTag(tag)}
+                          className={`cursor-pointer px-3 py-2 border-b flex items-center ${
+                            selectedTags.includes(tag) ? 'bg-blue-100' : ''
+                          }`}
+                        >
+                          {tag}
+                          {selectedTags.includes(tag) && <span className="ml-2 text-blue-600">✔</span>}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Lined Textarea (not saved) */}
             <div className='h-[58%] pl-6 pr-6 w-full'>
               <div className="w-full h-[55vh] bg-white relative border-none text-[14px] leading-6">
-                <div className="absolute inset-0 border-none" style={{ backgroundImage: `repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 24px)` }} />
+                <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 24px)" }} />
                 <div className="relative z-10 h-full border-none">
                   <textarea
                     className="w-full h-full resize-none bg-transparent outline-none border-none"
@@ -177,13 +277,13 @@ export default function NoteManager() {
               </div>
             </div>
 
-            {/* Footer Save Button */}
             <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
               <button
                 onClick={handleSaveNote}
                 className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
+                disabled={isSaving}
               >
-                Save note
+                {isSaving ? 'Saving...' : 'Save note'}
               </button>
             </div>
           </div>

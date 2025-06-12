@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function VitalsTable() {
+export default function VitalsTable({ studentId }) {
   const [vitals, setVitals] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function VitalsTable() {
       }
 
       try {
-        const res = await fetch("/api/v1/vitals/student/2", {
+        const res = await fetch(`/api/v1/vitals/student/${studentId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
