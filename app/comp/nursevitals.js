@@ -9,9 +9,17 @@ const NurseVitals = ({ studentId }) => {
     bloodPressure: '',
     temperature: '',
     weight: '',
+    recorder: { firstName: '', lastName: '' }, // Add recorder to initial state
   });
   const [isLoading, setIsLoading] = useState(false);
   const [tableKey, setTableKey] = useState(0);
+  const getTodayDate = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
 
   // Fetch vitals data (for cards)
   const fetchVitals = async () => {
@@ -38,6 +46,7 @@ const NurseVitals = ({ studentId }) => {
           bloodPressure: vitals.bloodPressure,
           temperature: vitals.temperature,
           weight: vitals.weight,
+          recorder: vitals.recorder || { firstName: '', lastName: '' }, // Set recorder from API
         });
       } else {
         setVitalsData({
@@ -45,6 +54,7 @@ const NurseVitals = ({ studentId }) => {
           bloodPressure: '',
           temperature: '',
           weight: '',
+          recorder: { firstName: '', lastName: '' },
         });
       }
     } catch (error) {
@@ -72,6 +82,7 @@ const NurseVitals = ({ studentId }) => {
       bloodPressure: '',
       temperature: '',
       weight: '',
+      recorder: { firstName: '', lastName: '' },
     });
   };
 
@@ -211,7 +222,7 @@ const NurseVitals = ({ studentId }) => {
                   value={vitalsData.heartRate}
                   onChange={handleInputChange}
                   placeholder="89"
-                  className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                  className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none mb-2"
                 />
               </div>
 
@@ -223,7 +234,7 @@ const NurseVitals = ({ studentId }) => {
                   value={vitalsData.bloodPressure}
                   onChange={handleInputChange}
                   placeholder="120/80"
-                  className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                  className="h-[45px] mb-2 w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
 
@@ -235,10 +246,9 @@ const NurseVitals = ({ studentId }) => {
                   value={vitalsData.temperature}
                   onChange={handleInputChange}
                   placeholder="37.5"
-                  className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                  className="h-[45px] w-full mb-2 pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
-
               <div className="flex h-[75px] flex-col justify-between">
                 <label className="text-[13px] text-[rgba(137,137,137,1)]">Weight</label>
                 <input
@@ -247,7 +257,35 @@ const NurseVitals = ({ studentId }) => {
                   value={vitalsData.weight}
                   onChange={handleInputChange}
                   placeholder="70"
-                  className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                  className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                />
+              </div>
+              <div className="flex h-[75px] flex-col justify-between">
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Date</label>
+                <input
+                  type="text"
+                  name="date"
+                  value={getTodayDate()}
+                  placeholder="Date"
+                  className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[#F5F5F5] border-[1px] border-[#D0D5DD] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none text-[rgba(137,137,137,1)]"
+                  readOnly
+                />
+              </div>
+              <div className="flex h-[75px] flex-col justify-between">
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Recorded by</label>
+                <input
+                  type="text"
+                  name="recorder"
+                  value={
+                    `Nurse ${
+                      vitalsData.recorder
+                        ? `${vitalsData.recorder.firstName || ''} ${vitalsData.recorder.lastName || ''}`.trim()
+                        : ''
+                    }`
+                  }
+                  placeholder="Recorder Name"
+                  className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[#F5F5F5] border-[1px] border-[#D0D5DD] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none text-[rgba(137,137,137,1)]"
+                  readOnly
                 />
               </div>
               </div>

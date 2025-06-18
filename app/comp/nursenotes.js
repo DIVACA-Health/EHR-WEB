@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
 
 const sampleTags = [
   'Follow-up', 'Malaria', 'Medications', 'Typhoid', 'Admitted', 'Discharged',
@@ -24,7 +25,7 @@ export default function NoteManager({ studentId }) {
     const fetchNotes = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const res = await fetch(`https://ehr-backend-4vx2.onrender.com/api/v1/notes/${studentId}`, {
+        const res = await fetch(`/api/v1/allergies/${studentId}`, {
           headers: {
             'Content-Type': 'application/json',
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -58,7 +59,7 @@ export default function NoteManager({ studentId }) {
 
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch('/api/v1/notes', {
+      const res = await fetch('https://ehr-backend-4vx2.onrender.com/api/v1/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ export default function NoteManager({ studentId }) {
         // Refetch notes from API after successful save
         const fetchNotes = async () => {
           try {
-            const res = await fetch(`/api/v1/notes/${studentId}`, {
+            const res = await fetch(`https://ehr-backend-4vx2.onrender.com/api/v1/notes/${studentId}`, {
               headers: {
                 'Content-Type': 'application/json',
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
