@@ -25,7 +25,7 @@ export default function NoteManager({ studentId }) {
     const fetchNotes = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const res = await fetch(`/api/v1/allergies/${studentId}`, {
+        const res = await fetch(`/api/v1/notes/${studentId}`, {
           headers: {
             'Content-Type': 'application/json',
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -59,7 +59,7 @@ export default function NoteManager({ studentId }) {
 
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch('https://ehr-backend-4vx2.onrender.com/api/v1/notes', {
+      const res = await fetch(`/api/v1/notes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function NoteManager({ studentId }) {
         // Refetch notes from API after successful save
         const fetchNotes = async () => {
           try {
-            const res = await fetch(`https://ehr-backend-4vx2.onrender.com/api/v1/notes/${studentId}`, {
+            const res = await fetch(`/api/v1/notes/${studentId}`, {
               headers: {
                 'Content-Type': 'application/json',
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -148,19 +148,23 @@ export default function NoteManager({ studentId }) {
       {/* Notes List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-10 p-3">
         {notes.map((note, index) => (
-          <div key={index} className="bg-white rounded shadow">
-            <div className='flex bg-[rgba(243,246,255,1)] w-full border-[0.8px] border-[rgba(243,246,255,1)] shadow-b-sm p-3 rounded-t'>
+          <div key={index} className="bg-white rounded-[12px] border border-gray-200 shadow-sm p-0">
+            <div className='flex bg-[rgba(243,246,255,1)] w-full border-b border-gray-100 shadow-b-sm p-3 rounded-t-[12px]'>
               <div className='flex flex-col gap-2'>
                 <h3 className="font-semibold text-lg">{note.title}</h3>
-                <h3>nurse :</h3>
+                <div className="text-xs text-gray-500">Nurse: {note.nurseName || '—'}</div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2 mt-2 pl-4 pt-2">
-              <h1>Tags :</h1>
+              <span className="font-medium text-xs text-gray-500">Tags:</span>
               {(note.tags || []).map((tag, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 rounded-full text-xs text-white bg-blue-500"
+                  className="px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{
+                    backgroundColor: tagColors[i % tagColors.length],
+                    color: '#fff'
+                  }}
                 >
                   {tag}
                 </span>
@@ -277,7 +281,6 @@ export default function NoteManager({ studentId }) {
                 </div>
               </div>
             </div>
-
             <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
               <button
                 onClick={handleSaveNote}

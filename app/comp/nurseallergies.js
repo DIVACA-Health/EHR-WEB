@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Map allergy types to image URLs or imports
 const allergyTypeImages = {
@@ -30,6 +30,12 @@ const nurseallergies = ({ studentId }) => {
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const [customAllergyType, setCustomAllergyType] = useState('');
   const [isAddingCustom, setIsAddingCustom] = useState(false);
+
+  // For custom severity dropdown
+  const [showSeverityDropdown, setShowSeverityDropdown] = useState(false);
+
+  // Ref for the form
+  const formRef = useRef(null);
 
   // Fetch allergies from API
   useEffect(() => {
@@ -130,6 +136,23 @@ const nurseallergies = ({ studentId }) => {
     }
   };
 
+  // Click outside handler for severity dropdown
+  useEffect(() => {
+    if (!showSeverityDropdown) return;
+    const handleClick = (e) => {
+      if (!e.target.closest('.severity-dropdown')) setShowSeverityDropdown(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [showSeverityDropdown]);
+
+  // Handler for external submit button
+  const handleExternalSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   return (
     <div className='border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-sm rounded-[12px]'>
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-xs mb-4 rounded-t-[12px] '>
@@ -181,7 +204,11 @@ const nurseallergies = ({ studentId }) => {
               <h2 className="text-xl font-semibold">Record New Allergies</h2>
               <button onClick={() => setShowSidebar(false)} className="text-xl">×</button>
             </div>
-            <form className='min-h-[78%] flex flex-col pl-7 pr-7 gap-[14px]' onSubmit={handleSubmit}>
+            <form
+              ref={formRef}
+              className='min-h-[78%] flex flex-col pl-7 pr-7 gap-[14px]'
+              onSubmit={handleSubmit}
+            >
               <div className='flex flex-col gap-2'>
                 <label>Allergy type</label>
                 {/* Custom dropdown */}
@@ -283,36 +310,92 @@ const nurseallergies = ({ studentId }) => {
                 <input
                   type='text'
                   placeholder='Enter allergy name'
-                  className='w-[90%] bg-[#FFFFFF] border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#898989]'
+                  className='w-[90%] bg-[#FFFFFF] outline-none border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#cdbebe]'
                   value={allergyName}
                   onChange={e => setAllergyName(e.target.value)}
                   required
                 />
               </div>
-              <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2'>
                 <label>Severity level</label>
-                <select
-                  className='w-[90%] bg-[#FFFFFF] border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#898989]'
-                  value={severityLevel}
-                  onChange={e => setSeverityLevel(e.target.value)}
-                  required
-                >
-                  <option value="">Select severity</option>
-                  <option>Mild</option>
-                  <option>Moderate</option>
-                  <option>Severe</option>
-                </select>
-              </div>
-              <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm'>
-                <button
-                  type='submit'
-                  className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
-                  disabled={isSaving}
-                >
-                  {isSaving ? 'Saving...' : 'Save Allergy'}
-                </button>
-              </div>
+                {/* Custom severity dropdown */}
+                <div className="relative w-[90%] severity-dropdown">
+                    <button
+                    type="button"
+                    className="flex items-center justify-between w-full bg-white border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#898989] focus:outline-none"
+                    onClick={() => setShowSeverityDropdown((prev) => !prev)}
+                    >
+                    <span>
+                        {severityLevel
+                        ? <span className={`px-3 py-1 border-[1.5px] rounded-[12px] text-xs font-semibold ${
+                            severityLevel === 'Mild'
+                                ? 'border-green-300 bg-green-100 text-green-600'
+                                : severityLevel === 'Moderate'
+                                ? 'border-amber-300 bg-amber-100 text-amber-600'
+                                : severityLevel === 'Severe'
+                                ? 'border-red-300 bg-red-100 text-red-600'
+                                : ''
+                            }`}>{severityLevel}</span>
+                        : 'Select severity level'}
+                    </span>
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5" stroke="#898989" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    </button>
+                    {showSeverityDropdown && (
+                    <div
+                        className="absolute left-0 right-0 z-50 mt-1 bg-white border border-[#D0D5DD] rounded-[12px] shadow-lg"
+                        style={{ minWidth: '100%', maxWidth: '100%' }}
+                    >
+                        <div
+                        className={`flex items-center gap-2 px-4 py-2 cursor-pointer ${!severityLevel ? 'bg-[#EEF4FF] text-[#3B6FED]' : ''}`}
+                        onClick={() => {
+                            setSeverityLevel('');
+                            setShowSeverityDropdown(false);
+                        }}
+                        >
+                        Select severity level
+                        { !severityLevel && (
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7" stroke="#3B6FED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                        )}
+                        </div>
+                        {['Mild', 'Moderate', 'Severe'].map(level => (
+                        <div
+                            key={level}
+                            className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#EEF4FF]"
+                            onClick={() => {
+                            setSeverityLevel(level);
+                            setShowSeverityDropdown(false);
+                            }}
+                        >
+                            <span className={`px-3 py-1 border-[1.5px] rounded-[12px] text-xs font-semibold ${
+                            level === 'Mild'
+                                ? 'border-green-300 bg-green-100 text-green-600'
+                                : level === 'Moderate'
+                                ? 'border-amber-300 bg-amber-100 text-amber-600'
+                                : level === 'Severe'
+                                ? 'border-red-300 bg-red-100 text-red-600'
+                                : ''
+                            }`}>{level}</span>
+                        </div>
+                        ))}
+                    </div>
+                    )}
+                </div>
+                </div>
             </form>
+            <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm'>
+              <button
+                type='button'
+                className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
+                disabled={isSaving}
+                onClick={handleExternalSubmit}
+              >
+                {isSaving ? 'Saving...' : 'Save Allergy'}
+              </button>
+            </div>
           </div>
         </div>
       )}
