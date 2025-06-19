@@ -244,8 +244,16 @@ export default function NurseQueueManagement() {
               filteredData.map((user, idx) => (
                 <tr
                   key={user.divacaId}
-                  className={idx % 2 === 0 ? "bg-[#FAFAFA]" : "bg-[#FFFFFF]"}
+                  className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
                   style={{ borderBottom: '1px solid #E5E7EB' }}
+                  onClick={e => {
+                    // Prevent row click if the action button (menu) is clicked
+                    if (
+                      e.target.closest('.action-menu-btn') ||
+                      e.target.closest('.floating-menu')
+                    ) return;
+                    handleRowClick(user.studentId);
+                  }}
                 >
                   <td className="px-4 py-3">{idx + 1}</td>
                   <td className="px-4 py-3">{user.firstname}</td>
@@ -263,10 +271,10 @@ export default function NurseQueueManagement() {
                       {user.status === 'Returned to health attendant' ? 'Returned to attendant' : user.status}
                     </span>
                   </td>
-                  <td className="relative p-3 text-lg">
+                  <td className="relative p-3 text-lg" onClick={e => e.stopPropagation()}>
                     <button
-                      onClick={e => handleMenuButtonClick(e, user)}
-                      className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+                      onClick={e => { e.stopPropagation(); handleMenuButtonClick(e, user); }}
+                      className="p-2 rounded-full hover:bg-gray-100 cursor-pointer action-menu-btn"
                     >
                       <img src="/image/More circle.png" alt="More options" width={20} height={20} />
                     </button>
