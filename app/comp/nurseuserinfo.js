@@ -507,7 +507,7 @@ const fetchUserQueueData = async () => {
             )}
 
             {activeSection === 'vitals' && (
-                      <Nursevitals studentId={user?.divacaId} />
+                <Nursevitals studentId={user?.divacaId} />
             )}
 
             {activeSection === 'allergies' && (

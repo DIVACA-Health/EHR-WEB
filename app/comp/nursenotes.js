@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const sampleTags = [
   'Follow-up', 'Malaria', 'Medications', 'Typhoid', 'Admitted', 'Discharged',
@@ -20,7 +20,6 @@ export default function NoteManager({ studentId }) {
   const [selectedColor, setSelectedColor] = useState(tagColors[0]);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Fetch notes from API when component mounts or studentId changes
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -44,7 +43,6 @@ export default function NoteManager({ studentId }) {
     if (studentId) fetchNotes();
   }, [studentId]);
 
-  // Send note to API and update notes from API after save
   const handleSaveNote = async () => {
     if (!noteTitle.trim() || !noteBody.trim()) return;
 
@@ -69,7 +67,6 @@ export default function NoteManager({ studentId }) {
       });
 
       if (res.ok) {
-        // Refetch notes from API after successful save
         const fetchNotes = async () => {
           try {
             const res = await fetch(`/api/v1/notes/${studentId}`, {
@@ -128,6 +125,17 @@ export default function NoteManager({ studentId }) {
     setSelectedTags(selectedTags.filter(t => t !== tag));
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB');
+  };
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  };
+
   return (
     <div className='w-full flex flex-col h-fit rounded-xl border-gray-200 border-[0.8px] shadow-sm relative'>
       {/* Header */}
@@ -146,31 +154,72 @@ export default function NoteManager({ studentId }) {
       </div>
 
       {/* Notes List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-10 p-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-10 p-3">
         {notes.map((note, index) => (
-          <div key={index} className="bg-white rounded-[12px] border border-gray-200 shadow-sm p-0">
-            <div className='flex bg-[rgba(243,246,255,1)] w-full border-b border-gray-100 shadow-b-sm p-3 rounded-t-[12px]'>
-              <div className='flex flex-col gap-2'>
-                <h3 className="font-semibold text-lg">{note.title}</h3>
-                <div className="text-xs text-gray-500">Nurse: {note.nurseName || '—'}</div>
+          <div
+            key={index}
+            className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-3"
+          >
+            {/* Nurse Note Section */}
+            <div className="rounded-xl border border-gray-200 bg-white">
+              {/* Header */}
+              <div className="flex items-start justify-between rounded-t-xl bg-[#F3F6FF] px-5 py-4 border-b border-gray-200">
+                <div>
+                  <h3 className="font-semibold text-base md:text-lg mb-1">{note.title}</h3>
+                  <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                    <span>Nurse {note.nurseName || '—'}</span>
+                    {note.createdAt && (
+                      <>
+                        <span className="mx-1">•</span>
+                        <span>{formatDate(note.createdAt)}</span>
+                        <span className="mx-1">•</span>
+                        <span>{formatTime(note.createdAt)}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-1">
+                  <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
+                    <img src="/image/copy.svg" alt="Copy" className="w-4 h-4" />
+                  </button>
+                  <button className="p-1 hover:bg-gray-200 rounded" title="Open">
+                    <img src="/image/open.svg" alt="Open" className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+              {/* Tags and Content */}
+              <div className="px-5 pt-3 pb-4">
+                <div className="flex flex-wrap gap-2 mb-2 items-center">
+                  <span className="font-medium text-xs text-gray-500">Tags:</span>
+                  {(note.tags || []).map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
+                      style={{
+                        borderColor: tagColors[i % tagColors.length],
+                        color: tagColors[i % tagColors.length],
+                        background: "#F3F6FF"
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="text-sm text-gray-700">{note.content || note.body}</div>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2 pl-4 pt-2">
-              <span className="font-medium text-xs text-gray-500">Tags:</span>
-              {(note.tags || []).map((tag, i) => (
-                <span
-                  key={i}
-                  className="px-3 py-1 rounded-full text-xs font-semibold"
-                  style={{
-                    backgroundColor: tagColors[i % tagColors.length],
-                    color: '#fff'
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
+            {/* Doctor Note Section */}
+            <div className="rounded-xl border border-gray-200 bg-[#F3F6FF] mt-2 flex flex-col min-h-[120px] overflow-hidden">
+              <div className="w-full px-5 py-4">
+                <div className="font-semibold text-base text-gray-700 mb-2">-----</div>
+                <div className="text-gray-400 text-base mb-4">-- • -- • --</div>
+              </div>
+              <div className="flex flex-col items-center justify-center bg-white rounded-b-xl py-6 border-t border-gray-200">
+                <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
+                <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
+                <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+              </div>
             </div>
-            <p className="mt-2 text-sm text-gray-700 p-4">{note.content || note.body}</p>
           </div>
         ))}
       </div>
@@ -268,7 +317,7 @@ export default function NoteManager({ studentId }) {
               </div>
             </div>
 
-            <div className='h-[58%] pl-6 pr-6 w-full'>
+            <div className='h-[60%] mt-5 pl-6 pr-6 w-full'>
               <div className="w-full h-[55vh] bg-white relative border-none text-[14px] leading-6">
                 <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 24px)" }} />
                 <div className="relative z-10 h-full border-none">
@@ -281,7 +330,7 @@ export default function NoteManager({ studentId }) {
                 </div>
               </div>
             </div>
-            <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+            <div className='min-h-[9%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
               <button
                 onClick={handleSaveNote}
                 className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
@@ -295,4 +344,4 @@ export default function NoteManager({ studentId }) {
       )}
     </div>
   );
-}
+ß}
