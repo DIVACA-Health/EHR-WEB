@@ -39,6 +39,8 @@ const dashboard = () => {
     const [selectedStatus, setSelectedStatus] = useState('All');
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+    const [menuUser, setMenuUser] = useState(null);
 
       const handleRowClick = async (userId) => {
         if (!userId) {
@@ -65,22 +67,24 @@ const dashboard = () => {
         }
       };
 
-      useEffect(() => {
+    useEffect(() => {
         const fetchQueueData = async () => {
           try {
-            const res = await fetchWithAuth('/api/v1/queue/');
+            const res = await fetchWithAuth('/api/v1/queue/medical-overview');
             if (!res.ok) throw new Error("Failed to fetch queue data");
             const result = await res.json();
-    
-            const transformed = result.map((item) => ({
-              name: `${item.firstName} ${item.lastName}`,
-              divacaId: item.userId,
-              matricNumber: item.studentId || 'N/A',
-              status: item.status,
-              lastVisit: new Date(item.timeAdded).toLocaleDateString(),
-              avatar: item.avatar || '/image/avatar.png',
+            const items = Array.isArray(result) ? result : result.data;
+            const transformed = (items || []).map((item) => ({
+              firstname: item.personalInfo.firstName,
+              lastname: item.personalInfo.lastName,
+              name: `${item.personalInfo.firstName} ${item.personalInfo.lastName}`,
+              divacaId: item.queueInfo.id,
+              matricNumber: item.student.matricNumber || 'N/A',
+              status: item.queueInfo.status,
+              studentId: item.student.id || "N/A",
+              lastVisit: item.queueInfo.timeAdded ? item.queueInfo.timeAdded : '',
+              avatar: '/image/profileimg.png',
             }));
-    
             setData(transformed);
             setLoading(false);
           } catch (err) {
@@ -89,34 +93,115 @@ const dashboard = () => {
             setLoading(false);
           }
         };
-    
         fetchQueueData();
-      }, []);
+    }, []);
+
+    const waitingData = data.filter(item => item.status === 'Waiting');
+    const referralsData = data.filter(item => item.status === 'Emergency' || item.status === 'Forwarded to doctor');
+    const recentData = [...data].sort((a, b) => new Date(b.lastVisit) - new Date(a.lastVisit));
     
-      useEffect(() => {
-        if (selectedStatus.toLowerCase() === 'all') {
-          setFilteredData(data);
-        } else {
-          setFilteredData(data.filter((item) => item.status.toLowerCase() === selectedStatus.toLowerCase()));
+        useEffect(() => {
+            const handleClickOutside = (e) => {
+              if (!e.target.closest('.floating-menu')) {
+                setMenuUser(null);
+              }
+            };
+            if (menuUser) {
+              document.addEventListener("mousedown", handleClickOutside);
+              document.addEventListener("touchstart", handleClickOutside);
+            }
+            return () => {
+              document.removeEventListener("mousedown", handleClickOutside);
+              document.removeEventListener("touchstart", handleClickOutside);
+            };
+        }, [menuUser]);
+
+    
+   const formatTime = (dateString) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
+
+    // Floating menu positioning
+const handleMenuButtonClick = (e, user) => {
+  const btnRect = e.currentTarget.getBoundingClientRect();
+  const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
+  const spaceBelow = window.innerHeight - btnRect.bottom;
+  let top = btnRect.bottom + 4;
+  if (spaceBelow < menuHeight) {
+    // Not enough space below, show above
+    top = btnRect.top - menuHeight - 4;
+    if (top < 0) top = 8; // Prevent offscreen top
+  }
+  setMenuPosition({
+    top,
+    left: btnRect.left,
+  });
+  setMenuUser(user);
+};
+
+    const handleForwardFiles = async (id) => {
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status: "Forwarded to Doctor" }),
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          toast.error(`Failed to forward files: ${errorText}`);
+          return;
         }
-      }, [selectedStatus, data]);
-    
-      useEffect(() => {
-        const handleClickOutside = (e) => {
-          if (!e.target.closest('.menu-container')) {
-            setOpenMenuIndex(null);
-          }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        document.addEventListener("touchstart", handleClickOutside); // Added for mobile
-        return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-          document.removeEventListener("touchstart", handleClickOutside);
-        };
-      }, []);
 
+        toast.success('Files forwarded successfully');
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to forward files:', err);
+        toast.error('An error occurred while forwarding files.');
+      }
+    };
 
+    const handleemergency = async (id) => {
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status: "emergency" }),
+        });
 
+        if (!res.ok) {
+          const errorText = await res.text();
+          toast.error(`Failed to change status to emergency: ${errorText}`);
+          return;
+        }
+
+        toast.success('Emergency patient added');
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to forward files:', err);
+        toast.error('An error occurred while forwarding files.');
+      }
+    };
+
+    const handleRemoveFromQueue = async (id) => {
+      const toastId = toast.loading('Removing from queue...');
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!res.ok) throw new Error('Failed to remove from queue');
+
+        toast.success('Removed from queue', { id: toastId });
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to remove from queue:', err);
+        toast.error('An error occurred while removing from queue.', { id: toastId });
+      }
+    };
 
   return (
     <div className='h-fit  w-full flex flex-col  items-center justify-center'> 
@@ -188,75 +273,73 @@ const dashboard = () => {
                     <img src='/image/rightarrow.png' alt='img' height={9} width={16}/>
                 </div>
             </div>
-            <table className="w-full text-sm text-left rounded-[12px]  border-[#E4E4E4] border-collapse  shadow-xs ">
-                <thead className="bg-gray-100 rounded-t-[12px]">
-                    <tr className="rounded-t-[12px]">
-                    <th className="px-4 py-3 ">S/N</th>
-                    <th className="px-4 py-3">Full Name</th>
-                    <th className="px-4 py-3">Divaca ID</th>
-                    <th className="px-4 py-3">Matric No.</th>
-                    <th className="px-4 py-3">Status</th>
-                    <th className="px-4 py-3">Last Visit</th>
-                    <th className="px-4 py-3">Action</th>
-                    </tr>
+            <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-4 relative border border-[#E5E7EB]">
+              <table className="w-full text-sm text-left border-collapse">
+                <thead className="bg-white border-b border-[#E5E7EB]">
+                  <tr>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">S/N</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">First name</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">Last name</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">Time in</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">Status</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">Action</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    {loading ? (
+                  {loading ? (
                     <tr>
-                        <td colSpan="7" className="px-4 py-6 text-center ">Loading...</td>
+                      <td colSpan="7" className="px-4 py-6 text-center">Loading...</td>
                     </tr>
-                    ) : filteredData.length > 0 ? (
-                    filteredData.map((user, idx) => (
-                        <tr key={user.divacaId} className="border-t hover:bg-gray-50 transition-colors">
+                  ) : recentData.length > 0 ? (
+                    recentData.map((user, idx) => (
+                      <tr
+                        key={user.divacaId}
+                        className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
+                        style={{ borderBottom: '1px solid #E5E7EB' }}
+                        onClick={e => {
+                          if (
+                            e.target.closest('.action-menu-btn') ||
+                            e.target.closest('.floating-menu')
+                          ) return;
+                          handleRowClick(user.studentId);
+                        }}
+                      >
                         <td className="px-4 py-3">{idx + 1}</td>
-                        <td className="px-4 py-3 flex items-center gap-3 cursor-pointer" onClick={() => handleRowClick(user.divacaId)}>
-                            <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                            {user.name}
-                        </td>
-                        <td className="px-4 py-3">{user.divacaId}</td>
-                        <td className="px-4 py-3">{user.matricNumber}</td>
+                        <td className="px-4 py-3">{user.firstname}</td>
+                        <td className="px-4 py-3">{user.lastname}</td>
+                        <td className="px-4 py-3">{formatTime(user.lastVisit)}</td>
                         <td className="px-4 py-3">
-                            <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                            user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[0.8px] border-[#E99633]' :
-                            user.status === 'In consultation' ? 'bg-blue-200 text-blue-800' :
-                            user.status === 'Forwarded to doctor' ? 'bg-blue-200 text-pink-800' :
-                            user.status === 'Emergency' ? 'bg-blue-200 text-red-800' :
-                            user.status === 'Returned to health attendant' ? 'bg-green-200 text-green-800' :
-                            'bg-gray-200 text-gray-800'
-                            }`}>
-                            {user.status}
-                            </span>
+                          <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
+                            user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
+                            user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
+                            user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                            user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                            user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
+                            'bg-gray-200 text-gray-800 border-gray-300'
+                          }`}>
+                            {user.status === 'Returned to health attendant' ? 'Returned to attendant' : user.status}
+                          </span>
                         </td>
-                        <td className="px-4 py-3">{user.lastVisit}</td>
-                        <td className="relative p-3 text-lg menu-container">
-                            <button
-                            onClick={() => setOpenMenuIndex((prev) => (prev === idx ? null : idx))}
-                            className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
-                            >
+                        <td className="relative p-3 text-lg" onClick={e => e.stopPropagation()}>
+                          <button
+                            onClick={e => { e.stopPropagation(); handleMenuButtonClick(e, user); }}
+                            className="p-2 rounded-full hover:bg-gray-100 cursor-pointer action-menu-btn"
+                          >
                             <img src="/image/More circle.png" alt="More options" width={20} height={20} />
-                            </button>
-                            {openMenuIndex === idx && (
-                            <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
-                                <button
-                                onClick={() => toast.success(`${user.name} added to patient queue`)}
-                                className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
-                                >
-                                Add to patient queue
-                                </button>
-                            </div>
-                            )}
+                          </button>
                         </td>
-                        </tr>
+                      </tr>
                     ))
-                    ) : (
+                  ) : (
                     <tr>
-                        <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+                      <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
                         No queue data available.
-                        </td>
+                      </td>
                     </tr>
-                    )}
+                  )}
                 </tbody>
-            </table>
+              </table>
+            </div>
         </div>
         <div className='h-[158px] w-full  rounded-[12px] mb-10'>
             <div className='w-full  h-[30%] flex  tems-center justify-between rounded-t-[12px]'>
@@ -297,6 +380,57 @@ const dashboard = () => {
                     </div>
                 </div>
         </div>
+                {menuUser && (
+          <div
+            className="floating-menu bg-white shadow-lg rounded-lg border border-gray-200 py-2"
+            style={{
+              position: 'fixed',
+              top: menuPosition.top,
+              left: menuPosition.left - 90,
+              minWidth: 160,
+              zIndex: 1000,
+              maxHeight: '60vh',
+              overflowY: 'auto',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              View health record
+            </button>
+            <button
+              onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Record vitals
+            </button>
+            <button
+              onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Forward patient files
+            </button>
+            <button
+              onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Flag as emergency
+            </button>
+            <button
+              onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Remove from queue
+            </button>
+          </div>
+        )}
 
     </div>
 

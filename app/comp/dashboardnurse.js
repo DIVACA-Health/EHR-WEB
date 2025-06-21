@@ -120,13 +120,83 @@ const dashboard = () => {
     };
 
     // Floating menu positioning
-    const handleMenuButtonClick = (e, user) => {
-      const btnRect = e.currentTarget.getBoundingClientRect();
-      setMenuPosition({
-        top: btnRect.bottom + 4,
-        left: btnRect.left,
-      });
-      setMenuUser(user);
+const handleMenuButtonClick = (e, user) => {
+  const btnRect = e.currentTarget.getBoundingClientRect();
+  const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
+  const spaceBelow = window.innerHeight - btnRect.bottom;
+  let top = btnRect.bottom + 4;
+  if (spaceBelow < menuHeight) {
+    // Not enough space below, show above
+    top = btnRect.top - menuHeight - 4;
+    if (top < 0) top = 8; // Prevent offscreen top
+  }
+  setMenuPosition({
+    top,
+    left: btnRect.left,
+  });
+  setMenuUser(user);
+};
+
+    const handleForwardFiles = async (id) => {
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status: "Forwarded to Doctor" }),
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          toast.error(`Failed to forward files: ${errorText}`);
+          return;
+        }
+
+        toast.success('Files forwarded successfully');
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to forward files:', err);
+        toast.error('An error occurred while forwarding files.');
+      }
+    };
+
+    const handleemergency = async (id) => {
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+          method: 'PUT',
+          body: JSON.stringify({ status: "emergency" }),
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          toast.error(`Failed to change status to emergency: ${errorText}`);
+          return;
+        }
+
+        toast.success('Emergency patient added');
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to forward files:', err);
+        toast.error('An error occurred while forwarding files.');
+      }
+    };
+
+    const handleRemoveFromQueue = async (id) => {
+      const toastId = toast.loading('Removing from queue...');
+      try {
+        const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!res.ok) throw new Error('Failed to remove from queue');
+
+        toast.success('Removed from queue', { id: toastId });
+        setMenuUser(null);
+        // Optionally refetch data here
+      } catch (err) {
+        console.error('Failed to remove from queue:', err);
+        toast.error('An error occurred while removing from queue.', { id: toastId });
+      }
     };
 
     return (
@@ -262,25 +332,6 @@ const dashboard = () => {
                   )}
                 </tbody>
               </table>
-              {menuUser && (
-                <div
-                  className="floating-menu bg-white shadow-md rounded-xl border border-gray-200"
-                  style={{
-                    position: 'fixed',
-                    top: menuPosition.top,
-                    left: menuPosition.left - 95,
-                    minWidth: 220,
-                    zIndex: 1000,
-                  }}
-                  onClick={e => e.stopPropagation()}
-                >
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">View health record</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Record vitals</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Forward patient files</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Flag as emergency</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Remove from queue</button>
-                </div>
-              )}
             </div>
           </div>
           {/* Pending Referrals */}
@@ -359,25 +410,6 @@ const dashboard = () => {
                   )}
                 </tbody>
               </table>
-              {menuUser && (
-                <div
-                  className="floating-menu bg-white shadow-md rounded-xl border border-gray-200"
-                  style={{
-                    position: 'fixed',
-                    top: menuPosition.top,
-                    left: menuPosition.left - 95,
-                    minWidth: 220,
-                    zIndex: 1000,
-                  }}
-                  onClick={e => e.stopPropagation()}
-                >
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">View health record</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Record vitals</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Forward patient files</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Flag as emergency</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Remove from queue</button>
-                </div>
-              )}
             </div>
           </div>
           {/* Recent Interactions */}
@@ -457,28 +489,61 @@ const dashboard = () => {
                   )}
                 </tbody>
               </table>
-              {menuUser && (
-                <div
-                  className="floating-menu bg-white shadow-md rounded-xl border border-gray-200"
-                  style={{
-                    position: 'fixed',
-                    top: menuPosition.top,
-                    left: menuPosition.left - 95,
-                    minWidth: 220,
-                    zIndex: 1000,
-                  }}
-                  onClick={e => e.stopPropagation()}
-                >
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">View health record</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Record vitals</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Forward patient files</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Flag as emergency</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer">Remove from queue</button>
-                </div>
-              )}
             </div>
           </div>
         </div>
+        {/* Floating menu rendered ONCE here */}
+        {menuUser && (
+          <div
+            className="floating-menu bg-white shadow-lg rounded-lg border border-gray-200 py-2"
+            style={{
+              position: 'fixed',
+              top: menuPosition.top,
+              left: menuPosition.left - 90,
+              minWidth: 160,
+              zIndex: 1000,
+              maxHeight: '60vh',
+              overflowY: 'auto',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              View health record
+            </button>
+            <button
+              onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Record vitals
+            </button>
+            <button
+              onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Forward patient files
+            </button>
+            <button
+              onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Flag as emergency
+            </button>
+            <button
+              onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Remove from queue
+            </button>
+          </div>
+        )}
       </div>
     );
 };

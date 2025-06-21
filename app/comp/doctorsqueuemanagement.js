@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
@@ -32,27 +32,32 @@ const fetchWithAuth = async (url, options = {}) => {
 };
 
 export default function NurseQueueManagement() {
-  const [selectedStatus, setSelectedStatus] = useState('All');
+   const [selectedStatus, setSelectedStatus] = useState('All');
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [openMenuIndex, setOpenMenuIndex] = useState(null);
-  const router = useRouter();
 
-  const handleRowClick = async (userId) => {
-    if (!userId) {
+  // Floating menu state
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [menuUser, setMenuUser] = useState(null);
+
+  const router = useRouter();
+  const tableContainerRef = useRef(null);
+
+  const handleRowClick = async (studentId) => {
+    if (!studentId) {
       toast.error('Invalid user ID. Cannot navigate to the page.');
       return;
     }
 
-    const checkUrl = `/api/v1/queue/${userId}/current`;
-    const navigateUrl = `/queue1/${userId}`; // Updated to point to real route
+    const checkUrl = `/api/v1/queue/${studentId}/current`;
+    const navigateUrl = `/queue1/${studentId}`;
 
     try {
       const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
 
       if (res.ok) {
-        router.push(navigateUrl); // Navigate to the actual frontend route
+        router.push(navigateUrl);
       } else if (res.status === 401) {
         toast.error('Unauthorized: Please log in again.');
         router.push('/login');
@@ -68,24 +73,27 @@ export default function NurseQueueManagement() {
     const fetchQueueData = async () => {
       try {
         const res = await fetchWithAuth('/api/v1/queue/medical-overview');
-        if (!res.ok) throw new Error("Failed to fetch queue data");
-        const result = await res.json();
+        if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
 
-        const transformed = result.map((item) => ({
-          name: `${item.personalInfo.firstName} ${item.personalInfo.lastName}`,
-          divacaId: item.student.id, // or item.student.matricNumber if you want the matric number here
+        const result = await res.json();
+        const transformed = result.data.map((item) => ({
+          firstname: item.personalInfo.firstName,
+          lastname: item.personalInfo.lastName,
+          divacaId: item.queueInfo.id,
           matricNumber: item.student.matricNumber || 'N/A',
           status: item.queueInfo.status,
-          lastVisit: new Date(item.queueInfo.timeAdded).toLocaleDateString(),
-          avatar: item.personalInfo.avatar || '/image/profileimg.png',
-          queueId: item.queueInfo.id, // <-- Add this if you need to PATCH/PUT status later
-            }));
+          studentId: item.student.id || "N/A",
+          lastVisit: item.queueInfo.timeAdded
+            ? item.queueInfo.timeAdded
+            : '',
+          avatar: '/image/profileimg.png',
+        }));
 
         setData(transformed);
         setLoading(false);
       } catch (err) {
         if (process.env.NODE_ENV === 'development') console.error(err);
-        toast.error('Failed to fetch queue data');
+        toast.error('Failed to fetch medical overview data');
         setLoading(false);
       }
     };
@@ -101,19 +109,22 @@ export default function NurseQueueManagement() {
     }
   }, [selectedStatus, data]);
 
+  // Close floating menu on click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!e.target.closest('.menu-container')) {
-        setOpenMenuIndex(null);
+      if (!e.target.closest('.floating-menu')) {
+        setMenuUser(null);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside); // Added for mobile
+    if (menuUser) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, []);
+  }, [menuUser]);
 
   const statusCounts = {
     all: data.length,
@@ -132,6 +143,95 @@ export default function NurseQueueManagement() {
     { label: `Returned to health attendant (${statusCounts.returned})`, value: 'Returned to health attendant' },
     { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
   ];
+
+  const handleRemoveFromQueue = async (id) => {
+    const toastId = toast.loading('Removing from queue...');
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) throw new Error('Failed to remove from queue');
+
+      toast.success('Removed from queue', { id: toastId });
+      setMenuUser(null);
+      // Optionally refetch data here
+    } catch (err) {
+      console.error('Failed to remove from queue:', err);
+      toast.error('An error occurred while removing from queue.', { id: toastId });
+    }
+  };
+
+  const handleForwardFiles = async (id) => {
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "Forwarded to Doctor" }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to forward files: ${errorText}`);
+        return;
+      }
+
+      toast.success('Files forwarded successfully');
+      setMenuUser(null);
+      // Optionally refetch data here
+    } catch (err) {
+      console.error('Failed to forward files:', err);
+      toast.error('An error occurred while forwarding files.');
+    }
+  };
+
+    const handleemergency = async (id) => {
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "emergency" }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to forward files: ${errorText}`);
+        return;
+      }
+
+      toast.success('Files forwarded successfully');
+      setMenuUser(null);
+      // Optionally refetch data here
+    } catch (err) {
+      console.error('Failed to forward files:', err);
+      toast.error('An error occurred while forwarding files.');
+    }
+  };
+
+  // --- Floating menu positioning fix ---
+  // Use fixed positioning relative to viewport, not table container
+const handleMenuButtonClick = (e, user) => {
+  const btnRect = e.currentTarget.getBoundingClientRect();
+  const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
+  const spaceBelow = window.innerHeight - btnRect.bottom;
+  let top = btnRect.bottom + 4;
+  if (spaceBelow < menuHeight) {
+    // Not enough space below, show above
+    top = btnRect.top - menuHeight - 4;
+    if (top < 0) top = 8; // Prevent offscreen top
+  }
+  setMenuPosition({
+    top,
+    left: btnRect.left,
+  });
+  setMenuUser(user);
+};
+
+  // Format time as "h:mm AM/PM"
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+  };
+
 
   return (
     <div className="p-4">
@@ -155,17 +255,16 @@ export default function NurseQueueManagement() {
         ))}
       </div>
 
-      <div className="overflow-x-auto bg-white shadow rounded mt-4">
+      <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-8 relative border border-[#E5E7EB]" ref={tableContainerRef}>
         <table className="w-full text-sm text-left border-collapse">
-          <thead className="bg-gray-100 border-b">
+          <thead className="bg-white border-b border-[#E5E7EB]">
             <tr>
-              <th className="px-4 py-3">S/N</th>
-              <th className="px-4 py-3">Full Name1</th>
-              <th className="px-4 py-3">Divaca ID</th>
-              <th className="px-4 py-3">Matric No.</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Last Visit</th>
-              <th className="px-4 py-3">Action</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">S/N</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">First name</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">Last name</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">Time in</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">Status</th>
+              <th className="px-4 py-3 font-normal text-[#6B7280]">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -175,44 +274,42 @@ export default function NurseQueueManagement() {
               </tr>
             ) : filteredData.length > 0 ? (
               filteredData.map((user, idx) => (
-                <tr key={user.divacaId} className="border-t hover:bg-gray-50 transition-colors">
+                <tr
+                  key={user.divacaId}
+                  className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
+                  style={{ borderBottom: '1px solid #E5E7EB' }}
+                  onClick={e => {
+                    // Prevent row click if the action button (menu) is clicked
+                    if (
+                      e.target.closest('.action-menu-btn') ||
+                      e.target.closest('.floating-menu')
+                    ) return;
+                    handleRowClick(user.studentId);
+                  }}
+                >
                   <td className="px-4 py-3">{idx + 1}</td>
-                  <td className="px-4 py-3 flex items-center gap-3 cursor-pointer" onClick={() => handleRowClick(user.divacaId)}>
-                    <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                    {user.name}
-                  </td>
-                  <td className="px-4 py-3">{user.divacaId}</td>
-                  <td className="px-4 py-3">{user.matricNumber}</td>
+                  <td className="px-4 py-3">{user.firstname}</td>
+                  <td className="px-4 py-3">{user.lastname}</td>
+                  <td className="px-4 py-3">{formatTime(user.lastVisit)}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                      user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[0.8px] border-[#E99633]' :
-                      user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[0.8px] border-[#3B6FED]' :
-                      user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[0.8px] border-[#218838]' :
-                      user.status === 'Emergency' ? 'bg-[#ECFFF0] text-[#e24312] border-[0.8px] border-[#e24312]' :
-                      user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[0.8px] border-[#2000C2]' :
-                      'bg-gray-200 text-gray-800'
+                    <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
+                      user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
+                      user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
+                      user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                      user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                      user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
+                      'bg-gray-200 text-gray-800 border-gray-300'
                     }`}>
-                      {user.status}
+                      {user.status === 'Returned to health attendant' ? 'Returned to attendant' : user.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3">{user.lastVisit}</td>
-                  <td className="relative p-3 text-lg menu-container">
+                  <td className="relative p-3 text-lg" onClick={e => e.stopPropagation()}>
                     <button
-                      onClick={() => setOpenMenuIndex((prev) => (prev === idx ? null : idx))}
-                      className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+                      onClick={e => { e.stopPropagation(); handleMenuButtonClick(e, user); }}
+                      className="p-2 rounded-full hover:bg-gray-100 cursor-pointer action-menu-btn"
                     >
                       <img src="/image/More circle.png" alt="More options" width={20} height={20} />
                     </button>
-                    {openMenuIndex === idx && (
-                      <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
-                        <button
-                          onClick={() => toast.success(`${user.name} added to patient queue`)}
-                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
-                        >
-                          Add to patient queue
-                        </button>
-                      </div>
-                    )}
                   </td>
                 </tr>
               ))
@@ -226,6 +323,57 @@ export default function NurseQueueManagement() {
           </tbody>
         </table>
       </div>
+      {/* Floating Action Menu - OUTSIDE the table container */}
+      {menuUser && (
+        <div
+          className="floating-menu bg-white shadow-lg rounded-lg border border-gray-200 py-2"
+          style={{
+            position: 'fixed',
+            top: menuPosition.top,
+            left: menuPosition.left - 90,
+            minWidth: 160,
+            zIndex: 1000,
+            maxHeight: '60vh',
+            overflowY: 'auto',
+          }}
+        >
+          <button
+            onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            View health record
+          </button>
+          <button
+            onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Record vitals
+          </button>
+          <button
+            onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Forward patient files
+          </button>
+          <button
+            onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Flag as emergency
+          </button>
+          <button
+            onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Remove from queue
+          </button>
+        </div>
+      )}
     </div>
   );
 }

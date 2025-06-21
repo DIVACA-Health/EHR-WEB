@@ -46,43 +46,7 @@ const QueueDetailPage = () => {
   const fullName = user?.name || '';
     const [firstName, ...rest] = fullName.trim().split(' ');
     const lastName = rest.join(' ');
-    const sampleTags = [
-        { label: "Follow-up", color: "blue" },
-        { label: "Malaria", color: "blue" },
-        { label: "Medications", color: "blue" },
-        { label: "Typhoid", color: "blue" },
-        { label: "Admitted", color: "red" },
-        { label: "Cough", color: "blue" },
-        { label: "Discharged", color: "green" },
-    ];
-      const [showSidebar, setShowSidebar] = useState(false);
-      const [notes, setNotes] = useState([]);
-      const [noteTitle, setNoteTitle] = useState('');
-      const [noteBody, setNoteBody] = useState('');
-      const [tags, setTags] = useState([]);
-      const [showTagSelector, setShowTagSelector] = useState(false);
-      const [selectedTag, setSelectedTag] = useState('');
-
-      const handleSaveNote = () => {
-        if (!noteTitle.trim()) return;
-        const newNote = { title: noteTitle.trim(), tags, body: noteBody.trim() };
-        setNotes([...notes, newNote]);
-        setNoteTitle('');
-        setNoteBody('');
-        setTags([]);
-        setShowSidebar(false);
-        setShowTagSelector(false);
-        setSelectedTag('');
-      };
-    
-      const handleAddTag = () => {
-        if (selectedTag && !tags.includes(selectedTag)) {
-          setTags([...tags, selectedTag]);
-        }
-        setSelectedTag('');
-        setShowTagSelector(false);
-      };
-
+   
   useEffect(() => {
     if (!params.userId) {
       return;
