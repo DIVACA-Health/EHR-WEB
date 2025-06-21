@@ -52,16 +52,15 @@ const Language = () => {
           <h1 className='text-sm text-[#141414] font-normal'>Date format</h1>
           <h1 className='text-[#898989] text-xs'>Choose how dates are displayed</h1>
         </div>
-        <div
-          className='flex items-center h-1/2 w-[388px] border-[1px] border-[#D0D5DD] rounded-[12px] pr-2 cursor-pointer pl-3'
-          onClick={handleDivClick}
-        >
-          <input
-            ref={dateInputRef}
-            type='date'
-            className='w-full h-full outline-none text-[#636363] font-light bg-transparent'
-          />
+        <div className='flex items-center h-1/2 w-[388px] border-[1px] border-[#D0D5DD] rounded-[12px] pr-2'>
+          <select className='w-full h-full pl-3 outline-none text-[#636363] font-light'>
+            <option value="" disabled hidden>DD / MM / YYYY</option>
+            <option value="DD/MM/YYYY">DD / MM / YYYY</option>
+            <option value="MM/DD/YYYY">MM / DD / YYYY</option>
+            <option value="YYYY/MM/DD">YYYY / MM / DD</option>
+          </select>
         </div>
+
       </div>
     </div>
   );
