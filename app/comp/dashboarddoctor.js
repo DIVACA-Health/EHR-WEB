@@ -49,7 +49,7 @@ const dashboard = () => {
         }
     
         const checkUrl = `/api/v1/queue/${userId}/current`;
-        const navigateUrl = `/queue/${userId}`; // Updated to point to real route
+        const navigateUrl = `/queue1/${userId}`; // Updated to point to real route
     
         try {
           const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
