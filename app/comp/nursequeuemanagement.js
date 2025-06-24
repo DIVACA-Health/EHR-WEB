@@ -43,60 +43,36 @@ export default function NurseQueueManagement() {
   const router = useRouter();
   const tableContainerRef = useRef(null);
 
-  const handleRowClick = async (studentId) => {
-    if (!studentId) {
-      toast.error('Invalid user ID. Cannot navigate to the page.');
-      return;
-    }
-
-    const checkUrl = `/api/v1/queue/${studentId}/current`;
-    const navigateUrl = `/queue/${studentId}`;
-
+  // Fetch queue data function (so it can be reused after actions)
+  const fetchQueueData = async () => {
     try {
-      const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
+      const res = await fetchWithAuth('/api/v1/queue/medical-overview');
+      if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
 
-      if (res.ok) {
-        router.push(navigateUrl);
-      } else if (res.status === 401) {
-        toast.error('Unauthorized: Please log in again.');
-        router.push('/login');
-      } else {
-        toast.error('The requested page does not exist.');
-      }
-    } catch (error) {
-      toast.error('Failed to validate the page. Please try again.');
+      const result = await res.json();
+      const transformed = result.data.map((item) => ({
+        firstname: item.personalInfo.firstName,
+        lastname: item.personalInfo.lastName,
+        divacaId: item.queueInfo.id,
+        matricNumber: item.student.matricNumber || 'N/A',
+        status: item.queueInfo.status,
+        studentId: item.student.id || "N/A",
+        lastVisit: item.queueInfo.timeAdded
+          ? item.queueInfo.timeAdded
+          : '',
+        avatar: '/image/profileimg.png',
+      }));
+
+      setData(transformed);
+      setLoading(false);
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error(err);
+      toast.error('Failed to fetch medical overview data');
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const fetchQueueData = async () => {
-      try {
-        const res = await fetchWithAuth('/api/v1/queue/medical-overview');
-        if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
-
-        const result = await res.json();
-        const transformed = result.data.map((item) => ({
-          firstname: item.personalInfo.firstName,
-          lastname: item.personalInfo.lastName,
-          divacaId: item.queueInfo.id,
-          matricNumber: item.student.matricNumber || 'N/A',
-          status: item.queueInfo.status,
-          studentId: item.student.id || "N/A",
-          lastVisit: item.queueInfo.timeAdded
-            ? item.queueInfo.timeAdded
-            : '',
-          avatar: '/image/profileimg.png',
-        }));
-
-        setData(transformed);
-        setLoading(false);
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') console.error(err);
-        toast.error('Failed to fetch medical overview data');
-        setLoading(false);
-      }
-    };
-
     fetchQueueData();
   }, []);
 
@@ -143,6 +119,31 @@ export default function NurseQueueManagement() {
     { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
   ];
 
+  const handleRowClick = async (studentId) => {
+    if (!studentId) {
+      toast.error('Invalid user ID. Cannot navigate to the page.');
+      return;
+    }
+
+    const checkUrl = `/api/v1/queue/${studentId}/current`;
+    const navigateUrl = `/queue/${studentId}`;
+
+    try {
+      const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
+
+      if (res.ok) {
+        router.push(navigateUrl);
+      } else if (res.status === 401) {
+        toast.error('Unauthorized: Please log in again.');
+        router.push('/login');
+      } else {
+        toast.error('The requested page does not exist.');
+      }
+    } catch (error) {
+      toast.error('Failed to validate the page. Please try again.');
+    }
+  };
+
   const handleRemoveFromQueue = async (id) => {
     const toastId = toast.loading('Removing from queue...');
     try {
@@ -154,7 +155,7 @@ export default function NurseQueueManagement() {
 
       toast.success('Removed from queue', { id: toastId });
       setMenuUser(null);
-      // Optionally refetch data here
+      await fetchQueueData(); // Refresh table after action
     } catch (err) {
       console.error('Failed to remove from queue:', err);
       toast.error('An error occurred while removing from queue.', { id: toastId });
@@ -165,7 +166,7 @@ export default function NurseQueueManagement() {
     try {
       const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
         method: 'PUT',
-        body: JSON.stringify({ status: "Forwarded to Doctor" }),
+        body: JSON.stringify({ status: "forwarded to doctor" }),
       });
 
       if (!res.ok) {
@@ -176,14 +177,14 @@ export default function NurseQueueManagement() {
 
       toast.success('Files forwarded successfully');
       setMenuUser(null);
-      // Optionally refetch data here
+      await fetchQueueData(); // Refresh table after action
     } catch (err) {
       console.error('Failed to forward files:', err);
       toast.error('An error occurred while forwarding files.');
     }
   };
 
-    const handleemergency = async (id) => {
+  const handleemergency = async (id) => {
     try {
       const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
         method: 'PUT',
@@ -198,7 +199,7 @@ export default function NurseQueueManagement() {
 
       toast.success('Files forwarded successfully');
       setMenuUser(null);
-      // Optionally refetch data here
+      await fetchQueueData(); // Refresh table after action
     } catch (err) {
       console.error('Failed to forward files:', err);
       toast.error('An error occurred while forwarding files.');
@@ -207,22 +208,22 @@ export default function NurseQueueManagement() {
 
   // --- Floating menu positioning fix ---
   // Use fixed positioning relative to viewport, not table container
-const handleMenuButtonClick = (e, user) => {
-  const btnRect = e.currentTarget.getBoundingClientRect();
-  const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
-  const spaceBelow = window.innerHeight - btnRect.bottom;
-  let top = btnRect.bottom + 4;
-  if (spaceBelow < menuHeight) {
-    // Not enough space below, show above
-    top = btnRect.top - menuHeight - 4;
-    if (top < 0) top = 8; // Prevent offscreen top
-  }
-  setMenuPosition({
-    top,
-    left: btnRect.left,
-  });
-  setMenuUser(user);
-};
+  const handleMenuButtonClick = (e, user) => {
+    const btnRect = e.currentTarget.getBoundingClientRect();
+    const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
+    const spaceBelow = window.innerHeight - btnRect.bottom;
+    let top = btnRect.bottom + 4;
+    if (spaceBelow < menuHeight) {
+      // Not enough space below, show above
+      top = btnRect.top - menuHeight - 4;
+      if (top < 0) top = 8; // Prevent offscreen top
+    }
+    setMenuPosition({
+      top,
+      left: btnRect.left,
+    });
+    setMenuUser(user);
+  };
 
   // Format time as "h:mm AM/PM"
   const formatTime = (dateString) => {
@@ -293,8 +294,8 @@ const handleMenuButtonClick = (e, user) => {
                     <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
                       user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
                       user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
-                      user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
-                      user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                      user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                      user.status === 'emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
                       user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
                       'bg-gray-200 text-gray-800 border-gray-300'
                     }`}>
@@ -350,14 +351,14 @@ const handleMenuButtonClick = (e, user) => {
             Record vitals
           </button>
           <button
-            onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
+            onClick={() => { handleForwardFiles(menuUser.studentId); setMenuUser(null); }}
             className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
             style={{ border: 'none', background: 'none' }}
           >
             Forward patient files
           </button>
           <button
-            onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
+            onClick={() => { handleemergency(menuUser.studentId); setMenuUser(null); }}
             className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
             style={{ border: 'none', background: 'none' }}
           >

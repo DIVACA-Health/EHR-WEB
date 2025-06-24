@@ -20,6 +20,10 @@ export default function NoteManager({ studentId }) {
   const [selectedColor, setSelectedColor] = useState(tagColors[0]);
   const [isSaving, setIsSaving] = useState(false);
 
+  // For expanded note sidebar (pair: nurse & doctor)
+  const [expandedPair, setExpandedPair] = useState(null);
+  const [showExpandedSidebar, setShowExpandedSidebar] = useState(false);
+
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -136,6 +140,21 @@ export default function NoteManager({ studentId }) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
+  // Helper: find the doctor note for a nurse note (by groupId or similar)
+  function findDoctorNoteForNurse(nurseNote) {
+    if (!nurseNote) return null;
+    // Try to match by groupId, visitId, or fallback to same index
+    if (nurseNote.groupId) {
+      return notes.find(
+        n => n.creator && n.creator.role === 'doctor' && n.groupId === nurseNote.groupId
+      );
+    }
+    // fallback: first doctor note after this nurse note
+    return notes.find(
+      n => n.creator && n.creator.role === 'doctor'
+    );
+  }
+
   return (
     <div className='w-full flex flex-col h-fit rounded-xl border-gray-200 border-[0.8px] shadow-sm relative'>
       {/* Header */}
@@ -154,75 +173,288 @@ export default function NoteManager({ studentId }) {
       </div>
 
       {/* Notes List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-10 p-3">
-        {notes.map((note, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-10 p-3 items-stretch">
+        {notes
+          .filter(note => note.creator && note.creator.role === 'nurse')
+          .map((note, index) => {
+            const doctorNoteForCard = findDoctorNoteForNurse(note);
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-3 h-full"
+              >
+                {/* Nurse Note Section */}
+                <div className="rounded-xl border border-gray-200 bg-white flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-start justify-between rounded-t-xl bg-[#E5FFEA] px-5 py-4 border-b border-gray-200">
+                    <div>
+                      <h3 className="font-semibold text-base md:text-lg mb-1">{note.title}</h3>
+                      <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                        <span>
+                          {note.creator && note.creator.role === 'nurse'
+                            ? `Nurse ${note.creator.firstName} ${note.creator.lastName}`
+                            : 'Nurse —'}
+                        </span>
+                        {note.createdAt && (
+                          <>
+                            <span className="mx-1">•</span>
+                            <span>{formatDate(note.createdAt)}</span>
+                            <span className="mx-1">•</span>
+                            <span>{formatTime(note.createdAt)}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-1">
+                      <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
+                        <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
+                      </button>
+                      <button
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Open"
+                        onClick={() => {
+                          setExpandedPair({ nurse: note, doctor: doctorNoteForCard });
+                          setShowExpandedSidebar(true);
+                        }}
+                      >
+                        <img src="/image/Expand.png" alt="expand" className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Tags and Content */}
+                  <div className="px-5 pt-3 pb-4 flex-1 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-2 items-center">
+                      <span className="font-medium text-xs text-gray-500">Tags:</span>
+                      {(note.tags || []).map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
+                          style={{
+                            borderColor: tagColors[i % tagColors.length],
+                            color: tagColors[i % tagColors.length],
+                            background: "#F3F6FF"
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="text-sm text-gray-700 flex-1">{note.content || note.body}</div>
+                  </div>
+                </div>
+                {/* Doctor Note Section */}
+                <div className="rounded-xl border border-gray-200 bg-white flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-start justify-between rounded-t-xl bg-[#F3F6FF] px-5 py-4 border-b border-gray-200">
+                    <div>
+                      <h3 className="font-semibold text-base md:text-lg mb-1">
+                        {doctorNoteForCard ? doctorNoteForCard.title : '-----'}
+                      </h3>
+                      <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                        <span>
+                          {doctorNoteForCard
+                            ? `Dr. ${doctorNoteForCard.creator.firstName} ${doctorNoteForCard.creator.lastName}`
+                            : 'Doctor —'}
+                        </span>
+                        {doctorNoteForCard && doctorNoteForCard.createdAt ? (
+                          <>
+                            <span className="mx-1">•</span>
+                            <span>{formatDate(doctorNoteForCard.createdAt)}</span>
+                            <span className="mx-1">•</span>
+                            <span>{formatTime(doctorNoteForCard.createdAt)}</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="mx-1">•</span>
+                            <span>--</span>
+                            <span className="mx-1">•</span>
+                            <span>--</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-1">
+                      <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
+                        <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
+                      </button>
+                      <button
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Open"
+                        onClick={() => {
+                          setExpandedPair({ nurse: note, doctor: doctorNoteForCard });
+                          setShowExpandedSidebar(true);
+                        }}
+                      >
+                        <img src="/image/Expand.png" alt="expand" className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Tags and Content */}
+                  <div className="px-5 pt-3 pb-4 flex-1 flex flex-col">
+                    <div className="flex flex-wrap gap-2 mb-2 items-center">
+                      <span className="font-medium text-xs text-gray-500">Tags:</span>
+                      {(doctorNoteForCard && doctorNoteForCard.tags && doctorNoteForCard.tags.length > 0) ? (
+                        doctorNoteForCard.tags.map((tag, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
+                            style={{
+                              borderColor: tagColors[i % tagColors.length],
+                              color: tagColors[i % tagColors.length],
+                              background: "#F3F6FF"
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-gray-400">--</span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-700 flex-1">
+                      {doctorNoteForCard ? doctorNoteForCard.content : (
+                        <div className="flex flex-col items-center justify-center py-6 h-full">
+                          <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
+                          <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
+                          <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+
+      {/* Expanded Note Sidebar (shows both nurse & doctor note for the card) */}
+      {showExpandedSidebar && expandedPair && (
+        <div className="fixed inset-0 z-50 bg-[#0C162F99]" onClick={() => setShowExpandedSidebar(false)}>
           <div
-            key={index}
-            className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-3"
+            className="absolute right-0 top-0 h-full w-[60%] bg-white shadow-lg z-50 flex flex-col"
+            onClick={e => e.stopPropagation()}
           >
-            {/* Nurse Note Section */}
-            <div className="rounded-xl border border-gray-200 bg-white">
-              {/* Header */}
-              <div className="flex items-start justify-between rounded-t-xl bg-[#F3F6FF] px-5 py-4 border-b border-gray-200">
-                <div>
-                  <h3 className="font-semibold text-base md:text-lg mb-1">{note.title}</h3>
-                  <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                    <span>Nurse {note.nurseName || '—'}</span>
-                    {note.createdAt && (
+            <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] border-gray-200 shadow-sm">
+              <h2 className="text-xl font-semibold">Note details</h2>
+              <button onClick={() => setShowExpandedSidebar(false)} className="text-xl">×</button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              {/* Nurse Note */}
+              <div className="rounded-xl border border-gray-200 bg-[#F3F6FF] mb-4">
+                <div className="px-5 py-4">
+                  <h3 className="font-semibold text-base md:text-lg mb-1">{expandedPair.nurse.title}</h3>
+                  <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-2">
+                    <span>
+                      {expandedPair.nurse.creator && expandedPair.nurse.creator.role === 'nurse'
+                        ? `Nurse ${expandedPair.nurse.creator.firstName} ${expandedPair.nurse.creator.lastName}`
+                        : 'Nurse —'}
+                    </span>
+                    {expandedPair.nurse.createdAt && (
                       <>
                         <span className="mx-1">•</span>
-                        <span>{formatDate(note.createdAt)}</span>
+                        <span>{formatDate(expandedPair.nurse.createdAt)}</span>
                         <span className="mx-1">•</span>
-                        <span>{formatTime(note.createdAt)}</span>
+                        <span>{formatTime(expandedPair.nurse.createdAt)}</span>
                       </>
                     )}
                   </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <span className="font-medium text-xs text-gray-500">Tags:</span>
+                    {(expandedPair.nurse.tags || []).map((tag, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
+                        style={{
+                          borderColor: tagColors[i % tagColors.length],
+                          color: tagColors[i % tagColors.length],
+                          background: "#F3F6FF"
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="text-sm text-gray-700 whitespace-pre-line mt-4">
+                    {expandedPair.nurse.content || expandedPair.nurse.body}
+                  </div>
                 </div>
-                <div className="flex gap-2 mt-1">
-                  <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
-                    <img src="/image/copy.svg" alt="Copy" className="w-4 h-4" />
-                  </button>
-                  <button className="p-1 hover:bg-gray-200 rounded" title="Open">
-                    <img src="/image/open.svg" alt="Open" className="w-4 h-4" />
+                <div className="flex justify-end px-5 pb-4">
+                  <button className="flex items-center gap-2 px-4 py-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
+                    <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
+                    Download note
                   </button>
                 </div>
               </div>
-              {/* Tags and Content */}
-              <div className="px-5 pt-3 pb-4">
-                <div className="flex flex-wrap gap-2 mb-2 items-center">
-                  <span className="font-medium text-xs text-gray-500">Tags:</span>
-                  {(note.tags || []).map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
-                      style={{
-                        borderColor: tagColors[i % tagColors.length],
-                        color: tagColors[i % tagColors.length],
-                        background: "#F3F6FF"
-                      }}
-                    >
-                      {tag}
+              {/* Doctor Note */}
+              <div className="rounded-xl border border-gray-200 bg-[#F3F6FF] mb-4">
+                <div className="px-5 py-4">
+                  <h3 className="font-semibold text-base md:text-lg mb-1">{expandedPair.doctor ? expandedPair.doctor.title : '-----'}</h3>
+                  <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-2">
+                    <span>
+                      {expandedPair.doctor
+                        ? `Dr. ${expandedPair.doctor.creator.firstName} ${expandedPair.doctor.creator.lastName}`
+                        : 'Doctor —'}
                     </span>
-                  ))}
+                    {expandedPair.doctor && expandedPair.doctor.createdAt ? (
+                      <>
+                        <span className="mx-1">•</span>
+                        <span>{formatDate(expandedPair.doctor.createdAt)}</span>
+                        <span className="mx-1">•</span>
+                        <span>{formatTime(expandedPair.doctor.createdAt)}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="mx-1">•</span>
+                        <span>--</span>
+                        <span className="mx-1">•</span>
+                        <span>--</span>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2 items-center">
+                    <span className="font-medium text-xs text-gray-500">Tags:</span>
+                    {(expandedPair.doctor && expandedPair.doctor.tags && expandedPair.doctor.tags.length > 0) ? (
+                      expandedPair.doctor.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 rounded-full text-xs font-semibold border border-[#D1D5DB] bg-[#F3F6FF] text-[#1E40AF]"
+                          style={{
+                            borderColor: tagColors[i % tagColors.length],
+                            color: tagColors[i % tagColors.length],
+                            background: "#F3F6FF"
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-gray-400">--</span>
+                    )}
+                  </div>
+                  <div className="text-sm text-gray-700 whitespace-pre-line mt-4">
+                    {expandedPair.doctor
+                      ? expandedPair.doctor.content
+                      : (
+                        <div className="flex flex-col items-center justify-center py-6 h-full">
+                          <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
+                          <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
+                          <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                        </div>
+                      )
+                    }
+                  </div>
                 </div>
-                <div className="text-sm text-gray-700">{note.content || note.body}</div>
-              </div>
-            </div>
-            {/* Doctor Note Section */}
-            <div className="rounded-xl border border-gray-200 bg-[#F3F6FF] mt-2 flex flex-col min-h-[120px] overflow-hidden">
-              <div className="w-full px-5 py-4">
-                <div className="font-semibold text-base text-gray-700 mb-2">-----</div>
-                <div className="text-gray-400 text-base mb-4">-- • -- • --</div>
-              </div>
-              <div className="flex flex-col items-center justify-center bg-white rounded-b-xl py-6 border-t border-gray-200">
-                <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
-                <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
-                <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                <div className="flex justify-end px-5 pb-4">
+                  <button className="flex items-center gap-2 px-4 py-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
+                    <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
+                    Download note
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
 
       {/* Sidebar Form */}
       {showSidebar && (
@@ -344,4 +576,4 @@ export default function NoteManager({ studentId }) {
       )}
     </div>
   );
-ß}
+}
