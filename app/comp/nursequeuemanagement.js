@@ -365,7 +365,7 @@ export default function NurseQueueManagement() {
             Flag as emergency
           </button>
           <button
-            onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
+            onClick={() => { handleRemoveFromQueue(menuUser.studentId); setMenuUser(null); }}
             className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
             style={{ border: 'none', background: 'none' }}
           >
