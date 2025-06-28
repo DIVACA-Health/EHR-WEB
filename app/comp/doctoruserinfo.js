@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Nursevitals from './nursevitals';
-import NurseHealthHistory from './doctorhealthhistory';
-import Nurseprescription from './doctorprescription';
+import NurseHealthHistory from './nursehealthhistory';
+import Nurseprescription from './nurseprescription';
 import Nurseallergies from './nurseallergies';
 import NoteManager from './nursenotes';
 
@@ -26,7 +26,6 @@ const fetchWithAuth = async (url, options = {}) => {
       console.log('Request Headers:', headers);
       const res = await fetch(url, { ...options, headers });
       console.log('Response Status:', res.status);
-      console.log('Response Body:', await res.clone().text()); // Clone to log response body
       if (res.status === 401) {
         console.error('Unauthorized: Invalid or expired token.');
         throw new Error('Unauthorized: Invalid or expired token.');
@@ -80,7 +79,24 @@ const fetchUserQueueData = async () => {
       emergency: data.data.student.emergencyContact.name || 'N/A', 
       address: data.data.personalInfo.homeAddress || 'N/A', 
       age: data.data.personalInfo.Age || 'N/A', 
-      avatar: data.data.personalInfo.Profileimg || "/image/profileimg.png", // Or use data.data.personalInfo.avatar if available
+      avatar: data.data.personalInfo.Profileimg || "/image/profileimg.png", 
+      heartrate: data.data.medicalData.vitals[0].heartRate || 'N/A',
+      bloodpressure: data.data.medicalData.vitals[0].bloodPressure || 'N/A',
+      temperature: data.data.medicalData.vitals[0].temperature || 'N/A',
+      weight: data.data.medicalData.vitals[0].weight || 'N/A',
+      note1: data.data.medicalData.notes[0]?.createdBy?.name || 'N/A',
+      notedate1: data.data.medicalData.notes[0]?.createdAt || 'N/A',
+      note2: data.data.medicalData.notes[1]?.createdBy?.name || 'N/A',
+      notedate2: data.data.medicalData.notes[1]?.createdAt || 'N/A',
+      notecontent1 : data.data.medicalData.notes[0]?.content || 'N/A',
+      notecontent2 : data.data.medicalData.notes[1]?.content || 'N/A',
+      allergy : data.data.medicalData.allergies[0]?.severity || 'N/A',
+      allergyname : data.data.medicalData.allergies[0]?.allergyName || 'N/A',
+      allergy1 : data.data.medicalData.allergies[1]?.severity || 'N/A',
+      allergyname1 : data.data.medicalData.allergies[1]?.allergyName || 'N/A',
+      allergy2 : data.data.medicalData.allergies[2]?.severity || 'N/A',
+      allergyname2 : data.data.medicalData.allergies[2]?.allergyName || 'N/A',
+
     });
   } catch (error) {
     console.error('Error fetching user queue data:', error);
@@ -99,6 +115,18 @@ const fetchUserQueueData = async () => {
     { key: 'health', label: 'Health history' },
     { key: 'prescriptions', label: 'Prescription history' },
   ];
+
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB');
+  };
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  };
 
 
   return (
@@ -133,7 +161,7 @@ const fetchUserQueueData = async () => {
                 {/* Grid */}
                 <div className="grid grid-cols-3 gap-6">
                   {/* Box 1 - Vitals */}
-                  <div className="bg-[#FFFFFF] p-4 rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-[300px]">
+                  <div className="bg-[#FFFFFF] pt-4 pb-4 pl-4 pr-8 rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-[300px]">
                     <div className=' min-h-[84px] w-[90%] flex gap-4 items-center'>
                         <div className='w-[30%] h-full'>
                         <img src={user.avatar} alt={user.name} className="w-full h-full rounded-full"/>
@@ -203,21 +231,21 @@ const fetchUserQueueData = async () => {
                         <div className='flex justify-between items-center mb-2'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Heart rate (bpm)</h1>
-                                <h1>{user.age}</h1>
+                                <h1>{user.heartrate}</h1>
                             </div>
                             <div className='flex flex-col gap-1 w-[55%]'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Blood pressure (mmHg)</h1>
-                                <h1>{user.age}</h1>
+                                <h1>{user.bloodpressure}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Temperature (°C)</h1>
-                                <h1>{user.age}</h1>
+                                <h1>{user.temperature}</h1>
                             </div>
                             <div className='flex flex-col gap-1 w-[55%]'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Weight (kg)</h1>
-                                <h1>{user.age}</h1>
+                                <h1>{user.weight}</h1>
                             </div>
                         </div>
                     </div>
@@ -239,20 +267,20 @@ const fetchUserQueueData = async () => {
                     <div className='p-4 text-sm font-lighter'>
                         <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
                             <div className='flex flex-col gap-1'>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
-                                <h1 className='text-xs'>Treatment note</h1>
+                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
+                                <h1 className='text-xs'>{user.notecontent1}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-sm'>14-09-2024</h1>
+                                <h1 className='text-sm'>{formatDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2'>
                             <div className='flex flex-col gap-1'>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
-                                <h1 className='text-xs'>Treatment note</h1>
+                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
+                                <h1 className='text-xs'>{user.notecontent2}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-sm'>14-09-2024</h1>
+                                <h1 className='text-sm'>{formatDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -271,18 +299,18 @@ const fetchUserQueueData = async () => {
                     <div className='p-4 text-sm font-lighter'>
                         <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-10'>
                             <div>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
+                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end '>
-                                <h1 className='text-sm'>14-09-2024</h1>
+                                <h1 className='text-xs'>{formatDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2 h-10'>
                             <div>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
+                               <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-sm'>14-09-2024</h1>
+                                <h1 className='text-xs'>{formatDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -304,20 +332,20 @@ const fetchUserQueueData = async () => {
                     <div className='p-4 text-sm font-lighter'>
                         <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
                             <div className='flex flex-col gap-1'>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
+                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                                 <h1 className='text-xs'>Treatment note</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-xs'>14-09-2024</h1>
+                                <h1 className='text-xs'>{formatDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2 h-10'>
                             <div className='flex flex-col gap-1'>
-                                <h1 className='text-xs text-[#919191] font-extralight'>Dr Michael Ekene</h1>
+                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
                                 <h1 className='text-xs'>Treatment note</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-xs'>14-09-2024</h1>
+                                <h1 className='text-xs'>{formatDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -338,27 +366,42 @@ const fetchUserQueueData = async () => {
                     </div>
                     <div className='p-4 text-sm font-lighter'>
                         <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
-                            <div className='text-xs text-[#919191] font-extralight'>Ibuprofen</div>
+                            <div className='text-xs text-[#919191] font-extralight'>{user.allergyname}</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-green-200 h-fit w-fit  border-[1px] border-black'>
-                                    <h1 className='text-xs pl-1 pr-1'>Mild</h1>
-                                </div>
+                             <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
+                                user.allergy === 'Moderate' ? 'border-[#FCBF49] bg-[#FFF8EB] text-[#FCBF49]' :
+                                user.allergy === 'Mild' ? 'border-[#2A9D8F] bg-[#E2FFFB] text-[#2A9D8F]' :
+                                user.allergy === 'Severe' ? 'border-[#FF4040] bg-[#FEF0F0] text-[#FF4040]' :
+                                'border-gray-300 bg-gray-100 text-gray-700'
+                            }`}>
+                            {user.allergy}
+                            </span>
                             </div>
                         </div>
-                        <div className='flex justify-between items-center w-full h-10 border-b-[1px] border-b-black'>
-                            <div className='text-xs text-[#919191] font-extralight'>Ibuprofen</div>
+                                                <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                            <div className='text-xs text-[#919191] font-extralight'>{user.allergyname1}</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-green-200 h-fit w-fit  border-[1px] border-black'>
-                                    <h1 className='text-xs pl-1 pr-1'>Mild</h1>
-                                </div>
+                             <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
+                                user.allergy === 'Moderate' ? 'border-[#FCBF49] bg-[#FFF8EB] text-[#FCBF49]' :
+                                user.allergy === 'Mild' ? 'border-[#2A9D8F] bg-[#E2FFFB] text-[#2A9D8F]' :
+                                user.allergy === 'Severe' ? 'border-[#FF4040] bg-[#FEF0F0] text-[#FF4040]' :
+                                'border-gray-300 bg-gray-100 text-gray-700'
+                            }`}>
+                            {user.allergy1}
+                            </span>
                             </div>
                         </div>
-                        <div className='flex justify-between items-center w-full  h-10 '>
-                            <div className='text-xs text-[#919191] font-extralight'>Penicillin</div>
+                            <div className='flex justify-between items-center w-full  h-10 '>
+                            <div className='text-xs text-[#919191] font-extralight'>{user.allergyname2}</div>
                             <div className='w-[30%] flex justify-end'>
-                                <div className='rounded-xl bg-red-200 h-fit w-fit  border-[1px] border-black'>
-                                    <h1 className='text-xs pl-1 pr-1'>Severe</h1>
-                                </div>
+                             <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
+                                user.allergy === 'Moderate' ? 'border-[#FCBF49] bg-[#FFF8EB] text-[#FCBF49]' :
+                                user.allergy === 'Mild' ? 'border-[#2A9D8F] bg-[#E2FFFB] text-[#2A9D8F]' :
+                                user.allergy === 'Severe' ? 'border-[#FF4040] bg-[#FEF0F0] text-[#FF4040]' :
+                                'border-gray-300 bg-gray-100 text-gray-700'
+                            }`}>
+                            {user.allergy2}
+                            </span>
                             </div>
                         </div>
                     </div>
@@ -425,7 +468,7 @@ const fetchUserQueueData = async () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Phone number</h1>
                         </label>
-                       <input type="text" value={user.phoneNumber} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.phoneNumber} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
@@ -439,7 +482,7 @@ const fetchUserQueueData = async () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Date of birth</h1>
                         </label>
-                       <input type="text" value="N/A" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value="N/A" readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
@@ -453,13 +496,13 @@ const fetchUserQueueData = async () => {
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Address</h1>
                         </label>
-                         <input type="text" value={user.address}readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.address}readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
                         <label>
                             <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Emergency contact</h1>
                         </label>
-                        <input type="text" value={user.address}readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
+                        <input type="text" value={user.emergency} readOnly className="p-2 rounded-[12px]  bg-[rgba(239,239,239,1)] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs"/>
                     </div>
                 </div>
 
