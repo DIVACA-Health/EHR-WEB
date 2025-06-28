@@ -172,9 +172,9 @@ const fetchUserQueueData = async () => {
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
                                 user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
                                 user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
-                                user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                                user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]  text-center text-[11px]' :
                                 user.status === 'emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
-                                user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
+                                user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2] text-center text-[11px]' :
                                 'bg-gray-200 text-gray-800 border-gray-300'
                             }`}>
                             {user.status}
