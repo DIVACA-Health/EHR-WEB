@@ -228,7 +228,7 @@ const nurseprescription = ({ studentId }) => {
                                   <span className="text-gray-400">N/A</span>
                                 )}
                               </div>
-                                                            <div className="flex justify-between items-center py-3">
+                              <div className="flex justify-between items-center py-3">
                                 <span className="text-gray-700">Medication 2 </span>
                                 <span className="font-medium text-gray-900">{med.medication || 'N/A'}</span>
                               </div>
