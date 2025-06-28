@@ -50,13 +50,13 @@ const accessibility = () => {
               <img src='/image/uparrow.png' alt='img' width={8} height={14}/>
             </div>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[2px] flex items-center justify-center h-[36px] w-[38px]'>
-              <img src='/image/uparrow.png' alt='img' width={8} height={14}/>
+              <img src='/image/downarrow.png' alt='img' width={8} height={14}/>
             </div>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[2px] flex items-center justify-center h-[36px] w-[38px]'>
-              <img src='/image/uparrow.png' alt='img' width={8} height={14}/>
+              <img src='/image/leftarrow.png' alt='img' width={14} height={14}/>
             </div>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[2px] flex items-center justify-center h-[36px] w-[38px]'>
-              <img src='/image/uparrow.png' alt='img' width={8} height={14}/>
+              <img src='/image/rightarrow copy.png' alt='img' width={14} height={14}/>
             </div>
           </div>
         </div>
