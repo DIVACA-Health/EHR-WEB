@@ -98,15 +98,15 @@ const nurseallergies = ({ studentId }) => {
 
   // Helper for severity color
   const getSeverityClass = (level) => {
-    if (level === 'Mild') return 'border-green-200 text-green-600 bg-white';
-    if (level === 'Moderate') return 'border-amber-200 text-amber-600 bg-white';
-    if (level === 'Severe') return 'border-red-200 text-red-600 bg-white';
+    if (level === 'Mild') return 'border-gray-200 text-gray-700 bg-white';
+    if (level === 'Moderate') return 'border-gray-200 text-gray-700 bg-white';
+    if (level === 'Severe') return 'border-gray-200 text-gray-700 bg-white';
     return 'border-gray-200 text-gray-700 bg-white';
   };
   const getSeverityPillClass = (level) => {
-    if (level === 'Mild') return 'border-green-300 bg-green-100 text-green-600';
-    if (level === 'Moderate') return 'border-amber-300 bg-amber-100 text-amber-600';
-    if (level === 'Severe') return 'border-red-300 bg-red-100 text-red-600';
+    if (level === 'Mild') return 'border-[#2A9D8F] bg-[#E2FFFB] text-[#2A9D8F]';
+    if (level === 'Moderate') return 'border-[#FCBF49] bg-[#FFF8EB] text-[#FCBF49]';
+    if (level === 'Severe') return 'border-[#FF4040] bg-[#FEF0F0] text-[#FF4040]';
     return 'border-gray-300 bg-gray-100 text-gray-700';
   };
 

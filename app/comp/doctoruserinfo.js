@@ -141,7 +141,7 @@ const fetchUserQueueData = async () => {
                         <div className='flex flex-col gap-1.5 h-full w-fit'>
                             <h1>{user.name}</h1>
                             <h1>ID : {user.divacaId}</h1>
-                            <span className={`inline-block px-1 py-0.9 text-[11px] rounded-full w-fit ${
+                             <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
                                 user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
                                 user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
                                 user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :

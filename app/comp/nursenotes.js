@@ -140,7 +140,6 @@ export default function NoteManager({ studentId }) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
-  // Option 1: Pair by index
   const nurseNotes = notes.filter(n => n.creator && n.creator.role === 'nurse');
   const doctorNotes = notes.filter(n => n.creator && n.creator.role === 'doctor');
 
