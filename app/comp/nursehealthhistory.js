@@ -88,97 +88,45 @@ const NurseHealthHistory = ({ studentId }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-[14px]">
-            {summary && summary.currentMedications && summary.currentMedications.length > 0 && summary.recentDiagnoses && summary.recentDiagnoses.length > 0 ? (
+            {summary && summary.recentActivity && summary.recentActivity.length > 0 ? (
               <>
-                {/* First row: current medication + first diagnosis */}
-                <tr
-                  key="current-medication"
-                  className="odd:bg-white even:bg-gray-50 cursor-pointer"
-                  onClick={() => handleRowClick(summary.recentDiagnoses[0])}
-                >
-                  <td className="px-6 py-4 text-center">{formatDate(summary.recentDiagnoses[0].date)}</td>
-                  <td className="px-6 py-4 text-center">N/A</td>
-                  <td className="px-6 py-4 text-center">{summary.recentDiagnoses[0].diagnosis || 'N/A'}</td>
-                  <td className="px-6 py-4 text-center">
-                    {summary.currentMedications[0].instructions || 'N/A'}
-                  </td>
-                  <td className='p-4 relative flex justify-center items-center'>
-                    <button
-                      onClick={e => {
-                        e.stopPropagation();
-                        setActiveActionIndex((prev) => (prev === 0 ? null : 0));
-                      }}
-                      className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
-                      ref={(el) => (actionButtonRefs.current[0] = el)}
-                    >
-                      <img src="/image/More circle.png" alt="img" height={20} width={20}/>
-                    </button>
-                    {activeActionIndex === 0 && (
-                      <div
-                        ref={(el) => (dropdownRefs.current[0] = el)}
-                        className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10 text-left'
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <button
-                          onClick={() => {
-                            // handleForwardFiles(summary.recentDiagnoses[0].id);
-                          }}
-                          className='w-full text-left px-4 py-1 hover:bg-gray-100'
-                        >
-                          Forward patient files
-                        </button>
-                        <button
-                          onClick={() => {
-                            // handleRemoveFromQueue(summary.recentDiagnoses[0].id);
-                          }}
-                          className='w-full text-left px-4 py-1 text-red-600 hover:bg-red-50'
-                        >
-                          Remove from queue
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                {/* Other diagnoses (without medication info) */}
-                {summary.recentDiagnoses.slice(1).map((diag, index) => (
+                {summary.recentActivity.map((activity, index) => (
                   <tr
-                    key={index + 1}
+                    key={activity.id}
                     className="odd:bg-white even:bg-gray-50 cursor-pointer"
-                    onClick={() => handleRowClick(diag)}
+                    onClick={() => handleRowClick(activity)}
                   >
-                    <td className="px-6 py-4 text-center">{formatDate(diag.date)}</td>
-                    <td className="px-6 py-4 text-center">N/A</td>
-                    <td className="px-6 py-4 text-center">{diag.diagnosis || 'N/A'}</td>
-                    <td className="px-6 py-4 text-center">N/A</td>
+                    <td className="px-6 py-4 text-center">{formatDate(activity.date)}</td>
+                    <td className="px-6 py-4 text-center">{activity.recordedBy?.name || 'N/A'}</td>
+                    <td className="px-6 py-4 text-center">{activity.diagnosis || 'N/A'}</td>
+                    <td className="px-6 py-4 text-center">
+                      {summary.currentMedications && summary.currentMedications[0]?.instructions || 'N/A'}
+                    </td>
                     <td className='p-4 relative flex justify-center items-center'>
                       <button
                         onClick={e => {
                           e.stopPropagation();
-                          setActiveActionIndex((prev) => (prev === index + 1 ? null : index + 1));
+                          setActiveActionIndex((prev) => (prev === index ? null : index));
                         }}
                         className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
-                        ref={(el) => (actionButtonRefs.current[index + 1] = el)}
+                        ref={(el) => (actionButtonRefs.current[index] = el)}
                       >
                         <img src="/image/More circle.png" alt="img" height={20} width={20}/>
                       </button>
-                      {activeActionIndex === index + 1 && (
+                      {activeActionIndex === index && (
                         <div
-                          ref={(el) => (dropdownRefs.current[index + 1] = el)}
+                          ref={(el) => (dropdownRefs.current[index] = el)}
                           className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10 text-left'
                           onClick={e => e.stopPropagation()}
                         >
                           <button
-                            onClick={() => {
-                              // handleForwardFiles(diag.id);
-                            }}
+                            onClick={() => {/* handleForwardFiles(activity.id); */}}
                             className='w-full text-left px-4 py-1 hover:bg-gray-100'
                           >
                             Forward patient files
                           </button>
                           <button
-                            onClick={() => {
-                              // handleRemoveFromQueue(diag.id);
-                            }}
+                            onClick={() => {/* handleRemoveFromQueue(activity.id); */}}
                             className='w-full text-left px-4 py-1 text-red-600 hover:bg-red-50'
                           >
                             Remove from queue
@@ -213,9 +161,9 @@ const NurseHealthHistory = ({ studentId }) => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex  justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm">
-                <div className='flex flex-col'>
+                <div className='flex flex-col gap-2'>
                   <h2>Date : {selectedDiagnosis ? formatDate(selectedDiagnosis.date) : ''}</h2>
-                  <h2>Type : {selectedDiagnosis ? selectedDiagnosis.type : ''}</h2>
+                  <h2> Doctor : Dr. {selectedDiagnosis ? selectedDiagnosis.recordedBy.name : ''}</h2>
                 </div>
                 <button onClick={() => setShowSidebar(false)} className="text-xl">
                   ×

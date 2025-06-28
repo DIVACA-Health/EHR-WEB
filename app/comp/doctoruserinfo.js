@@ -134,20 +134,20 @@ const fetchUserQueueData = async () => {
                 <div className="grid grid-cols-3 gap-6">
                   {/* Box 1 - Vitals */}
                   <div className="bg-[#FFFFFF] p-4 rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-[300px]">
-                    <div className=' min-h-[84px] w-[90%] flex gap-4'>
+                    <div className=' min-h-[84px] w-[90%] flex gap-4 items-center'>
                         <div className='w-[30%] h-full'>
                         <img src={user.avatar} alt={user.name} className="w-full h-full rounded-full"/>
                         </div>
-                        <div className='flex flex-col gap-1 h-full w-fit'>
+                        <div className='flex flex-col gap-1.5 h-full w-fit'>
                             <h1>{user.name}</h1>
                             <h1>ID : {user.divacaId}</h1>
-                            <span className={`inline-block px-1 py-0.9 text-[10px] rounded-full w-fit ${
-                            user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[0.8px] border-[#E99633]' :
-                            user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[0.8px] border-[#3B6FED]' :
-                            user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[0.8px] border-[#218838]' :
-                            user.status === 'Emergency' ? 'bg-[#ECFFF0] text-[#e24312] border-[0.8px] border-[#e24312]' :
-                            user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[0.8px] border-[#2000C2]' :
-                            'bg-gray-200 text-gray-800'
+                            <span className={`inline-block px-1 py-0.9 text-[11px] rounded-full w-fit ${
+                                user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
+                                user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
+                                user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                                user.status === 'emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                                user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
+                                'bg-gray-200 text-gray-800 border-gray-300'
                             }`}>
                             {user.status}
                             </span>
