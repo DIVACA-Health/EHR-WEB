@@ -4,7 +4,7 @@ import React from 'react';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
   return (
-    <div className='bg-[rgba(12,22,47,1)] w-[23%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
+    <div className='bg-[rgba(12,22,47,1)] w-[280px] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
       <div className='min-h-[15%] flex items-center justify-center w-[70%]'>
         <img src='/image/DHLOGO.png' alt='logo' className='w-[100px] h-[35px]' />
       </div>

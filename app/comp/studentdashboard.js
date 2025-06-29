@@ -56,7 +56,7 @@ const StudentDashboard = () => {
   return (
     <div className='flex text-black h-screen'>
       {/* Sidebar */}
-      <div className='bg-[rgba(12,22,47,1)] w-[23%] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
+      <div className='bg-[rgba(12,22,47,1)] w-[280px] h-screen fixed top-0 left-0 flex flex-col gap-[75px]'>
         <div className='min-h-[15%] flex items-center justify-center w-[70%]'>
           <img src='/image/DHLOGO.png' alt='logo' className='w-[100px] h-[35px]' />
         </div>
@@ -116,7 +116,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className='bg-white w-[77%] ml-[23%] h-screen overflow-y-auto flex flex-col items-center '>
+      <div className='bg-white w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center '>
         {/* Top Bar */}
         <div className='w-full h-[8%] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-sm shadow-gray-200'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
