@@ -45,7 +45,7 @@ const dashboard = () => {
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-1' >
                     <h2 className='font-extralight text-[14px] text-[#898989]'>Most frequent complaint</h2>
-                    <h2 className='font-medium text-xl'>Maleria</h2>
+                    <h2 className='font-medium text-xl'>Malaria</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/frequentlogo.png' alt='img' width={32} height={32}/>
