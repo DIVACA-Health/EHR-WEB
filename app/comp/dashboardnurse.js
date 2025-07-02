@@ -119,6 +119,15 @@ const dashboard = () => {
       return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
     };
 
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-based
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
     // Floating menu positioning
 const handleMenuButtonClick = (e, user) => {
   const btnRect = e.currentTarget.getBoundingClientRect();
@@ -435,7 +444,7 @@ const handleMenuButtonClick = (e, user) => {
                     <th className="px-4 py-3 font-normal text-[#6B7280]">S/N</th>
                     <th className="px-4 py-3 font-normal text-[#6B7280]">First name</th>
                     <th className="px-4 py-3 font-normal text-[#6B7280]">Last name</th>
-                    <th className="px-4 py-3 font-normal text-[#6B7280]">Time in</th>
+                    <th className="px-4 py-3 font-normal text-[#6B7280]">Date</th>
                     <th className="px-4 py-3 font-normal text-[#6B7280]">Status</th>
                     <th className="px-4 py-3 font-normal text-[#6B7280]">Action</th>
                   </tr>
@@ -462,7 +471,7 @@ const handleMenuButtonClick = (e, user) => {
                         <td className="px-4 py-3">{idx + 1}</td>
                         <td className="px-4 py-3">{user.firstname}</td>
                         <td className="px-4 py-3">{user.lastname}</td>
-                        <td className="px-4 py-3">{formatTime(user.lastVisit)}</td>
+                        <td className="px-4 py-3">{formatDate(user.lastVisit)}</td>
                         <td className="px-4 py-3">
                     <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
                       user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
