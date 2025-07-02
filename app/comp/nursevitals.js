@@ -132,6 +132,38 @@ const NurseVitals = ({ studentId }) => {
     }
   };
 
+  const getHeartRateStatus = (hr) => {
+  if (!hr) return '';
+  const value = Number(hr);
+  if (value < 60) return 'Low';
+  if (value > 100) return 'High';
+  return 'Normal';
+};
+
+const getBloodPressureStatus = (bp) => {
+  if (!bp) return '';
+  const [systolic, diastolic] = bp.split('/').map(Number);
+  if (systolic < 90 || diastolic < 60) return 'Low';
+  if (systolic > 140 || diastolic > 90) return 'High';
+  return 'Normal';
+};
+
+const getTemperatureStatus = (temp) => {
+  if (!temp) return '';
+  const value = Number(temp);
+  if (value < 36) return 'Low';
+  if (value > 37.5) return 'High';
+  return 'Normal';
+};
+
+const getWeightStatus = (weight) => {
+  if (!weight) return '';
+    const value = Number(weight);
+    if (value < 50) return 'Low';
+    if (value > 100) return 'High';
+  return 'Normal';
+};
+
   return (
     <div>
       <div className="border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-sm rounded-[12px]">
@@ -157,7 +189,7 @@ const NurseVitals = ({ studentId }) => {
               {vitalsData.heartRate || '--'}
               <span className="text-[14px] font-extralight">bpm</span>
             </h2>
-            <h2 className="text-[14px] font-extralight">Heart rate is Normal</h2>
+            <h2 className="text-[14px] font-extralight">Heart rate is {getHeartRateStatus(vitalsData.heartRate)}</h2>
           </div>
           <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/pressure.png" alt="blood pressure" width={32} height={32} />
@@ -166,7 +198,9 @@ const NurseVitals = ({ studentId }) => {
               {vitalsData.bloodPressure || '--'}
               <span className="text-[14px] font-extralight">mmHg</span>
             </h2>
-            <h2 className="text-[14px] font-extralight">Blood pressure is Normal</h2>
+            <h2 className="text-[14px] font-extralight">
+              Blood pressure is {getBloodPressureStatus(vitalsData.bloodPressure)}
+            </h2>
           </div>
           <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/temperature.png" alt="temperature" width={32} height={32} />
@@ -175,7 +209,9 @@ const NurseVitals = ({ studentId }) => {
               {vitalsData.temperature || '--'}
               <span className="text-[14px] font-extralight">°C</span>
             </h2>
-            <h2 className="text-[14px] font-extralight">Temperature is Normal</h2>
+              <h2 className="text-[14px] font-extralight">
+                Temperature is {getTemperatureStatus(vitalsData.temperature)}
+              </h2>
           </div>
           <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/weight.png" alt="weight" width={32} height={32} />
@@ -184,7 +220,9 @@ const NurseVitals = ({ studentId }) => {
               {vitalsData.weight || '--'}
               <span className="text-[14px] font-extralight">kg</span>
             </h2>
-            <h2 className="text-[14px] font-extralight">Weight is Normal</h2>
+            <h2 className="text-[14px] font-extralight">
+              Weight is {getWeightStatus(vitalsData.weight)}
+            </h2>
           </div>
         </div>
       </div>
