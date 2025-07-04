@@ -144,7 +144,7 @@ const getBloodPressureStatus = (bp) => {
   if (!bp) return '';
   const [systolic, diastolic] = bp.split('/').map(Number);
   if (systolic < 120 || diastolic < 80) return 'Low';
-  if (systolic > 120 || diastolic > 80ß) return 'High';
+  if (systolic > 120 || diastolic > 80) return 'High';
   return 'Normal';
 };
 
