@@ -145,7 +145,7 @@ const handleMenuButtonClick = (e, user) => {
       try {
         const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
           method: 'PUT',
-          body: JSON.stringify({ status: "Forwarded to Doctor" }),
+          body: JSON.stringify({ status: "Forwarded to doctor" }),
         });
 
         if (!res.ok) {
@@ -314,6 +314,7 @@ const handleMenuButtonClick = (e, user) => {
                             user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
                             user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
                             user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                            user.status === 'Admitted' ? 'bg-[#FFEBEB] text-[#FF4040] border-[#FF4040]' :
                             user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
                             'bg-gray-200 text-gray-800 border-gray-300'
                           }`}>
@@ -409,21 +410,21 @@ const handleMenuButtonClick = (e, user) => {
               Record vitals
             </button>
             <button
-              onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
+              onClick={() => { handleForwardFiles(menuUser.studentId); setMenuUser(null); }}
               className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
               style={{ border: 'none', background: 'none' }}
             >
               Forward patient files
             </button>
             <button
-              onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
+              onClick={() => { handleemergency(menuUser.studentId); setMenuUser(null); }}
               className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
               style={{ border: 'none', background: 'none' }}
             >
               Flag as emergency
             </button>
             <button
-              onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
+              onClick={() => { handleRemoveFromQueue(menuUser.studentId); setMenuUser(null); }}
               className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
               style={{ border: 'none', background: 'none' }}
             >

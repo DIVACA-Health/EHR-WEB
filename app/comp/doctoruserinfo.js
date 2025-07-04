@@ -174,6 +174,7 @@ const fetchUserQueueData = async () => {
                                 user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
                                 user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838] text-center text-[11px]' :
                                 user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                                user.status === 'Admitted' ? 'bg-[#FFEBEB] text-[#FF4040] border-[#FF4040]' :
                                 user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2] text-center text-[11px]' :
                                 'bg-gray-200 text-gray-800 border-gray-300'
                             }`}>
@@ -427,6 +428,7 @@ const fetchUserQueueData = async () => {
                                 user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
                                 user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838] text-center text-[11px]' :
                                 user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                                user.status === 'Admitted' ? 'bg-[#FFEBEB] text-[#FF4040] border-[#FF4040]' :
                                 user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2] text-center text-[11px]' :
                                 'bg-gray-200 text-gray-800 border-gray-300'
                             }`}>
