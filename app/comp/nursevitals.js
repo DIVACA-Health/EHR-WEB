@@ -143,15 +143,15 @@ const NurseVitals = ({ studentId }) => {
 const getBloodPressureStatus = (bp) => {
   if (!bp) return '';
   const [systolic, diastolic] = bp.split('/').map(Number);
-  if (systolic < 90 || diastolic < 60) return 'Low';
-  if (systolic > 140 || diastolic > 90) return 'High';
+  if (systolic < 120 || diastolic < 80) return 'Low';
+  if (systolic > 120 || diastolic > 80ß) return 'High';
   return 'Normal';
 };
 
 const getTemperatureStatus = (temp) => {
   if (!temp) return '';
   const value = Number(temp);
-  if (value < 36) return 'Low';
+  if (value < 36.5) return 'Low';
   if (value > 37.5) return 'High';
   return 'Normal';
 };
