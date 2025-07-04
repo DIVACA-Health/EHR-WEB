@@ -167,12 +167,12 @@ const handleMenuButtonClick = (e, user) => {
       try {
         const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
           method: 'PUT',
-          body: JSON.stringify({ status: "emergency" }),
+          body: JSON.stringify({ status: "Emergency" }),
         });
 
         if (!res.ok) {
           const errorText = await res.text();
-          toast.error(`Failed to change status to emergency: ${errorText}`);
+          toast.error(`Failed to change status to Emergency: ${errorText}`);
           return;
         }
 
@@ -312,8 +312,8 @@ const handleMenuButtonClick = (e, user) => {
                           <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
                             user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
                             user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
-                            user.status === 'forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
-                            user.status === 'emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                            user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                            user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
                             user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
                             'bg-gray-200 text-gray-800 border-gray-300'
                           }`}>

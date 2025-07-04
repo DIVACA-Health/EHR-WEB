@@ -188,7 +188,7 @@ export default function NurseQueueManagement() {
     try {
       const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
         method: 'PUT',
-        body: JSON.stringify({ status: "emergency" }),
+        body: JSON.stringify({ status: "Emergency" }),
       });
 
       if (!res.ok) {
@@ -296,7 +296,7 @@ const handleMenuButtonClick = (e, user) => {
                       user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
                       user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
                       user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
-                      user.status === 'emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                      user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
                       user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
                       'bg-gray-200 text-gray-800 border-gray-300'
                     }`}>
@@ -363,7 +363,7 @@ const handleMenuButtonClick = (e, user) => {
             className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
             style={{ border: 'none', background: 'none' }}
           >
-            Flag as emergency
+            Flag as Emergency
           </button>
           <button
             onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
