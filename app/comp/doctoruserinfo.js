@@ -130,7 +130,7 @@ const fetchUserQueueData = async () => {
 
 
   return (
-    <div className='w-[95%] m-auto mt-6'>
+    <div className='w-[95%]  m-auto mt-6'>
     <h1 className=' mb-4 text-[12px] font-light'> Queue management - Student Health Record </h1>
       <h1 className='text-xl font-medium mb-5'>Student Health Record</h1>
       {/* Tabs */}
