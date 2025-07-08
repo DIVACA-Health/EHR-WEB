@@ -166,7 +166,7 @@ const QueueManagement = () => {
     <div className='p-6 w-full h-full m-auto'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-bold'>Queue management</h2>
-        <button
+        {/* <button
           onClick={() => setShowModal(true)}
           className='bg-blue-600 text-white w-[174px] h-[44px] rounded-[8px] hover:bg-blue-700 flex items-center justify-center gap-3'
         >
@@ -174,7 +174,7 @@ const QueueManagement = () => {
           <h1 className='text-[14px]'>
             Add to queue
           </h1>
-        </button>
+        </button> */}
       </div>
 
       {/* Display loading spinner if data is being fetched */}
