@@ -433,7 +433,7 @@ const handleNewHealthIssueSubmit = async (e) => {
         {showPrescriptionSidebar && (
           <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowPrescriptionSidebar(false)}>
             <div
-              className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 flex flex-col"
+              className="absolute right-0 top-0 h-full w-[55%] bg-[#FBFBFB] shadow-lg z-50 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] border-gray-200 shadow-sm">
@@ -445,12 +445,12 @@ const handleNewHealthIssueSubmit = async (e) => {
                 onSubmit={handleNewHealthIssueSubmit}
               >
                 {/* Collapsible: Test & vitals results */}
-                <div className="border-b pb-4">
+                <div className="border-b pb-4  mb-5 mt-3">
                   <div
                     className="flex justify-between items-center cursor-pointer"
                     onClick={() => setOpenTestSection((v) => !v)}
                   >
-                    <h3 className="font-semibold mb-2">Test & vitals results</h3>
+                    <h3 className="font-medium text-lg mb-2">Test & vitals results</h3>
                     <span className="text-lg">{openTestSection ? '▾' : '▸'}</span>
                   </div>
                   {openTestSection && (
@@ -464,7 +464,7 @@ const handleNewHealthIssueSubmit = async (e) => {
                         onChange={e => setTest(e.target.value)}
                       />
                       <label className="block mb-1 text-sm">Lab results</label>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 mb-3">
                         <label className="flex flex-col items-center justify-center w-full h-[48px] border border-dashed border-[#D0D5DD] rounded-[12px] cursor-pointer bg-[#F9FAFB]">
                           <input
                             type="file"
@@ -473,7 +473,7 @@ const handleNewHealthIssueSubmit = async (e) => {
                             onChange={handleLabResultChange}
                           />
                           <span className="text-[#3B6FED] text-sm flex items-center gap-2">
-                            <img src="/image/upload.svg" alt="upload" className="w-5 h-5" />
+                            <img src="/image/Cloudupload.png" alt="upload" className="w-5 h-5" />
                             {labResultFile ? labResultFile.name : 'Upload lab result'}
                           </span>
                         </label>
@@ -489,7 +489,7 @@ const handleNewHealthIssueSubmit = async (e) => {
                     className="flex justify-between items-center cursor-pointer"
                     onClick={() => setOpenDoctorSection((v) => !v)}
                   >
-                    <h3 className="font-semibold mb-2">Doctor's notes & treatment plan</h3>
+                    <h3 className="font-medium text-lg mb-4">Doctor's notes & treatment plan</h3>
                     <span className="text-lg">{openDoctorSection ? '▾' : '▸'}</span>
                   </div>
                   {openDoctorSection && (
@@ -518,16 +518,8 @@ const handleNewHealthIssueSubmit = async (e) => {
                         value={possibleCause}
                         onChange={e => setPossibleCause(e.target.value)}
                       />
-                      <label className="block mb-1 text-sm">Medication</label>
-                      {medications.map((med, idx) => (
-                        <div key={idx} className="flex items-center gap-2 mb-3 relative">
-                          <input
-                            type="text"
-                            placeholder="Enter medication"
-                            className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black"
-                            value={med.medication}
-                            onChange={e => handleMedicationChange(idx, 'medication', e.target.value)}
-                          />
+                      <label className="flex items-center justify-between mb-1 text-sm">
+                        Medication
                           <button
                             type="button"
                             className="flex gap-2 text-[#3B6FED] items-center"
@@ -536,6 +528,17 @@ const handleNewHealthIssueSubmit = async (e) => {
                             <img src="/image/Plus{BLUE}.png" width={24} height={24} alt="icon" />
                             Add medication
                           </button>
+                      </label>
+                      {medications.map((med, idx) => (
+                        <div key={idx} className="flex items-center gap-2 mb-3 relative ">
+                          <input
+                            type="text"
+                            placeholder="Enter medication"
+                            className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black"
+                            value={med.medication}
+                            onChange={e => handleMedicationChange(idx, 'medication', e.target.value)}
+                          />
+
                           {medications.length > 1 && (
                             <button
                               type="button"
@@ -565,7 +568,7 @@ const handleNewHealthIssueSubmit = async (e) => {
                       <input
                         type="text"
                         placeholder="Give notes if needed"
-                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 mb-3 shadow-xs text-black"
                         value={notes}
                         onChange={e => setNotes(e.target.value)}
                       />

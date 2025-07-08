@@ -37,6 +37,10 @@ const nurseallergies = ({ studentId }) => {
   // Ref for the form
   const formRef = useRef(null);
 
+  // For view sidebar
+  const [showViewSidebar, setShowViewSidebar] = useState(false);
+  const [selectedAllergy, setSelectedAllergy] = useState(null);
+
   // Fetch allergies from API
   useEffect(() => {
     const fetchAllergies = async () => {
@@ -59,7 +63,7 @@ const nurseallergies = ({ studentId }) => {
       }
     };
     if (studentId) fetchAllergies();
-  }, [studentId, showSidebar]);
+  }, [studentId, showSidebar, showViewSidebar]);
 
   // Handle form submit
   const handleSubmit = async (e) => {
@@ -153,6 +157,12 @@ const nurseallergies = ({ studentId }) => {
     }
   };
 
+  // Handler for allergy row click
+  const handleRowClick = (allergy) => {
+    setSelectedAllergy(allergy);
+    setShowViewSidebar(true);
+  };
+
   return (
     <div className='border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-sm rounded-[12px]'>
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-xs mb-4 rounded-t-[12px] '>
@@ -174,6 +184,8 @@ const nurseallergies = ({ studentId }) => {
             <div
             key={allergy.id || idx}
             className={`flex items-center justify-between pl-4 pr-4 h-[65px] w-[45%] border-[1.5px] rounded-[12px] bg-white ${getSeverityClass(allergy.severityLevel)}`}
+            onClick={() => handleRowClick(allergy)}
+            style={{ cursor: 'pointer' }}
             >
             <div className='flex items-center gap-2'>
                 <img
@@ -394,6 +406,78 @@ const nurseallergies = ({ studentId }) => {
                 onClick={handleExternalSubmit}
               >
                 {isSaving ? 'Saving...' : 'Save Allergy'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* View Allergy Sidebar */}
+      {showViewSidebar && selectedAllergy && (
+        <div className="fixed inset-0 z-50 bg-[#0C162F99]" onClick={() => setShowViewSidebar(false)}>
+          <div
+            className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b border-gray-200 shadow-sm">
+              <h2 className="text-xl font-semibold">Allergy</h2>
+              <button onClick={() => setShowViewSidebar(false)} className="text-xl">×</button>
+            </div>
+            <div className="flex-1 flex flex-col gap-6 p-8 bg-[#FAFAFA]">
+              {/* Allergy type */}
+              <div>
+                <label className="block mb-2 text-sm text-gray-600">Allergy type</label>
+                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-[12px] px-4 py-3">
+                  <img
+                    src={getAllergyTypeImage(selectedAllergy.allergyType)}
+                    alt={selectedAllergy.allergyType}
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                  <span className="font-medium">{selectedAllergy.allergyType}</span>
+                </div>
+              </div>
+              {/* Allergy name */}
+              <div>
+                <label className="block mb-2 text-sm text-gray-600">Allergy name</label>
+                <input
+                  type="text"
+                  className="w-full bg-white border border-gray-200 rounded-[12px] px-4 py-3"
+                  value={selectedAllergy.allergyName}
+                  readOnly
+                />
+              </div>
+              {/* Severity level */}
+              <div>
+                <label className="block mb-2 text-sm text-gray-600">Severity level</label>
+                <div className="w-full">
+                  <span className={`inline-block px-4 py-2 border rounded-[12px] text-base font-semibold
+                    ${selectedAllergy.severityLevel === 'Mild'
+                      ? 'border-green-300 bg-green-100 text-green-600'
+                      : selectedAllergy.severityLevel === 'Moderate'
+                      ? 'border-amber-300 bg-amber-100 text-amber-600'
+                      : selectedAllergy.severityLevel === 'Severe'
+                      ? 'border-red-300 bg-red-100 text-red-600'
+                      : 'border-gray-300 bg-gray-100 text-gray-700'
+                    }`}>
+                    {selectedAllergy.severityLevel}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center border-t border-gray-200 px-8 py-4 bg-white">
+              <button
+                className="border border-red-500 text-red-600 px-6 py-2 rounded hover:bg-red-50"
+                // onClick={handleDeleteAllergy} // Implement this if needed
+              >
+                Delete allergy
+              </button>
+              <button
+                className="bg-[#6C5DD3] text-white px-6 py-2 rounded"
+                // onClick={handleEditAllergy} // Implement this if needed
+              >
+                Edit allergy
               </button>
             </div>
           </div>
