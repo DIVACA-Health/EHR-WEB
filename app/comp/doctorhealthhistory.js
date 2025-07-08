@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import nurseprescription from './nurseprescription';
 
 const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('access_token');
@@ -37,8 +38,49 @@ const NurseHealthHistory = ({ studentId }) => {
   const actionButtonRefs = useRef({});
   const dropdownRefs = useRef({});
   const [loading, setLoading] = useState(true);
-    const [showInstructionsModal, setShowInstructionsModal] = useState(false);
-    const [instructionsText, setInstructionsText] = useState('');
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
+  const [instructionsText, setInstructionsText] = useState('');
+
+  // Sidebar state for health issue
+  const [showPrescriptionSidebar, setShowPrescriptionSidebar] = useState(false);
+
+  // Collapsible sections for sidebar
+  const [openTestSection, setOpenTestSection] = useState(true);
+  const [openDoctorSection, setOpenDoctorSection] = useState(true);
+
+  // Form fields for sidebar
+  const [test, setTest] = useState('');
+  const [labResultFile, setLabResultFile] = useState(null);
+  const [vitalSigns, setVitalSigns] = useState({
+    bloodPressure: '',
+    heartRate: '',
+    temperature: ''
+  });
+  const [diagnosis, setDiagnosis] = useState('');
+  const [description, setDescription] = useState('');
+  const [possibleCause, setPossibleCause] = useState('');
+  const [medications, setMedications] = useState([
+    { medication: '', dosage: '', frequency: '', instructions: '' }
+  ]);
+  const [followUp, setFollowUp] = useState('');
+  const [notes, setNotes] = useState('');
+  const [followUpDate, setFollowUpDate] = useState('');
+  const [type, setType] = useState('EMERGENCY');
+  const [isSavingHealthIssue, setIsSavingHealthIssue] = useState(false);
+
+  // Medication handlers
+  const handleMedicationChange = (idx, field, value) => {
+    setMedications(prev =>
+      prev.map((med, i) => (i === idx ? { ...med, [field]: value } : med))
+    );
+  };
+  const addMedication = () => setMedications(prev => [...prev, { medication: '', dosage: '', frequency: '', instructions: '' }]);
+  const removeMedication = idx => setMedications(prev => prev.filter((_, i) => i !== idx));
+
+  // File upload (not sent in payload, just for UI)
+  const handleLabResultChange = (e) => {
+    setLabResultFile(e.target.files[0]);
+  };
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -67,6 +109,75 @@ const NurseHealthHistory = ({ studentId }) => {
     return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
+  // Handler for saving new health issue
+
+const handleNewHealthIssueSubmit = async (e) => {
+  e.preventDefault();
+  setIsSavingHealthIssue(true);
+  try {
+    const token = localStorage.getItem('access_token');
+    const payload = {
+      studentId,
+      type: type || '', // always present
+      testResults: [
+        {
+          testType: test || '',
+          result: description || '',
+          normalRange: possibleCause || ''
+        }
+      ],
+      vitalSigns: {
+        bloodPressure: vitalSigns.bloodPressure || '',
+        heartRate: vitalSigns.heartRate ? Number(vitalSigns.heartRate) : '',
+        temperature: vitalSigns.temperature ? Number(vitalSigns.temperature) : ''
+      },
+      diagnosis: diagnosis || '',
+      medications: medications.length > 0 ? medications.map(med => ({
+        medication: med.medication || '',
+        dosage: med.dosage || '',
+        frequency: med.frequency || '',
+        instructions: med.instructions || ''
+      })) : [{
+        medication: '',
+        dosage: '',
+        frequency: '',
+        instructions: ''
+      }],
+      followUpDate: followUpDate || ''
+    };
+    const res = await fetch('/api/v1/health-records', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      setShowPrescriptionSidebar(false);
+      setTest('');
+      setLabResultFile(null);
+      setVitalSigns({ bloodPressure: '', heartRate: '', temperature: '' });
+      setDiagnosis('');
+      setDescription('');
+      setPossibleCause('');
+      setMedications([{ medication: '', dosage: '', frequency: '', instructions: '' }]);
+      setFollowUp('');
+      setNotes('');
+      setFollowUpDate('');
+      setType('EMERGENCY');
+    } else {
+      alert('Failed to save health issue');
+    }
+  } catch (err) {
+    alert('Error saving health issue');
+  } finally {
+    setIsSavingHealthIssue(false);
+  }
+};
+
+
+
   return (
     <div className='border-[rgba(235,235,235,1)] shadow-sm rounded-t-[12px]'>
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] rounded-t-[12px] border-[rgba(235,235,235,1)] shadow-xs'>
@@ -74,6 +185,13 @@ const NurseHealthHistory = ({ studentId }) => {
           <img src='/image/healthicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Health history</h1>
         </div>
+        <button
+          className="bg-blue-600 flex gap-[8px] w-fit h-[44px] px-2 items-center justify-center text-white rounded-[8px]"
+          onClick={() => setShowPrescriptionSidebar(true)}
+        >
+          <img src="/image/Plus.png" alt="icon" width={25} height={25} />
+          <h1 className="text-[14px]">Record Health issue</h1>
+        </button>
       </div>
 
       <div className="overflow-x-auto border border-gray-200">
@@ -282,37 +400,195 @@ const NurseHealthHistory = ({ studentId }) => {
               </div>
             </div>
           </div>
-          
         )}
-                {/* Instructions Modal */}
-                {showInstructionsModal && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0C162F99]" onClick={() => setShowInstructionsModal(false)}>
-                    <div
-                      className="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <button
-                        className="absolute top-3 right-4 text-2xl text-gray-400 hover:text-gray-700"
-                        onClick={() => setShowInstructionsModal(false)}
-                      >
-                        ×
-                      </button>
-                      <h2 className="text-lg font-semibold mb-4 text-center">Description</h2>
-                      <div className="mb-6 whitespace-pre-line text-gray-700 text-center">{instructionsText}</div>
-                      <div className="flex justify-center">
-                        <button
-                          className="bg-blue-600 text-white px-6 py-2 rounded"
-                          onClick={() => setShowInstructionsModal(false)}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
+
+        {/* Instructions Modal */}
+        {showInstructionsModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0C162F99]" onClick={() => setShowInstructionsModal(false)}>
+            <div
+              className="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-3 right-4 text-2xl text-gray-400 hover:text-gray-700"
+                onClick={() => setShowInstructionsModal(false)}
+              >
+                ×
+              </button>
+              <h2 className="text-lg font-semibold mb-4 text-center">Description</h2>
+              <div className="mb-6 whitespace-pre-line text-gray-700 text-center">{instructionsText}</div>
+              <div className="flex justify-center">
+                <button
+                  className="bg-blue-600 text-white px-6 py-2 rounded"
+                  onClick={() => setShowInstructionsModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Sidebar for creating a new health issue */}
+        {showPrescriptionSidebar && (
+          <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowPrescriptionSidebar(false)}>
+            <div
+              className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] border-gray-200 shadow-sm">
+                <h2 className="text-xl font-semibold">Record health issue</h2>
+                <button onClick={() => setShowPrescriptionSidebar(false)} className="text-xl">×</button>
+              </div>
+              <form
+                className="flex-1 overflow-y-auto flex flex-col pl-7 pr-7 gap-[18px] py-4"
+                onSubmit={handleNewHealthIssueSubmit}
+              >
+                {/* Collapsible: Test & vitals results */}
+                <div className="border-b pb-4">
+                  <div
+                    className="flex justify-between items-center cursor-pointer"
+                    onClick={() => setOpenTestSection((v) => !v)}
+                  >
+                    <h3 className="font-semibold mb-2">Test & vitals results</h3>
+                    <span className="text-lg">{openTestSection ? '▾' : '▸'}</span>
                   </div>
-                )}
+                  {openTestSection && (
+                    <>
+                      <label className="block mb-1 text-sm">Test</label>
+                      <input
+                        type="text"
+                        placeholder="Enter test carried out"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={test}
+                        onChange={e => setTest(e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Lab results</label>
+                      <div className="flex items-center gap-3">
+                        <label className="flex flex-col items-center justify-center w-full h-[48px] border border-dashed border-[#D0D5DD] rounded-[12px] cursor-pointer bg-[#F9FAFB]">
+                          <input
+                            type="file"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            className="hidden"
+                            onChange={handleLabResultChange}
+                          />
+                          <span className="text-[#3B6FED] text-sm flex items-center gap-2">
+                            <img src="/image/upload.svg" alt="upload" className="w-5 h-5" />
+                            {labResultFile ? labResultFile.name : 'Upload lab result'}
+                          </span>
+                        </label>
+                      </div>
+
+                    </>
+                  )}
+                </div>
+
+                {/* Collapsible: Doctor's notes & treatment plan */}
+                <div className="border-b pb-4">
+                  <div
+                    className="flex justify-between items-center cursor-pointer"
+                    onClick={() => setOpenDoctorSection((v) => !v)}
+                  >
+                    <h3 className="font-semibold mb-2">Doctor's notes & treatment plan</h3>
+                    <span className="text-lg">{openDoctorSection ? '▾' : '▸'}</span>
+                  </div>
+                  {openDoctorSection && (
+                    <>
+                      <label className="block mb-1 text-sm">Diagnosis</label>
+                      <input
+                        type="text"
+                        placeholder="Enter diagnosis"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={diagnosis}
+                        onChange={e => setDiagnosis(e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Description</label>
+                      <input
+                        type="text"
+                        placeholder="Enter diagnosis description"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Possible cause</label>
+                      <input
+                        type="text"
+                        placeholder="Enter possible cause"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={possibleCause}
+                        onChange={e => setPossibleCause(e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Medication</label>
+                      {medications.map((med, idx) => (
+                        <div key={idx} className="flex items-center gap-2 mb-3 relative">
+                          <input
+                            type="text"
+                            placeholder="Enter medication"
+                            className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black"
+                            value={med.medication}
+                            onChange={e => handleMedicationChange(idx, 'medication', e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className="flex gap-2 text-[#3B6FED] items-center"
+                            onClick={addMedication}
+                          >
+                            <img src="/image/Plus{BLUE}.png" width={24} height={24} alt="icon" />
+                            Add medication
+                          </button>
+                          {medications.length > 1 && (
+                            <button
+                              type="button"
+                              className="absolute right-[-30px] text-red-500"
+                              onClick={() => removeMedication(idx)}
+                            >×</button>
+                          )}
+                        </div>
+                      ))}
+                      <label className="block mb-1 text-sm">Dosage</label>
+                      <input
+                        type="text"
+                        placeholder="Enter medication dosage"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={medications[0]?.dosage}
+                        onChange={e => handleMedicationChange(0, 'dosage', e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Follow-up</label>
+                      <input
+                        type="text"
+                        placeholder="Give a follow-up"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black mb-3"
+                        value={followUp}
+                        onChange={e => setFollowUp(e.target.value)}
+                      />
+                      <label className="block mb-1 text-sm">Notes</label>
+                      <input
+                        type="text"
+                        placeholder="Give notes if needed"
+                        className="w-full bg-[#FFFFFF] outline-none border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black"
+                        value={notes}
+                        onChange={e => setNotes(e.target.value)}
+                      />
+                    </>
+                  )}
+                </div>
+
+                <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm mt-4'>
+                  <button
+                    type='submit'
+                    className="bg-[#6C5DD3] text-white py-2 px-6 rounded w-fit mt-3 text-[16px] font-medium"
+                    disabled={isSavingHealthIssue}
+                  >
+                    {isSavingHealthIssue ? 'Saving...' : 'Save health issue'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
 };
-
 export default NurseHealthHistory;
