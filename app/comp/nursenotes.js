@@ -308,7 +308,7 @@ export default function NoteManager({ studentId }) {
                   <div className="text-sm text-gray-700 flex-1">
                     {doctorNoteForCard ? doctorNoteForCard.content : (
                       <div className="flex flex-col items-center justify-center py-6 h-full">
-                        <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
+                        <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
                         <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
                         <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
                       </div>
