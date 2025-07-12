@@ -60,7 +60,7 @@ useEffect(() => {
           matricNumber: studentInfo?.matricNumber || "N/A",
           status: student.isActive ? "Active" : "Inactive",
           lastVisit: student.updatedAt
-            ? new Date(student.updatedAt).toLocaleDateString()
+              ? formatDateDMY(student.updatedAt)
             : "N/A",
         };
       });
@@ -157,6 +157,16 @@ useEffect(() => {
 
     setOpenMenuIndex(null);
   };
+
+
+  function formatDateDMY(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
 
   return (
     <div className="p-6 overflow-x-auto">

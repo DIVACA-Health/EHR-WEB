@@ -6,10 +6,10 @@ const Logopicture = () => {
         <div className="relative z-20 p-4 text-white h-full w-full flex items-center justify-center">
         <div className=" min-h-[90%] w-[85%] flex flex-col justify-between " >
             <img src="/image/DHLOGO.png" alt="logo"  width={164} height={56}/>
-            <div>
-            <div className=" mb-8 flex flex-col text-center gap-3">
-                <h2 className="text-2xl font-bold">Your Data, Always Protected</h2>
-                <h4 className="text-sm">Keep patient records safe with built-in security and seamless access controls.</h4>
+            <div className=" w-full">
+            <div className=" mb-8 flex flex-col text-center gap-3 ">
+                <h2 className="text-[27px] font-medium">Seamless Digital Health Records</h2>
+                <h4 className="text-sm">Easily manage patient data with a secure, paperless system.</h4>
             </div>
             <div className="flex justify-center items-center">
                 <img src="/image/slide.png" alt="slider" width={88} height={10} />

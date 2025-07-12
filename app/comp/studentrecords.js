@@ -18,7 +18,7 @@ const studentrecords = () => {
           <div className='relative z-10'>
             <div className='min-h-6/10 min-w-4/10 flex items-center justify-center'>
                 <div className='flex flex-col items-center'>
-                  <h2 className='text-xl'>Total Students</h2>
+                  <h2 className='text-lg font-extralight mb-4'>Total Students</h2>
                   <div>
                     <h1 className='text-3xl'>320</h1>
                   </div>

@@ -110,7 +110,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-0.5">
               <label className="text-sm">Phone Number</label>
-              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[7px] outline-none flex items-center shadow-sm shadow-gray-300">
+              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center ">
                 <div className="flex gap-0.5 w-1/5">
                   <img src="/image/flag.png" alt="" width={22} height={22} />
                   <h3 className="font-semibold tracking-widest">+234</h3>
@@ -130,7 +130,7 @@ export default function Home() {
               <label className="text-sm">Role</label>
               <select
                 name="role"
-                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none cursor-pointer"
+                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px]  outline-none cursor-pointer"
                 onChange={handleChange}
                 required
               >
@@ -162,7 +162,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full h-10 text-white text-sm bg-blue-600 flex items-center justify-center rounded-[7px] shadow-sm shadow-gray-300 cursor-pointer mt-2 ${
+              className={`w-full h-12 text-white text-sm bg-blue-600 rounded-[16px] flex items-center justify-center cursor-pointer mt-2 ${
                 loading ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
@@ -212,7 +212,7 @@ const InputField = ({ label, name, type, placeholder, onChange }) => (
       name={name}
       type={type}
       placeholder={placeholder}
-      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px]  outline-none"
       onChange={onChange}
       required
     />
@@ -228,7 +228,7 @@ const PasswordInput = ({ label, name, placeholder, show, toggle, onChange }) => 
         type={show ? "text" : "password"}
         placeholder={placeholder}
         minLength={6}
-        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
+        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px] outline-none"
         onChange={onChange}
         required
       />

@@ -76,8 +76,8 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border cursor-pointer mt-3">
-            <button type="submit" onClick={handlePasswordReset} disabled={loading}>
+          <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border cursor-pointer mt-3" onClick={handlePasswordReset}>
+            <button type="submit"  disabled={loading}>
               {loading ? "Sending..." : "Reset password"}
             </button>
           </div>
