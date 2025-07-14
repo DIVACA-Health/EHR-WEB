@@ -70,7 +70,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Category.png' alt='dashboard' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
                   Dashboard
                 </h2>
               </div>
@@ -82,7 +82,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Document.png' alt='student records' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
                   Student records
                 </h2>
               </div>
@@ -94,7 +94,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Users.png' alt='queue' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full text-sm ${activeTab === 'queue' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full  ${activeTab === 'queue' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
                   Queue management
                 </h2>
               </div>
@@ -106,7 +106,7 @@ const StudentDashboard = () => {
                 }`}
               >
                 <img src='/image/Settings.png' alt='settings' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-normal' : 'text-sm'}`}>
+                <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
                   Settings
                 </h2>
               </div>
@@ -118,7 +118,7 @@ const StudentDashboard = () => {
       {/* Main Content */}
       <div className='bg-white w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center '>
         {/* Top Bar */}
-        <div className='w-full h-[8%] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-sm shadow-gray-200'>
+        <div className='w-full h-[8%] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-xs shadow-gray-100'>
           <div className='h-[70%] w-[95%] flex items-center justify-between'>
             <div className='border border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center'>
               <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px]' />
@@ -134,11 +134,17 @@ const StudentDashboard = () => {
               <div className='border-r border-black w-1/2 h-[80%] flex items-center justify-center cursor-pointer'>
                 <img src='/image/Bell.png' alt='notification' className='h-[20px] w-[16px]' />
               </div>
-              <div className='h-[90%] w-1/2 flex items-center justify-end relative'>
+              <div className='h-[90%] w-1/2 flex gap-1 px-1 items-center justify-end relative'>
                 <img
                   src='/image/profileimg.png'
                   alt='profile'
                   className='cursor-pointer h-[41px] w-[41px]'
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                />
+                <img
+                  src='/image/dropdownprofile.png'
+                  alt='profile'
+                  className='cursor-pointer h-[px] w-[9px]'
                   onClick={() => setShowDropdown((prev) => !prev)}
                 />
                 {showDropdown && (
