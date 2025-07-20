@@ -62,55 +62,71 @@ const StudentDashboard = () => {
         </div>
         <div className='min-h-[75%] flex justify-center'>
           <div className='w-[85%] min-h-full'>
-            <nav className='flex flex-col gap-3 text-white'>
-              <div
-                onClick={() => setActiveTab('dashboard')}
-                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'dashboard' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-                }`}
-              >
-                <img src='/image/Category.png' alt='dashboard' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                  Dashboard
-                </h2>
-              </div>
+          <nav className='flex flex-col gap-3 text-white'>
+            <div
+              onClick={() => setActiveTab('dashboard')}
+              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                activeTab === 'dashboard' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
+              }`}
+            >
+              <img
+                src={activeTab === 'dashboard' ? '/image/Category(blue).png' : '/image/Category.png'}
+                alt='dashboard'
+                className='h-[22px] w-[20px]'
+              />
+              <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                Dashboard
+              </h2>
+            </div>
 
-              <div
-                onClick={() => setActiveTab('students')}
-                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'students' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-                }`}
-              >
-                <img src='/image/Document.png' alt='student records' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                  Student records
-                </h2>
-              </div>
+            <div
+              onClick={() => setActiveTab('students')}
+              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                activeTab === 'students' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
+              }`}
+            >
+              <img
+                src={activeTab === 'students' ? '/image/Document(blue).png' : '/image/Document.png'}
+                alt='student records'
+                className='h-[22px] w-[20px]'
+              />
+              <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                Student records
+              </h2>
+            </div>
 
-              <div
-                onClick={() => setActiveTab('queue')}
-                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'queue' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-                }`}
-              >
-                <img src='/image/Users.png' alt='queue' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full  ${activeTab === 'queue' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                  Queue management
-                </h2>
-              </div>
+            <div
+              onClick={() => setActiveTab('queue')}
+              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                activeTab === 'queue' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
+              }`}
+            >
+              <img
+                src={activeTab === 'queue' ? '/image/Users(blue).png' : '/image/Users.png'}
+                alt='queue'
+                className='h-[22px] w-[20px]'
+              />
+              <h2 className={`w-[80%] h-full  ${activeTab === 'queue' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                Queue management
+              </h2>
+            </div>
 
-              <div
-                onClick={() => setActiveTab('settings')}
-                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                  activeTab === 'settings' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-                }`}
-              >
-                <img src='/image/Settings.png' alt='settings' className='h-[22px] w-[20px]' />
-                <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                  Settings
-                </h2>
-              </div>
-            </nav>
+            <div
+              onClick={() => setActiveTab('settings')}
+              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                activeTab === 'settings' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
+              }`}
+            >
+              <img
+                src={activeTab === 'settings' ? '/image/Settings(blue).png' : '/image/Settings.png'}
+                alt='settings'
+                className='h-[22px] w-[20px]'
+              />
+              <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                Settings
+              </h2>
+            </div>
+          </nav>
           </div>
         </div>
       </div>

@@ -12,10 +12,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
         <div className='w-[85%] min-h-full'>
           <nav className='flex flex-col gap-3 text-white'>
             {[
-              { id: 'dashboard', label: 'Dashboard', icon: '/image/Category.png' },
-              { id: 'students', label: 'Student records', icon: '/image/Document.png' },
-              { id: 'queue', label: 'Queue management', icon: '/image/Users.png' },
-              { id: 'settings', label: 'Settings', icon: '/image/Settings.png' },
+              { id: 'dashboard', label: 'Dashboard', icon: '/image/Category.png', iconBlue: '/image/Category(blue).png' },
+              { id: 'students', label: 'Student records', icon: '/image/Document.png', iconBlue: '/image/Document(blue).png' },
+              { id: 'queue', label: 'Queue management', icon: '/image/Users.png', iconBlue: '/image/Users(blue).png' },
+              { id: 'settings', label: 'Settings', icon: '/image/Settings.png', iconBlue: '/image/Settings(blue).png' },
             ].map((tab) => (
               <div
                 key={tab.id}
@@ -24,7 +24,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                   activeTab === tab.id ? 'bg-blue-100' : 'hover:bg-blue-100'
                 }`}
               >
-                <img src={tab.icon} alt={tab.label} className='h-[22px] w-[20px]' />
+                <img
+                  src={activeTab === tab.id ? tab.iconBlue : tab.icon}
+                  alt={tab.label}
+                  className='h-[22px] w-[20px]'
+                />
                 <h2
                   className={`w-[80%] h-full ${
                     activeTab === tab.id ? 'text-blue-600 font-semibold' : 'text-sm'
