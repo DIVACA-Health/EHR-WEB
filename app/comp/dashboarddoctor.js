@@ -324,7 +324,7 @@ const handleMenuButtonClick = (e, user) => {
                     <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">Last name</th>
-                    <th className="px-4 py-3 font-boldtext-[#6B7280]">Time in</th>
+                    <th className="px-4 py-3 font-boldtext-[#6B7280]">Time-in</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">Status</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">Action</th>
                   </tr>
