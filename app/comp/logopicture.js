@@ -31,7 +31,7 @@ const Logopicture = () => {
         setCurrent((prev) => (prev + 1) % slides.length);
         setFade(true);
       }, 400); // fade out before changing
-    }, 8000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [slides.length, current]);
 
