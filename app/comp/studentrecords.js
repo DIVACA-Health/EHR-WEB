@@ -13,8 +13,8 @@ const studentrecords = () => {
               <h3 className='font-medium'>Download list</h3>
             </div>
         </div>
-        <div className='h-[166px] w-[95%] bg-blue-950 text-white rounded-xl flex items-center justify-center mt-5 relative bg-cover bg-center' style={{ backgroundImage: "url('/image/Pattern.png')",}}>
-          <div className='absolute inset-0 bg-black opacity-85 rounded-xl'></div> 
+        <div className='h-[166px] w-[95%] bg-[#0C162F] text-white rounded-xl flex items-center justify-center mt-5 relative bg-cover bg-center' style={{ backgroundImage: "url('/image/Pattern.png')",}}>
+          <div className='absolute inset-0 bg-[#0C162F] opacity-85 rounded-xl'></div> 
           <div className='relative z-10'>
             <div className='min-h-6/10 min-w-4/10 flex items-center justify-center'>
                 <div className='flex flex-col items-center'>
@@ -24,7 +24,7 @@ const studentrecords = () => {
                   </div>
                 </div>
                 <div className='h-15 flex items-center gap-1 ml-6 '>
-                  <img src='/image/Vector (2).png' alt='img' width={22} height={22}/>
+                  <img src='/image/greenarrow.png' alt='img' width={22} height={22}/>
                   <h2 className='text-green-600'>1.55% from last semester</h2>
                 </div>
             </div>

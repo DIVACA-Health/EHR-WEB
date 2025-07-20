@@ -187,11 +187,11 @@ const QueueManagement = () => {
           <table className='min-w-full table-auto text-sm'>
             <thead>
               <tr className='border-b'>
-                <th className=' p-4  text-center'>S/N</th>
-                <th className=' text-center p-4'>First name</th>
-                <th className=' text-center p-4'>Last name</th>
-                <th className=' text-center p-4'>Time</th>
-                <th className='text-center p-4'>Action</th>
+                <th className=' p-4  text-center font-medium'>S/N</th>
+                <th className=' text-center p-4 font-medium'>First name</th>
+                <th className=' text-center p-4 font-medium'>Last name</th>
+                <th className=' text-center p-4 font-medium'>Time</th>
+                <th className='text-center p-4 font-medium'>Action</th>
               </tr>
             </thead>
             <tbody>

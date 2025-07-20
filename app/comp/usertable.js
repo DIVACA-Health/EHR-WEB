@@ -40,6 +40,7 @@ export default function UserTable() {
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const itemsPerPage = 10;
   const menuRef = useRef();
+  const [searchFocused, setSearchFocused] = useState(false);
 
   // Fetch student data
 useEffect(() => {
@@ -191,7 +192,7 @@ useEffect(() => {
         </div>
 
         {/* Search */}
-        <div className="flex gap-2 h-full items-center justify-center border border-[rgba(240,242,245,1)] rounded-[10px] w-full outline-blue-300">
+        <div className={`flex gap-2 h-full items-center justify-center border border-[rgba(240,242,245,1)] rounded-[10px] w-full ${searchFocused ? "outline outline-2 outline-[#3B6FED]" : ""}`}>
           <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px]" />
             <input
@@ -199,6 +200,8 @@ useEffect(() => {
               placeholder="Search by name, ID, matric number etc."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
               className="h-[80%] w-full p-2 rounded-r-xl text-black outline-transparent"
             />
           </div>
@@ -259,10 +262,10 @@ useEffect(() => {
                     />
                   </button>
                   {openMenuIndex === index && (
-                    <div className="absolute right-0 top-0 w-62 z-10 bg-white shadow-md rounded-xl border border-gray-200">
+                    <div className="absolute right-0 bottom-0 w-62 z-10 bg-white shadow-md rounded-[8px] border border-gray-200">
                       <button
                         onClick={() => handleActionClick(user)}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
+                        className="w-full text-left text-[#494949] font-normal px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
                       >
                         Add to patient queue
                       </button>
