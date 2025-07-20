@@ -184,7 +184,51 @@ export default function NurseQueueManagement() {
     }
   };
 
-    const handleemergency = async (id) => {
+    const handlestartconsultation = async (id) => {
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "In consultation" }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to forward files: ${errorText}`);
+        return;
+      }
+
+      toast.success('Consultation started successfully');
+      setMenuUser(null);
+      // Optionally refetch data here
+    } catch (err) {
+      console.error('Failed to start consultation:', err);
+      toast.error('An error occurred while forwarding files.');
+    }
+  };
+  
+     const handleendconsultation = async (id) => {
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "Returned to health attendant" }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to end consultation: ${errorText}`);
+        return;
+      }
+
+      toast.success('consultation ended succesfully');
+      setMenuUser(null);
+      // Optionally refetch data here
+    } catch (err) {
+      console.error('Failed to forward files:', err);
+      toast.error('An error occurred while forwarding files.');
+    }
+  };
+
+     const handleemergency = async (id) => {
     try {
       const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
         method: 'PUT',
@@ -352,29 +396,28 @@ const handleMenuButtonClick = (e, user) => {
           >
             Record vitals
           </button>
-          <button
-            onClick={() => { handleForwardFiles(menuUser.divacaId); setMenuUser(null); }}
-            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
-            style={{ border: 'none', background: 'none' }}
-          >
-            Forward patient files
-          </button>
-          <button
-            onClick={() => { handleemergency(menuUser.divacaId); setMenuUser(null); }}
-            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
-            style={{ border: 'none', background: 'none' }}
-          >
-            Flag as Emergency
-          </button>
-          <button
-            onClick={() => { handleRemoveFromQueue(menuUser.divacaId); setMenuUser(null); }}
-            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
-            style={{ border: 'none', background: 'none' }}
-          >
-            Remove from queue
-          </button>
+
+          {/* Conditionally render the consultation button */}
+          {menuUser.status !== 'In consultation' ? (
+            <button
+              onClick={() => { handlestartconsultation(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 text-[#3B6FED] hover:bg-[#F0F2F5]  text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Start Consultation
+            </button>
+          ) : (
+            <button
+              onClick={() => { handleendconsultation(menuUser.studentId); setMenuUser(null); }}
+              className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+              style={{ border: 'none', background: 'none' }}
+            >
+              Complete Consultation
+            </button>
+          )}
         </div>
       )}
+
     </div>
   );
 }
