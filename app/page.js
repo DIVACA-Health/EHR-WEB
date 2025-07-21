@@ -1,244 +1,459 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import Logopicture from "./comp/logopicture";
-import { useRouter } from "next/navigation";
-import { toast, Toaster } from "react-hot-toast";
 
-export default function Home() {
-  const router = useRouter();
+'use client';
+import React from 'react'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [loading, setLoading] = useState(false);
+const main = () => {
+    const pathname = usePathname(); // to track active link
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    role: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About us', path: '/about' },
+    { name: 'Contact us', path: '/contact' },
+  ];
+    const steps = [
+  {
+    title: "Student registers & gets digital card",
+    description: "Instantly receive a personalized digital card after signing up.",
+  },
+  {
+    title: "Presents Card at Clinic",
+    description: "Show your digital card at any partner clinic to access services.",
+  },
+  {
+    title: "Health Attendant Checks In",
+    description: "A health attendant scans your card to confirm your clinic visit.",
+  },
+  {
+    title: "Nurse and Doctor Treat & Update Record",
+    description: "Care is given and your record is updated instantly.",
+  },
+  {
+    title: "Record Synced Securely and Accessible",
+    description: "Your record is synced safely and easy to access.",
+  },
+];
+const features = [
+  {
+    icon: <img src='/image/covericon1.png' alt='cover'/>,
+    title: "Covers all upfront costs for clinics",
+    description: "Get started with no hardware, license, or training costs at all.",
+    color: "bg-teal-100 text-teal-600",
+  },
+  {
+    icon: <img src='/image/covericon2.png' alt='cover'/>,
+    title: "Designed for African institutions",
+    description: "Built to fit African health systems, workflows, and realities.",
+    color: "bg-purple-100 text-purple-600",
+  },
+  {
+    icon: <img src='/image/coveicon3.png' alt='cover'/>,
+    title: "Stylus-ready and solar-compatible tech",
+    description: "Use with a stylus, keyboard is optional, and it works even without power.",
+    color: "bg-yellow-100 text-yellow-600",
+  },
+  {
+    icon: <img src='/image/covericon4.png' alt='cover'/>,
+    title: "First full EHR platform built for students",
+    description: "Manage student health with records made just for campuses.",
+    color: "bg-indigo-100 text-indigo-600",
+  },
+  {
+    icon: <img src='/image/covericon5.png' alt='cover'/>,
+    title: "Offline syncing and fast queue systems",
+    description: "Works without internet and keeps clinic flow fast and smooth.",
+    color: "bg-orange-100 text-orange-600",
+  },
+  {
+    icon: <img src='/image/covericon6.png' alt='cover'/>,
+    title: "Health tracker and gamification for patients",
+    description: "Patients stay engaged by earning points for healthy actions.",
+    color: "bg-pink-100 text-pink-600",
+  },
+];
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!formData.firstName.trim()) return toast.error("First name is required");
-    if (!formData.lastName.trim()) return toast.error("Last name is required");
-    if (!emailRegex.test(formData.email)) return toast.error("Please enter a valid email address");
-    if (!formData.phone.trim() || !/^[789]\d{9}$/.test(formData.phone.trim()))
-      return toast.error("Please enter a valid Nigerian phone number (e.g., 8031234567)");
-    if (!formData.role) return toast.error("Please select a role");
-    if (formData.password.length < 6)
-      return toast.error("Password must be at least 6 characters long");
-    if (formData.password !== formData.confirmPassword)
-      return toast.error("Passwords do not match");
-
-    try {
-      setLoading(true);
-
-      const payload = {
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        email: formData.email.trim(),
-        phoneNumber: `+234${formData.phone.trim()}`,
-        role: formData.role,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-      };
-
-      const signupRes = await fetch("/api/v1/auth/medical-practitioner-signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const signupData = await signupRes.json();
-
-      if (!signupRes.ok) {
-        throw new Error(signupData.message || "Signup failed");
-      }
-
-      await fetch("/api/v1/auth/request-email-verification", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
-
-      toast.success("Signup successful!");
-      router.push(`/authentication?email=${formData.email}`);
-    } catch (error) {
-      console.error("Signup error:", error);
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
-    <div className="w-full h-[100vh] bg-white flex justify-between">
-      <Toaster position="top-center" />
-      <Logopicture />
-      <div className="w-[55%] h-[99%] flex justify-center items-center">
-        <div className="w-[65%] h-[95%] flex flex-col items-center justify-center  ">
-          <div className="h-auto w-full text-black mb-3">
-            <h3 className="text-2xl xl:text-3xl ">Create Account</h3>
-            <h4 className="text-[12px] xl:text-sm text-gray-500">
-              Set up your account to experience a seamless health record system.
-            </h4>
-          </div>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2 xl:gap-3 w-full text-black">
-            <InputField label="First Name" name="firstName" type="text" placeholder="Enter first name" onChange={handleChange} />
-            <InputField label="Last Name" name="lastName" type="text" placeholder="Enter last name" onChange={handleChange} />
-            <InputField label="Email Address" name="email" type="email" placeholder="Email Address" onChange={handleChange} />
-
-            <div className="flex flex-col gap-0.5">
-              <label className="text-sm">Phone Number</label>
-              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center ">
-                <div className="flex gap-0.5 w-1/5">
-                  <img src="/image/flag.png" alt="" width={22} height={22} />
-                  <h3 className="font-semibold tracking-widest">+234</h3>
+    <>
+    <div className='bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
+        <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20'>
+            <div className='flex items-center justify-between pl-5 pr-5 mt-4'>
+                <div>
+                    <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <input
-                  name="phone"
-                  type="number"
-                  className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none"
-                  placeholder="80 000 000 00"
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+                <div className='w-[252px]'>
+                    <nav className='flex items-center justify-between w-full'>
+                    {navLinks.map((link) => (
+                        <Link
+                        key={link.name}
+                        href={link.path}
+                        className={` font-medium transition-colors duration-200 ${
+                            pathname === link.path
+                            ? 'text-[#3B6FED] font-semibold'
+                            : 'text-[#626262] hover:text-[#3B6FED]'
+                        }`}
+                        >
+                        {link.name}
+                        </Link>
+                    ))}
+                    </nav>
+                </div>
+                <Link href="/createpage">
+                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
+                    Explore Campus Care
+                    </button>
+                </Link>
             </div>
+            <div className='flex items-center justify-between h-[70%] w-full pl-5 pr-10 mt-[77px]  '>
+                <div className='w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
+                    <div className='w-[202px] h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
+                        <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
+                        <h3 className='text-xs'>SMART HEALTH SOLUTION</h3>
+                    </div>
+                    <h1 className='text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
+                    <h3>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
+                    <div className='flex w-[432px] justify-between'>
+                        <Link href='/createpage'>
+                        <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-[210px] h-[48px]'>
+                            <h1 className='text-white'>Explore Campus Care</h1>
+                        </button>
+                        </Link>
+                        <Link href='/createpage'>
+                        <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-[210px] h-[48px]'>
+                            <h1 className='text-[#3B6FED]'>Request early access</h1>
+                        </button>
+                        </Link>
 
-            <div className="flex flex-col gap-0.5">
-              <label className="text-sm">Role</label>
-              <select
-                name="role"
-                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px]  outline-none cursor-pointer"
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Role</option>
-                <option value="doctor">Doctor</option>
-                <option value="nurse">Nurse</option>
-                <option value="health_attendant">Record Keeper</option>
-              </select>
+                    </div>
+                </div>
+                <div className='w-[45%] h-full  flex justify-center items-center'>
+                    <img src='/image/Group1171276095.png' alt='IMG' className='w-[90%] h-full'/>
+                </div>
             </div>
-
-            <PasswordInput
-              label="Create Password"
-              name="password"
-              placeholder="Enter password"
-              show={showPassword}
-              toggle={() => setShowPassword(!showPassword)}
-              onChange={handleChange}
-            />
-
-            <PasswordInput
-              label="Confirm Password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              show={showPassword1}
-              toggle={() => setShowPassword1(!showPassword1)}
-              onChange={handleChange}
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full h-12 text-white text-sm bg-blue-600 rounded-[16px] flex items-center justify-center cursor-pointer mt-2 ${
-                loading ? "opacity-70 cursor-not-allowed" : ""
-              }`}
-            >
-              {loading ? (
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8H4z"
-                  />
-                </svg>
-              ) : (
-                "Create Account"
-              )}
-            </button>
-          </form>
-
-          <div className="flex text-sm gap-0.5 mt-1 justify-center items-center text-black">
-            <h2>Already have an account?</h2>
-            <Link href="/login">
-              <span className="text-blue-600 cursor-pointer">Log In</span>
-            </Link>
-          </div>
         </div>
-      </div>
+        <div className='h-[60vh]  w-full pl-15 pr-15 pt-10 pb-10 flex justify-between mt-10'>
+            <div className='w-1/2 flex flex-col gap-3 justify-center text-black'>
+                <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
+                    <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
+                    <h3 className='text-xs'>OUR INVESTORS & PARTNERS</h3>
+                </div>
+                <h1 className='text-[50px] font-bold '>Built by DIVACA Tech</h1>
+                <h3>DIVACA Health empowers schools, Institutions and hospitals with <br></br> digital records, reliable infrastructure, and better health for all.</h3>
+            </div>
+            <div className='w-1/2 '> 
+                <img src='/image/Frame1261158844.png' alt='IMG' className='h-full w-[100%]'/>
+            </div>
+        </div>
+        <div className='h-fit  w-full bg-[#14254F] rounded-[48px] mt-15 mb-5 flex flex-col items-center pt-10 gap-8'>
+            <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
+                <h3 className='text-[#3B6FED] text-sm'>EXPLORE OUR PLANS</h3>
+            </div>
+            <div className='w-full h-fit px-5 py-6  mt-3 text-center flex flex-col gap-3 '>
+                <h4 className='text-5xl'>Simple, Transparent Pricing for <br></br> Every Institution</h4>
+                <h4 className='text-lg'>Choose the right solution for your healthcare center — whether you run a school <br></br> clinic, a general hospital, or a specialized lab. We also offer flexible pricing plan.</h4>
+            </div>
+            <div>
+            <div className='h-[450px] w-[900px] flex gap-5 mb-5 '>
+                <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
+                    <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
+                        <h2 className='text-[#14254F] text-lg font-bold'>HospitalCare Plan</h2>
+                        <h3 className='text-sm'>Perfect for clinics and institutional health providers.</h3>
+                        <button className='flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] bg-[#3B6FED]'>
+                            <h3>Get Campus Care</h3>
+                            <img src="/image/Subtract.png" alt='img' className='w-[18px] h-[18px]'/>
+                        </button>
+                    </div>
+                    <div className='p-5 flex flex-col gap-3'>
+                        <h2>Whats Included:</h2>
+                        <div className='flex flex-col gap-2.5'>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Student Digital Health Cards</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Nurse/Doctor Dashboards</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Prescription & Medical History</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Smart Queue System</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Tablet-friendly EHR</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/Check.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>24/7 uptime (via optional solar power)</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
+                    <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
+                        <h2 className='text-[#14254F] text-lg font-bold'>General Hospital Management Plan </h2>
+                        <h3 className='text-sm'>Perfect for public/private hospitals, health centers</h3>
+                        <button className='flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] bg-[#14254F] text-white'>
+                            <h3>Coming soon</h3>
+                        </button>
+                    </div>
+                    <div className='p-5 flex flex-col gap-3'>
+                        <h2>Whats Included:</h2>
+                        <div className='flex flex-col gap-2.5'>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Full hospital EHR</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Admission, discharge, ward tracking</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Billing, insurance, staff access</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Offline & solar-ready infrastructure</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Maintenance & technical training included</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className='h-[450px] w-[900px]  flex gap-5 mb-25 '>
+                <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
+                    <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
+                        <h2 className='text-[#14254F] text-lg font-bold'>API Access Plan </h2>
+                        <h3 className='text-sm'>Perfect for developers, startups, and external hospitals </h3>
+                        <button className='flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] bg-[#14254F] text-white'>
+                            <h3>Coming soon</h3>
+                        </button>
+                    </div>
+                    <div className='p-5 flex flex-col gap-3'>
+                        <h2>Whats Included:</h2>
+                        <div className='flex flex-col gap-2.5'>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>API endpoints for patient record access, updates</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Data synchronization tools</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Compliance & security layer</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Scalable pricing based on API usage tier</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
+                    <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
+                        <h2 className='text-[#14254F] text-lg font-bold'>Specialty Care (Dentists, Labs, Eye Clinics)</h2>
+                        <h3 className='text-sm'>Perfect for specialized clinics or departments</h3>
+                        <button className='flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] bg-[#14254F] text-white'>
+                            <h3>Coming soon</h3>
+                        </button>
+                    </div>
+                    <div className='p-5 flex flex-col gap-3'>
+                        <h2>Whats Included:</h2>
+                        <div className='flex flex-col gap-2.5 text-sm'>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Tailored workflows (e.g., dental charting, lab test tracking, radiology uploads)</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Integration with lab equipment or external tools</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Patient referral & treatment continuity tools</h2>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <img src="/image/blackCheck.png" alt='img' className='w-[18px] h-[18px]'/>
+                                <h2>Specialty-specific analytics</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        <div className='w-full h-fit  p-5 flex flex-col items-center'>
+            <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]'/>
+                <h3 className='text-[#3B6FED] text-sm'>HOW IT WORKS</h3>
+            </div>
+            <div className='w-full h-fit px-5 py-6  mt-3 text-center flex flex-col gap-3 text-black'>
+                <h4 className='text-5xl'>It Only Takes a Few Steps</h4>
+                <h4 className='text-lg'>We’ve broken it down into simple steps so you know exactly what to expect.</h4>
+            </div>
+            <div className='h-[640px] w-full  flex gap-20 mb-10'>
+                <div className='w-[55%]  h-full flex items-center justify-center'>
+                    <img src='/image/phone.png' alt='Img' className='w-full h-full' />
+                </div>
+                <div className='w-[35%] h-full text-black flex flex-col justify-between  '>
+                    {steps.map((step, index) => (
+                        <div key={index} className="flex items-start relative pb-10">
+                        {/* Step Number */}
+                        <div className="z-10 flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full">
+                            {index + 1}
+                        </div>
+
+                        {/* Vertical Line */}
+                        {index !== steps.length - 1 && (
+                            <div className="absolute left-3.5 top-8 h-full border-l-2 border-dashed border-blue-300 z-0" />
+                        )}
+
+                        {/* Content */}
+                        <div className="ml-6">
+                            <h3 className="font-semibold text-lg">{step.title}</h3>
+                            <p className="text-sm text-gray-600 mt-1">{step.description}</p>
+                        </div>
+                        </div>
+                    ))}
+                    <button className='w-full h-[48px] bg-[#3B6FED] border-1 rounded-[8px] border-[#14254F] '>
+                        Get started with DIVACA Health
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div 
+            className='w-full h-fit  rounded-[48px] flex flex-col items-center'
+              style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)",}}
+        >
+            <div className='w-fit mt-5 items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]'/>
+                <h3 className='text-[#3B6FED] text-sm'>WHY DIVACA Health</h3>
+            </div>
+            <div className='w-full h-fit px-5 py-6  mt-3 text-center flex flex-col gap-4 '>
+                <h4 className='text-5xl'>Not just for the sick, built for the healthy too</h4>
+                <h4 className='text-lg'>DIVACA Health isn’t just for when you’re in the clinic. Our platform uses gamification and proactive tools to <br></br> encourage users to stay healthy, track habits, and visit hospitals only for checkups — not emergencies.</h4>
+            </div>
+                <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-15 mt-15 text-black ">
+                    {features.map((feature, index) => (
+                    <div
+                        key={index}
+                        className="bg-white rounded-xl p-6 shadow-md flex flex-col gap-3"
+                    >
+                        <div
+                        className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${feature.color}`}
+                        >
+                        {feature.icon}
+                        </div>
+                        <h3 className="font-semibold text-lg">{feature.title}</h3>
+                        <p className="text-sm text-gray-600">{feature.description}</p>
+                    </div>
+                    ))}
+                </div>
+        </div>
+        <div className='w-full p-5  h-[640px] mt-5 mb-10 flex justify-between text-black'>
+            <div className='w-[40%] h-full flex flex-col items-left  justify-center'>
+                <div className='w-fit mt-5  items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                    <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]'/>
+                    <h3 className='text-[#3B6FED] text-sm'>COMING NEXT</h3>
+                </div>
+                <div className='w-full h-fit  py-4  mt-3 text-left flex flex-col gap-4  items-start'>
+                    <h4 className='text-4xl'>What’s Coming Next</h4>
+                    <h4 className=''>Get a sneak peek of the awesome features we're building at <br></br> DIVACA Health</h4>
+                </div>
+                <div className='w-full h-fit  text-black text-sm'>
+                    <div className='w-full h-[68px]  flex gap-5 mb-3'>
+                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
+                            <img src='/image/generalicon1.png' alt='IMG' className='w-[40px] h-[40px]'/>
+                            <h3>General hospital integrations</h3>
+                        </div>
+                        <div className='w-fit h-full bg-white border-1 gap-2 flex items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
+                            <img src='/image/realicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
+                            <h3>Real-time analytics</h3>
+                        </div>
+                    </div>
+                    <div className='w-full h-[68px] flex  gap-5 mb-3'>
+                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
+                            <img src='/image/acessicon3.png' alt='IMG' className='w-[40px] h-[40px]'/>
+                            <h3>Multilingual access</h3>
+                        </div>
+                        <div className='w-fit h-full bg-white border-1 gap-2 flex items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
+                            <img src='/image/healthicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
+                            <h3>Health coverage portability</h3>
+                        </div>
+                    </div>
+                    <div className='w-full h-[68px]  flex justify-between'>
+                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
+                            <img src='/image/devicon.png' alt='IMG' className='w-[40px] h-[40px]'/>
+                            <h3>Developer-friendly API</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='w-[55%] h-full'>
+                <img src='/image/pcimg.png' alt='img' className='w-full h-full'/>
+            </div>
+        </div>
     </div>
-  );
+    <footer className='h-[400px] w-full bg-[#0C162F] rounded-t-[48px] pt-12 '>
+        <div className='h-[70%] w-[90%] m-auto flex justify-evenly border-b-1 border-b-[#B0B0B0]'>
+            <div className='w-1/4 h-full text'>
+                <img src='/image/DHLOGO.png' alt='img' className='w-[137px] h-[47px]'/>
+                <div className=' w-[80%] flex items-center h-fit mt-[40px]'>
+                    <div className='w-2/10 border-r-1 border-r-2-white'>
+                        <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px] '/>
+                    </div>
+                    <div className='w-8/10 pl-2'>
+                    <h3>support@divacahealth.com</h3>
+                    </div>
+                </div>
+            </div>
+            <div className='w-1/4 h-full  flex flex-col gap-2 items-center text-left'>
+                <div className='w-1/2 m-auto h-full flex flex-col gap-3 '>
+                    <h3 className='font-medium text-lg'>Company</h3>
+                    <h3 className='font-extralight'>Home</h3>
+                    <h3 className='font-extralight'>About</h3>
+                    <h3 className='font-extralight'>Contact</h3>
+                    <h3 className='font-extralight'>Campus care</h3>
+                </div>
+            </div>
+            <div className='w-1/4 h-full  flex flex-col gap-2 items-center text-left'>
+                <div className='w-1/2 m-auto h-full flex flex-col gap-3 '>
+                    <h3 className='font-medium text-lg'>LEGAL</h3>
+                    <h3 className='font-extralight'>Privacy Policy</h3>
+                    <h3 className='font-extralight'>Terms of service</h3>
+                </div>
+            </div>
+            <div className='w-1/4 h-full  flex flex-col gap-2 items-center text-left'>
+                <div className='w-1/2 m-auto h-full flex flex-col gap-3 '>
+                    <h3 className='font-medium text-lg'>SOCIAL MEDIA</h3>
+                    <h3 className='font-extralight'>Instagram</h3>
+                    <h3 className='font-extralight'>LinkedIn</h3>
+                    <h3 className='font-extralight'>X (formerly Twitter)</h3>
+                </div>
+            </div>
+        </div>
+        <div className='h-[10%] mt-5 text-center'>
+            <h2 className='text-sm'>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
+        </div>
+    </footer> 
+    </>
+  )
 }
 
-const InputField = ({ label, name, type, placeholder, onChange }) => (
-  <div className="flex flex-col gap-0.5">
-    <label className="text-sm">{label}</label>
-    <input
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px]  outline-none"
-      onChange={onChange}
-      required
-    />
-  </div>
-);
-
-const PasswordInput = ({ label, name, placeholder, show, toggle, onChange }) => (
-  <div className="flex flex-col gap-0.5">
-    <label className="text-sm">{label}</label>
-    <div className="relative w-full flex items-center">
-      <input
-        name={name}
-        type={show ? "text" : "password"}
-        placeholder={placeholder}
-        minLength={6}
-        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px] outline-none"
-        onChange={onChange}
-        required
-      />
-      <button
-        type="button"
-        onClick={toggle}
-        className="absolute right-3 top-2 text-gray-500 hover:text-gray-700"
-      >
-        {show ? <Eye size={20} /> : <EyeOff size={20} />}
-      </button>
-    </div>
-  </div>
-);
+export default main

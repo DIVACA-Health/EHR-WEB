@@ -121,7 +121,7 @@ const Login = () => {
           </div>
           <div className="flex gap-1.5 mt-3 text-center justify-center items-center ">
             <h2>Don't have an account?</h2>
-            <Link href="/">
+            <Link href="/createpage">
               <span className="text-blue-600 cursor-pointer">Sign Up</span>
             </Link>
           </div>
