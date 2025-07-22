@@ -12,28 +12,44 @@ const about = () => {
     { name: 'About us', path: '/about' },
     { name: 'Contact us', path: '/contact' },
   ];
-    const steps = [
+const initiatives = [
   {
-    title: "Student registers & gets digital card",
-    description: "Instantly receive a personalized digital card after signing up.",
+    icon: "🍲",
+    title: "Support for the needy",
+    description:
+      "We provide food, medical supplies, and basic necessities to vulnerable families and underserved communities.",
+    color: "bg-green-100 text-green-600",
   },
   {
-    title: "Presents Card at Clinic",
-    description: "Show your digital card at any partner clinic to access services.",
+    icon: "🩺",
+    title: "Free Health Screenings",
+    description:
+      "Our team organizes medical checkups, vitals assessments, and health education sessions in rural and low-income areas.",
+    color: "bg-blue-100 text-blue-600",
   },
   {
-    title: "Health Attendant Checks In",
-    description: "A health attendant scans your card to confirm your clinic visit.",
+    icon: "⛪",
+    title: "Spreading the Word of God",
+    description:
+      "We believe in holistic healing — both physical and spiritual. Through our outreach, we share the message of Christ, pray with the sick, and encourage faith-based hope and healing.",
+    color: "bg-purple-100 text-purple-600",
   },
   {
-    title: "Nurse and Doctor Treat & Update Record",
-    description: "Care is given and your record is updated instantly.",
+    icon: "🏗️",
+    title: "Infrastructure Projects",
+    description:
+      "We invest in clean water, solar-powered health sheds, digital access, and safe spaces for students and families.",
+    color: "bg-yellow-100 text-yellow-600",
   },
   {
-    title: "Record Synced Securely and Accessible",
-    description: "Your record is synced safely and easy to access.",
+    icon: "🎓",
+    title: "Education & Empowerment",
+    description:
+      "From digital literacy workshops to wellness education, we empower young people with the tools to live healthier, purpose-driven lives.",
+    color: "bg-pink-100 text-pink-600",
   },
 ];
+
 const features = [
   {
     icon: <img src='/image/covericon1.png' alt='cover'/>,
@@ -175,53 +191,55 @@ const features = [
             </div>
         </div>
         <div 
-            className='w-full h-[100vh]  rounded-[48px] flex  items-center'
+            className='w-full h-fit  rounded-[48px] flex   p-15'
               style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)",}}
         >
-
+            <div className='w-[40%] h-full  '>
+                <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
+                    <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
+                    <h3 className='text-xs'>WHERE WE MAKE A DIFFERENCE</h3>
+                </div>
+                <h1 className='text-[40px] font-medium '>What we do through our outreach</h1>
+                <h3 className='font-extralight'>We go beyond healthcare by showing up with love <br></br> compassion, and faith. Our outreach touches lives with healing, hope, and the message of Christ.</h3>
+            </div>
+            <div className='w-[60%] h-full  text-black'>
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {initiatives.map((item, index) => (
+                <div
+                    key={index}
+                    className={`bg-white rounded-xl p-6 shadow-md flex flex-col gap-3 
+                    ${index === 2 ? 'sm:col-span-2' : ''}`} // 👈 Only span middle card
+                >
+                    <div className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${item.color}`}>
+                    {item.icon}
+                    </div>
+                    <h3 className="font-semibold text-lg">{item.title}</h3>
+                    <p className="text-sm text-gray-600">{item.description}</p>
+                </div>
+                ))}
+            </div>
+            </div>
         </div>
-        <div className='w-full p-5  h-[640px] mt-5 mb-10 flex justify-between text-black'>
-            <div className='w-[40%] h-full flex flex-col items-left  justify-center'>
-                <div className='w-fit mt-5  items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-                    <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]'/>
-                    <h3 className='text-[#3B6FED] text-sm'>COMING NEXT</h3>
+        <div className='h-fit  w-full pl-15 pr-15 pt-10 pb-10 flex flex-row-reverse gap-5 justify-between mt-10'>
+            <div className='w-[40%] flex flex-col gap-3 justify-center text-left text-black'>
+                <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                    <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
+                    <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
                 </div>
-                <div className='w-full h-fit  py-4  mt-3 text-left flex flex-col gap-4  items-start'>
-                    <h4 className='text-4xl'>What’s Coming Next</h4>
-                    <h4 className=''>Get a sneak peek of the awesome features we're building at <br></br> DIVACA Health</h4>
-                </div>
-                <div className='w-full h-fit  text-black text-sm'>
-                    <div className='w-full h-[68px]  flex gap-5 mb-3'>
-                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
-                            <img src='/image/generalicon1.png' alt='IMG' className='w-[40px] h-[40px]'/>
-                            <h3>General hospital integrations</h3>
-                        </div>
-                        <div className='w-fit h-full bg-white border-1 gap-2 flex items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
-                            <img src='/image/realicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
-                            <h3>Real-time analytics</h3>
-                        </div>
-                    </div>
-                    <div className='w-full h-[68px] flex  gap-5 mb-3'>
-                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
-                            <img src='/image/acessicon3.png' alt='IMG' className='w-[40px] h-[40px]'/>
-                            <h3>Multilingual access</h3>
-                        </div>
-                        <div className='w-fit h-full bg-white border-1 gap-2 flex items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
-                            <img src='/image/healthicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
-                            <h3>Health coverage portability</h3>
-                        </div>
-                    </div>
-                    <div className='w-full h-[68px]  flex justify-between'>
-                        <div className='w-fit h-full bg-white border-1 flex gap-2 items-center justify-center border-[#354874] px-2  rounded-[20px] shadow-xs shadow-[#143C9D]'>
-                            <img src='/image/devicon.png' alt='IMG' className='w-[40px] h-[40px]'/>
-                            <h3>Developer-friendly API</h3>
-                        </div>
-                    </div>
+                <div className='w-full h-fit  mt-3 text-left flex flex-col gap-3 '>
+                    <h4 className='text-4xl'>Why we do it</h4>
+                    <h4 className='text-lg'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-[55%] h-full'>
-                <img src='/image/pcimg.png' alt='img' className='w-full h-full'/>
+            <div className='w-[56%] h-[590px] mb-10'> 
+                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
+        </div>
+        <div className=' w-[90%] h-[507px] rounded-[24px] m-auto mb-10 flex gap-3 flex-col items-center justify-center bg-cover bg-center'
+            style={{ backgroundImage: "url('/image/aboutbottom.png')" }}
+        >
+            <h2 className='text-5xl'>Want to Support or Get Involved?</h2>
+            <h3 className='text-center'>If you’d like to volunteer, partner, or support our outreach, reach out to us at: <br></br> 📧 outreach@divacahealth.com</h3>
         </div>
     </div>
     <footer className='h-[400px] w-full bg-[#0C162F] rounded-t-[48px] pt-12 '>
@@ -262,7 +280,7 @@ const features = [
                 </div>
             </div>
         </div>
-        <div className='h-[10%] mt-5 text-center'>
+        <div className='h-[10%] mt-5 text-center ' >
             <h2 className='text-sm'>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
         </div>
     </footer> 
