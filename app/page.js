@@ -76,9 +76,9 @@ const features = [
 
   return (
     <>
-    <div className='bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
-        <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20'>
-            <div className='flex items-center justify-between pl-5 pr-5 mt-4'>
+    <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
+        <div className='mb-20 sm: h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20  '>
+            <div className='hidden sm:flex items-center justify-between pl-5 pr-5 mt-4 '>
                 <div>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
@@ -100,35 +100,34 @@ const features = [
                     </nav>
                 </div>
                 <Link href="/createpage">
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
+                    <button className=' lg:bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium sm:bg-red-500'>
                     Explore Campus Care
                     </button>
                 </Link>
             </div>
-            <div className='flex items-center justify-between h-[70%] w-full pl-5 pr-10 mt-[77px]  '>
-                <div className='w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
+            <div className='block sm:flex items-center justify-between h-[70%] w-full pl-5 pr-10 mt-[77px]'>
+                <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
                     <div className='w-[202px] h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs'>SMART HEALTH SOLUTION</h3>
                     </div>
                     <h1 className='text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
                     <h3>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
-                    <div className='flex w-[432px] justify-between'>
-                        <Link href='/createpage'>
-                        <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-[210px] h-[48px]'>
+                    <div className='w-[100%]  flex gap-2'>
+                        <Link href='/createpage' className='w-1/2'>
+                        <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-[48px]'>
                             <h1 className='text-white'>Explore Campus Care</h1>
                         </button>
                         </Link>
-                        <Link href='/createpage'>
-                        <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-[210px] h-[48px]'>
+                        <Link href='/createpage' className='w-1/2'>
+                        <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full h-[48px]'>
                             <h1 className='text-[#3B6FED]'>Request early access</h1>
                         </button>
                         </Link>
-
                     </div>
                 </div>
-                <div className='w-[45%] h-full  flex justify-center items-center'>
-                    <img src='/image/Group1171276095.png' alt='IMG' className='w-[90%] h-full'/>
+                <div className='w-full mt-10 sm:w-[45%] h-[505px]  flex justify-center items-center '>
+                    <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
                 </div>
             </div>
         </div>
@@ -155,7 +154,7 @@ const features = [
                 <h4 className='text-lg'>Choose the right solution for your healthcare center — whether you run a school <br></br> clinic, a general hospital, or a specialized lab. We also offer flexible pricing plan.</h4>
             </div>
             <div>
-            <div className='h-[450px] w-[900px] flex gap-5 mb-5 '>
+            <div className='hidden  sm:h-[450px] w-[900px] flex gap-5 mb-5 '>
                 <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
                     <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
                         <h2 className='text-[#14254F] text-lg font-bold'>HospitalCare Plan</h2>
@@ -232,7 +231,7 @@ const features = [
 
                 </div>
             </div>
-            <div className='h-[450px] w-[900px]  flex gap-5 mb-25 '>
+            <div className='hidden sm:h-[450px] w-[900px]  flex gap-5 mb-25 '>
                 <div className='w-1/2  h-full bg-white text-black rounded-[24px] ' >
                     <div className='w-full  p-5 bg-[#FFFFFF] text-black rounded-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3 h-[40%]'>
                         <h2 className='text-[#14254F] text-lg font-bold'>API Access Plan </h2>

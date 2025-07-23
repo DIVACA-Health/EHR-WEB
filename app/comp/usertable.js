@@ -238,8 +238,8 @@ useEffect(() => {
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       user.status === "Active"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-red-100 text-red-600"
+                        ? "bg-[#ECFFF0] text-[#218838] border-[1px] border-[#218838]"
+                        : "bg-[#FEF0F0] text-[#FF4040] border-[1px] border-[#FF4040]"
                     }`}
                   >
                     {user.status}
