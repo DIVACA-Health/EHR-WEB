@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Plus, Minus , X } from "lucide-react"; 
+import { Plus, Minus , X , Menu } from "lucide-react"; 
 
 const contact = () => {
     const pathname = usePathname(); 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Plus, Minus , X } from "lucide-react"; 
+import { Menu, X } from 'lucide-react'; 
 
 const main = () => {
     const pathname = usePathname(); 
