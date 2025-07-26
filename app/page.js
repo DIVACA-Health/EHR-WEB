@@ -324,8 +324,8 @@ const plans = [
 
         {/* Header */}
         <div className='w-full h-fit px-5 py-6 mt-3 text-center flex flex-col gap-3 text-black'>
-            <h4 className='text-5xl sm:text-4xl text-3xl'>It Only Takes a Few Steps</h4>
-            <h4 className='text-lg sm:text-base text-sm'>
+            <h4 className=' sm:text-4xl text-3xl'>It Only Takes a Few Steps</h4>
+            <h4 className=' sm:text-base text-sm'>
             We’ve broken it down into simple steps so you know exactly what to expect.
             </h4>
         </div>
