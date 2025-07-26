@@ -192,7 +192,7 @@ useEffect(() => {
         </div>
 
         {/* Search */}
-        <div className={`flex gap-2 h-full items-center justify-center border border-[rgba(240,242,245,1)] rounded-[10px] w-full ${searchFocused ? "outline outline-2 outline-[#3B6FED]" : ""}`}>
+        <div className={`flex gap-2 h-full items-center justify-center border border-[rgba(240,242,245,1)] rounded-[10px] w-full ${searchFocused ? " outline-2 outline-[#3B6FED]" : ""}`}>
           <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px]" />
             <input
