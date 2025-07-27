@@ -190,39 +190,32 @@ const plans = [
                     </svg>
                 </button>
             </div>
-            <div className="flex items-center justify-between px-5 py-4">
-            <img src="/image/DHSVG1.png" alt="logo" className="w-[108px] h-[37px]" />
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-10">
-                <nav className="flex items-center gap-6">
-                {navLinks.map((link) => (
-                    <Link
-                    key={link.name}
-                    href={link.path}
-                    className={`font-medium transition-colors duration-200 ${
-                        pathname === link.path
-                        ? 'text-[#3B6FED] font-semibold'
-                        : 'text-[#626262] hover:text-[#3B6FED]'
-                    }`}
-                    >
-                    {link.name}
-                    </Link>
-                ))}
-                </nav>
+            <div className='hidden md:flex items-center justify-between pl-5 pr-5 mt-4 '>
+                <div>
+                    <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
+                </div>
+                <div className='w-[252px]'>
+                    <nav className='flex items-center justify-between w-full'>
+                    {navLinks.map((link) => (
+                        <Link
+                        key={link.name}
+                        href={link.path}
+                        className={` font-medium transition-colors duration-200 ${
+                            pathname === link.path
+                            ? 'text-[#3B6FED] font-semibold'
+                            : 'text-[#626262] hover:text-[#3B6FED]'
+                        }`}
+                        >
+                        {link.name}
+                        </Link>
+                    ))}
+                    </nav>
+                </div>
                 <Link href="/createpage">
-                <button className="bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium">
+                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
-                </button>
+                    </button>
                 </Link>
-            </div>
-
-            {/* Hamburger Icon (Mobile only) */}
-            <div className="md:hidden">
-                <button onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
-                {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
-            </div>
             </div>
             <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%] w-full pl-5 pr-5 mt-[77px]'>
                 <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
