@@ -39,7 +39,7 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
           <div className='border-r border-black w-1/2 h-[80%] flex items-center justify-center cursor-pointer'>
             <img src='/image/Bell.png' alt='notification' className='h-[20px] w-[16px]' />
           </div>
-              <div className='h-[90%] w-1/2 flex gap-1 px-1 items-center justify-end relative'>
+              <div className='h-[90%] w-1/2 flex gap-3 px-1 items-center justify-end relative'>
                 <img
                   src='/image/profileimg.png'
                   alt='profile'
@@ -49,7 +49,7 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
                 <img
                   src='/image/dropdownprofile.png'
                   alt='profile'
-                  className='cursor-pointer h-[px] w-[9px]'
+                  className='cursor-pointer h-[4px] w-[9px]'
                   onClick={() => setShowDropdown((prev) => !prev)}
                 />
                 {showDropdown && (

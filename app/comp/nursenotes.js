@@ -144,6 +144,14 @@ export default function NoteManager({ studentId }) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
+    const getTodayDate = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
   const nurseNotes = notes.filter(n => n.creator && n.creator.role === 'nurse');
   const doctorNotes = notes.filter(n => n.creator && n.creator.role === 'doctor');
 
@@ -155,13 +163,6 @@ export default function NoteManager({ studentId }) {
           <img src='/image/notesicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Notes</h1>
         </div>
-        <button
-          className='bg-blue-600 flex gap-[8px] w-[175px] h-[44px] items-center justify-center text-white rounded-[8px]'
-          onClick={() => setShowSidebar(true)}
-        >
-          <img src='/image/Plus.png' alt='icon' width={25} height={25} />
-          <h1 className='text-[16px]'>Add new Note</h1>
-        </button>
       </div>
 
       {/* Notes List */}
@@ -188,7 +189,7 @@ export default function NoteManager({ studentId }) {
                       {nurseNote.createdAt && (
                         <>
                           <span className="mx-1">•</span>
-                          <span>{formatDate(nurseNote.createdAt)}</span>
+                          <span>{getTodayDate(nurseNote.createdAt)}</span>
                           <span className="mx-1">•</span>
                           <span>{formatTime(nurseNote.createdAt)}</span>
                         </>
@@ -227,7 +228,7 @@ export default function NoteManager({ studentId }) {
                           background: "#F3F6FF"
                         }}
                       >
-                        {tag}
+                        {tag.charAt(0).toUpperCase() + tag.slice(1)}
                       </span>
                     ))}
                   </div>
@@ -251,7 +252,7 @@ export default function NoteManager({ studentId }) {
                       {doctorNoteForCard && doctorNoteForCard.createdAt ? (
                         <>
                           <span className="mx-1">•</span>
-                          <span>{formatDate(doctorNoteForCard.createdAt)}</span>
+                          <span>{getTodayDate(doctorNoteForCard.createdAt)}</span>
                           <span className="mx-1">•</span>
                           <span>{formatTime(doctorNoteForCard.createdAt)}</span>
                         </>
@@ -298,7 +299,7 @@ export default function NoteManager({ studentId }) {
                             background: "#F3F6FF"
                           }}
                         >
-                          {tag}
+                          {tag.charAt(0).toUpperCase() + tag.slice(1)}
                         </span>
                       ))
                     ) : (
@@ -311,6 +312,15 @@ export default function NoteManager({ studentId }) {
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
                         <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
                         <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                        <div className=' h-10 w-full flex items-center justify-center mt-3'>
+                          <button
+                            className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
+                            onClick={() => setShowSidebar(true)}
+                          >
+                            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                            <h1 className='text-[16px]'>Add Note</h1>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>

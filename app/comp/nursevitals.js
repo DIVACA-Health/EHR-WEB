@@ -104,7 +104,8 @@ const NurseVitals = ({ studentId }) => {
         heartRate: vitalsData.heartRate !== '' ? Number(vitalsData.heartRate) : null,
         bloodPressure: vitalsData.bloodPressure,
         temperature: vitalsData.temperature !== '' ? Number(vitalsData.temperature) : null,
-        weight: vitalsData.weight !== '' ? Number(vitalsData.weight) : null,
+        oxygen: vitalsData.oxygen !== '' ? Number(vitalsData.weight) : null,
+        respiration: vitalsData.respiration !== '' ? Number(vitalsData.weight) : null,
       };
 
       const response = await fetch('/api/v1/vitals', {
@@ -156,13 +157,23 @@ const getTemperatureStatus = (temp) => {
   return 'Normal';
 };
 
-const getWeightStatus = (weight) => {
+const getrespirationStatus = (weight) => {
   if (!weight) return '';
     const value = Number(weight);
     if (value < 50) return 'Low';
     if (value > 100) return 'High';
   return 'Normal';
 };
+
+const getoxygenStatus = (weight) => {
+  if (!weight) return '';
+    const value = Number(weight);
+    if (value < 50) return 'Low';
+    if (value > 100) return 'High';
+  return 'Normal';
+};
+
+
 
   return (
     <div>
@@ -182,7 +193,7 @@ const getWeightStatus = (weight) => {
         </div>
         <div className="flex gap-3 p-4">
           {/* Card components for vitals */}
-          <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
+          <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/heartbeat.png" alt="heart rate" width={32} height={32} />
             <h2 className="text-[14px]">Heart Rate</h2>
             <h2 className="text-[25px] font-medium">
@@ -191,7 +202,7 @@ const getWeightStatus = (weight) => {
             </h2>
             <h2 className="text-[14px] font-extralight">Heart rate is {getHeartRateStatus(vitalsData.heartRate)}</h2>
           </div>
-          <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
+          <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/pressure.png" alt="blood pressure" width={32} height={32} />
             <h2 className="text-[14px]">Blood Pressure</h2>
             <h2 className="text-[25px] font-medium">
@@ -202,7 +213,7 @@ const getWeightStatus = (weight) => {
               Blood pressure is {getBloodPressureStatus(vitalsData.bloodPressure)}
             </h2>
           </div>
-          <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
+          <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/temperature.png" alt="temperature" width={32} height={32} />
             <h2 className="text-[14px]">Temperature</h2>
             <h2 className="text-[25px] font-medium">
@@ -213,17 +224,29 @@ const getWeightStatus = (weight) => {
                 Temperature is {getTemperatureStatus(vitalsData.temperature)}
               </h2>
           </div>
-          <div className="h-[175px] w-1/4 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
-            <img src="/image/weight.png" alt="weight" width={32} height={32} />
-            <h2 className="text-[14px]">Weight</h2>
+          <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
+            <img src="/image/respiratoryicon.png" alt="weight" width={32} height={32} />
+            <h2 className="text-[14px]">Respiratory rate</h2>
             <h2 className="text-[25px] font-medium">
-              {vitalsData.weight || '--'}
-              <span className="text-[14px] font-extralight">kg</span>
+              {vitalsData.respiration || '--'}
+              <span className="text-[14px] font-extralight">b/pm</span>
             </h2>
             <h2 className="text-[14px] font-extralight">
-              Weight is {getWeightStatus(vitalsData.weight)}
+              Respiratory rate is {getrespirationStatus(vitalsData.weight)}
             </h2>
           </div>
+          <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
+            <img src="/image/oxygenicon.png" alt="weight" width={32} height={32} />
+            <h2 className="text-[14px]">Oxygen saturation</h2>
+            <h2 className="text-[25px] font-medium">
+              {vitalsData.oxygen || '--'}
+              <span className="text-[14px] font-extralight">%</span>
+            </h2>
+            <h2 className="text-[14px] font-extralight">
+              Oxygen sat. is {getoxygenStatus(vitalsData.weight)}
+            </h2>
+          </div>
+
         </div>
       </div>
 

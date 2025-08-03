@@ -67,6 +67,14 @@ const NurseHealthHistory = ({ studentId }) => {
     return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
+  const getTodayDate = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
   return (
     <div className='border-[rgba(235,235,235,1)] shadow-sm rounded-t-[12px]'>
       <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] rounded-t-[12px] border-[rgba(235,235,235,1)] shadow-xs'>
@@ -96,7 +104,7 @@ const NurseHealthHistory = ({ studentId }) => {
                     className="odd:bg-white even:bg-gray-50 cursor-pointer"
                     onClick={() => handleRowClick(activity)}
                   >
-                    <td className="px-6 py-4 text-center">{formatDate(activity.date)}</td>
+                    <td className="px-6 py-4 text-center">{getTodayDate(activity.date)}</td>
                     <td className="px-6 py-4 text-center">{activity.recordedBy?.name || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">{activity.diagnosis || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">

@@ -79,6 +79,7 @@ const fetchUserQueueData = async () => {
       emergency: data.data.student.emergencyContact.name || 'N/A', 
       address: data.data.personalInfo.homeAddress || 'N/A', 
       age: data.data.personalInfo.Age || 'N/A', 
+      DOB: data.data.personalInfo.dateofbirth || 'N/A', 
       avatar: data.data.personalInfo.Profileimg || "/image/profileimg.png", 
       heartrate: data.data.medicalData.vitals[0].heartRate || 'N/A',
       bloodpressure: data.data.medicalData.vitals[0].bloodPressure || 'N/A',
@@ -122,11 +123,14 @@ const fetchUserQueueData = async () => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-GB');
   };
-  const formatTime = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-  };
+
+const getTodayDate = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
 
 
   return (
@@ -195,7 +199,7 @@ const fetchUserQueueData = async () => {
                     <div className='flex justify-between items-center mb-5 mt-5 '>
                         <div className='flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Date of birth</h1>
-                            <h1 className='text-xs text-[#141414] font-semibold'>{user.matricNumber}</h1>
+                            <h1 className='text-xs text-[#141414] font-semibold'>{user.DOB}</h1>
                         </div>
                         <div className=' w-[55%] flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Email</h1>
@@ -272,7 +276,7 @@ const fetchUserQueueData = async () => {
                                 <h1 className='text-xs'>{user.notecontent1}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-sm'>{formatDate(user.notedate1)}</h1>
+                                <h1 className='text-sm'>{getTodayDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2'>
@@ -281,7 +285,7 @@ const fetchUserQueueData = async () => {
                                 <h1 className='text-xs'>{user.notecontent2}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-sm'>{formatDate(user.notedate2)}</h1>
+                                <h1 className='text-sm'>{getTodayDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -303,7 +307,7 @@ const fetchUserQueueData = async () => {
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end '>
-                                <h1 className='text-xs'>{formatDate(user.notedate1)}</h1>
+                                <h1 className='text-xs'>{getTodayDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2 h-10'>
@@ -311,7 +315,7 @@ const fetchUserQueueData = async () => {
                                <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-xs'>{formatDate(user.notedate2)}</h1>
+                                <h1 className='text-xs'>{getTodayDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -337,7 +341,7 @@ const fetchUserQueueData = async () => {
                                 <h1 className='text-xs'>Treatment note</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-xs'>{formatDate(user.notedate1)}</h1>
+                                <h1 className='text-xs'>{getTodayDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2 h-10'>
@@ -346,7 +350,7 @@ const fetchUserQueueData = async () => {
                                 <h1 className='text-xs'>Treatment note</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
-                                <h1 className='text-xs'>{formatDate(user.notedate2)}</h1>
+                                <h1 className='text-xs'>{getTodayDate(user.notedate2)}</h1>
                             </div>
                         </div>
                     </div>
@@ -379,7 +383,7 @@ const fetchUserQueueData = async () => {
                             </span>
                             </div>
                         </div>
-                                                <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                            <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
                             <div className='text-xs text-[#919191] font-extralight'>{user.allergyname1}</div>
                             <div className='w-[30%] flex justify-end'>
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${

@@ -46,21 +46,23 @@ export default function VitalsTable({ studentId }) {
         <thead className="bg-gray-100 text-gray-700">
           <tr className="text-[12px] font-normal">
             <th className="px-4 py-4 text-center">Date</th>
-            <th className="px-4 py-4 text-center">Heart rate (bpm)</th>
+            <th className="px-4 py-4 text-center">Heart rate (b/pm)</th>
             <th className="px-4 py-4 text-center">Blood pressure (mmHg)</th>
             <th className="px-4 py-4 text-center">Temperature (°C)</th>
-            <th className="px-4 py-4 text-center">Weight (kg)</th>
+            <th className="px-4 py-4 text-center">Respiratory rate (b/pm)</th>
+            <th className="px-4 py-4 text-center">Oxygen saturation (%)</th>
             <th className="px-4 py-4 text-center">Recorded by</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-[14px]">
           {vitals.map((vital, index) => (
             <tr key={index} className="odd:bg-white even:bg-gray-50">
-              <td className="px-6 py-4 text-center">{vital.date}</td>
+              <td className="px-8 py-4 text-center">{vital.date}</td>
               <td className="px-6 py-4 text-center">{vital.heartRate}</td>
               <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
               <td className="px-6 py-4 text-center">{vital.temperature}</td>
-              <td className="px-6 py-4 text-center">{vital.weight}</td>
+              <td className="px-5 py-4 text-center">{vital.respiration}</td>
+              <td className="px-5 py-4 text-center">{vital.oxygen}</td>
               <td className="px-6 py-4 text-center">
                 Nurse {vital.recorder?.firstName} {vital.recorder?.lastName}
               </td>

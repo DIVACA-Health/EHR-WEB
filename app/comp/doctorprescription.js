@@ -146,7 +146,6 @@ const DoctorPrescription = ({ studentId }) => {
               <th className="px-4 py-4 text-center">Date of visit</th>
               <th className="px-4 py-4 text-center">Last dose date</th>
               <th className="px-4 py-4 text-center">Prescribed by</th>
-              <th className="px-4 py-4 text-center">Diagnosis</th>
               <th className="px-4 py-4 text-center">Medication 1</th>
               <th className="px-4 py-4 text-center">Dosage</th>
               <th className="px-4 py-4 text-center">Action</th>
@@ -177,7 +176,6 @@ const DoctorPrescription = ({ studentId }) => {
                       ? `Dr ${item.doctor.firstName} ${item.doctor.lastName}`
                       : 'N/A'}
                   </td>
-                  <td className="px-6 py-4 text-center">{item.diagnosis || 'N/A'}</td>
                   <td className="px-6 py-4 text-center">
                     {item.medications && item.medications.length > 0
                       ? item.medications[0].medication

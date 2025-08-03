@@ -176,6 +176,14 @@ const handleNewHealthIssueSubmit = async (e) => {
   }
 };
 
+  const getTodayDate = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
 
 
   return (
@@ -214,7 +222,7 @@ const handleNewHealthIssueSubmit = async (e) => {
                     className="odd:bg-white even:bg-gray-50 cursor-pointer"
                     onClick={() => handleRowClick(activity)}
                   >
-                    <td className="px-6 py-4 text-center">{formatDate(activity.date)}</td>
+                    <td className="px-6 py-4 text-center">{getTodayDate(activity.date)}</td>
                     <td className="px-6 py-4 text-center">{activity.recordedBy?.name || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">{activity.diagnosis || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">
