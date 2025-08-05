@@ -359,8 +359,8 @@ const plans = [
         </div>
         </div>
         <div 
-        className='w-full h-fit rounded-[48px] flex flex-col items-center'
-        style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)" }}
+        className='w-full h-fit pb-15 pt-15 rounded-[48px] flex flex-col items-center bg-[#14254F]'
+        // style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)" }}
         >
         <div className='w-fit mt-5 flex items-center justify-center bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
             <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]' />
@@ -450,11 +450,10 @@ const plans = [
         </div>
         </div>
     </div>
-    <footer className='w-full bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%] m-auto grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-8'>
-        
-        <div className='text-white'>
-        <img src='/image/DHLOGO.png' alt='img' className='w-[137px] h-[47px]' />
+    <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
+    <div className='w-[90%]  grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10'>
+        <div className='text-white w-1/4'>
+        <img src='/image/DHLOGO.png' alt='img'   className='object-contain max-w-[137px] max-h-[47px] w-full h-auto' />
         <div className='w-[80%] flex items-center h-fit mt-10 gap-2'>
         <div className='flex items-center border-r border-white pr-2'>
             <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
@@ -464,34 +463,30 @@ const plans = [
         </div>
         </div>
         </div>
-
-        <div className='text-white'>
-        <h3 className='font-medium text-lg mb-3'>Company</h3>
-        <h3 className='font-extralight'>Home</h3>
-        <h3 className='font-extralight'>About</h3>
-        <h3 className='font-extralight'>Contact</h3>
-        <h3 className='font-extralight'>Campus care</h3>
+        <div className='text-white w-1/4 flex flex-col gap-4'>
+          <h3 className='font-medium text-lg mb-3'>Company</h3>
+          <h3 className='font-extralight'>Home</h3>
+          <h3 className='font-extralight'>About</h3>
+          <h3 className='font-extralight'>Contact</h3>
+          <h3 className='font-extralight'>Campus care</h3>
         </div>
-
-        <div className='text-white'>
+        <div className='text-white w-1/4 flex flex-col gap-4'>
         <h3 className='font-medium text-lg mb-3'>LEGAL</h3>
         <h3 className='font-extralight'>Privacy Policy</h3>
         <h3 className='font-extralight'>Terms of service</h3>
         </div>
-
-        <div className='text-white'>
+        <div className='text-white w-1/4 flex flex-col gap-4'>
         <h3 className='font-medium text-lg mb-3'>SOCIAL MEDIA</h3>
         <h3 className='font-extralight'>Instagram</h3>
         <h3 className='font-extralight'>LinkedIn</h3>
         <h3 className='font-extralight'>X (formerly Twitter)</h3>
         </div>
-
     </div>
-
-    <div className='text-center text-white text-sm mt-5 pb-5'>
+    <div className='text-center text-white text-sm mt-10 pb-5 pt-5'>
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
     </div>
-        {/* Mobile Dropdown Menu */}
+    </footer>
+    {/* Mobile Dropdown Menu */}
     {isMobileMenuOpen && (
     <div className="md:hidden px-5 pb-4 space-y-3">
         {navLinks.map((link) => (
@@ -515,7 +510,6 @@ const plans = [
         </Link>
     </div>
     )}
-    </footer>
     </>
     
   )
