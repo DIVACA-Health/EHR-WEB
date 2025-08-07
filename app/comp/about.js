@@ -175,7 +175,7 @@ const features = [
                 </div>
             </div>
         </div>
-        <div className='h-fit  w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
+        <div className='h-fit   w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
             <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                 <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]'/>
                 <h3 className='text-[#3B6FED] text-sm'>OUR PURPOSE AND PATH</h3>
@@ -184,7 +184,7 @@ const features = [
                 <h4 className='text-[20px] font-medium sm:text-5xl'>Why We Exist</h4>
                 <h4 className='text-[12px] sm:text-lg'>Our mission fuels our work, and our vision guides where we’re headed.</h4>
             </div>
-            <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black sm:h-[304px] mt-5 '>
+            <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black sm:h-[304px] mt-5 mb-15 '>
                 <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-lg font-medium'>Our Mission</h4>
@@ -305,39 +305,42 @@ const features = [
             <h3 className='text-sm text-center'>If you’d like to volunteer, partner, or support our outreach, reach out to us at: <br></br>📧 outreach@divacahealth.com</h3>
         </div>
     </div>
-    <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%]  grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10'>
-        <div className='text-white w-1/4'>
-        <img src='/image/DHLOGO.png' alt='img'   className='object-contain max-w-[137px] max-h-[47px] w-full h-auto' />
-        <div className='w-[80%] flex items-center h-fit mt-10 gap-2'>
-        <div className='flex items-center border-r border-white pr-2'>
+     <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
+    <div className='w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
+        sm:grid-cols-2 sm:grid-rows-2
+        xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center'>
+        {/* Logo and contact */}
+        <div className='text-white w-full xs:w-full flex flex-col items-start mb-6'>
+        <img src='/image/DHLOGO.png' alt='img' className='object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4' />
+        <div className='flex items-center justify-center gap-2 mb-2'>
             <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
-        </div>
-        <div className='pl-1'>
-            <h3 className='break-words text-xs'>support@divacahealth.com</h3>
+            <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
         </div>
         </div>
+        {/* Company */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
+        <h3 className='font-extralight'>Home</h3>
+        <h3 className='font-extralight'>About</h3>
+        <h3 className='font-extralight'>Contact</h3>
+        <h3 className='font-extralight'>Campus care</h3>
         </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-          <h3 className='font-medium text-lg mb-3'>Company</h3>
-          <h3 className='font-extralight'>Home</h3>
-          <h3 className='font-extralight'>About</h3>
-          <h3 className='font-extralight'>Contact</h3>
-          <h3 className='font-extralight'>Campus care</h3>
-        </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>LEGAL</h3>
+        {/* Legal */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6 '>
+        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
         <h3 className='font-extralight'>Privacy Policy</h3>
         <h3 className='font-extralight'>Terms of service</h3>
         </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>SOCIAL MEDIA</h3>
+        {/* Social Media */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>SOCIAL MEDIA</h3>
         <h3 className='font-extralight'>Instagram</h3>
         <h3 className='font-extralight'>LinkedIn</h3>
         <h3 className='font-extralight'>X (formerly Twitter)</h3>
         </div>
     </div>
-    <div className='text-center text-white text-sm mt-10 pb-5 pt-5'>
+    <div className='w-full'></div>
+    <div className='text-center text-white text-sm mt-6 pb-5 pt-5'>
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
     </div>
     </footer>

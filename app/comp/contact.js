@@ -19,23 +19,23 @@ const contact = () => {
     {
         question: "What is Campus Care?",
         answer:
-        "Campus Care is DIVACA Health's solution for digitizing student healthcare in universities and schools. It includes electronic health records (EHR), digital health cards, a smart queue system, and a tablet-friendly interface for health staff.",
+        "CampusCare is DIVACA Health’s solution for digitizing student healthcare in universities and schools. It includes electronic health records (EHR), digital health cards, a smart queue system, and a tablet-friendly interface for health staff.",
     },
     {
         question: "Is the system only for school clinics?",
-        answer: "No, the system can be customized for other educational institutions and health centers.",
+        answer: "No. While Campus Care is built for educational institutions, we also offer tailored plans for general hospitals, labs, dentists, and other health providers.",
     },
     {
         question: "Do you offer training for clinic staff?",
-        answer: "Yes, we provide onboarding and training to help staff use the system efficiently.",
+        answer: "Absolutely. We provide hands-on training and ongoing support to nurses, doctors, and health attendants — both on-site and virtually.",
     },
     {
         question: "Is the system secure and private?",
-        answer: "Absolutely. It adheres to data protection laws and uses encryption for sensitive data.",
+        answer: "Yes. DIVACA Health follows strict data protection standards and uses role-based access control, encryption, and regular audits to ensure your data is safe.",
     },
     {
         question: "What happens if I need technical support?",
-        answer: "We offer 24/7 technical support via chat, email, or phone.",
+        answer: "We’ve got you covered. DIVACA Health provides dedicated technical support to all institutions using our platform. Whether it's a software issue, training need, or device troubleshooting, our team is available to assist you.",
     },
     ];
 
@@ -212,38 +212,41 @@ const contact = () => {
         </div>
     </div>
     <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%]  grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10'>
-        <div className='text-white w-1/4'>
-        <img src='/image/DHLOGO.png' alt='img'   className='object-contain max-w-[137px] max-h-[47px] w-full h-auto' />
-        <div className='w-[80%] flex items-center h-fit mt-10 gap-2'>
-        <div className='flex items-center border-r border-white pr-2'>
+    <div className='w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
+        sm:grid-cols-2 sm:grid-rows-2
+        xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center'>
+        {/* Logo and contact */}
+        <div className='text-white w-full xs:w-full flex flex-col items-start mb-6'>
+        <img src='/image/DHLOGO.png' alt='img' className='object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4' />
+        <div className='flex items-center justify-center gap-2 mb-2'>
             <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
-        </div>
-        <div className='pl-1'>
-            <h3 className='break-words text-xs'>support@divacahealth.com</h3>
+            <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
         </div>
         </div>
+        {/* Company */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
+        <h3 className='font-extralight'>Home</h3>
+        <h3 className='font-extralight'>About</h3>
+        <h3 className='font-extralight'>Contact</h3>
+        <h3 className='font-extralight'>Campus care</h3>
         </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-          <h3 className='font-medium text-lg mb-3'>Company</h3>
-          <h3 className='font-extralight'>Home</h3>
-          <h3 className='font-extralight'>About</h3>
-          <h3 className='font-extralight'>Contact</h3>
-          <h3 className='font-extralight'>Campus care</h3>
-        </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>LEGAL</h3>
+        {/* Legal */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6 '>
+        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
         <h3 className='font-extralight'>Privacy Policy</h3>
         <h3 className='font-extralight'>Terms of service</h3>
         </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>SOCIAL MEDIA</h3>
+        {/* Social Media */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>SOCIAL MEDIA</h3>
         <h3 className='font-extralight'>Instagram</h3>
         <h3 className='font-extralight'>LinkedIn</h3>
         <h3 className='font-extralight'>X (formerly Twitter)</h3>
         </div>
     </div>
-    <div className='text-center text-white text-sm mt-10 pb-5 pt-5'>
+    <div className='w-full'></div>
+    <div className='text-center text-white text-sm mt-6 pb-5 pt-5'>
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
     </div>
     </footer>
