@@ -199,6 +199,9 @@ export default function NurseQueueManagement() {
 
       toast.success('Consultation started successfully');
       setMenuUser(null);
+
+      
+      router.push(`/queue/${menuUser.studentId}?section=notes`);
       // Optionally refetch data here
     } catch (err) {
       console.error('Failed to start consultation:', err);
@@ -389,14 +392,6 @@ const handleMenuButtonClick = (e, user) => {
           >
             View health record
           </button>
-          <button
-            onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
-            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
-            style={{ border: 'none', background: 'none' }}
-          >
-            Record vitals
-          </button>
-
           {/* Conditionally render the consultation button */}
           {menuUser.status !== 'In consultation' ? (
             <button

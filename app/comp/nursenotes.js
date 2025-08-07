@@ -5,6 +5,7 @@ const sampleTags = [
   'Follow-up', 'Malaria', 'Medications', 'Typhoid', 'Admitted', 'Discharged',
 ];
 
+
 const tagColors = ['#1E40AF', '#059669', '#D97706', '#EAB308', '#A855F7', '#EF4444'];
 
 export default function NoteManager({ studentId }) {
@@ -144,16 +145,30 @@ export default function NoteManager({ studentId }) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
-    const getTodayDate = () => {
-  const d = new Date();
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
-  return `${day}-${month}-${year}`;
-};
+  const getTodayDate = () => {
+    const d = new Date();
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
   const nurseNotes = notes.filter(n => n.creator && n.creator.role === 'nurse');
   const doctorNotes = notes.filter(n => n.creator && n.creator.role === 'doctor');
+const [user, setUser] = useState(null);
+
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
+
+useEffect(() => {
+  if (user) {
+    console.log('User role:', user.role);
+  }
+}, [user]);
 
   return (
     <div className='w-full flex flex-col h-fit rounded-xl border-gray-200 border-[0.8px] shadow-sm relative'>
@@ -312,15 +327,18 @@ export default function NoteManager({ studentId }) {
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
                         <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
                         <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
-                        <div className=' h-10 w-full flex items-center justify-center mt-3'>
-                          <button
-                            className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
-                            onClick={() => setShowSidebar(true)}
-                          >
-                            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
-                            <h1 className='text-[16px]'>Add Note</h1>
-                          </button>
-                        </div>
+                        {/* Only show Add Note if NOT nurse */}
+                        {user.role !== 'nurse' && (
+                          <div className=' h-10 w-full flex items-center justify-center mt-3'>
+                            <button
+                              className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
+                              onClick={() => setShowSidebar(true)}
+                            >
+                              <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                              <h1 className='text-[16px]'>Add Note</h1>
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -395,6 +413,18 @@ export default function NoteManager({ studentId }) {
                     <div className="text-sm text-gray-700 whitespace-pre-line mt-4 px-5">
                       {expandedPair.nurse.content || expandedPair.nurse.body}
                     </div>
+                    {/* Only show Add Note if NOT doctor */}
+                    {!expandedPair.nurse.content && userRole !== 'doctor' && (
+                      <div className=' h-10 w-full flex items-center justify-center mt-3'>
+                        <button
+                          className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
+                          onClick={() => setShowSidebar(true)}
+                        >
+                          <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                          <h1 className='text-[16px]'>Add Note</h1>
+                        </button>
+                      </div>
+                    )}
                     <div className="flex justify-end mt-4 mb-1 border-t-[0.8px] border-t-gray-300 w-fullrounded-b-xl ">
                       <button className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
                         <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
@@ -474,17 +504,29 @@ export default function NoteManager({ studentId }) {
                             <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
                             <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
                             <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                            {/* Only show Add Note if NOT nurse */}
+                            {userRole !== 'nurse' && (
+                              <div className=' h-10 w-full flex items-center justify-center mt-3'>
+                                <button
+                                  className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
+                                  onClick={() => setShowSidebar(true)}
+                                >
+                                  <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                                  <h1 className='text-[16px]'>Add Note</h1>
+                                </button>
+                              </div>
+                            )}
                           </div>
                         )
                       }
                     </div>
                     <div className="flex justify-end mt-4 w-full rounded-b-xl border-t-[0.8px] border-t-gray-300">
-                    <div className="flex justify-end  mb-1  w-full rounded-b-xl">
-                      <button className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
-                        <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
-                        Download note
-                      </button>
-                    </div>
+                      <div className="flex justify-end  mb-1  w-full rounded-b-xl">
+                        <button className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
+                          <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
+                          Download note
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -273,10 +273,10 @@ const getoxygenStatus = (weight) => {
                 ×
               </button>
             </div>
-            <form className="min-h-[88%] flex flex-col justify-between pl-7 pr-7 gap-[14px] " onSubmit={handleSubmit}>
-              <div className='w-full min-h-[90%]   '>
+            <form className="min-h-[88%] flex flex-col justify-between pl-7 pr-7 gap-10 " onSubmit={handleSubmit}>
+              <div className='w-full min-h-[90%]  flex flex-col  gap-2  '>
               <div className="flex h-[75px] flex-col justify-between">
-                <label className="text-[13px] text-[rgba(137,137,137,1)]">Heart Rate</label>
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Heart Rate (b/pm)</label>
                 <input
                   type="text"
                   name="heartRate"
@@ -288,7 +288,7 @@ const getoxygenStatus = (weight) => {
               </div>
 
               <div className="flex h-[75px] flex-col justify-between">
-                <label className="text-[13px] text-[rgba(137,137,137,1)]">Blood Pressure</label>
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Blood Pressure (mmHg)</label>
                 <input
                   type="text"
                   name="bloodPressure"
@@ -300,7 +300,7 @@ const getoxygenStatus = (weight) => {
               </div>
 
               <div className="flex h-[75px] flex-col justify-between">
-                <label className="text-[13px] text-[rgba(137,137,137,1)]">Temperature</label>
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Temperature (°C)</label>
                 <input
                   type="text"
                   name="temperature"
@@ -311,7 +311,18 @@ const getoxygenStatus = (weight) => {
                 />
               </div>
               <div className="flex h-[75px] flex-col justify-between">
-                <label className="text-[13px] text-[rgba(137,137,137,1)]">Weight</label>
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">Respiratory rate (c/min)</label>
+                <input
+                  type="text"
+                  name="weight"
+                  value={vitalsData.weight}
+                  onChange={handleInputChange}
+                  placeholder="70"
+                  className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
+                />
+              </div>
+                            <div className="flex h-[75px] flex-col justify-between">
+                <label className="text-[13px] text-[rgba(137,137,137,1)]">oxygen saturation (%)</label>
                 <input
                   type="text"
                   name="weight"

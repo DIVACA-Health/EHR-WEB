@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams , useSearchParams } from 'next/navigation';
 import Nursevitals from './nursevitals';
 import NurseHealthHistory from './nursehealthhistory';
 import Nurseprescription from './nurseprescription';
@@ -39,6 +39,7 @@ const fetchWithAuth = async (url, options = {}) => {
 
 const QueueDetailPage = () => {
     const params = useParams();
+    const searchParams = useSearchParams();
   const [user, setUser] = useState(null);
   const [activeSection, setActiveSection] = useState('overview');
   const [isOpen, setIsOpen] = useState(false);
@@ -110,8 +111,8 @@ const fetchUserQueueData = async () => {
   const tabs = [
     { key: 'overview', label: 'Overview' },
     { key: 'personal', label: 'Personal information' },
-    { key: 'notes', label: 'Notes' },
     { key: 'vitals', label: 'Vitals' },
+    { key: 'notes', label: 'Notes' },
     { key: 'allergies', label: 'Allergies' },
     { key: 'health', label: 'Health history' },
     { key: 'prescriptions', label: 'Prescription history' },
@@ -131,6 +132,11 @@ const getTodayDate = () => {
   const year = d.getFullYear();
   return `${day}-${month}-${year}`;
 };
+
+    useEffect(() => {
+    const section = searchParams.get('section');
+    if (section) setActiveSection(section);
+  }, [searchParams]);
 
 
   return (
@@ -515,7 +521,7 @@ const getTodayDate = () => {
             )}
 
             {activeSection === 'notes' && (
-                <NoteManager studentId={user?.divacaId}/>
+                <NoteManager studentId={user?.divacaId} userRole={user?.role}/>
             )}
 
             {activeSection === 'vitals' && (

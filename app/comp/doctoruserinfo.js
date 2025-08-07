@@ -110,8 +110,8 @@ const fetchUserQueueData = async () => {
   const tabs = [
     { key: 'overview', label: 'Overview' },
     { key: 'personal', label: 'Personal information' },
-    { key: 'notes', label: 'Notes' },
     { key: 'vitals', label: 'Vitals' },
+    { key: 'notes', label: 'Notes' },
     { key: 'allergies', label: 'Allergies' },
     { key: 'health', label: 'Health history' },
     { key: 'prescriptions', label: 'Prescription history' },

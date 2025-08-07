@@ -345,7 +345,10 @@ export default function NurseQueueManagement() {
             View health record
           </button>
           <button
-            onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+            onClick={() => {
+              router.push(`/queue/${menuUser.studentId}?section=vitals`);
+              setMenuUser(null);
+            }}
             className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
             style={{ border: 'none', background: 'none' }}
           >
