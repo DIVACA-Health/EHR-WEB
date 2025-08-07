@@ -27,7 +27,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                 <img
                   src={activeTab === tab.id ? tab.iconBlue : tab.icon}
                   alt={tab.label}
-                  className='h-[22px] w-[20px]'
+                  className='h-[20px] w-[20px]'
                 />
                 <h2
                   className={`w-[80%] h-full ${
