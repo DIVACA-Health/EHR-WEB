@@ -92,11 +92,11 @@ const contact = () => {
                     </svg>
                 </button>
             </div>
-            <div className='hidden md:flex items-center justify-between pl-5 pr-5 mt-4 '>
-                <div>
+            <div className='hidden md:flex items-center justify-between mt-4 '>
+                <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className='w-[252px]'>
+                <div className=' w-[253px] flex gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
@@ -113,12 +113,12 @@ const contact = () => {
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage">
+                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
                 </Link>
-            </div>
+            </div> 
             <div className='flex flex-col md:flex-row items-center h-[70%] w-full pl-5 pr-5 mt-[77px]'>
                 <div className='h-fit mb-15 w-[100%] text-black sm:w-1/2 sm:h-[762px] flex flex-col gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
@@ -134,7 +134,7 @@ const contact = () => {
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <h2 className='text-sm font-light'>Email address</h2>
-                                <h2 className='font-medium'>support@divacahealth.com</h2>
+                                <h2 className='font-medium'>info@divacahealth.com</h2>
                             </div>
                         </div>
                         <div className='h-[60px]   flex items-center gap-3'>
@@ -143,7 +143,7 @@ const contact = () => {
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <h2 className='text-sm font-light'>Phone number</h2>
-                                <h2 className='font-medium'>+234 9045389203</h2>
+                                <h2 className='font-medium'>+234 7061419883</h2>
                             </div>
                         </div>
                         <div className='h-[60px]   flex items-center gap-3'>
@@ -152,31 +152,31 @@ const contact = () => {
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <h2 className='text-sm font-light'>Office address</h2>
-                                <h2 className='font-medium'>Ogun State, Nigeria.</h2>
+                                <h2 className='font-medium'>Osun State, Nigeria.</h2>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs p-10 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
                     <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly '>
-                        <div className='flex flex-col gap-1'>
-                            <label>Full name</label>
+                        <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
+                            <label className='text-[14px]'>Full name</label>
                             <input type='text' placeholder='Enter First and Last name' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
-                            <div className='flex flex-col gap-1'>
-                            <label>Institution / Organisation</label>
+                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
+                            <label className='text-[14px] '>Institution / Organisation</label>
                             <input type='text' placeholder='Enter institution / organisation' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                            <label>Email address</label>
+                        <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
+                            <label className='text-[14px]'>Email address</label>
                             <input type='email' placeholder='Enter email address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
-                            <div className='flex flex-col gap-1'>
-                            <label>Location</label>
+                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
+                            <label className='text-[14px] '>Location</label>
                             <input type='text' placeholder='Enter your location / address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
-                            <div className='flex flex-col gap-1'>
-                            <label>Message</label>
+                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
+                            <label className='text-[14px]'>Message</label>
                             <textarea placeholder='Type your message here...' className='pl-2 pt-2 w-full h-[152px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></textarea>
                         </div>
                         <button type='submit' className='w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center '>Submit</button>

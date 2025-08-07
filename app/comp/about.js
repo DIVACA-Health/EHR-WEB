@@ -133,11 +133,11 @@ const features = [
                     </svg>
                 </button>
             </div>
-            <div className='hidden md:flex items-center justify-between pl-5 pr-5 mt-4 '>
-                <div>
+            <div className='hidden md:flex items-center justify-between mt-4 '>
+                <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className='w-[252px]'>
+                <div className=' w-[253px] flex gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
@@ -154,28 +154,28 @@ const features = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage">
+                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
                 </Link>
             </div> 
-            <div className='flex flex-col  items-center justify-center h-[70%] w-full pl-5 pr-10 mt-[77px]  '>
-                <div className='w-full h-full  text-black flex flex-col gap-10 justify-center items-center '>
+            <div className='flex flex-col  items-center justify-center h-fit   w-full  mt-[77px]  '>
+                <div className='w-full h-full  text-black flex flex-col gap-3 justify-center items-center '>
                     <div className='w-fit h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center px-2 gap-1'>
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-[9px] sm:text-xs'>DRIVEN BY CARE, DEFINED BY PURPOSE</h3>
                     </div>
                     <h1 className='text-[24px] font-bold sm:text-[50px] text-center'> <span className='text-[#3B6FED]'>Innovating healthcare </span><br></br>for a healthier tomorrow</h1>
-                    <h3 className='text-[12px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
+                    <h3 className='text-[12px] sm:text-[18px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
 
                 </div>
-                <div className='w-full h-[160px] sm:w-full  sm:h-[500px]  flex justify-center items-center'>
+                <div className='w-full h-[160px] sm:w-full  sm:h-[480px]  flex justify-center items-center'>
                     <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:w-[90%] sm:h-full'/>
                 </div>
             </div>
         </div>
-        <div className='h-fit  w-full pl-15 pr-15 pt-10 pb-10 flex flex-col items-center text-black justify-between mt-10'>
+        <div className='h-fit  w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
             <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                 <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]'/>
                 <h3 className='text-[#3B6FED] text-sm'>OUR PURPOSE AND PATH</h3>
@@ -185,12 +185,12 @@ const features = [
                 <h4 className='text-[12px] sm:text-lg'>Our mission fuels our work, and our vision guides where we’re headed.</h4>
             </div>
             <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black sm:h-[304px] mt-5 '>
-                <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-full rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
+                <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-lg font-medium'>Our Mission</h4>
                     <h5>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
                 </div>
-                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-full rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
+                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/lighticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-lg font-medium'>Our Vision</h4>
                     <h5>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>
@@ -233,7 +233,7 @@ const features = [
             ))}
         </div>
         </div>
-        <div className='flex flex-col sm:h-fit w-full pl-15 pr-15 pt-10 pb-10  sm:flex-row-reverse gap-5 justify-between mt-10'>
+        <div className='flex flex-col sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  sm:flex-row-reverse gap-5 justify-between mt-10'>
             <div className='w-full  sm:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit  bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
@@ -249,14 +249,12 @@ const features = [
             </div>
         </div>
         <div 
-        className='w-full h-fit rounded-[48px] flex flex-col lg:flex-row px-7 py-10 gap-10'
-        style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)" }}
-        >
+        className='w-full h-fit rounded-[48px] bg-[#14254F] flex flex-col sm:flex-row pt-20 pb-20 pr-10 pl-10 gap-10'>
         {/* Left Text Section */}
-        <div className='w-full lg:w-[40%] flex flex-col gap-5 text-white'>
+        <div className='w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white '>
             <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
             <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-            <h3 className='text-xs font-medium'>WHERE WE MAKE A DIFFERENCE</h3>
+            <h3 className='text-[9px] sm:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
             </div>
             <h1 className='text-3xl sm:text-4xl font-semibold'>What we do through our outreach</h1>
             <h3 className='font-light text-base'>
@@ -266,7 +264,7 @@ const features = [
         </div>
 
         {/* Right Grid Section */}
-        <div className='w-full lg:w-[60%] text-black'>
+        <div className='w-full lg:w-[50%] text-black'>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {initiatives.map((item, index) => (
                 <div
@@ -285,7 +283,7 @@ const features = [
             </div>
         </div>
         </div>
-        <div className='flex flex-col sm:h-fit  w-full pl-15 pr-15 pt-10 pb-10 sm:flex-row-reverse gap-5 justify-between mt-10'>
+        <div className='flex flex-col sm:h-fit  w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 sm:flex-row-reverse gap-5 justify-between mt-10'>
             <div className='w-full  sm:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
@@ -296,11 +294,11 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-full h-[310px] mt-10 sm:w-[56%] sm:h-[590px] mb-10'> 
+            <div className='w-full h-[280px] mt-10 sm:w-[56%] sm:h-[590px] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>
-        <div className=' w-[90%] h-[507px] rounded-[24px] m-auto mb-10 flex gap-3 flex-col items-center justify-center bg-cover bg-center'
+        <div className=' w-[90%] h-[507px] rounded-[24px] m-auto mb-10 flex gap-3 flex-col items-center justify-center bg-cover bg-center p-4'
             style={{ backgroundImage: "url('/image/aboutbottom.png')" }}
         >
             <h2 className=' text-2xl sm:text-5xl text-center'>Want to Support or Get Involved?</h2>

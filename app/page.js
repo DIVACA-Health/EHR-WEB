@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react'; 
+import { Menu, X , ChevronLeft, ChevronRight } from 'lucide-react'; 
 
 const main = () => {
     const pathname = usePathname(); 
@@ -14,28 +14,64 @@ const main = () => {
     { name: 'About us', path: '/about' },
     { name: 'Contact us', path: '/contact' },
   ];
-    const steps = [
-  {
-    title: "Student registers & gets digital card",
-    description: "Instantly receive a personalized digital card after signing up.",
-  },
-  {
-    title: "Presents Card at Clinic",
-    description: "Show your digital card at any partner clinic to access services.",
-  },
-  {
-    title: "Health Attendant Checks In",
-    description: "A health attendant scans your card to confirm your clinic visit.",
-  },
-  {
-    title: "Nurse and Doctor Treat & Update Record",
-    description: "Care is given and your record is updated instantly.",
-  },
-  {
-    title: "Record Synced Securely and Accessible",
-    description: "Your record is synced safely and easy to access.",
-  },
-];
+
+    const studentImages = [
+    '/image/forstudents1.png',
+    '/image/forstudents2.png',
+    '/image/forstudents3.png',
+  ];
+  const medicImages = [
+    '/image/formedics1.png',
+    '/image/formedics2.png',
+    '/image/formedics3.png',
+  ];
+
+ const studentSteps = [
+    {
+      title: "Student registers & gets digital card",
+      description: "Instantly receive a personalized digital card after signing up.",
+    },
+    {
+      title: "Presents Card at Clinic",
+      description: "Show your digital card at any partner clinic to access services.",
+    },
+    {
+      title: "Health Attendant Checks In",
+      description: "A health attendant scans your card to confirm your clinic visit.",
+    },
+    {
+      title: "Nurse and Doctor Treat & Update Record",
+      description: "Care is given and your record is updated instantly.",
+    },
+    {
+      title: "Record Synced Securely and Accessible",
+      description: "Your record is synced safely and easy to access.",
+    },
+  ];
+  const medicSteps = [
+    {
+      title: "Medic registers on DIVICA Health",
+      description: "Creates a secure profile as a record keeper, nurse, or doctor.",
+    },
+    {
+      title: "Verifies role & access level",
+      description: "Receives permissions to update student health records.",
+    },
+    {
+      title: "Checks in student with digital card",
+      description: "Record keeper enters the student’s ID to begin a new session.",
+    },
+    {
+      title: "Provides treatment & updates record",
+      description: "Nurse/doctor updates student file with treatment details.",
+    },
+    {
+      title: "Record syncs securely & instantly",
+      description: "Encrypted updates are instantly available to approved staff.",
+    },
+  ];
+
+
 const features = [
   {
     icon: <img src='/image/covericon1.png' alt='cover'/>,
@@ -138,14 +174,30 @@ const plans = [
 
   const [activeIndex, setActiveIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeRole, setActiveRole] = useState('students');
 
   const toggle = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
+    const [stepImageIndex, setStepImageIndex] = useState(0);
+
+
+  // Get current images array
+  const currentImages = activeRole === 'students' ? studentImages : medicImages;
+
+  // Handlers for next/prev
+  const handlePrev = () => {
+    setStepImageIndex((prev) => (prev === 0 ? currentImages.length - 1 : prev - 1));
+  };
+  const handleNext = () => {
+    setStepImageIndex((prev) => (prev === currentImages.length - 1 ? 0 : prev + 1));
+  };
+
+
   return (
     <>
-              {/* Mobile Hamburger Menu */}
+      {/* Mobile Hamburger Menu */}
       {isOpen && (
         <div className='fixed inset-0 z-51 bg-white w-full h-screen flex flex-col justify-between px-6 py-6'>
           <div className='flex items-center justify-between'>
@@ -176,7 +228,6 @@ const plans = [
         </div>
       )}
 
-
     <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
         <div className='mb-20 sm: h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20  '>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
@@ -190,11 +241,11 @@ const plans = [
                     </svg>
                 </button>
             </div>
-            <div className='hidden md:flex items-center justify-between pl-5 pr-5 mt-4 '>
-                <div>
+            <div className='hidden md:flex items-center justify-between mt-4 '>
+                <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className='w-[252px]'>
+                <div className=' w-[253px] flex gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
@@ -211,12 +262,12 @@ const plans = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage">
+                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
                 </Link>
-            </div>
+            </div> 
             <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%] w-full pl-5 pr-5 mt-[77px]'>
                 <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
                     <div className='w-[202px] h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
@@ -309,73 +360,119 @@ const plans = [
 
         </div>
         <div className='w-full h-fit p-5 flex flex-col items-center'>
-        {/* Badge */}
-        <div className='w-fit flex items-center justify-center h-fit bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
-            <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]' />
-            <h3 className='text-[#3B6FED] text-sm'>HOW IT WORKS</h3>
-        </div>
+          {/* Badge */}
+          <div className='w-fit flex items-center justify-center h-fit bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
+              <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]' />
+              <h3 className='text-[#3B6FED] text-sm'>HOW IT WORKS</h3>
+          </div>
 
         {/* Header */}
-        <div className='w-full h-fit px-5 py-6 mt-3 text-center flex flex-col gap-3 text-black'>
-            <h4 className=' sm:text-4xl text-3xl'>It Only Takes a Few Steps</h4>
-            <h4 className=' sm:text-base text-sm'>
-            We’ve broken it down into simple steps so you know exactly what to expect.
-            </h4>
-        </div>
+          <div className='w-full h-fit px-5 py-6 mt-3 text-center flex flex-col gap-3 text-black'>
+              <h4 className=' sm:text-4xl text-3xl'>It Only Takes a Few Steps</h4>
+              <h4 className=' sm:text-base text-sm'>
+              We’ve broken it down into simple steps so you know exactly what to expect.
+              </h4>
+          </div>
 
-        {/* Main Section */}
-        <div className='w-full flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10'>
-            {/* Image */}
-            <div className='w-full sm:w-[55%] h-[300px] sm:h-auto flex items-center justify-center'>
-            <img src='/image/phone.png' alt='Img' className='w-full h-full object-contain' />
+          {/* Role Switcher */}
+          <div className='w-full h-[88px] mb-8 mt-4 p-3 flex gap-2 rounded-[29px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
+            <div
+              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-blue-600 text-white' : ' text-black'}`}
+              onClick={() => setActiveRole('students')}
+            >
+              <h3>For students</h3>
+            </div>
+            <div
+              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-blue-600 text-white' : ' text-black'}`}
+              onClick={() => setActiveRole('medics')}
+            >
+              <h3>For medics</h3>
+            </div>
+          </div>
+
+          {/* For students or for doctors */}
+          <div className='w-full flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10 '>
+            {/* Image with navigation */}
+            <div className="w-full sm:w-[55%] h-[300px] sm:h-auto flex flex-col items-center justify-center relative bg-[#182B5B] p-4 rounded-[24px]">
+              {/* Image container */}
+              <div className="w-full h-full flex items-center justify-center rounded-2xl bg-[#F0F5FF] border border-[#E5E7EB] ">
+                <img
+                  src={currentImages[stepImageIndex]}
+                  alt="Step"
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              {/* Navigation controls */}
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <button
+                  onClick={handlePrev}
+                  aria-label="Previous"
+                >
+                  <img src='/image/Leftcircle.png' alt='next' className="w-[30px] h-[30px] text-blue-600"/>
+                </button>
+                 {/* Dashes */}
+                  <div className="flex gap-2">
+                    {currentImages.map((_, idx) => (
+                      <span
+                        key={idx}
+                        className={`h-1 w-10 rounded-full transition-all duration-200 ${
+                          idx === stepImageIndex
+                            ? 'bg-blue-600'
+                            : 'bg-[#373e50]'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                <button
+                  onClick={handleNext}
+                  aria-label="Next"
+                >
+                  <img src='/image/Rightcircle.png' alt='next' className="w-[30px] h-[30px] text-blue-600"/>
+                </button>
+              </div>
             </div>
 
             {/* Steps */}
             <div className='w-full sm:w-[35%] text-black flex flex-col justify-between'>
-            {steps.map((step, index) => (
+              {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex items-start relative pb-10">
-                {/* Step Number */}
-                <div className="z-10 flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full">
+                  {/* Step Number */}
+                  <div className="z-10 flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full">
                     {index + 1}
-                </div>
-
-                {/* Vertical Line */}
-                {index !== steps.length - 1 && (
+                  </div>
+                  {/* Vertical Line */}
+                  {index !== (activeRole === 'students' ? studentSteps.length : medicSteps.length) - 1 && (
                     <div className="absolute left-3.5 top-8 h-full border-l-2 border-dashed border-blue-300 z-0" />
-                )}
-
-                {/* Content */}
-                <div className="ml-6">
+                  )}
+                  {/* Content */}
+                  <div className="ml-6">
                     <h3 className="font-semibold text-base sm:text-lg">{step.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{step.description}</p>
+                  </div>
                 </div>
-                </div>
-            ))}
-
-            <button className='w-full h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px]'>
+              ))}
+              <button className='w-full text-white h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px]'>
                 Get started with DIVACA Health
-            </button>
+              </button>
             </div>
-        </div>
-        </div>
-        <div 
-        className='w-full h-fit pb-15 pt-15 rounded-[48px] flex flex-col items-center bg-[#14254F]'
-        // style={{ background: "linear-gradient(to right, #3B6FED, #14254F, #3B6FED)" }}
-        >
-        <div className='w-fit mt-5 flex items-center justify-center bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
-            <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]' />
-            <h3 className='text-[#3B6FED] text-sm'>WHY DIVACA Health</h3>
+          </div>
         </div>
 
-        <div className='w-full h-fit px-4 sm:px-5 py-6 mt-3 text-center flex flex-col gap-4'>
-            <h4 className='text-3xl sm:text-5xl font-semibold leading-snug'>
-            Not just for the sick, built for the healthy too
-            </h4>
-            <h4 className='text-base sm:text-lg text-white'>
-            DIVACA Health isn’t just for when you’re in the clinic. Our platform uses gamification and proactive tools to 
-            encourage users to stay healthy, track habits, and visit hospitals only for checkups — not emergencies.
-            </h4>
-        </div>
+        <div className='w-full h-fit pb-15 pt-15 rounded-[48px] flex flex-col items-center bg-[#14254F]'>
+          <div className='w-fit mt-5 flex items-center justify-center bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
+              <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]' />
+              <h3 className='text-[#3B6FED] text-sm'>WHY DIVACA Health</h3>
+          </div>
+
+          <div className='w-full h-fit px-4 sm:px-5 py-6 mt-3 text-center flex flex-col gap-4'>
+              <h4 className='text-3xl sm:text-5xl font-semibold leading-snug'>
+              Not just for the sick, built for the healthy too
+              </h4>
+              <h4 className='text-base sm:text-lg text-white'>
+              DIVACA Health isn’t just for when you’re in the clinic. Our platform uses gamification and proactive tools to 
+              encourage users to stay healthy, track habits, and visit hospitals only for checkups — not emergencies.
+              </h4>
+          </div>
 
         <div className="w-full px-4 sm:px-6 max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 text-black">
             {features.map((feature, index) => (
@@ -394,6 +491,8 @@ const plans = [
             ))}
         </div>
         </div>
+
+
         <div className='w-full p-5 h-fit mt-5 mb-10 flex flex-col lg:flex-row justify-between text-black gap-10'>
         {/* Left Content */}
         <div className='w-full lg:w-[45%] flex flex-col justify-center items-center sm:items-start'>
@@ -451,65 +550,65 @@ const plans = [
         </div>
     </div>
     <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%]  grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10'>
-        <div className='text-white w-1/4'>
-        <img src='/image/DHLOGO.png' alt='img'   className='object-contain max-w-[137px] max-h-[47px] w-full h-auto' />
-        <div className='w-[80%] flex items-center h-fit mt-10 gap-2'>
-        <div className='flex items-center border-r border-white pr-2'>
-            <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
-        </div>
-        <div className='pl-1'>
-            <h3 className='break-words text-xs'>support@divacahealth.com</h3>
-        </div>
-        </div>
-        </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-          <h3 className='font-medium text-lg mb-3'>Company</h3>
-          <h3 className='font-extralight'>Home</h3>
-          <h3 className='font-extralight'>About</h3>
-          <h3 className='font-extralight'>Contact</h3>
-          <h3 className='font-extralight'>Campus care</h3>
-        </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>LEGAL</h3>
-        <h3 className='font-extralight'>Privacy Policy</h3>
-        <h3 className='font-extralight'>Terms of service</h3>
-        </div>
-        <div className='text-white w-1/4 flex flex-col gap-4'>
-        <h3 className='font-medium text-lg mb-3'>SOCIAL MEDIA</h3>
-        <h3 className='font-extralight'>Instagram</h3>
-        <h3 className='font-extralight'>LinkedIn</h3>
-        <h3 className='font-extralight'>X (formerly Twitter)</h3>
-        </div>
-    </div>
-    <div className='text-center text-white text-sm mt-10 pb-5 pt-5'>
-        <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
-    </div>
+      <div className='w-[90%]  grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10'>
+          <div className='text-white w-1/4'>
+          <img src='/image/DHLOGO.png' alt='img'   className='object-contain max-w-[137px] max-h-[47px] w-full h-auto' />
+          <div className='w-[80%] flex items-center h-fit mt-10 gap-2'>
+          <div className='flex items-center border-r border-white pr-2'>
+              <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
+          </div>
+          <div className='pl-1'>
+              <h3 className='break-words text-xs'>support@divacahealth.com</h3>
+          </div>
+          </div>
+          </div>
+          <div className='text-white w-1/4 flex flex-col gap-4'>
+            <h3 className='font-medium text-lg mb-3'>Company</h3>
+            <h3 className='font-extralight'>Home</h3>
+            <h3 className='font-extralight'>About</h3>
+            <h3 className='font-extralight'>Contact</h3>
+            <h3 className='font-extralight'>Campus care</h3>
+          </div>
+          <div className='text-white w-1/4 flex flex-col gap-4'>
+          <h3 className='font-medium text-lg mb-3'>LEGAL</h3>
+          <h3 className='font-extralight'>Privacy Policy</h3>
+          <h3 className='font-extralight'>Terms of service</h3>
+          </div>
+          <div className='text-white w-1/4 flex flex-col gap-4'>
+          <h3 className='font-medium text-lg mb-3'>SOCIAL MEDIA</h3>
+          <h3 className='font-extralight'>Instagram</h3>
+          <h3 className='font-extralight'>LinkedIn</h3>
+          <h3 className='font-extralight'>X (formerly Twitter)</h3>
+          </div>
+      </div>
+      <div className='text-center text-white text-sm mt-10 pb-5 pt-5'>
+          <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
+      </div>
     </footer>
-    {/* Mobile Dropdown Menu */}
-    {isMobileMenuOpen && (
-    <div className="md:hidden px-5 pb-4 space-y-3">
-        {navLinks.map((link) => (
-        <Link
-            key={link.name}
-            href={link.path}
-            className={`block font-medium ${
-            pathname === link.path
-                ? 'text-[#3B6FED] font-semibold'
-                : 'text-[#626262] hover:text-[#3B6FED]'
-            }`}
-            onClick={() => setMobileMenuOpen(false)} // Close menu on click
-        >
-            {link.name}
-        </Link>
-        ))}
-        <Link href="/createpage">
-        <button className="mt-2 w-full bg-[#3B6FED] hover:bg-[#274dcf] border border-[#3B6FED] rounded-[8px] h-[48px] text-white text-sm font-medium">
-            Explore Campus Care
-        </button>
-        </Link>
-    </div>
-    )}
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+      <div className="md:hidden px-5 pb-4 space-y-3">
+          {navLinks.map((link) => (
+          <Link
+              key={link.name}
+              href={link.path}
+              className={`block font-medium ${
+              pathname === link.path
+                  ? 'text-[#3B6FED] font-semibold'
+                  : 'text-[#626262] hover:text-[#3B6FED]'
+              }`}
+              onClick={() => setMobileMenuOpen(false)} // Close menu on click
+          >
+              {link.name}
+          </Link>
+          ))}
+          <Link href="/createpage">
+          <button className="mt-2 w-full bg-[#3B6FED] hover:bg-[#274dcf] border border-[#3B6FED] rounded-[8px] h-[48px] text-white text-sm font-medium">
+              Explore Campus Care
+          </button>
+          </Link>
+      </div>
+      )}
     </>
     
   )
