@@ -294,8 +294,8 @@ const plans = [
                 </div>
             </div>
         </div>
-        <div className='flex flex-col h-fit sm:h-[60vh]  w-full pl-15 pr-15 pt-10 pb-10 sm:flex-row justify-between mt-10'>
-            <div className='w-full sm:w-1/2 flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
+        <div className='flex flex-col h-fit sm:h-[60vh]  w-full pl-15 pr-15 pt-10 pb-10 sm:flex-row gap-5 justify-between mt-10'>
+            <div className='w-full sm:w-[55%] flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
                 <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
                     <h3 className=' text-[9px] sm:text-xs'>OUR INVESTORS & PARTNERS</h3>
@@ -303,8 +303,8 @@ const plans = [
                 <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
-            <div className='w-full sm:w-1/2 '> 
-                <img src='/image/Frame1261158844.png' alt='IMG' className='h-full w-[100%]'/>
+            <div className='w-full sm:w-[45%] '> 
+                <img src='/image/divacatechlogo.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>
         <div className='w-full h-fit pb-10 bg-[#14254F] rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10 gap-8'>
@@ -326,43 +326,44 @@ const plans = [
         </div>
 
         {/* Grid */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-[1200px]'>
+        <div className="w-full max-w-[868px] mx-auto px-2 sm:px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Reusable Card Component */}
             {plans.map((plan, index) => (
-            <div key={index} className='bg-white text-black rounded-[24px] flex flex-col h-full'>
+              <div key={index} className="bg-white text-black rounded-[24px] flex flex-col h-full">
                 {/* Top */}
-                <div className='p-5 rounded-t-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3'>
-                <h2 className='text-[#14254F] text-lg font-bold'>{plan.title}</h2>
-                <h3 className='text-sm'>{plan.subtitle}</h3>
-                <button
+                <div className="p-5 rounded-t-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3">
+                  <h2 className="text-[#14254F] text-lg font-bold">{plan.title}</h2>
+                  <h3 className="text-sm">{plan.subtitle}</h3>
+                  <button
                     className={`flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] ${plan.buttonColor} ${plan.buttonTextColor}`}
-                >
+                  >
                     <h3>{plan.buttonText}</h3>
-                    {plan.icon && <img src={plan.icon} alt='icon' className='w-[18px] h-[18px]' />}
-                </button>
+                    {plan.icon && <img src={plan.icon} alt="icon" className="w-[18px] h-[18px]" />}
+                  </button>
                 </div>
-
                 {/* Features */}
-                <div className='p-5 flex flex-col gap-3'>
-                <h2 className='text-[#14254F] font-semibold'>What's Included:</h2>
-                <div className='flex flex-col gap-2.5 text-sm'>
+                <div className="p-5 flex flex-col gap-3">
+                  <h2 className="text-[#14254F] font-semibold">What's Included:</h2>
+                  <div className="flex flex-col gap-2.5 text-sm">
                     {plan.features.map((feature, idx) => (
-                    <div key={idx} className='flex gap-2 items-start'>
-                        <img src={feature.icon} alt='check' className='w-[18px] h-[18px] mt-1' />
+                      <div key={idx} className="flex gap-2 items-start">
+                        <img src={feature.icon} alt="check" className="w-[18px] h-[18px] mt-1" />
                         <h2>{feature.text}</h2>
-                    </div>
+                      </div>
                     ))}
+                  </div>
                 </div>
-                </div>
-            </div>
+              </div>
             ))}
+          </div>
         </div>
 
         </div>
         <div className='w-full h-fit p-5 flex flex-col items-center'>
           {/* Badge */}
           <div className='w-fit flex items-center justify-center h-fit bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
-              <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]' />
+              <img src="/image/howitworkicon.png" alt='img' className='w-[18px] h-[18px]' />
               <h3 className='text-[#3B6FED] text-sm'>HOW IT WORKS</h3>
           </div>
 
@@ -375,7 +376,7 @@ const plans = [
           </div>
 
           {/* Role Switcher */}
-          <div className='w-full h-[88px] mb-8 mt-4 p-3 flex gap-2 rounded-[29px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
+          <div className='w-full h-[88px] mb-8 mt-4 p-1.5 flex gap-2 rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
             <div
               className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-blue-600 text-white' : ' text-black'}`}
               onClick={() => setActiveRole('students')}
@@ -464,11 +465,11 @@ const plans = [
               <h3 className='text-[#3B6FED] text-sm'>WHY DIVACA Health</h3>
           </div>
 
-          <div className='w-full h-fit px-4 sm:px-5 py-6 mt-3 text-center flex flex-col gap-4'>
+          <div className='w-full h-fit px-4 sm:px-5 py-6 mt-3 text-center flex flex-col gap-4 mb-20'>
               <h4 className='text-3xl sm:text-5xl font-semibold leading-snug'>
               Not just for the sick, built for the healthy too
               </h4>
-              <h4 className='text-base sm:text-lg text-white'>
+              <h4 className='text-base sm:text-lg text-white w-[80%] m-auto'>
               DIVACA Health isn’t just for when you’re in the clinic. Our platform uses gamification and proactive tools to 
               encourage users to stay healthy, track habits, and visit hospitals only for checkups — not emergencies.
               </h4>

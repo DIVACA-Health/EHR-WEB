@@ -187,18 +187,18 @@ const features = [
             <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black sm:h-[304px] mt-5 mb-15 '>
                 <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
-                    <h4 className='text-lg font-medium'>Our Mission</h4>
+                    <h4 className='text-xl font-bold'>Our Mission</h4>
                     <h5>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
                 </div>
                 <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/lighticon.png' alt='img' className='w-[54px] h-[54px]'/>
-                    <h4 className='text-lg font-medium'>Our Vision</h4>
+                    <h4 className='text-xl font-bold'>Our Vision</h4>
                     <h5>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>
                 </div>
             </div>
 
         </div>
-        <div className='sm:h-fit w-full bg-[#14254F] rounded-[48px] mt-15 mb-5 flex flex-col items-center pt-10 gap-8 px-4 sm:px-10'>
+        <div className='sm:h-fit w-full bg-[#14254F] rounded-[48px] mt-15 mb-5 flex flex-col items-center pt-10 pb-10 gap-8 px-4 sm:px-10'>
         {/* Top tag */}
         <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
             <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]' />
@@ -206,7 +206,7 @@ const features = [
         </div>
 
         {/* Headings */}
-        <div className='w-full h-fit text-center flex flex-col gap-4'>
+        <div className='w-full h-fit text-center flex flex-col gap-4 mb-15'>
             <h4 className='text-3xl sm:text-5xl font-semibold text-white'>Our Focus Areas</h4>
             <h4 className='text-base sm:text-lg font-extralight text-white'>
             We’ve identified key domains where targeted innovation can improve health outcomes and reduce
@@ -235,7 +235,7 @@ const features = [
         </div>
         <div className='flex flex-col sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  sm:flex-row-reverse gap-5 justify-between mt-10'>
             <div className='w-full  sm:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
-                <div className='w-fit items-center justify-center h-fit  bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+                <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
                     <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
                 </div>
@@ -244,7 +244,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[310px] mt-10 sm:w-[56%] sm:h-[590px] mb-10'> 
+            <div className='w-full h-[280px] mt-10 sm:w-[56%] sm:h-[590px] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>

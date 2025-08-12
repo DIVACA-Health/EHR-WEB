@@ -79,8 +79,8 @@ const contact = () => {
         </div>
       )}
       
-    <div className='bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
-        <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20'>
+    <div className='bg-white w-full height-fit pl-2 sm:pl-5 pr-2 sm:pr-5 pt-3 pb-3'>
+        <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-2 sm:pl-5  pr-2 sm:pr-5 pt-3 pb-20'>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[80px] h-[30px]'/>
                 <button
@@ -119,8 +119,8 @@ const contact = () => {
                     </button>
                 </Link>
             </div> 
-            <div className='flex flex-col md:flex-row items-center h-[70%] w-full pl-5 pr-5 mt-[77px]'>
-                <div className='h-fit mb-15 w-[100%] text-black sm:w-1/2 sm:h-[762px] flex flex-col gap-10 '>
+            <div className='flex flex-col md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[25px] '>
+                <div className='h-fit mb-15 w-[100%] text-black sm:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs'>WE’RE HERE TO HELP YOU</h3>
@@ -157,8 +157,8 @@ const contact = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs p-10 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
-                    <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly '>
+                <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs sm:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
+                    <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly  '>
                         <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Full name</label>
                             <input type='text' placeholder='Enter First and Last name' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
@@ -184,25 +184,25 @@ const contact = () => {
                 </div>
             </div>
         </div>
-        <div className='w-full h-fit rounded-[48px] text-black mt-10 mb-10 p-10 flex flex-col gap-2 items-center'>
+        <div className='w-full h-fit rounded-[48px] text-black mt-10 mb-10 p-3 sm:p-10 flex flex-col gap-2 items-center'>
             <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                 <img src='/image/Expandicon.png' alt='IMG' className='w-[20px] h-[20px]' />
                 <h3 className='text-xs'>STILL NEED CLARITY?</h3>
             </div>
             <h1 className='text-lg font-medium mb-2 sm:text-[40px] text-center'>Frequently asked questions</h1>
             <h3 className='font-extralight text-center'>We’ve put together some helpful answers to give you clarity on what DIVACA Health offers, how it works, and why it’s built with <br></br> your needs in mind whether you’re in a clinic or a classroom.</h3>
-            <div className="w-full mx-auto  mt-5">
+            <div className="w-full mx-auto  mt-5 ">
                 {faqs.map((faq, index) => (
                     <div key={index} className="">
                     <button
                         onClick={() => toggle(index)}
-                        className="w-full text-left px-4 py-4 flex justify-between items-center bg-[#F0F5FF] border-[1.5px] rounded-[20px] mt-5 mb-5 border-[#1E3877] hover:bg-blue-100 transition"
+                        className="w-full text-left px-4 py-4 flex justify-between items-center bg-[#F0F5FF] border-[1px] rounded-[8px] mt-5 mb-5 border-[#1E3877] hover:bg-blue-100 transition"
                     >
-                        <span className="font-medium">{faq.question}</span>
+                        <span className="font-medium text-[#14254F] text-[16px] sm:text-[20]">{faq.question}</span>
                         {activeIndex === index ? <Minus size={18} /> : <Plus size={18} />}
                     </button>
                     {activeIndex === index && (
-                        <div className="px-5 py-8 text-sm text-gray-700 bg-[#F0F5FF]  border-[1.5px] rounded-[20px] border-[#1E3877]">
+                        <div className="px-5 py-8   bg-[#F0F5FF]  border-[1.5px] rounded-[20px] border-[#1E3877] text-[#3B3B3B] sm:text-[18px] text-[14px]">
                         {faq.answer}
                         </div>
                     )}
