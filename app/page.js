@@ -262,13 +262,13 @@ const plans = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
+                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
                 </Link>
             </div> 
-            <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%] w-full pl-2 pr-2 sm:pl-5 sm:pr-5 mt-[77px]'>
+            <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%]  w-full p-0 sm:pl-5 sm:pr-5 mt-[77px]'>
                 <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 sm:justify-center items-center sm:items-start'>
                     <div className='w-[202px] h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
@@ -289,7 +289,7 @@ const plans = [
                         </Link>
                     </div>
                 </div>
-                <div className='w-full  h-[320px] mt-10 sm:w-[45%] sm:h-[60vh]  flex justify-center items-center '>
+                <div className='w-full  h-[320px] mt-10 lg:w-[45%] sm:h-[45vh] lg:h-[65vh]  flex justify-center items-center '>
                     <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
                 </div>
             </div>
@@ -303,8 +303,8 @@ const plans = [
                 <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
-            <div className='w-full sm:w-[45%] '> 
-                <img src='/image/divacatechlogo.png' alt='IMG' className='h-full w-[100%]'/>
+            <div className='w-full sm:w-[45%] m-auto'>
+                <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[50vh] lg:w-[45vw]   w-full h-full'/>
             </div>
         </div>
         <div className='w-full h-fit pb-10 bg-[#14254F] rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10 gap-8'>
@@ -378,13 +378,13 @@ const plans = [
           {/* Role Switcher */}
           <div className='w-full h-[88px] mb-8 mt-4 p-1.5 flex gap-2 rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
             <div
-              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-blue-600 text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('students')}
             >
               <h3>For students</h3>
             </div>
             <div
-              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg- text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('medics')}
             >
               <h3>For medics</h3>
@@ -392,15 +392,15 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-[640px] flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10 '>
+          <div className='w-full sm:h-fit lg:h-[640px] flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10  '>
             {/* Image with navigation */}
-            <div className="w-full sm:w-[55%] h-[300px] sm:h-auto flex flex-col items-center justify-center relative bg-[#182B5B] p-6 sm:p-4 rounded-[24px]">
+            <div className="w-full sm:w-[55%] h-[300px] sm:h-[500px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-6 sm:p-4 rounded-[24px]">
               {/* Image container */}
-              <div className="w-full h-[90%] flex items-center justify-center rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
+              <div className="w-full h-full flex items-center justify-center rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
                 <img
                   src={currentImages[stepImageIndex]}
                   alt="Step"
-                  className="object-contain w-full h-full"
+                  className="object-contain w-full h-full rounded-[24px]"
                 />
               </div>
               {/* Navigation controls */}
@@ -434,7 +434,7 @@ const plans = [
             </div>
 
             {/* Steps */}
-            <div className='w-full  sm:h-[640px] p-3 sm:w-[35%] text-black flex flex-col justify-between'>
+            <div className='w-full sm:h-fit lg:h-[640px] p-3 sm:w-[35%] text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex items-start relative pb-10">
                   {/* Step Number */}

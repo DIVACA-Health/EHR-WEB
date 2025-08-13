@@ -133,7 +133,7 @@ const features = [
                     </svg>
                 </button>
             </div>
-            <div className='hidden md:flex items-center justify-between mt-4 '>
+            <div className='hidden md:flex items-center justify-between mt-4  '>
                 <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
@@ -154,7 +154,7 @@ const features = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
+                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
@@ -170,12 +170,12 @@ const features = [
                     <h3 className='text-[12px] sm:text-[18px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
 
                 </div>
-                <div className='w-full h-[130px] sm:w-[90]  sm:h-[65vh]  flex justify-center items-center'>
-                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:w-[90%] sm:h-full'/>
+                <div className='w-full h-[130px] sm:h-fit lg:w-full  lg:h-[65vh]  flex justify-center items-center'>
+                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:h-[30vh] lg:w-[90%] lg:h-full'/>
                 </div>
             </div>
         </div>
-        <div className='h-fit   w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
+        <div className='h-fit  w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
             <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                 <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]'/>
                 <h3 className='text-[#3B6FED] text-sm'>OUR PURPOSE AND PATH</h3>
@@ -184,7 +184,7 @@ const features = [
                 <h4 className='text-[20px] font-medium sm:text-5xl'>Why We Exist</h4>
                 <h4 className='text-[12px] sm:text-lg'>Our mission fuels our work, and our vision guides where we’re headed.</h4>
             </div>
-            <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black sm:h-[304px] mt-5 mb-15 '>
+            <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black lg:h-[304px] mt-5 mb-15 '>
                 <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-xl font-bold'>Our Mission</h4>
@@ -244,7 +244,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[45vw] sm:h-[65vh] mb-10 '> 
+            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[45vw] lg:h-[65vh] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>
@@ -294,7 +294,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[45vw] sm:h-[65vh] mb-10 '> 
+            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[45vw] lg:h-[65vh] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>

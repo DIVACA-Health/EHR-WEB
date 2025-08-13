@@ -113,13 +113,13 @@ const contact = () => {
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end pr-10'>
+                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
                 </Link>
             </div> 
-            <div className='flex flex-col md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[25px] '>
+            <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[25px] '>
                 <div className='h-fit mb-15 w-[100%] text-black sm:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
@@ -157,7 +157,7 @@ const contact = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs sm:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
+                <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs lg:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
                     <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly  '>
                         <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Full name</label>
