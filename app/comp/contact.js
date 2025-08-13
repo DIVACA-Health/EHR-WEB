@@ -223,14 +223,7 @@ const contact = () => {
             <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
         </div>
         </div>
-        {/* Company */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
-        <h3 className='font-extralight'>Home</h3>
-        <h3 className='font-extralight'>About</h3>
-        <h3 className='font-extralight'>Contact</h3>
-        <h3 className='font-extralight'>Campus care</h3>
-        </div>
+
         {/* Legal */}
         <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
         <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
@@ -246,6 +239,12 @@ const contact = () => {
         <Link href="/createpage">
           <h3 className='font-extralight'>Campus Care</h3>
         </Link>
+        </div>
+        {/* Company */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
+        <h3 className='font-extralight mb-3'> Privacy Policy</h3>
+        <h3 className='font-extralight'>Terms of service</h3>
         </div>
         {/* Social Media */}
         <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>

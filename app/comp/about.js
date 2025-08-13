@@ -170,7 +170,7 @@ const features = [
                     <h3 className='text-[12px] sm:text-[18px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
 
                 </div>
-                <div className='w-full h-[160px] sm:w-full  sm:h-[480px]  flex justify-center items-center'>
+                <div className='w-full h-[130px] sm:w-[90]  sm:h-[65vh]  flex justify-center items-center'>
                     <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:w-[90%] sm:h-full'/>
                 </div>
             </div>
@@ -244,7 +244,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[56%] sm:h-[590px] mb-10 '> 
+            <div className='w-full h-[280px] mt-10 sm:w-[45vw] sm:h-[65vh] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>
@@ -294,7 +294,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[56%] sm:h-[590px] mb-10 '> 
+            <div className='w-full h-[280px] mt-10 sm:w-[45vw] sm:h-[65vh] mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
             </div>
         </div>
@@ -305,7 +305,7 @@ const features = [
             <h3 className='text-sm text-center'>If you’d like to volunteer, partner, or support our outreach, reach out to us at: <br></br>📧 outreach@divacahealth.com</h3>
         </div>
     </div>
-     <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
+    <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
     <div className='w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
         sm:grid-cols-2 sm:grid-rows-2
         xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center'>
@@ -317,7 +317,8 @@ const features = [
             <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
         </div>
         </div>
-        {/* Company */}
+
+        {/* Legal */}
         <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
         <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
         <Link href="/">
@@ -333,10 +334,10 @@ const features = [
           <h3 className='font-extralight'>Campus Care</h3>
         </Link>
         </div>
-        {/* Legal */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6 '>
+        {/* Company */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
         <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
-        <h3 className='font-extralight'>Privacy Policy</h3>
+        <h3 className='font-extralight mb-3'> Privacy Policy</h3>
         <h3 className='font-extralight'>Terms of service</h3>
         </div>
         {/* Social Media */}

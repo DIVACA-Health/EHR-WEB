@@ -289,7 +289,7 @@ const plans = [
                         </Link>
                     </div>
                 </div>
-                <div className='w-full  h-[320px] mt-10 sm:w-[45%] sm:h-[505px]  flex justify-center items-center '>
+                <div className='w-full  h-[320px] mt-10 sm:w-[45%] sm:h-[60vh]  flex justify-center items-center '>
                     <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
                 </div>
             </div>
@@ -384,7 +384,7 @@ const plans = [
               <h3>For students</h3>
             </div>
             <div
-              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-blue-600 text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg- text-white' : ' text-black'}`}
               onClick={() => setActiveRole('medics')}
             >
               <h3>For medics</h3>
@@ -562,14 +562,7 @@ const plans = [
             <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
         </div>
         </div>
-        {/* Company */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
-        <h3 className='font-extralight'>Home</h3>
-        <h3 className='font-extralight'>About</h3>
-        <h3 className='font-extralight'>Contact</h3>
-        <h3 className='font-extralight'>Campus care</h3>
-        </div>
+
         {/* Legal */}
         <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
         <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
@@ -585,6 +578,12 @@ const plans = [
         <Link href="/createpage">
           <h3 className='font-extralight'>Campus Care</h3>
         </Link>
+        </div>
+        {/* Company */}
+        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
+        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
+        <h3 className='font-extralight mb-3'> Privacy Policy</h3>
+        <h3 className='font-extralight'>Terms of service</h3>
         </div>
         {/* Social Media */}
         <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
