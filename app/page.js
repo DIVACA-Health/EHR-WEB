@@ -376,7 +376,7 @@ const plans = [
           </div>
 
           {/* Role Switcher */}
-          <div className='w-full h-[88px] mb-8 mt-4 p-1.5 flex gap-2 rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
+          <div className='w-full h-[88px] mb-8 mt-4  p-1.5 flex gap-2 rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
             <div
               className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('students')}
@@ -392,7 +392,7 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-fit lg:h-[640px] flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10  '>
+          <div className='w-full sm:h-fit  lg:h-fit flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10  '>
             {/* Image with navigation */}
             <div className="w-full sm:w-[55%] h-[300px] sm:h-[500px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-6 sm:p-4 rounded-[24px]">
               {/* Image container */}
