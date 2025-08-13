@@ -249,12 +249,12 @@ const features = [
             </div>
         </div>
         <div 
-        className='w-full h-fit rounded-[48px] bg-[#14254F] flex flex-col sm:flex-row pt-20 pb-20 pr-10 pl-10 gap-10'>
+        className='w-full h-fit rounded-[48px] bg-[#14254F] flex flex-col sm:flex-row pt-20 pb-20 pr-5 pl-5 sm:pr-10 sm:pl-10 gap-10'>
         {/* Left Text Section */}
         <div className='w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white '>
             <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
             <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-            <h3 className='text-[9px] sm:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
+            <h3 className='text-[11px] sm:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
             </div>
             <h1 className='text-3xl sm:text-4xl font-semibold'>What we do through our outreach</h1>
             <h3 className='font-light text-base'>

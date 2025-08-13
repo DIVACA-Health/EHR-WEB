@@ -298,7 +298,7 @@ const plans = [
             <div className='w-full sm:w-[55%] flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
                 <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-                    <h3 className=' text-[9px] sm:text-xs'>OUR INVESTORS & PARTNERS</h3>
+                    <h3 className=' text-[11px] sm:text-xs'>OUR INVESTORS & PARTNERS</h3>
                 </div>
                 <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
