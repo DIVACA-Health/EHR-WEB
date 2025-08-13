@@ -268,23 +268,23 @@ const plans = [
                     </button>
                 </Link>
             </div> 
-            <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%] w-full pl-5 pr-5 mt-[77px]'>
-                <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 justify-center '>
+            <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%] w-full pl-2 pr-2 sm:pl-5 sm:pr-5 mt-[77px]'>
+                <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 sm:justify-center items-center sm:items-start'>
                     <div className='w-[202px] h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
-                        <h3 className='text-xs'>SMART HEALTH SOLUTION</h3>
+                        <h3 className='text-xs font-medium'>SMART HEALTH SOLUTION</h3>
                     </div>
-                    <h1 className='text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
-                    <h3>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
+                    <h1 className='text-[24px] font-semibold text-center sm:text-left sm:text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
+                    <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
                     <div className='w-[85%]  flex gap-2'>
                         <Link href='/createpage' className='w-1/2'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2'>
-                            <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
+                            <h1 className='text-white text-[14px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
                         <Link href='/createpage' className='w-1/2'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2'>
-                            <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
+                            <h1 className='text-[#3B6FED] text-[14px] sm:text-lg'>Request early access</h1>
                         </button>
                         </Link>
                     </div>
@@ -294,7 +294,7 @@ const plans = [
                 </div>
             </div>
         </div>
-        <div className='flex flex-col h-fit sm:h-[60vh]  w-full pl-15 pr-15 pt-10 pb-10 sm:flex-row gap-5 justify-between mt-10'>
+        <div className='flex flex-col h-fit sm:h-[60vh]  w-full pl-2 pr-2 pt-10 pb-10 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 sm:flex-row gap-5 justify-between mt-10'>
             <div className='w-full sm:w-[55%] flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
                 <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
@@ -392,11 +392,11 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10 '>
+          <div className='w-full sm:h-[640px] flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10 '>
             {/* Image with navigation */}
-            <div className="w-full sm:w-[55%] h-[300px] sm:h-auto flex flex-col items-center justify-center relative bg-[#182B5B] p-4 rounded-[24px]">
+            <div className="w-full sm:w-[55%] h-[300px] sm:h-auto flex flex-col items-center justify-center relative bg-[#182B5B] p-6 sm:p-4 rounded-[24px]">
               {/* Image container */}
-              <div className="w-full h-full flex items-center justify-center rounded-2xl bg-[#F0F5FF] border border-[#E5E7EB] ">
+              <div className="w-full h-[90%] flex items-center justify-center rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
                 <img
                   src={currentImages[stepImageIndex]}
                   alt="Step"
@@ -434,7 +434,7 @@ const plans = [
             </div>
 
             {/* Steps */}
-            <div className='w-full sm:w-[35%] text-black flex flex-col justify-between'>
+            <div className='w-full  sm:h-[640px] p-3 sm:w-[35%] text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex items-start relative pb-10">
                   {/* Step Number */}
@@ -443,7 +443,7 @@ const plans = [
                   </div>
                   {/* Vertical Line */}
                   {index !== (activeRole === 'students' ? studentSteps.length : medicSteps.length) - 1 && (
-                    <div className="absolute left-3.5 top-8 h-full border-l-2 border-dashed border-blue-300 z-0" />
+                    <div className="absolute left-3 sm:left-3.5 top-8 h-full border-l-2 border-dashed border-blue-300 z-0" />
                   )}
                   {/* Content */}
                   <div className="ml-6">
