@@ -289,7 +289,7 @@ const plans = [
                         </Link>
                     </div>
                 </div>
-                <div className='w-full  h-[320px] mt-10 lg:w-[45%] sm:h-[45vh] lg:h-[65vh]  flex justify-center items-center '>
+                <div className='w-full  h-[320px] mt-10 lg:w-[520px] sm:h-[45vh] lg:h-[520px]  flex justify-center items-center '>
                     <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
                 </div>
             </div>
@@ -304,7 +304,7 @@ const plans = [
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
             <div className='w-full sm:w-[45%] m-auto'>
-                <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[50vh] lg:w-[45vw]   w-full h-full'/>
+                <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[435px] lg:w-[574px]   w-full h-full'/>
             </div>
         </div>
         <div className='w-full h-fit pb-10 bg-[#14254F] rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10 gap-8'>
@@ -326,7 +326,7 @@ const plans = [
         </div>
 
         {/* Grid */}
-        <div className="w-full max-w-[868px] mx-auto px-2 sm:px-4">
+        <div className="w-full max-w-[900px] mx-auto px-2 sm:px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Reusable Card Component */}
             {plans.map((plan, index) => (

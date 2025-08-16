@@ -171,7 +171,7 @@ const features = [
 
                 </div>
                 <div className='w-full h-[130px] sm:h-fit lg:w-full  lg:h-[65vh]  flex justify-center items-center'>
-                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:h-[30vh] lg:w-[90%] lg:h-full'/>
+                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:h-[30vh] lg:w-[1200px] lg:h-[526px]'/>
                 </div>
             </div>
         </div>
@@ -244,8 +244,8 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[45vw] lg:h-[65vh] mb-10 '> 
-                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
+            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[706px] lg:h-[590px] mb-10 '> 
+                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
         <div 
@@ -294,15 +294,31 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[45vw] lg:h-[65vh] mb-10 '> 
-                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-[100%]'/>
+            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[706px] lg:h-[590px] mb-10 '> 
+                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
-        <div className=' w-[90%] h-[507px] rounded-[24px] m-auto mb-10 flex gap-3 flex-col items-center justify-center bg-cover bg-center p-4'
-            style={{ backgroundImage: "url('/image/aboutbottom.png')" }}
-        >
-            <h2 className=' text-2xl sm:text-5xl text-center'>Want to Support or Get Involved?</h2>
-            <h3 className='text-sm text-center'>If you’d like to volunteer, partner, or support our outreach, reach out to us at: <br></br>📧 outreach@divacahealth.com</h3>
+        <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3'>
+          <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
+            <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
+            <h3 className='text-[#3B6FED] text-sm'>STAY IN THE LOOP</h3>
+          </div>
+          <div className='w-full lg:w-[1051px] text-center flex flex-col gap-5 mt-10'>
+            <h2 className='text-[24px] sm:text-[32px] lg:text-[48px] font-semibold'>Subscribe to Our Newsletter</h2>
+            <h4 className='text-[14px] sm:text-[16px] lg:text-[18px] text-center'>
+              Stay updated on our latest outreach efforts, health innovations, and partnership opportunities. Subscribe to our newsletter and be part of our journey to transform lives across Africa and the world at large.
+            </h4>
+          </div>
+          <div className='w-full max-w-[924px] border-[1px] border-[#D0D5DD] sm:mb-10 lg:h-[72px] rounded-[24px] mt-10 bg-[#F4F4F4] flex  sm:flex-row items-center justify-between p-2 gap-3'>
+            <input
+              type='email'
+              placeholder='Enter your email address'
+              className='w-full sm:w-[75%] h-[48px] lg:h-full rounded-[24px] pl-3 mb-2 sm:mb-0 text-xs sm:text-lg'
+            />
+            <button className='w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-[#223F87] text-white'>
+              Subscribe
+            </button>
+          </div>
         </div>
     </div>
     <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
