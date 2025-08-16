@@ -71,6 +71,14 @@ const main = () => {
     },
   ];
 
+  const stepImages = [
+  '/image/step1.png',
+  '/image/step2.png',
+  '/image/step3.png',
+  '/image/step4.png',
+  '/image/step5.png',
+];
+
 
 const features = [
   {
@@ -276,20 +284,20 @@ const plans = [
                     </div>
                     <h1 className='text-[24px] font-semibold text-center sm:text-left sm:text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
                     <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
-                    <div className='w-[85%]  flex gap-2'>
+                    <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
                         <Link href='/createpage' className='w-1/2'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2'>
-                            <h1 className='text-white text-[14px] sm:text-lg'>Explore Campus Care</h1>
+                            <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
                         <Link href='/createpage' className='w-1/2'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2'>
-                            <h1 className='text-[#3B6FED] text-[14px] sm:text-lg'>Request early access</h1>
+                            <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
                         </button>
                         </Link>
                     </div>
                 </div>
-                <div className='w-full  h-[320px] mt-10 lg:w-[520px] sm:h-[45vh] lg:h-[520px]  flex justify-center items-center '>
+                <div className='w-full  h-[320px] mt-10 lg:w-[520px]  lg:h-[520px]  flex justify-center items-center '>
                     <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
                 </div>
             </div>
@@ -436,17 +444,20 @@ const plans = [
             {/* Steps */}
             <div className='w-full sm:h-fit lg:h-[640px] p-3 sm:w-[35%] text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
-                <div key={index} className="flex items-start relative pb-10">
-                  {/* Step Number */}
-                  <div className="z-10 flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full">
-                    {index + 1}
+                <div key={index} className="flex relative pb-10">
+                  {/* Timeline column */}
+                  <div className="flex flex-col items-center relative min-w-[38px]">
+                    {/* Step Number Image */}
+                    <div className="z-10 flex items-center justify-center w-[38px] h-[38px]">
+                      <img src={stepImages[index]} alt={`Step ${index + 1}`} className="w-full h-full object-contain" />
+                    </div>
+                    {/* Vertical Line */}
+                    {index !== (activeRole === 'students' ? studentSteps.length : medicSteps.length) - 1 && (
+        <div className="absolute top-[38px] left-1/2 -translate-x-1/2 w-0 h-[calc(100%+38px)] border-l-2 border-dashed border-blue-300 z-0" />
+                    )}
                   </div>
-                  {/* Vertical Line */}
-                  {index !== (activeRole === 'students' ? studentSteps.length : medicSteps.length) - 1 && (
-                    <div className="absolute left-3 sm:left-3.5 top-8 h-full border-l-2 border-dashed border-blue-300 z-0" />
-                  )}
                   {/* Content */}
-                  <div className="ml-6">
+                  <div className="ml-6 flex-1">
                     <h3 className="font-semibold text-base sm:text-lg">{step.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{step.description}</p>
                   </div>

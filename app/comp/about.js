@@ -298,7 +298,7 @@ const features = [
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
-        <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3'>
+        <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3 mb-10'>
           <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
             <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
             <h3 className='text-[#3B6FED] text-sm'>STAY IN THE LOOP</h3>
@@ -309,11 +309,11 @@ const features = [
               Stay updated on our latest outreach efforts, health innovations, and partnership opportunities. Subscribe to our newsletter and be part of our journey to transform lives across Africa and the world at large.
             </h4>
           </div>
-          <div className='w-full max-w-[924px] border-[1px] border-[#D0D5DD] sm:mb-10 lg:h-[72px] rounded-[24px] mt-10 bg-[#F4F4F4] flex  sm:flex-row items-center justify-between p-2 gap-3'>
+          <div className='w-full max-w-[924px] border-[1px] border-[#D0D5DD] sm:mb-10 lg:h-[72px] rounded-[24px] mt-10 bg-[#F4F4F4] flex  sm:flex-row items-center justify-center p-2  gap-3'>
             <input
               type='email'
               placeholder='Enter your email address'
-              className='w-full sm:w-[75%] h-[48px] lg:h-full rounded-[24px] pl-3 mb-2 sm:mb-0 text-xs sm:text-lg'
+              className='w-full sm:w-[75%] h-[48px]  lg:h-full rounded-[24px] pl-3  sm:mb-0 text-xs sm:text-lg outline-none'
             />
             <button className='w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-[#223F87] text-white'>
               Subscribe
