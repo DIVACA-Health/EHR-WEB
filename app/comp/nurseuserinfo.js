@@ -219,14 +219,14 @@ const getTodayDate = () => {
                         </div>
                         <div className=' w-[55%] flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Address</h1>
-                            <h1 className='text-xs text-[#141414] font-semibold'>{user.phoneNumber}</h1>
+                            <h1 className='text-xs text-[#141414] font-semibold'>{user.address}</h1>
                         </div>
                     </div>
 
                   </div>
 
                   {/* Box 2 - Vitals */}
-                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit ">
+                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit  ">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14 '>
                             <div className='flex gap-3 items-center'>
@@ -239,12 +239,12 @@ const getTodayDate = () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2'>
-                            <div className='flex flex-col gap-1'>
+                        <div className='flex justify-between items-center mb-2 '>
+                            <div className='flex flex-col gap-1 '>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Heart rate (bpm)</h1>
                                 <h1>{user.heartrate}</h1>
                             </div>
-                            <div className='flex flex-col gap-1 w-[55%]'>
+                            <div className='flex flex-col gap-1 w-[40%] '>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Blood pressure (mmHg)</h1>
                                 <h1>{user.bloodpressure}</h1>
                             </div>
@@ -254,7 +254,7 @@ const getTodayDate = () => {
                                 <h1 className='text-xs text-[#919191] font-extralight'>Temperature (°C)</h1>
                                 <h1>{user.temperature}</h1>
                             </div>
-                            <div className='flex flex-col gap-1 w-[55%]'>
+                            <div className='flex flex-col gap-1 w-[40%]'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Weight (kg)</h1>
                                 <h1>{user.weight}</h1>
                             </div>
@@ -302,7 +302,7 @@ const getTodayDate = () => {
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-start items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>
-                                <img src='/image/Frame 1261158733 (1).png' alt='img' height={38} width={38} />
+                                <img src='/image/nursehealthlogo.png' alt='img' height={38} width={38} />
                                 <h2 className='text-[14px]'>Health history</h2>
                             </div>
                         </div>

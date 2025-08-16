@@ -23,7 +23,7 @@ const studentrecords = () => {
                     <h1 className='text-3xl'>320</h1>
                   </div>
                 </div>
-                <div className='h-15 flex items-center gap-2 ml-6 '>
+                <div className='h-15 flex  gap-2 ml-[-20px]  justify-end items-end'>
                   <img src='/image/greenarrow.png' alt='img' width={22} height={22}/>
                   <h2 className='text-green-600'>1.55% from last semester</h2>
                 </div>
