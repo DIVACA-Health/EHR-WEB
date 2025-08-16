@@ -294,7 +294,7 @@ const plans = [
                 </div>
             </div>
         </div>
-        <div className='flex flex-col h-fit sm:h-[60vh]  w-full pl-2 pr-2 pt-10 pb-10 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 sm:flex-row gap-5 justify-between mt-10'>
+        <div className='flex flex-col h-fit sm:h-fit w-full pl-2 pr-2 pt-10 pb-10 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 sm:flex-row gap-5 justify-between mt-10'>
             <div className='w-full sm:w-[55%] flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
                 <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
@@ -303,7 +303,7 @@ const plans = [
                 <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
-            <div className='w-full sm:w-[45%] m-auto'>
+            <div className='w-full sm:w-[45%] flex items-center justify-center'>
                 <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[435px] lg:w-[574px]   w-full h-full'/>
             </div>
         </div>
@@ -376,15 +376,15 @@ const plans = [
           </div>
 
           {/* Role Switcher */}
-          <div className='w-full h-[88px] mb-8 mt-4  p-1.5 flex gap-2 rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
+          <div className='w-full h-[56px] md:h-[88px] mb-8 mt-4  p-1.5 flex gap-2 rounded-[16px] md:rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
             <div
-              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-[#223F87] text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('students')}
             >
               <h3>For students</h3>
             </div>
             <div
-              className={`w-1/2 h-full rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-[#223F87] text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('medics')}
             >
               <h3>For medics</h3>
@@ -392,15 +392,15 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-fit  lg:h-fit flex flex-col sm:flex-row gap-10 sm:gap-20 mb-10  '>
+          <div className='w-full sm:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10  '>
             {/* Image with navigation */}
-            <div className="w-full sm:w-[55%] h-[300px] sm:h-[500px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-6 sm:p-4 rounded-[24px]">
+            <div className="w-full sm:w-[55%] h-[300px] sm:h-[500px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
               {/* Image container */}
-              <div className="w-full h-full flex items-center justify-center rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
+              <div className="w-full h-full flex items-center justify-center rounded-[8px] md:rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
                 <img
                   src={currentImages[stepImageIndex]}
                   alt="Step"
-                  className="object-contain w-full h-full rounded-[24px]"
+                  className="object-contain w-full h-full rounded-[8px] md:rounded-[24px]"
                 />
               </div>
               {/* Navigation controls */}
