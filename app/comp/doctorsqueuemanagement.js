@@ -306,12 +306,12 @@ const handleMenuButtonClick = (e, user) => {
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-white border-b border-[#E5E7EB]">
             <tr>
-              <th className="px-4 py-3 font-medium text-[#6B7280]">S/N</th>
-              <th className="px-4 py-3 font-medium text-[#6B7280]">First name</th>
-              <th className="px-4 py-3 font-mediumnormal text-[#6B7280]">Last name</th>
-              <th className="px-4 py-3 font-medium text-[#6B7280]">Time in</th>
-              <th className="px-4 py-3 font-medium text-[#6B7280]">Status</th>
-              <th className="px-4 py-3 font-medium text-[#6B7280]">Action</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Last name</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Time in</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Status</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Action</th>
             </tr>
           </thead>
           <tbody>
