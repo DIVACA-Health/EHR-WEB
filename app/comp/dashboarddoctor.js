@@ -40,6 +40,34 @@ const dashboard = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+
+    const [overview, setOverview] = useState({
+    patientsOnQueue: 0,
+    pendingPrescriptions: 0,
+    upcomingAppointments: 0,
+    urgentCases: 0,
+  });
+  const [performance, setPerformance] = useState({
+    patientsSeenToday: 0,
+    avgConsultationTime: 'No data',
+    prescriptionsIssued: 0,
+  });
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const res = await fetchWithAuth('/api/v1/dashboard/medical-staff');
+        if (!res.ok) throw new Error('Failed to fetch dashboard data');
+        const result = await res.json();
+        if (result?.data?.overview) setOverview(result.data.overview);
+        if (result?.data?.personalPerformance) setPerformance(result.data.personalPerformance);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchDashboardData();
+  }, []);
+
     const [menuUser, setMenuUser] = useState(null);
 
       const handleRowClick = async (userId) => {
@@ -270,7 +298,7 @@ const handleMenuButtonClick = (e, user) => {
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#F7A752] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2  '>
                     <h2 className='font-extralight text-[14px] text-[#898989]'>Patients in waiting</h2>
-                    <h2 className='font-medium  text-xl'>15</h2>
+                    <h2 className='font-medium  text-xl'>{overview.patientsOnQueue}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/Frame 1261158598@2x.png' alt='img' width={32} height={32}/>
@@ -280,7 +308,7 @@ const handleMenuButtonClick = (e, user) => {
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#3B6FED] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2 '> 
                     <h2 className='font-extralight text-[14px] text-[#898989]'>Vitals logged today</h2>
-                    <h2 className='font-medium  text-xl'>9</h2>
+                    <h2 className='font-medium  text-xl'>{overview.pendingPrescriptions}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/Frame 1261158733.png' alt='img' width={32} height={32}/>
@@ -290,7 +318,7 @@ const handleMenuButtonClick = (e, user) => {
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-1' >
                     <h2 className='font-extralight text-[14px] text-[#898989]'>Patients forwarded to doctor</h2>
-                    <h2 className='font-medium text-xl'>10</h2>
+                    <h2 className='font-medium text-xl'>{overview.upcomingAppointments}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/Frame 1261158598.png' alt='img' width={32} height={32}/>
@@ -300,7 +328,7 @@ const handleMenuButtonClick = (e, user) => {
                 <div className='w-[1.2%] ml-0 pl-0 h-6/10 bg-[#E63946] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2 ' >
                     <h2 className='font-extralight text-[14px] text-[#898989]'>Emergency alerts triggered</h2>
-                    <h2 className='font-medium  text-xl'>1</h2>
+                    <h2 className='font-medium  text-xl'>{overview.urgentCases}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                     <img src='/image/warning.png' alt='img' width={32} height={32}/>
@@ -397,7 +425,7 @@ const handleMenuButtonClick = (e, user) => {
                         <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#F7A752] m-auto rounded-r-[8px]'></div>
                         <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-2  '>
                             <h2 className='font-extralight text-[14px] text-[#898989]'>Patients seen today</h2>
-                            <h2 className='font-medium  text-xl'>25</h2>
+                            <h2 className='font-medium  text-xl'>{performance.patientsSeenToday}</h2>
                         </div>
                         {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                             <img src='/image/Frame 1261158598@2x.png' alt='img' width={32} height={32}/>
@@ -407,7 +435,7 @@ const handleMenuButtonClick = (e, user) => {
                         <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#3B6FED] m-auto rounded-r-[8px]'></div>
                         <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-2 '> 
                             <h2 className='font-extralight text-[14px] text-[#898989]'>Avg consultation time</h2>
-                            <h2 className='font-medium  text-xl'>18 mins</h2>
+                            <h2 className='font-medium  text-xl'>{performance.avgConsultationTime}</h2>
                         </div>
                         {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                             <img src='/image/Frame 1261158733.png' alt='img' width={32} height={32}/>
@@ -417,7 +445,7 @@ const handleMenuButtonClick = (e, user) => {
                         <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
                         <div className='h-6/10 w-[95%] flex flex-col m-auto justify-between pl-1' >
                             <h2 className='font-extralight text-[14px] text-[#898989]'>Prescriptions issued</h2>
-                            <h2 className='font-medium text-xl'>5</h2>
+                            <h2 className='font-medium text-xl'>{performance.prescriptionsIssued}</h2>
                         </div>
                         {/* <div className='h-full w-2/10  flex items-center justify-center pr-1'>
                             <img src='/image/Frame 1261158598.png' alt='img' width={32} height={32}/>

@@ -37,6 +37,27 @@ const dashboard = () => {
     const router = useRouter();
     const [data, setData] = useState([]);
 
+      const [overview, setOverview] = useState({
+    patientsInWaiting: 0,
+    vitalsLoggedToday: 0,
+    patientsForwardedToDoctor: 0,
+    emergencyAlertsTriggered: 0,
+  });
+
+  useEffect(() => {
+    const fetchOverview = async () => {
+      try {
+        const res = await fetchWithAuth('/api/v1/dashboard/nurse-overview-stats');
+        if (!res.ok) throw new Error('Failed to fetch nurse overview stats');
+        const result = await res.json();
+        if (result?.data) setOverview(result.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchOverview();
+  }, []);
+
     const handleRowClick = async (userId) => {
         if (!userId) {
           toast.error('Invalid user ID. Cannot navigate to the page.');
@@ -231,7 +252,7 @@ const handleMenuButtonClick = (e, user) => {
               <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#F7A752] m-auto rounded-r-[8px]'></div>
               <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2'>
                 <h2 className='font-extralight text-[14px] text-[#898989]'>Patients in waiting</h2>
-                <h2 className='font-medium text-xl'>15</h2>
+                <h2 className='font-medium text-xl'>{overview.patientsInWaiting}</h2>
               </div>
               <div className='h-full w-2/10 flex items-center justify-center pr-1'>
                 <img src='/image/Frame 1261158598@2x.png' alt='img' width={32} height={32}/>
@@ -241,7 +262,7 @@ const handleMenuButtonClick = (e, user) => {
               <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#3B6FED] m-auto rounded-r-[8px]'></div>
               <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2'> 
                 <h2 className='font-extralight text-[14px] text-[#898989]'>Vitals logged today</h2>
-                <h2 className='font-medium text-xl'>9</h2>
+                <h2 className='font-medium text-xl'>{overview.vitalsLoggedToday}</h2>
               </div>
               <div className='h-full w-2/10 flex items-center justify-center pr-1'>
                 <img src='/image/Frame 1261158733.png' alt='img' width={32} height={32}/>
@@ -251,7 +272,7 @@ const handleMenuButtonClick = (e, user) => {
               <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
               <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-1'>
                 <h2 className='font-extralight text-[14px] text-[#898989]'>Patients forwarded to doctor</h2>
-                <h2 className='font-medium text-xl'>10</h2>
+                <h2 className='font-medium text-xl'>{overview.patientsForwardedToDoctor}</h2>
               </div>
               <div className='h-full w-2/10 flex items-center justify-center pr-1'>
                 <img src='/image/Frame 1261158598.png' alt='img' width={32} height={32}/>
@@ -261,7 +282,7 @@ const handleMenuButtonClick = (e, user) => {
               <div className='w-[1.2%] ml-0 pl-0 h-6/10 bg-[#E63946] m-auto rounded-r-[8px]'></div>
               <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2'>
                 <h2 className='font-extralight text-[14px] text-[#898989]'>Emergency alerts triggered</h2>
-                <h2 className='font-medium text-xl'>1</h2>
+                <h2 className='font-medium text-xl'>{overview.emergencyAlertsTriggered}</h2>
               </div>
               <div className='h-full w-2/10 flex items-center justify-center pr-1'>
                 <img src='/image/warning.png' alt='img' width={32} height={32}/>
