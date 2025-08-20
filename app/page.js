@@ -400,19 +400,19 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10  '>
+          <div className='w-full sm:h-fit md:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10 '>
             {/* Image with navigation */}
-            <div className="w-full sm:w-[55%] h-[300px] sm:h-[500px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
+            <div className="w-full sm:w-[55%] h-[350px] sm:h-[640px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
               {/* Image container */}
-              <div className="w-full h-full flex items-center justify-center rounded-[8px] md:rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
+              <div className="w-full h-[90%] flex items-center justify-center rounded-[8px] md:rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
                 <img
                   src={currentImages[stepImageIndex]}
                   alt="Step"
-                  className="object-contain w-[80%] sm:w-full h-full rounded-[8px] md:rounded-[24px]"
+                  className="object-contain w-full sm:w-full h-full rounded-[8px] md:rounded-[24px]"
                 />
               </div>
               {/* Navigation controls */}
-              <div className="flex items-center justify-center gap-4 mt-4">
+              <div className="flex h-[10%] items-center justify-center gap-4 mt-4">
                 <button
                   onClick={handlePrev}
                   aria-label="Previous"
@@ -442,7 +442,7 @@ const plans = [
             </div>
 
             {/* Steps */}
-            <div className='w-full sm:h-fit lg:h-[640px] p-3 sm:w-[35%] text-black flex flex-col justify-between'>
+            <div className='w-full sm:h-fit lg:h-fit p-3 sm:w-[35%] text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex relative pb-10">
                   {/* Timeline column */}
