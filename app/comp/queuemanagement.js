@@ -118,7 +118,7 @@ const QueueManagement = () => {
   const handleForwardFiles = async (id) => {
   try {
     const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
-      method: 'PUT', // or 'PUT' if your API expects that
+      method: 'PUT', 
       body: JSON.stringify({ status: "Waiting" }),
     });
 
@@ -137,23 +137,30 @@ const QueueManagement = () => {
   }
 };
 
-  const handleRemoveFromQueue = async (id) => {
-    const toastId = toast.loading('Removing from queue...');
-    try {
-      const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
-        method: 'DELETE',
-      });
+const handleRemoveFromQueue = async (id) => {
+  const toastId = toast.loading('Removing from queue...');
+  try {
+    console.log('Removing ID:', id);
+    const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
+      method: 'DELETE',
+    });
+    console.log('Response:', res);
 
-      if (!res.ok) throw new Error('Failed to remove from queue');
-
-      toast.success('Removed from queue', { id: toastId });
-      setActiveActionIndex(null);
-      fetchQueue();
-    } catch (err) {
-      console.error('Failed to remove from queue:', err);
-      toast.error('An error occurred while removing from queue.', { id: toastId });
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('API error:', errorText);
+      throw new Error('Failed to remove from queue');
     }
-  };
+
+    toast.success('Removed from queue', { id: toastId });
+    setActiveActionIndex(null);
+    fetchQueue();
+  } catch (err) {
+    console.error('Failed to remove from queue:', err);
+    toast.error('An error occurred while removing from queue.', { id: toastId });
+  }
+};
+
 
   const handlePageClick = (page) => setCurrentPage(page);
 

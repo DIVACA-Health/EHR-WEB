@@ -40,6 +40,7 @@ export default function UserTable() {
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const itemsPerPage = 10;
   const menuRef = useRef();
+  const dropdownRef = useRef();
   const [searchFocused, setSearchFocused] = useState(false);
 
   // Fetch student data
@@ -57,7 +58,7 @@ useEffect(() => {
           name: `${student.firstName} ${student.lastName}`,
           avatar: student.profileImage || "/image/profileimg.png",
           divacaId: `STU-${student.id}`,
-          studentId: studentInfo?.id?.toString() || "N/A",
+          studentId: (studentInfo?.id ?? student.id)?.toString() || "N/A", 
           matricNumber: studentInfo?.matricNumber || "N/A",
           status: student.isActive ? "Active" : "Inactive",
           lastVisit: student.updatedAt
@@ -73,13 +74,19 @@ useEffect(() => {
   // Handle clicks outside dropdown menu
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target)
+      ) {
         setOpenMenuIndex(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [setOpenMenuIndex]);
+  }, []);
+
 
   // Filtering logic
   const filteredUsers = users.filter((user) => {
@@ -127,7 +134,7 @@ useEffect(() => {
       const payload = {
         firstName: nameParts[0],
         lastName: nameParts.slice(1).join(" ") || "",
-        studentId: String(user.studentId),
+        studentId: user.studentId && user.studentId !== "N/A" ? String(user.studentId) : null,
       };
 
       console.log("Payload being sent:", payload);
@@ -139,6 +146,11 @@ useEffect(() => {
         },
         body: JSON.stringify(payload),
       });
+
+      if (!payload.studentId) {
+        alert("Student ID is missing for this user.");
+        return;
+      }
 
       console.log("Response status:", response.status);
 
@@ -262,8 +274,12 @@ useEffect(() => {
                     />
                   </button>
                   {openMenuIndex === index && (
-                    <div className="absolute right-0 bottom-0 w-62 z-10 bg-white shadow-md rounded-[8px] border border-gray-200">
+                    <div
+                      ref={dropdownRef}
+                      className="absolute right-0 bottom-0 w-62 z-10 bg-white shadow-md rounded-[8px] border border-gray-200"
+                    >
                       <button
+                        onMouseDown={e => e.stopPropagation()}
                         onClick={() => handleActionClick(user)}
                         className="w-full text-left text-[#494949] font-normal px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
                       >
