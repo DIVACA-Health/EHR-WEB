@@ -230,14 +230,14 @@ const handleRemoveFromQueue = async (id) => {
                       >
                         <button
                           onClick={() => {
-                            handleForwardFiles(item.id);
+                            handleForwardFiles(item.studentId);
                           }}
                           className='w-full text-left px-4 py-1 hover:bg-gray-100'
                         >
                           Forward patient files
                         </button>
                         <button
-                          onClick={() => handleRemoveFromQueue(item.id)}
+                          onClick={() => handleRemoveFromQueue(item.studentId)}
                           className='w-full text-left px-4 py-1 text-red-600 hover:bg-red-50'
                         >
                           Remove from queue

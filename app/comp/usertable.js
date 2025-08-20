@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { MoreVertical } from "lucide-react";
+import toast from 'react-hot-toast'
 
 const fetchWithAuth = async (url, options = {}) => {
     const token = localStorage.getItem('access_token');
@@ -148,7 +149,7 @@ useEffect(() => {
       });
 
       if (!payload.studentId) {
-        alert("Student ID is missing for this user.");
+        toast.error("Student ID is missing for this user.");
         return;
       }
 
@@ -157,15 +158,15 @@ useEffect(() => {
       if (response.ok) {
         const result = await response.json();
         console.log("Success response:", result);
-        alert(`${user.name} has been added to the patient queue.`);
+        toast.error(`${user.name} has been added to the patient queue.`);
       } else {
         const errorData = await response.json();
         console.error("Error response:", errorData);
-        alert(`Failed to add ${user.name}: ${errorData.message || "Unknown error"}`);
+        toast.error(`Failed to add ${user.name}: ${errorData.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error during fetch:", error);
-      alert("An error occurred while trying to add this user.");
+      toast.error("An error occurred while trying to add this user.");
     }
 
     setOpenMenuIndex(null);
