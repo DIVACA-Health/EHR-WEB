@@ -311,7 +311,7 @@ const plans = [
                 <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
-            <div className='w-full sm:w-[45%] flex items-center justify-center'>
+            <div className='w-full sm:w-[45%] md:w-[60%] flex items-center justify-center'>
                 <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[435px] lg:w-[574px]   w-full h-full'/>
             </div>
         </div>
@@ -408,7 +408,7 @@ const plans = [
                 <img
                   src={currentImages[stepImageIndex]}
                   alt="Step"
-                  className="object-contain w-full h-full rounded-[8px] md:rounded-[24px]"
+                  className="object-contain w-[80%] sm:w-full h-full rounded-[8px] md:rounded-[24px]"
                 />
               </div>
               {/* Navigation controls */}
