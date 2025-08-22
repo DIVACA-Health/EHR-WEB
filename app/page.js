@@ -340,8 +340,8 @@ const plans = [
             {plans.map((plan, index) => (
               <div key={index} className="bg-white text-black rounded-[24px] flex flex-col h-full">
                 {/* Top */}
-                <div className="p-5 rounded-t-[24px] shadow-sm shadow-[#A2A2A233] flex flex-col gap-3">
-                  <h2 className="text-[#14254F] text-lg font-bold">{plan.title}</h2>
+                <div className="pl-5 pr-5 pt-8 pb-8  rounded-[24px] shadow-2xl shadow-[#A2A2A233] flex flex-col gap-3 ">
+                  <h2 className="text-[#14254F] text-[18px] font-semibold">{plan.title}</h2>
                   <h3 className="text-sm">{plan.subtitle}</h3>
                   <button
                     className={`flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] ${plan.buttonColor} ${plan.buttonTextColor}`}
@@ -400,7 +400,7 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-fit md:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10 '>
+          <div className='w-full sm:h-fit md:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10  '>
             {/* Image with navigation */}
             <div className="w-full sm:w-[55%] h-[350px] sm:h-[640px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
               {/* Image container */}
@@ -442,7 +442,7 @@ const plans = [
             </div>
 
             {/* Steps */}
-            <div className='w-full sm:h-fit lg:h-fit p-3 sm:w-[35%] text-black flex flex-col justify-between'>
+            <div className='w-full m-auto h-fit sm:h-fit lg:h-fit p-3 sm:w-[35%] text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex relative pb-10">
                   {/* Timeline column */}

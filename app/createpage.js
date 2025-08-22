@@ -104,13 +104,36 @@ export default function Home() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-2 xl:gap-3 w-full text-black">
-            <InputField label="First Name" name="firstName" type="text" placeholder="Enter first name" onChange={handleChange} />
-            <InputField label="Last Name" name="lastName" type="text" placeholder="Enter last name" onChange={handleChange} />
-            <InputField label="Email Address" name="email" type="email" placeholder="Email Address" onChange={handleChange} />
+            <InputField
+              label="First Name"
+              name="firstName"
+              type="text"
+              placeholder="Enter first name"
+              onChange={handleChange}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+
+            <InputField
+              label="Last Name"
+              name="lastName"
+              type="text"
+              placeholder="Enter last name"
+              onChange={handleChange}
+              className="focus"
+            />
+
+            <InputField
+              label="Email Address"
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
 
             <div className="flex flex-col gap-0.5">
               <label className="text-sm">Phone Number</label>
-              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center ">
+              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center focus-within:ring-4 focus-within:ring-[#E5EDFF] focus-within:border-[#3B6FED]">
                 <div className="flex gap-0.5 w-1/5">
                   <img src="/image/flag.png" alt="" width={22} height={22} />
                   <h3 className="font-semibold tracking-widest">+234</h3>
@@ -118,7 +141,7 @@ export default function Home() {
                 <input
                   name="phone"
                   type="number"
-                  className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none"
+                  className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none focus:outline-none focus:ring-0"
                   placeholder="80 000 000 00"
                   onChange={handleChange}
                   required
@@ -130,7 +153,7 @@ export default function Home() {
               <label className="text-sm">Role</label>
               <select
                 name="role"
-                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px]  outline-none cursor-pointer"
+                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px] outline-none cursor-pointer focus:ring-4 focus:ring-[#E5EDFF] focus:border-[#3B6FED]"
                 onChange={handleChange}
                 required
               >
@@ -148,6 +171,7 @@ export default function Home() {
               show={showPassword}
               toggle={() => setShowPassword(!showPassword)}
               onChange={handleChange}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
             <PasswordInput
@@ -157,6 +181,7 @@ export default function Home() {
               show={showPassword1}
               toggle={() => setShowPassword1(!showPassword1)}
               onChange={handleChange}
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
             <button
@@ -192,6 +217,7 @@ export default function Home() {
               )}
             </button>
           </form>
+
 
           <div className="flex text-sm gap-0.5 mt-1 justify-center items-center text-black">
             <h2>Already have an account?</h2>
