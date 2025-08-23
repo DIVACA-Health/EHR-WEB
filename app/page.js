@@ -253,13 +253,13 @@ const plans = [
                 <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className=' w-[253px] flex gap-10 items-center justify-between '>
+                <div className=' w-[253px] flex md:gap-5  gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
                         key={link.name}
                         href={link.path}
-                        className={` font-medium transition-colors duration-200 ${
+                        className={` md:text-sm font-medium transition-colors duration-200 ${
                             pathname === link.path
                             ? 'text-[#3B6FED] font-semibold'
                             : 'text-[#626262] hover:text-[#3B6FED]'
@@ -282,7 +282,7 @@ const plans = [
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs font-medium'>SMART HEALTH SOLUTION</h3>
                     </div>
-                    <h1 className='text-[24px] font-semibold text-center sm:text-left sm:text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
+                    <h1 className='text-[24px] font-semibold text-center  sm:text-left lg:text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
                     <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
                     <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
                         <Link href='/createpage' className='w-1/2'>
@@ -297,8 +297,8 @@ const plans = [
                         </Link>
                     </div>
                 </div>
-                <div className='w-full  h-[320px] mt-10 lg:w-[520px]  lg:h-[520px]  flex justify-center items-center '>
-                    <img src='/image/Group1171276095.png' alt='IMG' className='w-full  sm:w-[90%] h-full'/>
+                <div className='w-full lg:w-[40%] h-full mt-10 flex justify-center items-center '>
+                    <img src='/image/Group1171276095.png' alt='IMG' className='w-full  h-full'/>
                 </div>
             </div>
         </div>
@@ -306,13 +306,13 @@ const plans = [
             <div className='w-full sm:w-[55%] flex flex-col gap-3 items-center sm:items-start  justify-center text-black'>
                 <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-                    <h3 className=' text-[11px] sm:text-xs'>OUR INVESTORS & PARTNERS</h3>
+                    <h3 className=' text-[11px] lg:text-xs'>OUR INVESTORS & PARTNERS</h3>
                 </div>
-                <h1 className=' text-[20px] text-center sm:text-[50px] sm:text-left font-bold '>Built & backed by DIVACA Tech</h1>
-                <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left sm:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
+                <h1 className=' text-[20px] text-center lg:text-[50px] sm:text-left font-bold lg:w-[80%]'>Built & backed by DIVACA Tech</h1>
+                <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left lg:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
-            <div className='w-full sm:w-[45%] md:w-[60%] flex items-center justify-center'>
-                <img src='/image/divacatechlogo.png' alt='IMG' className='sm:h-[25vh] sm:w-[50vw] lg:h-[435px] lg:w-[574px]   w-full h-full'/>
+            <div className='w-full h-full lg:w-1/2 m-auto flex items-center justify-center'>
+                <img src='/image/divacatechlogo.png' alt='IMG' className='w-full h-full'/>
             </div>
         </div>
         <div className='w-full h-fit pb-10 bg-[#14254F] rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10 gap-8'>
@@ -400,9 +400,9 @@ const plans = [
           </div>
 
           {/* For students or for doctors */}
-          <div className='w-full sm:h-fit md:h-fit  lg:h-fit flex flex-col-reverse sm:flex-row gap-10 sm:gap-20 mb-10  '>
+          <div className='w-full h-full  flex flex-col-reverse lg:flex-row gap-10 sm:gap-20 mb-10  '>
             {/* Image with navigation */}
-            <div className="w-full sm:w-[55%] h-[350px] sm:h-[640px] sm:m-auto lg:h-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
+            <div className="w-full lg:w-1/2 h-full m-auto  flex flex-col items-center justify-center relative bg-[#182B5B] p-2.5 sm:p-4  rounded-[12px] md:rounded-[24px]">
               {/* Image container */}
               <div className="w-full h-[90%] flex items-center justify-center rounded-[8px] md:rounded-[24px] bg-[#F0F5FF] border border-[#E5E7EB] ">
                 <img
@@ -440,9 +440,8 @@ const plans = [
                 </button>
               </div>
             </div>
-
             {/* Steps */}
-            <div className='w-full m-auto h-fit sm:h-fit lg:h-fit p-3 sm:w-[35%] text-black flex flex-col justify-between'>
+            <div className='w-full lg:w-1/2 m-auto h-fit sm:h-fit lg:h-fit p-3  text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex relative pb-10">
                   {/* Timeline column */}
@@ -556,7 +555,7 @@ const plans = [
         </div>
 
         {/* Right Image */}
-        <div className='w-full lg:w-[50%]'>
+        <div className='w-full lg:w-[50%] m-auto'>
             <img src='/image/pcimg.png' alt='img' className='w-full h-auto object-contain'/>
         </div>
         </div>

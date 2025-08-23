@@ -137,13 +137,13 @@ const features = [
                 <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className=' w-[253px] flex gap-10 items-center justify-between '>
+                <div className=' w-[253px] flex md:gap-5 gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
                         key={link.name}
                         href={link.path}
-                        className={` font-medium transition-colors duration-200 ${
+                        className={`md:text-sm font-medium transition-colors duration-200 ${
                             pathname === link.path
                             ? 'text-[#3B6FED] font-semibold'
                             : 'text-[#626262] hover:text-[#3B6FED]'
@@ -170,8 +170,8 @@ const features = [
                     <h3 className='text-[12px] sm:text-[18px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
 
                 </div>
-                <div className='w-full h-[130px] sm:h-fit lg:w-full  lg:h-[65vh]  flex justify-center items-center'>
-                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-[170px] sm:h-[30vh] lg:w-[1200px] lg:h-[526px]'/>
+                <div className='w-full h-full  flex justify-center items-center'>
+                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-full'/>
                 </div>
             </div>
         </div>
@@ -233,18 +233,18 @@ const features = [
             ))}
         </div>
         </div>
-        <div className='flex flex-col sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  sm:flex-row-reverse gap-5 justify-between mt-10'>
-            <div className='w-full  sm:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
+        <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10'>
+            <div className='w-full m-auto  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
                     <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
                 </div>
-                <div className='w-full h-fit  mt-3 text-left flex flex-col gap-3 '>
+                <div className='w-full h-full   mt-3 text-left flex flex-col gap-3 '>
                     <h4 className='text-[20px] font-medium text-center sm:text-4xl sm:text-left'>Health. Hope. Humanity.</h4>
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[706px] lg:h-[590px] mb-10 '> 
+            <div className='w-full h-full lg:w-[60%] mt-10  mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
@@ -254,7 +254,7 @@ const features = [
         <div className='w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white '>
             <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
             <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-            <h3 className='text-[11px] sm:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
+            <h3 className='text-[11px] lg:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
             </div>
             <h1 className='text-3xl sm:text-4xl font-semibold'>What we do through our outreach</h1>
             <h3 className='font-light text-base'>
@@ -283,8 +283,8 @@ const features = [
             </div>
         </div>
         </div>
-        <div className='flex flex-col sm:h-fit  w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 sm:flex-row-reverse gap-5 justify-between mt-10'>
-            <div className='w-full  sm:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
+        <div className='flex flex-col sm:h-fit  w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 lg:flex-row-reverse gap-10 justify-between mt-10'>
+            <div className='w-full  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
                     <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
@@ -294,7 +294,7 @@ const features = [
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>We believe true transformation isn’t just digital — it’s spiritual, emotional, and human. At DIVACA Health, every system we build and every service we provide is driven by love, compassion, and our calling to serve humanity as Christ would.</h4>
                 </div>
             </div>
-            <div className='w-full h-[280px] mt-10 sm:w-[50%] lg:w-[706px] lg:h-[590px] mb-10 '> 
+            <div className='w-full h-full lg:w-[60%] mt-10  mb-10 '> 
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
@@ -305,7 +305,7 @@ const features = [
           </div>
           <div className='w-full lg:w-[1051px] text-center flex flex-col gap-5 mt-10'>
             <h2 className='text-[24px] sm:text-[32px] lg:text-[48px] font-semibold'>Subscribe to Our Newsletter</h2>
-            <h4 className='text-[14px] sm:text-[16px] lg:text-[18px] text-center'>
+            <h4 className='text-[14px] sm:text-[16px] lg:text-[18px] text-center w-[80%] m-auto'>
               Stay updated on our latest outreach efforts, health innovations, and partnership opportunities. Subscribe to our newsletter and be part of our journey to transform lives across Africa and the world at large.
             </h4>
           </div>

@@ -81,8 +81,8 @@ const contact = () => {
       
     <div className='bg-white w-full height-fit pl-2 sm:pl-5 pr-2 sm:pr-5 pt-3 pb-3'>
         <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-2 sm:pl-5  pr-2 sm:pr-5 pt-3 pb-20'>
-            <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
-                <img src='/image/DHSVG1.png' alt='logo' className='w-[80px] h-[30px]'/>
+            <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden '>
+                <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
                 <button
                     onClick={() => setIsOpen(true)}
                     className='md:hidden  top-5 right-5 z-50 p-2 '
@@ -96,13 +96,13 @@ const contact = () => {
                 <div className=' w-1/3 pl-10'>
                     <img src='/image/DHSVG1.png' alt='logo' className='w-[108px] h-[37px]'/>
                 </div>
-                <div className=' w-[253px] flex gap-10 items-center justify-between '>
+                <div className=' w-[253px] flex md:gap-5 gap-10 items-center justify-between '>
                     <nav className='flex items-center justify-between w-full'>
                     {navLinks.map((link) => (
                         <Link
                         key={link.name}
                         href={link.path}
-                        className={` font-medium transition-colors duration-200 ${
+                        className={`md:text-sm font-medium transition-colors duration-200 ${
                             pathname === link.path
                             ? 'text-[#3B6FED] font-semibold'
                             : 'text-[#626262] hover:text-[#3B6FED]'
@@ -119,8 +119,8 @@ const contact = () => {
                     </button>
                 </Link>
             </div> 
-            <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[25px] '>
-                <div className='h-fit mb-15 w-[100%] text-black sm:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
+            <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[30px] '>
+                <div className='h-fit mb-10 w-[100%] text-black lg:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs'>WE’RE HERE TO HELP YOU</h3>
@@ -157,7 +157,7 @@ const contact = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full mt-0 sm:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs lg:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
+                <div className='w-full mt-0 lg:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs lg:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
                     <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly  '>
                         <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Full name</label>
