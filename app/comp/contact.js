@@ -255,7 +255,7 @@ const contact = () => {
       <div className="text-center text-white text-sm mt-6 pb-5 pt-5 relative z-10">
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
       </div>
-    </footer>ter>
+    </footer>
     </>
   )
 }
