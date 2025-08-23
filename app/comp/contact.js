@@ -211,54 +211,51 @@ const contact = () => {
             </div>
         </div>
     </div>
-    <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
-        sm:grid-cols-2 sm:grid-rows-2
-        xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center'>
+    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+      {/* Glow Effect */}
+      <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
+
+      <div className="w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
+          sm:grid-cols-2 sm:grid-rows-2
+          xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center">
         {/* Logo and contact */}
-        <div className='text-white w-full xs:w-full flex flex-col items-start mb-6'>
-        <img src='/image/DHLOGO.png' alt='img' className='object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4' />
-        <div className='flex items-center justify-center gap-2 mb-2'>
-            <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
-            <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
+        <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
+          <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <img src="/image/Mail.png" alt="emailicon" className="h-[22px] w-[22px]" />
+            <h3 className="break-words text-xs">support@<br/>divacahealth.com</h3>
+          </div>
         </div>
+
+        {/* Company */}
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">COMPANY</h3>
+          <Link href="/"><h3 className="font-extralight">Home</h3></Link>
+          <Link href="/about"><h3 className="font-extralight">About</h3></Link>
+          <Link href="/contact"><h3 className="font-extralight">Contact</h3></Link>
+          <Link href="/createpage"><h3 className="font-extralight">Campus Care</h3></Link>
         </div>
 
         {/* Legal */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
-        <Link href="/">
-          <h3 className='font-extralight'>Home</h3>
-        </Link>
-        <Link href="/about">
-          <h3 className='font-extralight'>About</h3>
-        </Link>
-        <Link href="/contact">
-          <h3 className='font-extralight'>Contact</h3>
-        </Link>
-        <Link href="/createpage">
-          <h3 className='font-extralight'>Campus Care</h3>
-        </Link>
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">LEGAL</h3>
+          <h3 className="font-extralight mb-3">Privacy Policy</h3>
+          <h3 className="font-extralight">Terms of service</h3>
         </div>
-        {/* Company */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
-        <h3 className='font-extralight mb-3'> Privacy Policy</h3>
-        <h3 className='font-extralight'>Terms of service</h3>
-        </div>
+
         {/* Social Media */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>SOCIAL MEDIA</h3>
-        <h3 className='font-extralight'>Instagram</h3>
-        <h3 className='font-extralight'>LinkedIn</h3>
-        <h3 className='font-extralight'>X (formerly Twitter)</h3>
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">SOCIAL MEDIA</h3>
+          <h3 className="font-extralight">Instagram</h3>
+          <h3 className="font-extralight">LinkedIn</h3>
+          <h3 className="font-extralight">X (formerly Twitter)</h3>
         </div>
-    </div>
-    <div className='w-full'></div>
-    <div className='text-center text-white text-sm mt-6 pb-5 pt-5'>
+      </div>
+
+      <div className="text-center text-white text-sm mt-6 pb-5 pt-5 relative z-10">
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
-    </div>
-    </footer>
+      </div>
+    </footer>ter>
     </>
   )
 }

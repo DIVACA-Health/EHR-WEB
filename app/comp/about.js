@@ -198,41 +198,54 @@ const features = [
             </div>
 
         </div>
-        <div className='sm:h-fit w-full bg-[#14254F] rounded-[48px] mt-15 mb-5 flex flex-col items-center pt-10 pb-10 gap-8 px-4 sm:px-10'>
-        {/* Top tag */}
-        <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-            <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]' />
-            <h3 className='text-[#3B6FED] text-sm text-center'>Where We Make a Difference</h3>
-        </div>
+        <div className="relative w-full sm:h-fit rounded-[48px] mt-15 mb-5 overflow-hidden">
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#14254F] to-[#0a0f1f]" />
 
-        {/* Headings */}
-        <div className='w-full h-fit text-center flex flex-col gap-4 mb-15'>
-            <h4 className='text-3xl sm:text-5xl font-semibold text-white'>Our Focus Areas</h4>
-            <h4 className='text-base sm:text-lg font-extralight text-white'>
-            We’ve identified key domains where targeted innovation can improve health outcomes and reduce
-            <br className='hidden sm:block' />
-            disparities. Our work is built around these pillars to ensure maximum relevance and impact.
-            </h4>
-        </div>
+          {/* Top-left glow */}
+          <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-[#3B6FED]/30 to-transparent blur-3xl" />
 
-        {/* Features Section */}
-        <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-6 text-black px-2 sm:px-0 pb-10">
-            {features.map((feature, index) => (
-            <div
-                key={index}
-                className="bg-white rounded-xl p-5 sm:p-6 shadow-md flex flex-col gap-3"
-            >
-                <div
-                className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${feature.color}`}
-                >
-                {feature.icon}
-                </div>
-                <h3 className="font-semibold text-lg">{feature.title}</h3>
-                <p className="text-sm text-gray-600">{feature.description}</p>
+          {/* Top-right glow */}
+          <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-[400px] h-[400px] bg-gradient-radial from-[#3B6FED]/30 to-transparent blur-3xl" />
+
+          {/* Main content */}
+          <div className="relative flex flex-col items-center pt-10 pb-10 gap-8 px-4 sm:px-10">
+            {/* Top tag */}
+            <div className="w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]">
+              <img src="/image/Document(blue).png" alt="img" className="w-[18px] h-[18px]" />
+              <h3 className="text-[#3B6FED] text-sm text-center">Where We Make a Difference</h3>
             </div>
-            ))}
+
+            {/* Headings */}
+            <div className="w-full h-fit text-center flex flex-col gap-4 mb-15">
+              <h4 className="text-3xl sm:text-5xl font-semibold text-white">Our Focus Areas</h4>
+              <h4 className="text-base sm:text-lg font-extralight text-white">
+                We’ve identified key domains where targeted innovation can improve health outcomes and reduce
+                <br className="hidden sm:block" />
+                disparities. Our work is built around these pillars to ensure maximum relevance and impact.
+              </h4>
+            </div>
+
+            {/* Features Section */}
+            <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 gap-6 text-black px-2 sm:px-0 pb-10">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-5 sm:p-6 shadow-md flex flex-col gap-3"
+                >
+                  <div
+                    className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${feature.color}`}
+                  >
+                    {feature.icon}
+                  </div>
+                  <h3 className="font-semibold text-lg">{feature.title}</h3>
+                  <p className="text-sm text-gray-600">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        </div>
+
         <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10'>
             <div className='w-full m-auto  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
@@ -248,41 +261,55 @@ const features = [
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div>
-        <div 
-        className='w-full h-fit rounded-[48px] bg-[#14254F] flex flex-col sm:flex-row pt-20 pb-20 pr-5 pl-5 sm:pr-10 sm:pl-10 gap-10'>
-        {/* Left Text Section */}
-        <div className='w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white '>
-            <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
-            <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
-            <h3 className='text-[11px] lg:text-xs text-center font-medium'>EXTENDING CARE, CREATING IMPACT.</h3>
+
+        <div className="relative w-full h-fit rounded-[48px] overflow-hidden pt-20 pb-20 pr-5 pl-5 sm:pr-10 sm:pl-10 flex flex-col sm:flex-row gap-10">
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#14254F] to-[#0a0f1f]" />
+
+          {/* Top-left blue glow */}
+          <div className="absolute -top-20 -left-20 w-[400px] h-[400px] bg-gradient-radial from-[#3B6FED]/30 to-transparent blur-3xl" />
+
+          {/* Top-right blue glow */}
+          <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-gradient-radial from-[#3B6FED]/30 to-transparent blur-3xl" />
+
+          {/* --- Main Content --- */}
+          <div className="relative w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white">
+            <div className="w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1">
+              <img src="/image/usersblue.png" alt="IMG" className="w-[20px] h-[20px]" />
+              <h3 className="text-[11px] lg:text-xs text-center font-medium">
+                EXTENDING CARE, CREATING IMPACT.
+              </h3>
             </div>
-            <h1 className='text-3xl sm:text-4xl font-semibold'>What we do through our outreach</h1>
-            <h3 className='font-light text-base'>
-            We go beyond healthcare by showing up with love, <br className='hidden sm:block' />
-            compassion, and faith. Our outreach touches lives with healing, hope, and the message of Christ.
+            <h1 className="text-3xl sm:text-4xl font-semibold">
+              What we do through our outreach
+            </h1>
+            <h3 className="font-light text-base">
+              We go beyond healthcare by showing up with love, <br className="hidden sm:block" />
+              compassion, and faith. Our outreach touches lives with healing, hope, and the message of Christ.
             </h3>
+          </div>
+
+          {/* Right Grid Section */}
+          <div className="relative w-full lg:w-[50%] text-black">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {initiatives.map((item, index) => (
+                <div
+                  key={index}
+                  className={`bg-white rounded-xl p-6 shadow-md flex flex-col gap-3 ${
+                    index === 2 ? 'sm:col-span-2' : ''
+                  }`}
+                >
+                  <div className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <h3 className="font-semibold text-lg">{item.title}</h3>
+                  <p className="text-sm text-gray-600">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Right Grid Section */}
-        <div className='w-full lg:w-[50%] text-black'>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {initiatives.map((item, index) => (
-                <div
-                key={index}
-                className={`bg-white rounded-xl p-6 shadow-md flex flex-col gap-3 ${
-                    index === 2 ? 'sm:col-span-2' : ''
-                }`}
-                >
-                <div className={`w-10 h-10 flex items-center justify-center rounded-full text-xl font-bold ${item.color}`}>
-                    {item.icon}
-                </div>
-                <h3 className="font-semibold text-lg">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.description}</p>
-                </div>
-            ))}
-            </div>
-        </div>
-        </div>
         <div className='flex flex-col sm:h-fit  w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 lg:flex-row-reverse gap-10 justify-between mt-10'>
             <div className='w-full  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
@@ -321,53 +348,50 @@ const features = [
           </div>
         </div>
     </div>
-    <footer className='w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12'>
-    <div className='w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
-        sm:grid-cols-2 sm:grid-rows-2
-        xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center'>
+    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+      {/* Glow Effect */}
+      <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
+
+      <div className="w-[90%] grid grid-cols-2 grid-rows-2 md:flex md:justify-evenly border-b border-b-[#B0B0B0] gap-8 pb-10
+          sm:grid-cols-2 sm:grid-rows-2
+          xs:flex xs:flex-col xs:items-center xs:gap-8 xs:text-center">
         {/* Logo and contact */}
-        <div className='text-white w-full xs:w-full flex flex-col items-start mb-6'>
-        <img src='/image/DHLOGO.png' alt='img' className='object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4' />
-        <div className='flex items-center justify-center gap-2 mb-2'>
-            <img src='/image/Mail.png' alt='emailicon' className='h-[22px] w-[22px]' />
-            <h3 className='break-words text-xs'>support@<br/>divacahealth.com</h3>
+        <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
+          <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <img src="/image/Mail.png" alt="emailicon" className="h-[22px] w-[22px]" />
+            <h3 className="break-words text-xs">support@<br/>divacahealth.com</h3>
+          </div>
         </div>
+
+        {/* Company */}
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">COMPANY</h3>
+          <Link href="/"><h3 className="font-extralight">Home</h3></Link>
+          <Link href="/about"><h3 className="font-extralight">About</h3></Link>
+          <Link href="/contact"><h3 className="font-extralight">Contact</h3></Link>
+          <Link href="/createpage"><h3 className="font-extralight">Campus Care</h3></Link>
         </div>
 
         {/* Legal */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>COMPANY</h3>
-        <Link href="/">
-          <h3 className='font-extralight'>Home</h3>
-        </Link>
-        <Link href="/about">
-          <h3 className='font-extralight'>About</h3>
-        </Link>
-        <Link href="/contact">
-          <h3 className='font-extralight'>Contact</h3>
-        </Link>
-        <Link href="/createpage">
-          <h3 className='font-extralight'>Campus Care</h3>
-        </Link>
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">LEGAL</h3>
+          <h3 className="font-extralight mb-3">Privacy Policy</h3>
+          <h3 className="font-extralight">Terms of service</h3>
         </div>
-        {/* Company */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>LEGAL</h3>
-        <h3 className='font-extralight mb-3'> Privacy Policy</h3>
-        <h3 className='font-extralight'>Terms of service</h3>
-        </div>
+
         {/* Social Media */}
-        <div className='text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6'>
-        <h3 className='font-medium text-lg mb-2'>SOCIAL MEDIA</h3>
-        <h3 className='font-extralight'>Instagram</h3>
-        <h3 className='font-extralight'>LinkedIn</h3>
-        <h3 className='font-extralight'>X (formerly Twitter)</h3>
+        <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
+          <h3 className="font-medium text-lg mb-2">SOCIAL MEDIA</h3>
+          <h3 className="font-extralight">Instagram</h3>
+          <h3 className="font-extralight">LinkedIn</h3>
+          <h3 className="font-extralight">X (formerly Twitter)</h3>
         </div>
-    </div>
-    <div className='w-full'></div>
-    <div className='text-center text-white text-sm mt-6 pb-5 pt-5'>
+      </div>
+
+      <div className="text-center text-white text-sm mt-6 pb-5 pt-5 relative z-10">
         <h2>Copyright © 2025 DIVACA Health. All rights reserved.</h2>
-    </div>
+      </div>
     </footer>
     </>
   )
