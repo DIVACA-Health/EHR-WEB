@@ -250,7 +250,7 @@ const InputField = ({ label, name, type, placeholder, onChange }) => (
       name={name}
       type={type}
       placeholder={placeholder}
-      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px]  outline-none"
+      className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px]  focus:outline-none focus:ring-3 focus:ring-blue-100 focus:border-blue-500"
       onChange={onChange}
       required
     />
@@ -266,7 +266,7 @@ const PasswordInput = ({ label, name, placeholder, show, toggle, onChange }) => 
         type={show ? "text" : "password"}
         placeholder={placeholder}
         minLength={6}
-        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px] outline-none"
+        className="w-full h-8 xl:h-10 pl-3 border border-gray-200 rounded-[12px] focus:outline-none focus:ring-3 focus:ring-blue-100 focus:border-blue-500"
         onChange={onChange}
         required
       />
