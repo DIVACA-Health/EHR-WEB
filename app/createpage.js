@@ -91,141 +91,153 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full h-[100vh] bg-white flex justify-between">
-      <Toaster position="top-center" />
-      <Logopicture />
-      <div className="w-[55%] h-[99%] flex justify-center items-center">
-        <div className="w-[65%] h-[95%] flex flex-col items-center justify-center  ">
-          <div className="h-auto w-full text-black mb-3">
-            <h3 className="text-2xl xl:text-3xl ">Create Account</h3>
-            <h4 className="text-[12px] xl:text-sm text-gray-500">
-              Set up your account to experience a seamless health record system.
-            </h4>
-          </div>
+    <div className="w-full h-screen bg-white">
+      <div className="w-full hidden h-screen bg-white lg:flex justify-between">
+        <Toaster position="top-center" />
+        <Logopicture />
+        <div className="w-[55%] h-[99%] flex justify-center items-center">
+          <div className="w-[65%] h-[95%] flex flex-col items-center justify-center  ">
+            <div className="h-auto w-full text-black mb-3">
+              <h3 className="text-2xl xl:text-3xl ">Create Account</h3>
+              <h4 className="text-[12px] xl:text-sm text-gray-500">
+                Set up your account to experience a seamless health record system.
+              </h4>
+            </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2 xl:gap-3 w-full text-black">
-            <InputField
-              label="First Name"
-              name="firstName"
-              type="text"
-              placeholder="Enter first name"
-              onChange={handleChange}
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2 xl:gap-3 w-full text-black">
+              <InputField
+                label="First Name"
+                name="firstName"
+                type="text"
+                placeholder="Enter first name"
+                onChange={handleChange}
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
 
-            <InputField
-              label="Last Name"
-              name="lastName"
-              type="text"
-              placeholder="Enter last name"
-              onChange={handleChange}
-              className="focus"
-            />
+              <InputField
+                label="Last Name"
+                name="lastName"
+                type="text"
+                placeholder="Enter last name"
+                onChange={handleChange}
+                className="focus"
+              />
 
-            <InputField
-              label="Email Address"
-              name="email"
-              type="email"
-              placeholder="Email Address"
-              onChange={handleChange}
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
+              <InputField
+                label="Email Address"
+                name="email"
+                type="email"
+                placeholder="Email Address"
+                onChange={handleChange}
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
 
-            <div className="flex flex-col gap-0.5">
-              <label className="text-sm">Phone Number</label>
-              <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center focus-within:ring-4 focus-within:ring-[#E5EDFF] focus-within:border-[#3B6FED]">
-                <div className="flex gap-0.5 w-1/5">
-                  <img src="/image/flag.png" alt="" width={22} height={22} />
-                  <h3 className="font-semibold tracking-widest">+234</h3>
+              <div className="flex flex-col gap-0.5">
+                <label className="text-sm">Phone Number</label>
+                <div className="relative w-full h-8 xl:h-11 pl-3 border border-gray-200 rounded-[12px] outline-none flex items-center focus-within:ring-4 focus-within:ring-[#E5EDFF] focus-within:border-[#3B6FED]">
+                  <div className="flex gap-0.5 w-1/5">
+                    <img src="/image/flag.png" alt="" width={22} height={22} />
+                    <h3 className="font-semibold tracking-widest">+234</h3>
+                  </div>
+                  <input
+                    name="phone"
+                    type="number"
+                    className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none focus:outline-none focus:ring-0"
+                    placeholder="80 000 000 00"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <input
-                  name="phone"
-                  type="number"
-                  className="h-8 xl:h-11 w-4/5 rounded-r-xl no-spinner pl-3 tracking-wider outline-none focus:outline-none focus:ring-0"
-                  placeholder="80 000 000 00"
+              </div>
+
+              <div className="flex flex-col gap-0.5">
+                <label className="text-sm">Role</label>
+                <select
+                  name="role"
+                  className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px] outline-none cursor-pointer focus:ring-4 focus:ring-[#E5EDFF] focus:border-[#3B6FED]"
                   onChange={handleChange}
                   required
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-0.5">
-              <label className="text-sm">Role</label>
-              <select
-                name="role"
-                className="w-full h-8 xl:h-10 pl-3 pr-3 border border-gray-200 rounded-[12px] outline-none cursor-pointer focus:ring-4 focus:ring-[#E5EDFF] focus:border-[#3B6FED]"
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Role</option>
-                <option value="doctor">Doctor</option>
-                <option value="nurse">Nurse</option>
-                <option value="health_attendant">Record Keeper</option>
-              </select>
-            </div>
-
-            <PasswordInput
-              label="Create Password"
-              name="password"
-              placeholder="Enter password"
-              show={showPassword}
-              toggle={() => setShowPassword(!showPassword)}
-              onChange={handleChange}
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-
-            <PasswordInput
-              label="Confirm Password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              show={showPassword1}
-              toggle={() => setShowPassword1(!showPassword1)}
-              onChange={handleChange}
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full h-12 text-white text-sm bg-blue-600 rounded-[16px] flex items-center justify-center cursor-pointer mt-2 ${
-                loading ? "opacity-70 cursor-not-allowed" : ""
-              }`}
-            >
-              {loading ? (
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
                 >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8H4z"
-                  />
-                </svg>
-              ) : (
-                "Create Account"
-              )}
-            </button>
-          </form>
+                  <option value="">Select Role</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="nurse">Nurse</option>
+                  <option value="health_attendant">Record Keeper</option>
+                </select>
+              </div>
+
+              <PasswordInput
+                label="Create Password"
+                name="password"
+                placeholder="Enter password"
+                show={showPassword}
+                toggle={() => setShowPassword(!showPassword)}
+                onChange={handleChange}
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+
+              <PasswordInput
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                show={showPassword1}
+                toggle={() => setShowPassword1(!showPassword1)}
+                onChange={handleChange}
+                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full h-12 text-white text-sm bg-blue-600 rounded-[16px] flex items-center justify-center cursor-pointer mt-2 ${
+                  loading ? "opacity-70 cursor-not-allowed" : ""
+                }`}
+              >
+                {loading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    />
+                  </svg>
+                ) : (
+                  "Create Account"
+                )}
+              </button>
+            </form>
 
 
-          <div className="flex text-sm gap-0.5 mt-1 justify-center items-center text-black">
-            <h2>Already have an account?</h2>
-            <Link href="/login">
-              <span className="text-blue-600 cursor-pointer">Log In</span>
-            </Link>
+            <div className="flex text-sm gap-0.5 mt-1 justify-center items-center text-black">
+              <h2>Already have an account?</h2>
+              <Link href="/login">
+                <span className="text-blue-600 cursor-pointer">Log In</span>
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-10  lg:hidden w-full h-full justify-center items-center bg-[#0C162F] text-white">
+        <h2 className="text-center text-lg px-6">
+          🚫  Please view this page on a larger screen (desktop or laptop).
+        </h2>
+        <Link href="/">
+          <button className="bg-white text-blue-500 font-semibold p-3 rounded-xl">
+            Home-page
+          </button>
+        </Link>
       </div>
     </div>
   );
