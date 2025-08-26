@@ -282,7 +282,7 @@ const plans = [
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs font-medium'>SMART HEALTH SOLUTION</h3>
                     </div>
-                    <h1 className='text-[24px] font-semibold text-center  sm:text-left lg:text-[50px] '>Reimagining healthcare <br></br>starting from the campus</h1>
+                    <h1 className='text-[24px] font-semibold text-center  sm:text-left lg:text-[50px] '>Healthcare Innovation Starts Here </h1>
                     <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
                     <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
                         <Link href='/createpage' className='w-1/2'>
@@ -507,7 +507,7 @@ const plans = [
               </h4>
               <h4 className="text-base sm:text-lg text-white w-[80%] m-auto">
                 DIVACA Health isn’t just for when you’re in the clinic. Our platform uses gamification and proactive tools to
-                encourage users to stay healthy, track habits, and visit hospitals only for checkups — not emergencies.
+                encourage users to stay healthy, track habits, and visit hospitals.
               </h4>
             </div>
 
