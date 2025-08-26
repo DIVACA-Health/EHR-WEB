@@ -246,7 +246,7 @@ const features = [
           </div>
         </div>
 
-        <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10'>
+        <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10 mb-10'>
             <div className='w-full m-auto  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
@@ -325,7 +325,7 @@ const features = [
                 <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
             </div>
         </div> */}
-        <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3 mb-10'>
+        <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3 mb-10 mt-15'>
           <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
             <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
             <h3 className='text-[#3B6FED] text-sm'>STAY IN THE LOOP</h3>
