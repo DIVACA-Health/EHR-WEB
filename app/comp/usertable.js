@@ -205,7 +205,11 @@ useEffect(() => {
         </div>
 
         {/* Search */}
-        <div className={`flex gap-2 h-full items-center justify-center border border-[rgba(240,242,245,1)] rounded-[10px] w-full ${searchFocused ? " outline-2 outline-[#3B6FED]" : ""}`}>
+        <div
+          className="flex gap-2 h-full items-center border-[rgba(240,242,245,1)] 
+                    rounded-[10px] w-full border-[2px]
+                    focus-within:ring-5 focus-within:ring-[#004AFF29] focus-within:border-[#3B6FED]"
+        >
           <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px]" />
             <input
@@ -213,12 +217,11 @@ useEffect(() => {
               placeholder="Search by name, ID, matric number etc."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
-              className="h-[80%] w-full p-2 rounded-r-xl text-black outline-transparent"
+              className="h-[80%] w-full p-2 rounded-r-xl text-black outline-none"
             />
           </div>
         </div>
+
       </div>
 
       {/* Table */}

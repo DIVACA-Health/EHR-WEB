@@ -139,7 +139,7 @@ const contact = () => {
                         </div>
                         <div className='h-[60px]   flex items-center gap-3'>
                             <div>
-                                <img src='/image/emailblueicon.png' alt='icon' className='h-[40px] w-[40px]'/>
+                                <img src='/image/phoneblueicon.png' alt='icon' className='h-[40px] w-[40px]'/>
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <h2 className='text-sm font-light'>Phone number</h2>
@@ -148,7 +148,7 @@ const contact = () => {
                         </div>
                         <div className='h-[60px]   flex items-center gap-3'>
                             <div>
-                                <img src='/image/emailblueicon.png' alt='icon' className='h-[40px] w-[40px]'/>
+                                <img src='/image/locationblueicon.png' alt='icon' className='h-[40px] w-[40px]'/>
                             </div>
                             <div className='flex flex-col gap-1'>
                                 <h2 className='text-sm font-light'>Office address</h2>
@@ -222,8 +222,8 @@ const contact = () => {
         <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
           <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
           <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/image/Mail.png" alt="emailicon" className="h-[22px] w-[22px]" />
-            <h3 className="break-words text-xs">support@<br/>divacahealth.com</h3>
+            <img src="/image/Mail.png" alt="emailicon" className="h-[20px] w-[20px]" />
+            <h3 className=" text-[10px] md:text-xs  ">| support@divacahealth.com</h3>
           </div>
         </div>
 
@@ -246,9 +246,15 @@ const contact = () => {
         {/* Social Media */}
         <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
           <h3 className="font-medium text-lg mb-2">SOCIAL MEDIA</h3>
-          <h3 className="font-extralight">Instagram</h3>
-          <h3 className="font-extralight">LinkedIn</h3>
-          <h3 className="font-extralight">X (formerly Twitter)</h3>
+          <Link href="https://www.instagram.com/divacahealth?igsh=MXZ6eHVrNGVkcW5pbA==">
+            <h3 className="font-extralight">Instagram</h3>
+          </Link>
+          <Link href="https://www.linkedin.com/company/divaca-health/">
+            <h3 className="font-extralight">LinkedIn</h3>
+          </Link>
+          <Link href="">
+            <h3 className="font-extralight">X (formerly Twitter)</h3>
+          </Link>
         </div>
       </div>
 

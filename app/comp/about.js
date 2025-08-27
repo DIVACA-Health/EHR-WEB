@@ -15,35 +15,35 @@ const about = () => {
   ];
 const initiatives = [
   {
-    icon: "🍲",
+    icon: <img src='/image/careicon1.png' alt='cover'/>,
     title: "Support for the needy",
     description:
       "We provide food, medical supplies, and basic necessities to vulnerable families and underserved communities.",
     color: "bg-green-100 text-green-600",
   },
   {
-    icon: "🩺",
+    icon: <img src='/image/careicon2.png' alt='cover'/>,
     title: "Free Health Screenings",
     description:
       "Our team organizes medical checkups, vitals assessments, and health education sessions in rural and low-income areas.",
     color: "bg-blue-100 text-blue-600",
   },
   {
-    icon: "⛪",
+    icon: <img src='/image/careicon3.png' alt='cover'/>,
     title: "Spreading the Word of God",
     description:
       "We believe in holistic healing — both physical and spiritual. Through our outreach, we share the message of Christ, pray with the sick, and encourage faith-based hope and healing.",
     color: "bg-purple-100 text-purple-600",
   },
   {
-    icon: "🏗️",
+    icon: <img src='/image/careicon4.png' alt='cover'/>,
     title: "Infrastructure Projects",
     description:
       "We invest in clean water, solar-powered health sheds, digital access, and safe spaces for students and families.",
     color: "bg-yellow-100 text-yellow-600",
   },
   {
-    icon: "🎓",
+    icon: <img src='/image/careicon5.png' alt='cover'/>,
     title: "Education & Empowerment",
     description:
       "From digital literacy workshops to wellness education, we empower young people with the tools to live healthier, purpose-driven lives.",
@@ -53,25 +53,25 @@ const initiatives = [
 
 const features = [
   {
-    icon: <img src='/image/covericon1.png' alt='cover'/>,
+    icon: <img src='/image/focusicon1.png' alt='cover'/>,
     title: " Electronic Health Records (EHR) & Healthcare Software",
     description: "We are pioneering an advanced EHR system to ensure hospitals, clinics, and healthcare providers can securely store, manage, and share patient records without relying on paperwork. Additionally, we aim to integrate EHR into the university curriculum, enabling medical students to become tech-literate and adopt digital systems faster.",
     color: "bg-teal-100 text-teal-600",
   },
   {
-    icon: <img src='/image/covericon2.png' alt='cover'/>,
+    icon: <img src='/image/focusicon2.png' alt='cover'/>,
     title: "API & System Synchronization",
     description: "We are building APIs for hospitals and healthcare facilities to seamlessly synchronize their systems. This ensures that patient records, prescriptions, and medical histories can be securely shared across approved networks, improving healthcare coordination and reducing errors.",
     color: "bg-purple-100 text-purple-600",
   },
   {
-    icon: <img src='/image/coveicon3.png' alt='cover'/>,
+    icon: <img src='/image/focusicon3.png' alt='cover'/>,
     title: "Flexible Equipment Financing for Healthcare Centers",
     description: "We support healthcare providers by offering essential medical equipment through loan-based solutions with no upfront cost, making it easier to access the tools they need to deliver quality care.",
     color: "bg-yellow-100 text-yellow-600",
   },
   {
-    icon: <img src='/image/covericon4.png' alt='cover'/>,
+    icon: <img src='/image/focusicon4.png' alt='cover'/>,
     title: "University Partnerships & Medical Education",
     description: "To drive the early adoption of EHR technology, we are working towards integrating EHR training into university curricula, ensuring medical students graduate with both clinical and technological expertise.",
     color: "bg-indigo-100 text-indigo-600",
@@ -212,7 +212,7 @@ const features = [
           <div className="relative flex flex-col items-center pt-10 pb-10 gap-8 px-4 sm:px-10">
             {/* Top tag */}
             <div className="w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]">
-              <img src="/image/Document(blue).png" alt="img" className="w-[18px] h-[18px]" />
+              <img src="/image/Chart.png" alt="img" className="w-[20px] h-[20px]" />
               <h3 className="text-[#3B6FED] text-sm text-center">Where We Make a Difference</h3>
             </div>
 
@@ -249,7 +249,7 @@ const features = [
         <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10 mb-10'>
             <div className='w-full m-auto  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-                    <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
+                    <img src="/image/hopeicon.png" alt='img' className='w-[18px] h-[18px]'/>
                     <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
                 </div>
                 <div className='w-full h-full   mt-3 text-left flex flex-col gap-3 '>
@@ -275,7 +275,7 @@ const features = [
           {/* --- Main Content --- */}
           <div className="relative w-full sm:w-[45%] sm:ml-[5%] flex flex-col gap-5 text-white">
             <div className="w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1">
-              <img src="/image/usersblue.png" alt="IMG" className="w-[20px] h-[20px]" />
+              <img src="/image/extendingicon.png" alt="IMG" className="w-[20px] h-[20px]" />
               <h3 className="text-[11px] lg:text-xs text-center font-medium">
                 EXTENDING CARE, CREATING IMPACT.
               </h3>
@@ -327,7 +327,7 @@ const features = [
         </div> */}
         <div className='w-full lg:h-[500px] text-black flex flex-col justify-center items-center px-3 mb-10 mt-15'>
           <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-            <img src="/image/Document(blue).png" alt='img' className='w-[18px] h-[18px]'/>
+            <img src="/image/Mailicon.png" alt='img' className='w-[18px] h-[15px]'/>
             <h3 className='text-[#3B6FED] text-sm'>STAY IN THE LOOP</h3>
           </div>
           <div className='w-full lg:w-[1051px] text-center flex flex-col gap-5 mt-10'>
@@ -342,7 +342,7 @@ const features = [
               placeholder='Enter your email address'
               className='w-full sm:w-[75%] h-[48px]  lg:h-full rounded-[24px] pl-3  sm:mb-0 text-xs sm:text-lg outline-none'
             />
-            <button className='w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-[#223F87] text-white'>
+            <button className='w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white'>
               Subscribe
             </button>
           </div>
@@ -359,8 +359,8 @@ const features = [
         <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
           <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
           <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/image/Mail.png" alt="emailicon" className="h-[22px] w-[22px]" />
-            <h3 className="break-words text-xs">support@<br/>divacahealth.com</h3>
+            <img src="/image/Mail.png" alt="emailicon" className="h-[20px] w-[20px]" />
+            <h3 className=" text-[10px] md:text-xs  ">| support@divacahealth.com</h3>
           </div>
         </div>
 
@@ -383,9 +383,15 @@ const features = [
         {/* Social Media */}
         <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
           <h3 className="font-medium text-lg mb-2">SOCIAL MEDIA</h3>
-          <h3 className="font-extralight">Instagram</h3>
-          <h3 className="font-extralight">LinkedIn</h3>
-          <h3 className="font-extralight">X (formerly Twitter)</h3>
+          <Link href="https://www.instagram.com/divacahealth?igsh=MXZ6eHVrNGVkcW5pbA==">
+            <h3 className="font-extralight">Instagram</h3>
+          </Link>
+          <Link href="https://www.linkedin.com/company/divaca-health/">
+            <h3 className="font-extralight">LinkedIn</h3>
+          </Link>
+          <Link href="">
+            <h3 className="font-extralight">X (formerly Twitter)</h3>
+          </Link>
         </div>
       </div>
 

@@ -316,7 +316,7 @@ const plans = [
             </div>
         </div>
         
-        <div className="relative w-full h-fit pb-10 rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10 gap-8 overflow-hidden">
+        <div className="relative w-full h-fit pb-10 rounded-[48px] mt-15 mb-15 flex flex-col items-center pt-10 px-4 sm:px-6 lg:px-10  gap-8 overflow-hidden">
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#14254F] to-[#0a0f1f]" />
 
@@ -325,6 +325,23 @@ const plans = [
 
           {/* Top-right glow */}
           <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-gradient-radial from-[#3B6FED]/30 to-transparent blur-3xl" />
+
+          {/* 🔹 Top-left logo */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#14254F] to-[#0a0f1f]" />
+
+          {/* Top-left logo */}
+          <img
+            src="/image/leftmidicon.png"
+            alt="Top Left Logo"
+            className="absolute top-0 left-0 w-[20%] h-[20%] object-contain hidden lg:block"
+          />
+
+          {/* Top-right logo */}
+          <img
+            src="/image/rightmidicon.png"
+            alt="Top Right Logo"
+            className="absolute top-0 right-0 w-[20%] h-[20%] object-contain hidden lg:block"
+          />
 
           {/* Main content */}
           <div className="relative flex flex-col items-center gap-8 w-full">
@@ -337,9 +354,9 @@ const plans = [
             {/* Header */}
             <div className="text-center flex flex-col gap-3 px-3">
               <h4 className="text-3xl sm:text-4xl lg:text-5xl text-white font-semibold leading-snug">
-                Simple, Transparent Pricing for Every Institution
+                Simple, Transparent Pricing for <br /> Every Institution
               </h4>
-              <h4 className="text-base sm:text-lg text-white font-light">
+              <h4 className="text-base sm:text-lg text-white font-light w-[80%] m-auto">
                 Choose the right solution for your healthcare center — whether you run a school clinic,
                 a general hospital, or a specialized lab. We also offer flexible pricing plans.
               </h4>
@@ -381,6 +398,7 @@ const plans = [
         </div>
 
 
+
         <div className='w-full h-fit p-5 flex flex-col items-center'>
           {/* Badge */}
           <div className='w-fit flex items-center justify-center h-fit bg-[#F0F5FF] gap-2 px-3 py-2 rounded-[20px]'>
@@ -399,13 +417,13 @@ const plans = [
           {/* Role Switcher */}
           <div className='w-full h-[56px] md:h-[88px] mb-8 mt-4  p-1.5 flex gap-2 rounded-[16px] md:rounded-[20px] bg-[#F9F9F9F9] border-[1px] border-[#EBEBEB]'>
             <div
-              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-[#223F87] text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'students' ? 'bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('students')}
             >
               <h3>For students</h3>
             </div>
             <div
-              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-[#223F87] text-white' : ' text-black'}`}
+              className={`w-1/2 h-full rounded-[8px] md:rounded-[20px] flex items-center justify-center cursor-pointer transition-all duration-200 ${activeRole === 'medics' ? 'bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white' : ' text-black'}`}
               onClick={() => setActiveRole('medics')}
             >
               <h3>For medics</h3>
@@ -454,7 +472,7 @@ const plans = [
               </div>
             </div>
             {/* Steps */}
-            <div className='w-full lg:w-1/2 m-auto h-fit sm:h-fit lg:h-fit p-3  text-black flex flex-col justify-between'>
+            <div className='w-full lg:w-[40%] m-auto h-fit sm:h-fit lg:h-fit p-3  text-black flex flex-col justify-between'>
               {(activeRole === 'students' ? studentSteps : medicSteps).map((step, index) => (
                 <div key={index} className="flex relative pb-10">
                   {/* Timeline column */}
@@ -537,12 +555,12 @@ const plans = [
         {/* Left Content */}
         <div className='w-full lg:w-[45%] flex flex-col justify-center items-center sm:items-start'>
             <div className='w-fit mt-5 items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-            <img src="/image/whydivaca.png" alt='img' className='w-[18px] h-[18px]'/>
+            <img src="/image/Rocket.png" alt='img' className='w-[18px] h-[18px]'/>
             <h3 className='text-[#3B6FED] text-sm'>COMING NEXT</h3>
             </div>
             
             <div className='w-full py-4 mt-3 text-left flex flex-col gap-4'>
-            <h4 className='text-3xl md:text-4xl text-center sm:text-left'>What’s Coming Next</h4>
+            <h4 className='text-3xl md:text-4xl text-center sm:text-left font-semibold'>What’s Coming Next</h4>
             <h4 className='text-base md:text-lg text-center sm:text-left'>
                 Get a sneak peek of the awesome features we're building at DIVACA Health
             </h4>
@@ -551,31 +569,31 @@ const plans = [
             <div className='w-full text-black text-sm'>
             <div className='flex flex-wrap gap-3'>
                 {/* Feature Card 1 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-sm'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
                 <img src='/image/generalicon1.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>General hospital integrations</h3>
                 </div>
 
                 {/* Feature Card 2 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-sm'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
                 <img src='/image/realicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Real-time analytics</h3>
                 </div>
 
                 {/* Feature Card 3 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-sm'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
                 <img src='/image/acessicon3.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Multilingual access</h3>
                 </div>
 
                 {/* Feature Card 4 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-sm'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
                 <img src='/image/healthicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Health coverage portability</h3>
                 </div>
 
                 {/* Feature Card 5 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-sm'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
                 <img src='/image/devicon.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Developer-friendly API</h3>
                 </div>
@@ -600,8 +618,8 @@ const plans = [
         <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
           <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
           <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/image/Mail.png" alt="emailicon" className="h-[22px] w-[22px]" />
-            <h3 className="break-words text-xs">support@<br/>divacahealth.com</h3>
+            <img src="/image/Mail.png" alt="emailicon" className="h-[20px] w-[20px]" />
+            <h3 className=" text-[10px] md:text-xs  ">| support@divacahealth.com</h3>
           </div>
         </div>
 
@@ -624,9 +642,15 @@ const plans = [
         {/* Social Media */}
         <div className="text-white w-full xs:w-full flex flex-col gap-2 items-start mb-6">
           <h3 className="font-medium text-lg mb-2">SOCIAL MEDIA</h3>
-          <h3 className="font-extralight">Instagram</h3>
-          <h3 className="font-extralight">LinkedIn</h3>
-          <h3 className="font-extralight">X (formerly Twitter)</h3>
+          <Link href="https://www.instagram.com/divacahealth?igsh=MXZ6eHVrNGVkcW5pbA==">
+            <h3 className="font-extralight">Instagram</h3>
+          </Link>
+          <Link href="https://www.linkedin.com/company/divaca-health/">
+            <h3 className="font-extralight">LinkedIn</h3>
+          </Link>
+          <Link href="">
+            <h3 className="font-extralight">X (formerly Twitter)</h3>
+          </Link>
         </div>
       </div>
 

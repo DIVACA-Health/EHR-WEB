@@ -89,7 +89,7 @@ const Login = () => {
             />
           </div>
           <div className="flex flex-col gap-1 mb-[40px]">
-            <label className="font-normal text-l">Create Password</label>
+            <label className="font-normal text-l">Password</label>
             <div className="relative w-full mb-[8px]">
               <input
                 className="w-full h-11 pl-3 border border-gray-200 rounded-[7px] shadow-sm shadow-gray-300 outline-none"
