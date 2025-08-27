@@ -1,6 +1,6 @@
 
 'use client';
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X , ChevronLeft, ChevronRight } from 'lucide-react'; 
@@ -195,13 +195,26 @@ const plans = [
   // Get current images array
   const currentImages = activeRole === 'students' ? studentImages : medicImages;
 
-  // Handlers for next/prev
-  const handlePrev = () => {
-    setStepImageIndex((prev) => (prev === 0 ? currentImages.length - 1 : prev - 1));
-  };
   const handleNext = () => {
-    setStepImageIndex((prev) => (prev === currentImages.length - 1 ? 0 : prev + 1));
+    setStepImageIndex((prevIndex) =>
+      prevIndex === currentImages.length - 1 ? 0 : prevIndex + 1
+    );
   };
+
+  const handlePrev = () => {
+    setStepImageIndex((prevIndex) =>
+      prevIndex === 0 ? currentImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Auto-slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // change slide every 5 seconds
+
+    return () => clearInterval(interval); // cleanup
+  }, [currentImages.length]);
 
 
   return (
@@ -271,7 +284,7 @@ const plans = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
+                <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
@@ -286,12 +299,12 @@ const plans = [
                     <h1 className='text-[24px] font-semibold text-center  sm:text-left lg:text-[50px] '>Healthcare Innovation Starts Here </h1>
                     <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
                     <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
-                        <Link href='/createpage' className='w-1/2'>
+                        <Link href='/contact' className='w-1/2'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2'>
                             <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
-                        <Link href='/createpage' className='w-1/2'>
+                        <Link href='/contact' className='w-1/2'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2'>
                             <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
                         </button>
@@ -445,18 +458,12 @@ const plans = [
               </div>
               {/* Navigation controls */}
               <div className="flex h-[10%] items-center justify-center gap-4 mt-4">
-                <button
-                  onClick={handlePrev}
-                  aria-label="Previous"
-                >
-                  <img src='/image/Leftcircle.png' alt='next' className="w-[30px] h-[30px] text-blue-600"/>
-                </button>
                  {/* Dashes */}
                   <div className="flex gap-2">
                     {currentImages.map((_, idx) => (
                       <span
                         key={idx}
-                        className={`h-1 w-10 rounded-full transition-all duration-200 ${
+                        className={`h-1 w-10 rounded-full transition-all duration-200 mb-3 ${
                           idx === stepImageIndex
                             ? 'bg-blue-600'
                             : 'bg-[#373e50]'
@@ -464,12 +471,6 @@ const plans = [
                       />
                     ))}
                   </div>
-                <button
-                  onClick={handleNext}
-                  aria-label="Next"
-                >
-                  <img src='/image/Rightcircle.png' alt='next' className="w-[30px] h-[30px] text-blue-600"/>
-                </button>
               </div>
             </div>
             {/* Steps */}
@@ -494,9 +495,11 @@ const plans = [
                   </div>
                 </div>
               ))}
-              <button className='w-full text-white h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px]'>
-                Get started with DIVACA Health
-              </button>
+              <Link href="/contact">
+                <button className='w-full text-white h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px]'>
+                  Get started with DIVACA Health
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -630,7 +633,6 @@ const plans = [
           <Link href="/"><h3 className="font-extralight">Home</h3></Link>
           <Link href="/about"><h3 className="font-extralight">About</h3></Link>
           <Link href="/contact"><h3 className="font-extralight">Contact</h3></Link>
-          <Link href="/createpage"><h3 className="font-extralight">Campus Care</h3></Link>
         </div>
 
         {/* Legal */}

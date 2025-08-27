@@ -70,7 +70,7 @@ const contact = () => {
             ))}
           </div>
           <div className='mt-auto'>
-            <Link href="/createpage">
+            <Link href="/contact">
               <button className='w-full h-[50px] bg-[#3B6FED] hover:bg-[#274dcf] text-white text-sm rounded-[12px]'>
                 Explore Campus Care
               </button>

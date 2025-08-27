@@ -111,7 +111,7 @@ const features = [
             ))}
           </div>
           <div className='mt-auto'>
-            <Link href="/createpage">
+            <Link href="/contact">
               <button className='w-full h-[50px] bg-[#3B6FED] hover:bg-[#274dcf] text-white text-sm rounded-[12px]'>
                 Explore Campus Care
               </button>
@@ -155,7 +155,7 @@ const features = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
+                <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
                     <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
                     Explore Campus Care
                     </button>
