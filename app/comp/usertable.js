@@ -43,6 +43,10 @@ export default function UserTable() {
   const menuRef = useRef();
   const dropdownRef = useRef();
   const [searchFocused, setSearchFocused] = useState(false);
+  const [queuedStudentIds, setQueuedStudentIds] = useState(new Set());
+  const [processingIds, setProcessingIds] = useState(new Set());
+
+
 
   // Fetch student data
 useEffect(() => {
@@ -88,6 +92,27 @@ useEffect(() => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+  const fetchQueue = async () => {
+    try {
+      const res = await fetchWithAuth("/api/v1/queue/");
+      if (!res.ok) throw new Error("Failed to fetch queue");
+
+      const data = await res.json();
+
+      if (Array.isArray(data)) {
+        // extract studentIds that are already in queue
+        const ids = new Set(data.map(item => String(item.studentId)));
+        setQueuedStudentIds(ids);
+      }
+    } catch (err) {
+      console.error("Error fetching queue:", err);
+    }
+  };
+
+  fetchQueue();
+}, []);
+
 
   // Filtering logic
   const filteredUsers = users.filter((user) => {
@@ -126,51 +151,68 @@ useEffect(() => {
   };
 
   // Action handler for adding to queue
-  const handleActionClick = async (user) => {
-    console.log("Button clicked for user:", user);
+const handleActionClick = async (user) => {
+  console.log("Button clicked for user:", user);
 
-    try {
-      // Split name safely
-      const nameParts = user.name.trim().split(/\s+/);
-      const payload = {
-        firstName: nameParts[0],
-        lastName: nameParts.slice(1).join(" ") || "",
-        studentId: user.studentId && user.studentId !== "N/A" ? String(user.studentId) : null,
-      };
+  // Prevent action if already in queue OR being processed
+  if (queuedStudentIds.has(user.studentId)) {
+    toast.error(`${user.name} is already in the patient queue.`);
+    return;
+  }
+  if (processingIds.has(user.studentId)) {
+    return; // 🚫 ignore extra rapid clicks
+  }
 
-      console.log("Payload being sent:", payload);
+  // Mark as processing
+  setProcessingIds(prev => new Set(prev).add(user.studentId));
 
-      const response = await  fetchWithAuth("/api/v1/queue/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+  try {
+    const nameParts = user.name.trim().split(/\s+/);
+    const payload = {
+      firstName: nameParts[0],
+      lastName: nameParts.slice(1).join(" ") || "",
+      studentId: user.studentId && user.studentId !== "N/A" ? String(user.studentId) : null,
+    };
 
-      if (!payload.studentId) {
-        toast.error("Student ID is missing for this user.");
-        return;
-      }
-
-      console.log("Response status:", response.status);
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Success response:", result);
-        toast.error(`${user.name} has been added to the patient queue.`);
-      } else {
-        const errorData = await response.json();
-        console.error("Error response:", errorData);
-        toast.error(`Failed to add ${user.name}: ${errorData.message || "Unknown error"}`);
-      }
-    } catch (error) {
-      console.error("Error during fetch:", error);
-      toast.error("An error occurred while trying to add this user.");
+    if (!payload.studentId) {
+      toast.error("Student ID is missing for this user.");
+      return;
     }
 
+    const response = await fetchWithAuth("/api/v1/queue/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Success response:", result);
+      toast.success(`${user.name} has been added to the patient queue.`);
+
+      // ✅ Add to queued
+      setQueuedStudentIds(prev => new Set(prev).add(user.studentId));
+    } else {
+      const errorData = await response.json();
+      console.error("Error response:", errorData);
+      toast.error(`Failed to add ${user.name}: ${errorData.message || "Unknown error"}`);
+    }
+  } catch (error) {
+    console.error("Error during fetch:", error);
+    toast.error("An error occurred while trying to add this user.");
+  } finally {
+    // Remove from processing state
+    setProcessingIds(prev => {
+      const updated = new Set(prev);
+      updated.delete(user.studentId);
+      return updated;
+    });
+
     setOpenMenuIndex(null);
-  };
+  }
+};
+
+
 
 
   function formatDateDMY(dateString) {
@@ -282,13 +324,25 @@ useEffect(() => {
                       ref={dropdownRef}
                       className="absolute right-0 bottom-0 w-62 z-10 bg-white shadow-md rounded-[8px] border border-gray-200"
                     >
-                      <button
-                        onMouseDown={e => e.stopPropagation()}
-                        onClick={() => handleActionClick(user)}
-                        className="w-full text-left text-[#494949] font-normal px-4 py-2 hover:bg-gray-100 flex justify-center items-center cursor-pointer"
-                      >
-                        Add to patient queue
-                      </button>
+                    <button
+                      onMouseDown={e => e.stopPropagation()}
+                      onClick={() => handleActionClick(user)}
+                      disabled={queuedStudentIds.has(user.studentId) || processingIds.has(user.studentId)}
+                      className={`w-full text-left font-normal px-4 py-2 flex justify-center items-center rounded
+                        ${queuedStudentIds.has(user.studentId)
+                          ? "cursor-not-allowed text-gray-400 bg-gray-100"
+                          : processingIds.has(user.studentId)
+                            ? "cursor-wait text-gray-400 bg-gray-50"
+                            : "text-[#494949] hover:bg-gray-100 cursor-pointer"}
+                      `}
+                    >
+                      {queuedStudentIds.has(user.studentId)
+                        ? "Already in queue"
+                        : processingIds.has(user.studentId)
+                          ? "Adding..."
+                          : "Add to patient queue"}
+                    </button>
+
                     </div>
                   )}
                 </td>

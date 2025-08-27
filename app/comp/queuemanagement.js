@@ -30,19 +30,32 @@ const QueueManagement = () => {
   const actionButtonRefs = useRef({});
   const dropdownRefs = useRef({});
 
-  const fetchQueue = async () => {
-    try {
-      const res = await fetchWithAuth('/api/v1/queue/');
-      if (!res.ok) throw new Error('Failed to fetch queue');
-      const result = await res.json();
-      setQueue(Array.isArray(result) ? result : []);
-    } catch (err) {
-      console.error('Failed to load queue:', err);
-      toast.error('Failed to load queue');
-    } finally {
-      setLoading(false); // Set loading to false after data is fetched
+const fetchQueue = async () => {
+  try {
+    const res = await fetchWithAuth('/api/v1/queue/');
+
+    // Only throw if it’s really bad
+    if (!res.ok) {
+      console.error("Bad response:", res.status, res.statusText);
+      toast.error(`Error: ${res.statusText}`);
+      return;
     }
-  };
+
+    const result = await res.json();
+
+    const sorted = Array.isArray(result)
+      ? result.sort((a, b) => new Date(b.timeAdded) - new Date(a.timeAdded))
+      : [];
+
+    setQueue(sorted);
+  } catch (err) {
+    console.error('Failed to load queue:', err);
+    toast.error('Failed to load queue');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchQueue();
