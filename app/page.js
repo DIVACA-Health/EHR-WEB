@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X , ChevronLeft, ChevronRight } from 'lucide-react'; 
 
+
 const main = () => {
     const pathname = usePathname(); 
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);

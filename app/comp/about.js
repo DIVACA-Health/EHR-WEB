@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
+import Image from "next/image";
 
 const about = () => {
     const pathname = usePathname(); // to track active link
@@ -171,7 +172,7 @@ const features = [
 
                 </div>
                 <div className='w-full h-full  flex justify-center items-center'>
-                    <img src='/image/aboutimg.png' alt='IMG' className=' w-full h-full'/>
+                    <Image src="/image/aboutimg.png" alt='IMG'   width={1200} height={800} />
                 </div>
             </div>
         </div>
