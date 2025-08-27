@@ -496,7 +496,7 @@ const plans = [
                 </div>
               ))}
               <Link href="/contact">
-                <button className='w-full text-white h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px]'>
+                <button className='w-full text-white h-[48px] bg-[#3B6FED] border border-[#14254F] rounded-[8px] cursor-pointer'>
                   Get started with DIVACA Health
                 </button>
               </Link>
