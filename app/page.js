@@ -309,7 +309,7 @@ const plans = [
                     <h3 className=' text-[11px] lg:text-xs'>OUR INVESTORS & PARTNERS</h3>
                 </div>
                 <h1 className=' text-[20px] text-center lg:text-[50px] sm:text-left font-bold lg:w-[80%]'>Built & backed by DIVACA Tech</h1>
-                <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left lg:text-lg'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
+                <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left lg:text-lg lg:w-[90%]'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
             <div className='w-full h-full lg:w-1/2 m-auto flex items-center justify-center'>
                 <img src='/image/divacatechlogo.png' alt='IMG' className='w-full h-full'/>
