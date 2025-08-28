@@ -621,9 +621,9 @@ const plans = [
         {/* Logo and contact */}
         <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
           <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/image/Mail.png" alt="emailicon" className="h-[20px] w-[20px]" />
-            <h3 className=" text-[10px] md:text-xs  ">| support@divacahealth.com</h3>
+          <div className="flex items-center justify-start gap-2 mb-2  ">
+            <img src="/image/Mail.png" alt="emailicon" className="h-[18px] w-[20px]" />
+            <h3 className=" break-words text-[12px] md:text-[14px] text-xs px-2  border-l-2 border-l-white w-[65%] sm:w-full ">support@divacahealth.com</h3>
           </div>
         </div>
 
