@@ -79,9 +79,9 @@ const contact = () => {
         </div>
       )}
       
-    <div className='bg-white w-full height-fit pl-2 sm:pl-5 pr-2 sm:pr-5 pt-3 pb-3'>
-        <div className='h-fit rounded-[48px] bg-[#F0F5FF] pl-2 sm:pl-5  pr-2 sm:pr-5 pt-3 pb-20'>
-            <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden '>
+    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3'>
+        <div className='p-0 bg-[#F0F5FF] sm:h-fit rounded-[48px]  pl-5 pr-5 pt-3 pb-20'>
+            <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
                 <button
                     onClick={() => setIsOpen(true)}
@@ -119,7 +119,7 @@ const contact = () => {
                     </button>
                 </Link>
             </div> 
-            <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[30px] '>
+            <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[50px] '>
                 <div className='h-fit mb-10 w-[100%] text-black lg:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
                         <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
@@ -233,7 +233,6 @@ const contact = () => {
           <Link href="/"><h3 className="font-extralight">Home</h3></Link>
           <Link href="/about"><h3 className="font-extralight">About</h3></Link>
           <Link href="/contact"><h3 className="font-extralight">Contact</h3></Link>
-          <Link href="/createpage"><h3 className="font-extralight">Campus Care</h3></Link>
         </div>
 
         {/* Legal */}

@@ -253,7 +253,7 @@ const plans = [
     <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
         <div className='mb-20 sm: h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20  '>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
-                <img src='/image/DHSVG1.png' alt='logo' className='w-[80px] h-[30px]'/>
+                <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
                 <button
                     onClick={() => setIsOpen(true)}
                     className='md:hidden  top-5 right-5 z-50 p-2 '
