@@ -178,7 +178,7 @@ const features = [
         </div>
         <div className='h-fit  w-full p-0 sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10 flex flex-col items-center text-black justify-between mt-10'>
             <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
-                <img src="/image/Expandicon.png" alt='img' className='w-[18px] h-[18px]'/>
+                <img src="/image/Compas.png" alt='img' className='w-[20px] h-[20px]'/>
                 <h3 className='text-[#3B6FED] text-sm'>OUR PURPOSE AND PATH</h3>
             </div>
             <div className='w-full h-fit px-5 py-6  mt-3 text-center flex flex-col gap-4 '>
@@ -186,12 +186,12 @@ const features = [
                 <h4 className='text-[12px] sm:text-lg'>Our mission fuels our work, and our vision guides where we’re headed.</h4>
             </div>
             <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black lg:h-[304px] mt-5 mb-15 '>
-                <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
+                <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-[6px_6px_0px_0px_#001A59] shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-xl font-bold'>Our Mission</h4>
                     <h5>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
                 </div>
-                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px] shadow-2xs shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
+                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px] shadow-2xs shadow-[6px_6px_0px_0px_#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/lighticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-xl font-bold'>Our Vision</h4>
                     <h5>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>

@@ -573,31 +573,31 @@ const plans = [
             <div className='w-full text-black text-sm'>
             <div className='flex flex-wrap gap-3'>
                 {/* Feature Card 1 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[3px_3px_0px_0px_#001A59]'>
                 <img src='/image/generalicon1.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>General hospital integrations</h3>
                 </div>
 
                 {/* Feature Card 2 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[3px_3px_0px_0px_#001A59]'>
                 <img src='/image/realicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Real-time analytics</h3>
                 </div>
 
                 {/* Feature Card 3 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[3px_3px_0px_0px_#001A59]'>
                 <img src='/image/acessicon3.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Multilingual access</h3>
                 </div>
 
                 {/* Feature Card 4 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[3px_3px_0px_0px_#001A59]'>
                 <img src='/image/healthicon2.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Health coverage portability</h3>
                 </div>
 
                 {/* Feature Card 5 */}
-                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+                <div className='flex items-center gap-2 bg-white border border-[#354874] px-3 py-2 rounded-[20px] shadow-[#143C9D] shadow-[3px_3px_0px_0px_#001A59]'>
                 <img src='/image/devicon.png' alt='IMG' className='w-[40px] h-[40px]'/>
                 <h3 className='text-sm md:text-base'>Developer-friendly API</h3>
                 </div>

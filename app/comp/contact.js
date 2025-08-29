@@ -122,7 +122,7 @@ const contact = () => {
             <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[50px] '>
                 <div className='h-fit mb-10 w-[100%] text-black lg:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
                     <div className='w-fit px-3 h-[32px] bg-white rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
-                        <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
+                        <img src='/image/helpicon.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs'>WE’RE HERE TO HELP YOU</h3>
                     </div>
                     <h1 className='text-[40px] font-medium '>Let’s Talk Health.</h1>
@@ -161,23 +161,23 @@ const contact = () => {
                     <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly  '>
                         <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Full name</label>
-                            <input type='text' placeholder='Enter First and Last name' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+                            <input type='text' placeholder='Enter First and Last name' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
                             <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px] '>Institution / Organisation</label>
-                            <input type='text' placeholder='Enter institution / organisation' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+                            <input type='text' placeholder='Enter institution / organisation' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
                         <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Email address</label>
-                            <input type='email' placeholder='Enter email address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+                            <input type='email' placeholder='Enter email address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
                             <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px] '>Location</label>
-                            <input type='text' placeholder='Enter your location / address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+                            <input type='text' placeholder='Enter your location / address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
                         </div>
                             <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
                             <label className='text-[14px]'>Message</label>
-                            <textarea placeholder='Type your message here...' className='pl-2 pt-2 w-full h-[152px] border-[1px] border-[#D0D5DD] shadow-xs shadow-[#1018280D] rounded-[12px] outline-none'></textarea>
+                            <textarea placeholder='Type your message here...' className='pl-2 pt-2 w-full h-[152px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></textarea>
                         </div>
                         <button type='submit' className='w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center '>Submit</button>
                     </form>
@@ -186,7 +186,7 @@ const contact = () => {
         </div>
         <div className='w-full h-fit rounded-[48px] text-black mt-10 mb-10 p-3 sm:p-10 flex flex-col gap-2 items-center'>
             <div className='w-fit px-3 h-[32px] bg-[#F0F5FF] rounded-[20px] text-[#3B6FED] flex items-center justify-center gap-1'>
-                <img src='/image/Expandicon.png' alt='IMG' className='w-[20px] h-[20px]' />
+                <img src='/image/clarityicon.png' alt='IMG' className='w-[20px] h-[20px]' />
                 <h3 className='text-xs'>STILL NEED CLARITY?</h3>
             </div>
             <h1 className='text-lg font-medium mb-2 sm:text-[40px] text-center'>Frequently asked questions</h1>
