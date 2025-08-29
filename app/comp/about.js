@@ -1,6 +1,6 @@
 
 'use client';
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -131,8 +131,21 @@ const [email, setEmail] = useState("");
     }
   };
 
+  const images = [
+    "/image/aboutmidimg.png",
+    "/image/aboutmidimg2.png",
+    "/image/aboutmidimg3.png",
+  ];
 
+  const [index, setIndex] = useState(0);
 
+  // ✅ Auto-slide every 5s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   return (
     <>
@@ -232,7 +245,7 @@ const [email, setEmail] = useState("");
                 <h4 className='text-[20px] font-medium sm:text-5xl'>Why We Exist</h4>
                 <h4 className='text-[12px] sm:text-lg'>Our mission fuels our work, and our vision guides where we’re headed.</h4>
             </div>
-            <div className='w-full h-fit  sm:flex gap-4 sm:w-[90%]  text-black lg:h-[304px] mt-5 mb-15 '>
+            <div className='w-full h-fit  sm:flex gap-4   text-black lg:h-[304px] mt-5 mb-15 '>
                 <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-[6px_6px_0px_0px_#001A59] shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-xl font-bold'>Our Mission</h4>
@@ -305,8 +318,27 @@ const [email, setEmail] = useState("");
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-full lg:w-[60%] mt-10  mb-10 '> 
-                <img src='/image/aboutmidimg.png' alt='IMG' className='h-full w-full'/>
+            <div className='w-full h-[350px] md:h-[620px] bg-[#182B5B] lg:w-[55%] mt-10 mb-10 pb-3 flex items-center justify-center  rounded-[24px]'> 
+              <div className="w-full h-full p-5 relative"> 
+                {/* Image */}
+                <img
+                  src={images[index]}
+                  alt="slideshow"
+                  className="w-full m-auto rounded-[15px] transition-all duration-700  h-[95%]"
+                />
+
+                {/* Bar Indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 ">
+                  {images.map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`h-1 w-10 rounded-full transition-all duration-300 ${
+                        idx === index ? "bg-blue-600" : "bg-[#373e50]"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
         </div>
 
