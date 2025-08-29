@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Plus, Minus , X , Menu } from "lucide-react"; 
+import { toast, Toaster } from "react-hot-toast";
 
 const contact = () => {
     const pathname = usePathname(); 
@@ -45,6 +46,62 @@ const contact = () => {
   const toggle = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    institutionOrganization: "",
+    emailAddress: "",
+    location: "",
+    message: "",
+  });
+
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/v1/support/tickets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit ticket");
+      }
+
+      const data = await res.json();
+      console.log("Ticket submitted:", data);
+
+      toast.success("Your support ticket has been submitted!");
+      setFormData({
+        fullName: "",
+        institutionOrganization: "",
+        emailAddress: "",
+        location: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <>
@@ -158,28 +215,78 @@ const contact = () => {
                     </div>
                 </div>
                 <div className='w-full mt-0 lg:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs lg:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
-                    <form method='post' className='  w-full sm:w-full h-full flex flex-col justify-evenly  '>
-                        <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
-                            <label className='text-[14px]'>Full name</label>
-                            <input type='text' placeholder='Enter First and Last name' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+                    <form method='post' onSubmit={handleSubmit} className='   w-full sm:w-full h-full flex flex-col justify-evenly  '>
+                        <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
+                          <label className="text-[14px]">Full name</label>
+                          <input
+                            type="text"
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={handleChange}
+                            placeholder="Enter First and Last name"
+                            className="pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none"
+                            required
+                          />
                         </div>
-                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
-                            <label className='text-[14px] '>Institution / Organisation</label>
-                            <input type='text' placeholder='Enter institution / organisation' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+
+                        <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
+                          <label className="text-[14px]">Institution / Organisation</label>
+                          <input
+                            type="text"
+                            name="institutionOrganization"
+                            value={formData.institutionOrganization}
+                            onChange={handleChange}
+                            placeholder="Enter institution / organisation"
+                            className="pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none"
+                            required
+                          />
                         </div>
-                        <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
-                            <label className='text-[14px]'>Email address</label>
-                            <input type='email' placeholder='Enter email address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+
+                        <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
+                          <label className="text-[14px]">Email address</label>
+                          <input
+                            type="email"
+                            name="emailAddress"
+                            value={formData.emailAddress}
+                            onChange={handleChange}
+                            placeholder="Enter email address"
+                            className="pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none"
+                            required
+                          />
                         </div>
-                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
-                            <label className='text-[14px] '>Location</label>
-                            <input type='text' placeholder='Enter your location / address' className='pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></input>
+
+                        <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
+                          <label className="text-[14px]">Location</label>
+                          <input
+                            type="text"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            placeholder="Enter your location / address"
+                            className="pl-2 w-full h-[52px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none"
+                            required
+                          />
                         </div>
-                            <div className='flex flex-col gap-1 text-[12px] sm:text-[14px]'>
-                            <label className='text-[14px]'>Message</label>
-                            <textarea placeholder='Type your message here...' className='pl-2 pt-2 w-full h-[152px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none'></textarea>
+
+                        <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
+                          <label className="text-[14px]">Message</label>
+                          <textarea
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            placeholder="Type your message here..."
+                            className="pl-2 pt-2 w-full h-[152px] border-[1px] border-[#D0D5DD] shadow-2xs shadow-[#1018280D] rounded-[12px] outline-none"
+                            required
+                          />
                         </div>
-                        <button type='submit' className='w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center '>Submit</button>
+
+                        <button
+                          type="submit"
+                          disabled={loading}
+                          className="w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center disabled:opacity-70"
+                        >
+                          {loading ? "Submitting..." : "Submit"}
+                        </button>
                     </form>
                 </div>
             </div>

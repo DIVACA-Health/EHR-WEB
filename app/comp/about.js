@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import Image from "next/image";
+import { toast, Toaster } from "react-hot-toast";
 
 const about = () => {
     const pathname = usePathname(); // to track active link
@@ -85,6 +86,52 @@ const features = [
   const toggle = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
+
+const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    if (submitting) {
+      toast("⏳ Already subscribing...");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/v1/newsletter/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailAddress: email }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Subscription failed");
+      }
+
+      const data = await res.json();
+      console.log("Subscribed:", data);
+
+      toast.success(" Successfully subscribed!");
+      setEmail(""); // clear input
+    } catch (error) {
+      console.error(error);
+      toast.error("❌ Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+
 
 
   return (
@@ -191,7 +238,7 @@ const features = [
                     <h4 className='text-xl font-bold'>Our Mission</h4>
                     <h5>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
                 </div>
-                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px] shadow-2xs shadow-[6px_6px_0px_0px_#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
+                <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px]  shadow-[6px_6px_0px_0px_#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/lighticon.png' alt='img' className='w-[54px] h-[54px]'/>
                     <h4 className='text-xl font-bold'>Our Vision</h4>
                     <h5>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>
@@ -337,16 +384,27 @@ const features = [
               Stay updated on our latest outreach efforts, health innovations, and partnership opportunities. Subscribe to our newsletter and be part of our journey to transform lives across Africa and the world at large.
             </h4>
           </div>
-          <div className='w-full max-w-[924px] border-[1px] border-[#D0D5DD] sm:mb-10 lg:h-[72px] rounded-[24px] mt-10 bg-[#F4F4F4] flex  sm:flex-row items-center justify-center p-2  gap-3'>
+          <form
+            onSubmit={handleSubscribe}
+            className="w-full max-w-[924px] border-[1px] border-[#D0D5DD] sm:mb-10 lg:h-[72px] rounded-[24px] mt-10 bg-[#F4F4F4] flex sm:flex-row items-center justify-center p-2 gap-3"
+          >
             <input
-              type='email'
-              placeholder='Enter your email address'
-              className='w-full sm:w-[75%] h-[48px]  lg:h-full rounded-[24px] pl-3  sm:mb-0 text-xs sm:text-lg outline-none'
+              type="email"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full sm:w-[75%] h-[48px] lg:h-full rounded-[24px] pl-3 sm:mb-0 text-xs sm:text-lg outline-none"
+              required
             />
-            <button className='w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white'>
-              Subscribe
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white disabled:opacity-70"
+            >
+              {submitting ? "Subscribing..." : "Subscribe"}
             </button>
-          </div>
+          </form>
+
         </div>
     </div>
     <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
