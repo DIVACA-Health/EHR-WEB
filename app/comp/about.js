@@ -318,8 +318,8 @@ const [email, setEmail] = useState("");
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[350px] md:h-[620px] bg-[#182B5B] lg:w-[55%] mt-10 mb-10 pb-3 flex items-center justify-center  rounded-[24px]'> 
-              <div className="w-full h-full p-5 relative"> 
+            <div className='w-full h-[310px]  lg:h-[620px] md:h-[45vh] bg-[#182B5B] lg:w-[706px] mt-10 mb-10 pb-3 flex items-center justify-center  rounded-[24px]'> 
+              <div className="w-full h-full p-3 md:p-6 relative"> 
                 {/* Image */}
                 <img
                   src={images[index]}
