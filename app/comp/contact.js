@@ -214,7 +214,7 @@ const contact = () => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full mt-0 lg:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px] shadow-2xs lg:p-10 p-5 shadow-[#141414]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
+                <div className='w-full mt-0 lg:w-[50%] h-[762px] bg-[#FFFFFF] text-black border-[1px]  lg:p-10 p-5 shadow-[#141414]  shadow-[3px_3px_0px_0px_#001A59]  border-[#1E3877] rounded-[24px] flex justify-center items-center'>
                     <form method='post' onSubmit={handleSubmit} className='   w-full sm:w-full h-full flex flex-col justify-evenly  '>
                         <div className="flex flex-col gap-1 text-[12px] sm:text-[14px]">
                           <label className="text-[14px]">Full name</label>
