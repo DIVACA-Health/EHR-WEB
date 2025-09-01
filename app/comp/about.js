@@ -314,7 +314,7 @@ const [email, setEmail] = useState("");
                     <h3 className='text-[#3B6FED] text-sm'>MISSION OUTREACH</h3>
                 </div>
                 <div className='w-full h-full   mt-3 text-left flex flex-col gap-3 '>
-                    <h4 className='text-[20px] font-medium text-center sm:text-4xl sm:text-left'>Health . Hope . Humanity</h4>
+                    <h4 className='text-[20px] font-medium text-center sm:text-4xl sm:text-left'>Health . Hope . Humanity </h4>
                     <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>BSF x DIVACA Health:
  At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
