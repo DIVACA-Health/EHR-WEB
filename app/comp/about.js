@@ -307,7 +307,7 @@ const [email, setEmail] = useState("");
           </div>
         </div>
 
-        <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-15 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10 mb-10'>
+        <div className='flex flex-col  sm:h-fit w-full sm:pl-15 sm:pr-10 sm:pt-10 sm:pb-10  lg:flex-row-reverse gap-10 justify-between mt-10 mb-10'>
             <div className='w-full m-auto  lg:w-[40%] flex flex-col gap-3 justify-center items-center sm:items-start text-left text-black'>
                 <div className='w-fit items-center justify-center h-fit bg-[#F0F5FF] flex gap-2 px-3 py-2 rounded-[20px]'>
                     <img src="/image/hopeicon.png" alt='img' className='w-[18px] h-[18px]'/>
@@ -315,21 +315,20 @@ const [email, setEmail] = useState("");
                 </div>
                 <div className='w-full h-full   mt-3 text-left flex flex-col gap-3 '>
                     <h4 className='text-[20px] font-medium text-center sm:text-4xl sm:text-left'>Health . Hope . Humanity </h4>
-                    <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>BSF x DIVACA Health:
- At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
+                    <h4 className='text-[14px] text-center sm:text-lg sm:text-left'>BSF x DIVACA Health: At DIVACA Health, our mission goes beyond technology and healthcare. We are committed to uplifting the underserved, caring for the needy, and spreading the love and message of God in every community we reach.</h4>
                 </div>
             </div>
-            <div className='w-full h-[310px]  lg:h-[620px] md:h-[45vh] bg-[#182B5B] lg:w-[706px] mt-10 mb-10 pb-3 flex items-center justify-center  rounded-[24px]'> 
-              <div className="w-full h-full p-3 md:p-6 relative"> 
+            <div className='w-full h-[310px]  lg:h-[590px] md:h-[590px] bg-[#182B5B] lg:w-[706px] mt-10 mb-10 pb-3 flex items-center justify-center  rounded-[24px]'> 
+              <div className="w-full h-full p-3 md:p-5 relative"> 
                 {/* Image */}
                 <img
                   src={images[index]}
                   alt="slideshow"
-                  className="w-full m-auto rounded-[15px] transition-all duration-700  h-[95%]"
+                  className="w-full m-auto rounded-[16px] transition-all duration-700  h-[95%]"
                 />
 
                 {/* Bar Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 ">
+                <div className="absolute bottom-1 lg:bottom-4 left-1/2 h-5    -translate-x-1/2 flex items-center justify-center gap-2 ">
                   {images.map((_, idx) => (
                     <span
                       key={idx}
@@ -450,9 +449,9 @@ const [email, setEmail] = useState("");
         {/* Logo and contact */}
         <div className="text-white w-full xs:w-full flex flex-col items-start mb-6">
           <img src="/image/DHLOGO.png" alt="img" className="object-contain max-w-[137px] max-h-[47px] w-full h-auto mb-4" />
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <img src="/image/Mail.png" alt="emailicon" className="h-[20px] w-[20px]" />
-            <h3 className=" text-[10px] md:text-xs  ">| support@divacahealth.com</h3>
+          <div className="flex items-center justify-start gap-2 mb-2  ">
+            <img src="/image/Mail.png" alt="emailicon" className="h-[18px] w-[20px]" />
+            <h3 className=" break-words text-[12px] md:text-[14px] text-xs px-2  border-l-2 border-l-white w-[65%] sm:w-full ">support@divacahealth.com</h3>
           </div>
         </div>
 
