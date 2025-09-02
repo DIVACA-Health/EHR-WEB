@@ -300,12 +300,12 @@ const plans = [
                     <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
                     <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
                         <Link href='/contact' className='w-1/2'>
-                        <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2'>
+                        <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2 cursor-pointer'>
                             <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
                         <Link href='/contact' className='w-1/2'>
-                        <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2'>
+                        <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2 cursor-pointer'>
                             <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
                         </button>
                         </Link>
