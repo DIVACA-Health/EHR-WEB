@@ -385,12 +385,15 @@ const plans = [
                     <div className="pl-5 pr-5 pt-8 pb-8 rounded-[24px] shadow-2xl shadow-[#A2A2A233] flex flex-col gap-3">
                       <h2 className="text-[#14254F] text-[18px] font-semibold">{plan.title}</h2>
                       <h3 className="text-sm">{plan.subtitle}</h3>
+                      <Link href="/contact">
                       <button
-                        className={`flex gap-2 items-center justify-center w-full rounded-[8px] h-[48px] ${plan.buttonColor} ${plan.buttonTextColor}`}
+                        className={`flex gap-2 items-center justify-center w-full rounded-[8px] cursor-pointer h-[48px] ${plan.buttonColor} ${plan.buttonTextColor}`}
                       >
                         <h3>{plan.buttonText}</h3>
                         {plan.icon && <img src={plan.icon} alt="icon" className="w-[18px] h-[18px]" />}
                       </button>
+                      </Link>
+
                     </div>
                     {/* Features */}
                     <div className="p-5 flex flex-col gap-3">
