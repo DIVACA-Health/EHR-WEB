@@ -285,7 +285,7 @@ const plans = [
                     </nav>
                 </div>
                 <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
+                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
                     Explore Campus Care
                     </button>
                 </Link>

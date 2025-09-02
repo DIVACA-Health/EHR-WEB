@@ -172,7 +172,7 @@ const [email, setEmail] = useState("");
           </div>
           <div className='mt-auto'>
             <Link href="/contact">
-              <button className='w-full h-[50px] bg-[#3B6FED] hover:bg-[#274dcf] text-white text-sm rounded-[12px]'>
+              <button className='w-full h-[50px] bg-[#3B6FED] hover:bg-[#274dcf] text-white text-sm rounded-[12px] cursor-pointer'>
                 Explore Campus Care
               </button>
             </Link>
@@ -216,7 +216,7 @@ const [email, setEmail] = useState("");
                     </nav>
                 </div>
                 <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium'>
+                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
                     Explore Campus Care
                     </button>
                 </Link>
@@ -431,7 +431,7 @@ const [email, setEmail] = useState("");
             <button
               type="submit"
               disabled={submitting}
-              className="w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white disabled:opacity-70"
+              className="w-[80%] sm:w-[25%] h-[48px] lg:h-full rounded-[12px] bg-gradient-to-r from-[#3B6FED] to-[#223F87] text-white disabled:opacity-70 cursor-pointer"
             >
               {submitting ? "Subscribing..." : "Subscribe"}
             </button>
