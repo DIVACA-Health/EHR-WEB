@@ -283,7 +283,7 @@ const contact = () => {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center disabled:opacity-70"
+                          className="w-full h-[60px] bg-[#3B6FED] rounded-[16px] text-white text-sm text-center flex items-center justify-center disabled:opacity-70 cursor-pointer"
                         >
                           {loading ? "Submitting..." : "Submit"}
                         </button>
