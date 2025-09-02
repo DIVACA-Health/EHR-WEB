@@ -250,7 +250,7 @@ const plans = [
         </div>
       )}
 
-    <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3'>
+    <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3 max-w-[1400px] m-auto'>
         <div className='mb-20 sm: h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20  '>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
@@ -284,11 +284,13 @@ const plans = [
                     ))}
                     </nav>
                 </div>
-                <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
-                    Explore Campus Care
-                    </button>
-                </Link>
+                <div className=' w-1/3  flex justify-end lg:pr-10'>
+                  <Link href="/contact" >
+                      <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
+                      Explore Campus Care
+                      </button>
+                  </Link>
+                </div>
             </div> 
             <div className=' flex flex-col sm:flex-row items-center justify-between h-[70%]  w-full p-0 sm:pl-5 sm:pr-5 mt-[77px]'>
                 <div className='  sm:w-[55%] h-full text-black flex flex-col gap-10 sm:justify-center items-center sm:items-start'>
@@ -296,15 +298,15 @@ const plans = [
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs font-medium'>SMART HEALTH SOLUTION</h3>
                     </div>
-                    <h1 className='text-[24px] font-semibold text-center  sm:text-left lg:text-[50px] '>Healthcare Innovation Starts Here </h1>
-                    <h3 className=' text-center sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
-                    <div className='lg:w-[432px] w-[308px]  flex gap-2 '>
-                        <Link href='/contact' className='w-1/2'>
+                    <h1 className='text-[clamp(1.5rem,0.7683rem+3.122vw,3.5rem)] font-bold text-center  sm:text-left  '>Healthcare Innovation Starts Here </h1>
+                    <h3 className=' text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)] w-full font-normal text-center  sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
+                    <div className='w-full flex gap-2 flex-wrap justify-center sm:justify-start bg-red'>
+                        <Link href='/contact' className='w-fit'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2 cursor-pointer'>
                             <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
-                        <Link href='/contact' className='w-1/2'>
+                        <Link href='/contact' className='w-fit'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2 cursor-pointer'>
                             <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
                         </button>
@@ -322,7 +324,7 @@ const plans = [
                     <img src='/image/usersblue.png' alt='IMG' className='w-[20px] h-[20px]' />
                     <h3 className=' text-[11px] lg:text-xs'>OUR INVESTORS & PARTNERS</h3>
                 </div>
-                <h1 className=' text-[20px] text-center lg:text-[50px] sm:text-left font-bold lg:w-[80%]'>Built & backed by DIVACA Tech</h1>
+                <h1 className=' text-[clamp(1.25rem,0.6098rem+2.7317vw,3rem)] text-center  sm:text-left font-bold lg:w-[80%]'>Built & backed by DIVACA Tech</h1>
                 <h3 className='text-[12px] mb-5 sm:mb-0 text-center sm:text-left lg:text-lg lg:w-[90%]'>DIVACA Health is proudly powered by DIVACA Tech — a future-driven company committed to transforming technology across Africa  and the world at large. As our founding partner, DIVACA Tech provides the innovation, infrastructure, and vision behind everything we build.</h3>
             </div>
             <div className='w-full h-full lg:w-1/2 m-auto flex items-center justify-center'>
@@ -614,7 +616,7 @@ const plans = [
         </div>
         </div>
     </div>
-    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+    <footer className="relative w-full max-w-[1400px] m-auto flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
       {/* Glow Effect */}
       <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
 

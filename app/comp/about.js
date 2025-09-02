@@ -181,7 +181,7 @@ const [email, setEmail] = useState("");
       )}
 
 
-    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3'>
+    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3 max-w-[1400px] m-auto'>
         <div className='p-0 bg-[#F0F5FF] sm:h-fit rounded-[48px]  pl-5 pr-5 pt-3 pb-20'>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
@@ -215,11 +215,13 @@ const [email, setEmail] = useState("");
                     ))}
                     </nav>
                 </div>
-                <Link href="/contact" className=' w-1/3 flex justify-end lg:pr-10'>
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
-                    Explore Campus Care
-                    </button>
-                </Link>
+                <div className=' w-1/3  flex justify-end lg:pr-10'>
+                  <Link href="/contact" >
+                      <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
+                      Explore Campus Care
+                      </button>
+                  </Link>
+                </div>
             </div> 
             <div className='flex flex-col  items-center justify-center h-fit   w-full  mt-[77px]  '>
                 <div className='w-full h-full  text-black flex flex-col gap-3 justify-center items-center '>
@@ -227,8 +229,8 @@ const [email, setEmail] = useState("");
                         <img src='/image/HeartRate.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-[9px] sm:text-xs'>DRIVEN BY CARE, DEFINED BY PURPOSE</h3>
                     </div>
-                    <h1 className='text-[24px] font-bold sm:text-[50px] text-center'> <span className='text-[#3B6FED]'>Innovating healthcare </span><br></br>for a healthier tomorrow</h1>
-                    <h3 className='text-[12px] sm:text-[18px] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
+                    <h1 className='text-[clamp(1.5rem,0.7683rem+3.122vw,3.5rem)]  font-bold  text-center'> <span className='text-[#3B6FED]'>Innovating healthcare </span><br></br>for a healthier tomorrow</h1>
+                    <h3 className='text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)] text-center sm:text-center mb-10'>DIVACA Health empowers schools, Institutions and hospitals with digital records,<br></br> reliable infrastructure, and better health for all.</h3>
 
                 </div>
                 <div className='w-full h-full  flex justify-center items-center'>
@@ -248,13 +250,13 @@ const [email, setEmail] = useState("");
             <div className='w-full h-fit  sm:flex gap-4   text-black lg:h-[304px] mt-5 mb-15 '>
                 <div className='w-full mb-5 sm:w-1/2 bg-[#F3F7FF] h-fit rounded-[24px] shadow-[6px_6px_0px_0px_#001A59] shadow-[#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/targeticon.png' alt='img' className='w-[54px] h-[54px]'/>
-                    <h4 className='text-xl font-bold'>Our Mission</h4>
-                    <h5>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
+                    <h4 className='text-[clamp(0.875rem,0.6463rem+0.9756vw,1.5rem)] font-bold'>Our Mission</h4>
+                    <h5 className='text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)]'>To revolutionize healthcare by eliminating paperwork and transitioning all processes to digital platforms—enhancing efficiency, patient care, and accessibility while ensuring seamless system synchronization for healthcare institutions.</h5>
                 </div>
                 <div className='w-full sm:w-1/2 bg-[#FFFCEE] h-fit rounded-[24px]  shadow-[6px_6px_0px_0px_#001A59] border-[2px] border-[#001A59] p-8 flex flex-col gap-3'>
                     <img src='/image/lighticon.png' alt='img' className='w-[54px] h-[54px]'/>
-                    <h4 className='text-xl font-bold'>Our Vision</h4>
-                    <h5>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>
+                    <h4 className='text-[clamp(0.875rem,0.6463rem+0.9756vw,1.5rem)] font-bold'>Our Vision</h4>
+                    <h5 className='text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)]'>To build a digitally connected healthcare system across Africa and the world where hospitals, universities, and healthcare providers operate efficiently through cutting-edge technology, and where individuals are empowered to live a healthier life.</h5>
                 </div>
             </div>
 
@@ -439,7 +441,7 @@ const [email, setEmail] = useState("");
 
         </div>
     </div>
-    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden max-w-[1400px] m-auto">
       {/* Glow Effect */}
       <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
 

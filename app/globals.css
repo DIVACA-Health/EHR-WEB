@@ -22,10 +22,11 @@
 }
 
 body {
-  background: var(--background);
+  background: white;
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  
 }
 
 /* Hide number input arrows (for Chrome, Safari, Edge, Opera) */

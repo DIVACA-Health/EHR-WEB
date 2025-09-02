@@ -136,7 +136,7 @@ const contact = () => {
         </div>
       )}
       
-    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3'>
+    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3 max-w-[1400px] m-auto'>
         <div className='p-0 bg-[#F0F5FF] sm:h-fit rounded-[48px]  pl-5 pr-5 pt-3 pb-20'>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
@@ -170,11 +170,13 @@ const contact = () => {
                     ))}
                     </nav>
                 </div>
-                <Link href="/createpage" className=' w-1/3 flex justify-end lg:pr-10'>
-                    <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
-                    Explore Campus Care
-                    </button>
-                </Link>
+                <div className=' w-1/3  flex justify-end lg:pr-10'>
+                  <Link href="/contact" >
+                      <button className='bg-[#3B6FED] hover:bg-[#274dcf] transition-colors duration-200 border border-[#3B6FED] rounded-[8px] w-[188px] h-[48px] text-white text-sm font-medium cursor-pointer'>
+                      Explore Campus Care
+                      </button>
+                  </Link>
+                </div>
             </div> 
             <div className='flex flex-col gap-5 md:flex-row items-center h-[70%] w-full pl-1 sm:pl-5 pr-1 sm:pr-5 sm:mt-[77px] mt-[50px] '>
                 <div className='h-fit mb-10 w-[100%] text-black lg:w-1/2 sm:h-[762px] flex flex-col gap-3 sm:gap-10 '>
@@ -182,8 +184,8 @@ const contact = () => {
                         <img src='/image/helpicon.png' alt='IMG' className='w-[20px] h-[20px]' />
                         <h3 className='text-xs'>WE’RE HERE TO HELP YOU</h3>
                     </div>
-                    <h1 className='text-[40px] font-medium '>Let’s Talk Health.</h1>
-                    <h3 className='font-extralight'>Want to bring DIVACA Health to your school, hospital, or state health <br></br> system? We’re ready to partner with forward-thinking institutions.</h3>
+                    <h1 className='text-[clamp(1.5rem,0.7683rem+3.122vw,3.5rem)] font-bold '>Let’s Talk Health.</h1>
+                    <h3 className='text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)] font-normal'>Want to bring DIVACA Health to your school, hospital, or state health system? We’re ready to partner with forward-thinking institutions.</h3>
                     <div className='w-[300px] flex flex-col gap-5'>
                         <div className='h-[60px]   flex items-center gap-3'>
                             <div>
@@ -318,7 +320,7 @@ const contact = () => {
             </div>
         </div>
     </div>
-    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden max-w-[1400px] m-auto">
       {/* Glow Effect */}
       <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
 
