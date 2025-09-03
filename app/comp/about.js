@@ -181,7 +181,7 @@ const [email, setEmail] = useState("");
       )}
 
 
-    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3 max-w-[1400px] m-auto'>
+    <div className='p-2 sm:bg-white w-full h-fit pl-5 pr-5 pt-3 pb-3 max-w-[1440px] m-auto'>
         <div className='p-0 bg-[#F0F5FF] sm:h-fit rounded-[48px]  pl-5 pr-5 pt-3 pb-20'>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
@@ -441,7 +441,7 @@ const [email, setEmail] = useState("");
 
         </div>
     </div>
-    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden max-w-[1400px] m-auto">
+    <footer className="relative w-full flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden max-w-[1440px] m-auto">
       {/* Glow Effect */}
       <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
 

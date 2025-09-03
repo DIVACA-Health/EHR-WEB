@@ -250,7 +250,7 @@ const plans = [
         </div>
       )}
 
-    <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3 max-w-[1400px] m-auto'>
+    <div className='lg bg-white w-full height-fit pl-5 pr-5 pt-3 pb-3 max-w-[1440px] m-auto'>
         <div className='mb-20 sm: h-fit rounded-[48px] bg-[#F0F5FF] pl-5 pr-5 pt-3 pb-20  '>
             <div className=' w-full h-fit rounded-[40px] mt-3 flex justify-between items-center px-3 sm:hidden'>
                 <img src='/image/DHSVG1.png' alt='logo' className='w-[90px] h-[30px]'/>
@@ -303,12 +303,12 @@ const plans = [
                     <div className='w-full flex gap-2 flex-wrap justify-center sm:justify-start bg-red'>
                         <Link href='/contact' className='w-fit'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2 cursor-pointer'>
-                            <h1 className='text-white text-[12px] sm:text-lg'>Explore Campus Care</h1>
+                            <h1 className='text-white text-[16px] sm:text-lg'>Explore Campus Care</h1>
                         </button>
                         </Link>
                         <Link href='/contact' className='w-fit'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2 cursor-pointer'>
-                            <h1 className='text-[#3B6FED] text-[12px] sm:text-lg'>Request early access</h1>
+                            <h1 className='text-[#3B6FED] text-[16px] sm:text-lg'>Request early access</h1>
                         </button>
                         </Link>
                     </div>
@@ -616,7 +616,7 @@ const plans = [
         </div>
         </div>
     </div>
-    <footer className="relative w-full max-w-[1400px] m-auto flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
+    <footer className="relative w-full max-w-[1440px] m-auto flex flex-col items-center justify-center bg-[#0C162F] rounded-t-[48px] pt-12 overflow-hidden">
       {/* Glow Effect */}
       <div className="absolute -bottom-30 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle,rgba(59,111,237,0.4),transparent)] blur-3xl pointer-events-none" />
 
