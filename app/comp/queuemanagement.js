@@ -1,10 +1,15 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+
+import { useEffect, useState, useRef } from "react";
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('access_token');
-  if (!token) throw new Error('Authorization token is missing.');
+  if (!token) {
+    console.error('Authorization token is missing.');
+    throw new Error('Authorization token is missing.');
+  }
 
   const headers = {
     'Content-Type': 'application/json',
@@ -12,338 +17,364 @@ const fetchWithAuth = async (url, options = {}) => {
     ...options.headers,
   };
 
-  const res = await fetch(url, { ...options, headers });
-  return res;
-};
-
-const QueueManagement = () => {
-  const [queue, setQueue] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ firstName: '', lastName: '' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [activeActionIndex, setActiveActionIndex] = useState(null);
-  const [formError, setFormError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state for data fetching
-
-  const itemsPerPage = 10;
-  const actionButtonRefs = useRef({});
-  const dropdownRefs = useRef({});
-
-const fetchQueue = async () => {
   try {
-    const res = await fetchWithAuth('/api/v1/queue/');
-
-    // Only throw if it’s really bad
-    if (!res.ok) {
-      console.error("Bad response:", res.status, res.statusText);
-      toast.error(`Error: ${res.statusText}`);
-      return;
+    const res = await fetch(url, { ...options, headers });
+    if (res.status === 401) {
+      console.error('Unauthorized: Invalid or expired token.');
+      throw new Error('Unauthorized: Invalid or expired token.');
     }
-
-    const result = await res.json();
-
-    const sorted = Array.isArray(result)
-      ? result.sort((a, b) => new Date(b.timeAdded) - new Date(a.timeAdded))
-      : [];
-
-    setQueue(sorted);
-  } catch (err) {
-    console.error('Failed to load queue:', err);
-    toast.error('Failed to load queue');
-  } finally {
-    setLoading(false);
+    return res;
+  } catch (error) {
+    console.error('Error in fetchWithAuth:', error);
+    throw error;
   }
 };
 
+export default function QueueManagement() {
+  const [selectedStatus, setSelectedStatus] = useState('All');
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchQueue();
-  }, []);
+  // Floating menu state
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [menuUser, setMenuUser] = useState(null);
 
-  const handleClickOutside = (event) => {
-    const buttonRefs = Object.values(actionButtonRefs.current);
-    const dropdowns = Object.values(dropdownRefs.current);
-  
-    const clickedOutsideAll = buttonRefs.every(
-      (ref, i) =>
-        (!ref || !ref.contains(event.target)) &&
-        (!dropdowns[i] || !dropdowns[i].contains(event.target))
-    );
-  
-    if (clickedOutsideAll) {
-      setActiveActionIndex(null);
+  const router = useRouter();
+  const tableContainerRef = useRef(null);
+
+  // Fetch queue data function (so it can be reused after actions)
+  const fetchQueueData = async () => {
+    try {
+      const res = await fetchWithAuth('/api/v1/queue/medical-overview');
+      if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
+
+      const result = await res.json();
+      const transformed = result.data.map((item) => ({
+        firstname: item.personalInfo.firstName,
+        lastname: item.personalInfo.lastName,
+        divacaId: item.queueInfo.id,
+        matricNumber: item.student.matricNumber || 'N/A',
+        status: item.queueInfo.status,
+        studentId: item.student.id || "N/A",
+        lastVisit: item.queueInfo.timeAdded
+          ? item.queueInfo.timeAdded
+          : '',
+        avatar: '/image/profileimg.png',
+      }));
+
+      setData(transformed);
+      setLoading(false);
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error(err);
+      toast.error('Failed to fetch medical overview data');
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    fetchQueueData();
   }, []);
 
-  const handleAddToQueue = async () => {
-    if (!formData.firstName || !formData.lastName) {
-      setFormError('Please fill in all the fields.');
+useEffect(() => {
+  if (selectedStatus.toLowerCase() === 'all') {
+    setFilteredData(
+      data.filter(item =>
+        ['Forwarded to doctor', 'In consultation', 'Emergency' , 'Waiting'].includes(item.status)
+      )
+    );
+  } else {
+    setFilteredData(
+      data.filter(item => item.status.toLowerCase() === selectedStatus.toLowerCase())
+    );
+  }
+}, [selectedStatus, data]);
+
+
+  // Close floating menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.floating-menu')) {
+        setMenuUser(null);
+      }
+    };
+    if (menuUser) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [menuUser]);
+
+  const statusCounts = {
+    waiting: data.filter((item) => item.status === 'Waiting').length,
+    forwarded: data.filter((item) => item.status === 'Forwarded to doctor').length,
+    consultation: data.filter((item) => item.status === 'In consultation').length,
+    emergency: data.filter((item) => item.status === 'Emergency').length,
+  };
+
+  statusCounts.all =
+  statusCounts.forwarded + statusCounts.consultation + statusCounts.emergency + statusCounts.waiting;
+
+  const statusOptions = [
+    { label: `All (${statusCounts.all})`, value: 'All' },
+    { label: `Waiting (${statusCounts.waiting})`, value: 'Waiting' },
+    { label: `Forwarded to doctor (${statusCounts.forwarded})`, value: 'Forwarded to doctor' },
+    { label: `In consultation (${statusCounts.consultation})`, value: 'In consultation' },
+    { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
+  ];
+
+  const handleRowClick = async (studentId) => {
+    if (!studentId) {
+      toast.error('Invalid user ID. Cannot navigate to the page.');
       return;
     }
 
-    if (isSubmitting) return;
-    setIsSubmitting(true);
-
-    const capitalizeName = (name) =>
-      name
-        .split(' ')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
-
-    const formattedFirstName = capitalizeName(formData.firstName);
-    const formattedLastName = capitalizeName(formData.lastName);
+    const checkUrl = `/api/v1/queue/${studentId}/current`;
+    const navigateUrl = `/queue/${studentId}`;
 
     try {
-      const res = await fetchWithAuth('/api/v1/queue', {
-        method: 'POST',
-        body: JSON.stringify({
-          firstName: formattedFirstName,
-          lastName: formattedLastName,
-        }),
+      const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
+
+      if (res.ok) {
+        router.push(navigateUrl);
+      } else if (res.status === 401) {
+        toast.error('Unauthorized: Please log in again.');
+        router.push('/login');
+      } else {
+        toast.error('The requested page does not exist.');
+      }
+    } catch (error) {
+      toast.error('Failed to validate the page. Please try again.');
+    }
+  };
+
+  const handleRemoveFromQueue = async (id) => {
+    const toastId = toast.loading('Removing from queue...');
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
+        method: 'DELETE',
       });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        toast.error(`Failed to add to queue: ${errorText}`);
-        setIsSubmitting(false);
-        return;
-      }
+      if (!res.ok) throw new Error('Failed to remove from queue');
 
-      setFormData({ firstName: '', lastName: '' });
-      setFormError('');
-      setShowModal(false);
-      toast.success('Added to queue successfully!');
-      fetchQueue();
+      toast.success('Removed from queue', { id: toastId });
+      setMenuUser(null);
+      await fetchQueueData(); // Refresh table after action
     } catch (err) {
-      console.error('Failed to add to queue:', err);
-      toast.error('An error occurred while adding to the queue.');
-    } finally {
-      setIsSubmitting(false);
+      console.error('Failed to remove from queue:', err);
+      toast.error('An error occurred while removing from queue.', { id: toastId });
     }
   };
 
   const handleForwardFiles = async (id) => {
-  try {
-    const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
-      method: 'PUT', 
-      body: JSON.stringify({ status: "Waiting" }),
-    });
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "forwarded to doctor" }),
+      });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      toast.error(`Failed to forward files: ${errorText}`);
-      return;
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to forward files: ${errorText}`);
+        return;
+      }
+
+      toast.success('Files forwarded successfully');
+      setMenuUser(null);
+      await fetchQueueData(); // Refresh table after action
+    } catch (err) {
+      console.error('Failed to forward files:', err);
+      toast.error('An error occurred while forwarding files.');
     }
+  };
 
-    toast.success('Files forwarded successfully');
-    setActiveActionIndex(null);
-    fetchQueue();
-  } catch (err) {
-    console.error('Failed to forward files:', err);
-    toast.error('An error occurred while forwarding files.');
-  }
-};
+  const handleemergency = async (id) => {
+    try {
+      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: "Emergency" }),
+      });
 
-const handleRemoveFromQueue = async (id) => {
-  const toastId = toast.loading('Removing from queue...');
-  try {
-    console.log('Removing ID:', id);
-    const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
-      method: 'DELETE',
-    });
-    console.log('Response:', res);
+      if (!res.ok) {
+        const errorText = await res.text();
+        toast.error(`Failed to forward files: ${errorText}`);
+        return;
+      }
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error('API error:', errorText);
-      throw new Error('Failed to remove from queue');
+      toast.success('Files forwarded successfully');
+      setMenuUser(null);
+      await fetchQueueData(); // Refresh table after action
+    } catch (err) {
+      console.error('Failed to forward files:', err);
+      toast.error('An error occurred while forwarding files.');
     }
+  };
 
-    toast.success('Removed from queue', { id: toastId });
-    setActiveActionIndex(null);
-    fetchQueue();
-  } catch (err) {
-    console.error('Failed to remove from queue:', err);
-    toast.error('An error occurred while removing from queue.', { id: toastId });
-  }
-};
+  // --- Floating menu positioning fix ---
+  // Use fixed positioning relative to viewport, not table container
+  const handleMenuButtonClick = (e, user) => {
+    const btnRect = e.currentTarget.getBoundingClientRect();
+    const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
+    const spaceBelow = window.innerHeight - btnRect.bottom;
+    let top = btnRect.bottom + 4;
+    if (spaceBelow < menuHeight) {
+      // Not enough space below, show above
+      top = btnRect.top - menuHeight - 4;
+      if (top < 0) top = 8; // Prevent offscreen top
+    }
+    setMenuPosition({
+      top,
+      left: btnRect.left,
+    });
+    setMenuUser(user);
+  };
 
-
-  const handlePageClick = (page) => setCurrentPage(page);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedQueue = Array.isArray(queue) ? queue.slice(startIndex, startIndex + itemsPerPage) : [];
-  const totalPages = Math.ceil(queue.length / itemsPerPage);
-  const isFormValid = formData.firstName && formData.lastName;
+  // Format time as "h:mm AM/PM"
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+  };
 
   return (
-    <div className='p-6 w-full h-full m-auto'>
-      <div className='flex justify-between items-center mb-4'>
+    <div className="p-4">
+      <div className='flex justify-between items-center mb-[18px] mt-[20px]'>
         <h2 className='text-xl font-bold'>Queue management</h2>
-        {/* <button
-          onClick={() => setShowModal(true)}
-          className='bg-blue-600 text-white w-[174px] h-[44px] rounded-[8px] hover:bg-blue-700 flex items-center justify-center gap-3'
-        >
-          <img src='/image/whiteplus.png' height={20} width={20}/>
-          <h1 className='text-[14px]'>
-            Add to queue
-          </h1>
-        </button> */}
       </div>
 
-      {/* Display loading spinner if data is being fetched */}
-      {loading ? (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600"></div>
-        </div>
-      ) : (
-        <div className='overflow-x-auto  rounded-xl border-[0.8px] border-[#E4E4E4] bg-[#FFFFFF] '>
-          <table className='min-w-full table-auto text-sm'>
-            <thead>
-              <tr className='border-b'>
-                <th className=' p-4  text-center font-medium'>S/N</th>
-                <th className=' text-center p-4 font-medium'>First name</th>
-                <th className=' text-center p-4 font-medium'>Last name</th>
-                <th className=' text-center p-4 font-medium'>Time</th>
-                <th className='text-center p-4 font-medium'>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedQueue.map((item, index) => (
-                <tr key={item.id} className={`${index % 2 === 0 ? 'bg-[#FAFAFA]' : ''}`}>
-                  <td className='p-4  text-center'>{startIndex + index + 1}</td> 
-                  <td className='p-4 text-center'>{item.firstName}</td>
-                  <td className='p-4  text-center'>{item.lastName}</td>
-                  <td className='p-4 text-center'>
-                    {new Date(item.timeAdded).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true,
-                    }).toUpperCase()}
-                  </td>
-                  <td className='p-4 relative flex justify-center items-center'>
-                    <button
-                      onClick={() => setActiveActionIndex((prev) => (prev === index ? null : index))}
-                      className='text-gray-700 hover:text-black p-1 cursor-pointer rounded-full'
-                      ref={(el) => (actionButtonRefs.current[index] = el)}
-                    >
-                      <img src="/image/More circle.png" alt="img" height={20} width={20}/>
-                    </button>
+      <div className="flex gap-2 mb-4 flex-wrap border-b-[1px] border-[#EBEBEB]">
+        {statusOptions.map((option) => (
+          <button
+            key={option.value}
+            className={`px-3 py-1 rounded text-sm font-extralight ${
+              selectedStatus === option.value
+                ? 'bg-transparent border-b-[2px] rounded-none border-b-[#3B6FED] text-[#3B6FED]'
+                : 'bg-transparent text-[#898989]'
+            }`}
+            onClick={() => setSelectedStatus(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
 
-                    {activeActionIndex === index && (
-                      <div
-                        ref={(el) => (dropdownRefs.current[index] = el)}
-                        className='absolute top-0 right-0 bg-white shadow-lg rounded-lg w-48 z-10 text-left'
-                      >
-                        <button
-                          onClick={() => {
-                            handleForwardFiles(item.studentId);
-                          }}
-                          className='w-full text-left px-4 py-1 hover:bg-gray-100'
-                        >
-                          Forward patient files
-                        </button>
-                        <button
-                          onClick={() => handleRemoveFromQueue(item.studentId)}
-                          className='w-full text-left px-4 py-1 text-red-600 hover:bg-red-50'
-                        >
-                          Remove from queue
-                        </button>
-                      </div>
-                    )}
+      <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-8 relative border border-[#E5E7EB]" ref={tableContainerRef}>
+        <table className="w-full text-sm text-center">
+          <thead className="bg-white border-b border-[#E5E7EB]">
+            <tr>
+              <th className="px-4 py-3 font-bold text-[#6B7280] ml-5">S/N</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Last name</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Time in</th>
+              <th className="px-4 py-3 font-bold text-[#6B7280]">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="7" className="px-4 py-6 text-center">Loading...</td>
+              </tr>
+            ) : filteredData.length > 0 ? (
+              filteredData.map((user, idx) => (
+                <tr
+                  key={user.divacaId}
+                  className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
+                  style={{ borderBottom: '1px solid #E5E7EB' }}
+                  onClick={e => {
+                    // Prevent row click if the action button (menu) is clicked
+                    if (
+                      e.target.closest('.action-menu-btn') ||
+                      e.target.closest('.floating-menu')
+                    ) return;
+                    handleRowClick(user.studentId);
+                  }}
+                >
+                  <td className="px-4 py-3">{idx + 1}</td>
+                  <td className="px-4 py-3">{user.firstname}</td>
+                  <td className="px-4 py-3">{user.lastname}</td>
+                  <td className="px-4 py-3">{formatTime(user.lastVisit)}</td>
+                  <td className="px-4 py-3">
+                    <span className={`inline-block px-3 py-1 text-xs rounded-full border ${
+                      user.status === 'Waiting' ? 'bg-[#FFF5E3] text-[#E99633] border-[#E99633]' :
+                      user.status === 'In consultation' ? 'bg-[#F2F6FF] text-[#3B6FED] border-[#3B6FED]' :
+                      user.status === 'Forwarded to doctor' ? 'bg-[#ECFFF0] text-[#218838] border-[#218838]' :
+                      user.status === 'Emergency' ? 'bg-[#FFF0EC] text-[#e24312] border-[#e24312]' :
+                      user.status === 'Admitted' ? 'bg-[#FFEBEB] text-[#FF4040] border-[#FF4040]' :
+                      user.status === 'Returned to health attendant' ? 'bg-[#EBE7FF] text-[#2000C2] border-[#2000C2]' :
+                      'bg-gray-200 text-gray-800 border-gray-300'
+                    }`}>
+                      {user.status === 'Returned to health attendant' ? 'Returned to attendant' : user.status}
+                    </span>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* Pagination */}
-      <div className='mt-4 flex justify-between items-center text-sm text-gray-600 mb-5'>
-        <button
-          onClick={() => currentPage > 1 && setCurrentPage(prev => prev - 1)}
-           className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <div className='flex gap-1'>
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => handlePageClick(i + 1)}
-              className={`px-3 py-1 border rounded-md ${currentPage === i + 1 ? 'bg-[#EBEBEB] text-[#242424]' : 'bg-[#FAFAFA] text-gray-600'}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={() => currentPage < totalPages && setCurrentPage(prev => prev + 1)}
-           className="h-[36px] w-[100px] border-[#D3D3D3] shadow-xs border-[1px] cursor-pointer rounded-[8px] bg-white"
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
+                  No queue data available.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
-
-      {/* Modal */}
-      {showModal && (
-        <div className='fixed inset-0 bg-[#0C162F99] flex items-center justify-center z-50'>
-          <div className='bg-white rounded-[12px] w-[80%] md:w-[500px]'>
-            <div className='h-[64px] w-full border-b-[0.8px] border-[#F0F2F5] rounded-t-[12px] flex items-center pl-6' >
-              <h2 className='text-lg font-bold '>Add to Queue</h2>
-            </div>
-            <div className='h-[190px] w-[90%] m-auto flex flex-col items-center justify-center '>
-              <label className=' w-full mb-1 mt-2 font-medium text-[14px]'>
-                First Name
-              </label>
-              <input
-                type='text'
-                placeholder='First name'
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className='w-full mb-3 p-2 border-[1px] rounded-[12px] border-[#D0D5DD] h-[52px] outline-none'
-              />
-              <label className=' w-full mb-1 mt-1 font-medium text-[14px]'>
-                Last Name
-              </label>
-              <input
-                type='text'
-                placeholder='Last name'
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className='w-full mb-3 p-2 border-[1px] rounded-[12px] border-[#D0D5DD] h-[52px] outline-none'
-              />
-            </div>
-            {formError && <p className='text-red-600 text-sm'>{formError}</p>}
-            <div className='flex justify-end items-center gap-3 pr-4  h-[55px] rounded-b-[12px] border-t-[0.8px] border-[#F0F2F5] '>
-              <button
-                onClick={() => setShowModal(false)}
-                className='h-[70%] p-2 text-sm w-[60px] rounded-[8px] text-gray-600 bg-gray-100 '
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddToQueue}
-                disabled={!isFormValid || isSubmitting}
-                className={`h-[70%] w-[190px] p-2 text-sm text-white rounded-[8px] ${isFormValid && !isSubmitting ? 'bg-[#3B6FED]' : 'bg-gray-400'}`}
-              >
-                {isSubmitting ? 'Adding...' : 'Add to queue'}
-              </button>
-            </div>
-          </div>
+      {/* Floating Action Menu - OUTSIDE the table container */}
+      {menuUser && (
+        <div
+          className="floating-menu bg-white shadow-lg rounded-lg border border-gray-200 py-2"
+          style={{
+            position: 'fixed',
+            top: menuPosition.top,
+            left: menuPosition.left - 90,
+            minWidth: 160,
+            zIndex: 1000,
+            maxHeight: '60vh',
+            overflowY: 'auto',
+          }}
+        >
+          <button
+            onClick={() => { handleRowClick(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            View health record
+          </button>
+          <button
+            onClick={() => {
+              router.push(`/queue/${menuUser.studentId}?section=vitals`);
+              setMenuUser(null);
+            }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Record vitals
+          </button>
+          <button
+            onClick={() => { handleForwardFiles(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#141414] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Forward patient files
+          </button>
+          <button
+            onClick={() => { handleemergency(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Flag as emergency
+          </button>
+          <button
+            onClick={() => { handleRemoveFromQueue(menuUser.studentId); setMenuUser(null); }}
+            className="w-full text-left px-5 py-2 hover:bg-[#F0F2F5] text-[#E24312] text-sm font-normal transition-colors"
+            style={{ border: 'none', background: 'none' }}
+          >
+            Remove from queue
+          </button>
         </div>
       )}
     </div>
   );
-};
-
-export default QueueManagement;
+}

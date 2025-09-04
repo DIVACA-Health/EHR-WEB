@@ -21,7 +21,7 @@ const dashboard = () => {
   }, []);
 
   return (
-    <div className='h-full  w-[95%] flex flex-col m-auto'> 
+    <div className='h-full  w-[95%] flex flex-col m-auto '> 
       <div className='w-full min-h-[80px] mb-5 flex items-center justify-between text-black  '>
         <div className='w-[30%]'>
           <h2 className='font-bold text-2xl'>Dashboard</h2>

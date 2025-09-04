@@ -101,13 +101,19 @@ export default function NurseQueueManagement() {
     fetchQueueData();
   }, []);
 
-  useEffect(() => {
-    if (selectedStatus.toLowerCase() === 'all') {
-      setFilteredData(data);
-    } else {
-      setFilteredData(data.filter((item) => item.status.toLowerCase() === selectedStatus.toLowerCase()));
-    }
-  }, [selectedStatus, data]);
+useEffect(() => {
+  if (selectedStatus.toLowerCase() === 'all') {
+    setFilteredData(
+      data.filter(item =>
+        ['Forwarded to doctor', 'In consultation', 'Emergency'].includes(item.status)
+      )
+    );
+  } else {
+    setFilteredData(
+      data.filter(item => item.status.toLowerCase() === selectedStatus.toLowerCase())
+    );
+  }
+}, [selectedStatus, data]);
 
   // Close floating menu on click outside
   useEffect(() => {
@@ -126,21 +132,18 @@ export default function NurseQueueManagement() {
     };
   }, [menuUser]);
 
-  const statusCounts = {
-    all: data.length,
-    waiting: data.filter((item) => item.status === 'Waiting').length,
+ const statusCounts = {
     forwarded: data.filter((item) => item.status === 'Forwarded to doctor').length,
     consultation: data.filter((item) => item.status === 'In consultation').length,
-    returned: data.filter((item) => item.status === 'Returned to health attendant').length,
     emergency: data.filter((item) => item.status === 'Emergency').length,
   };
 
+  statusCounts.all = statusCounts.forwarded + statusCounts.consultation + statusCounts.emergency;
+
   const statusOptions = [
     { label: `All (${statusCounts.all})`, value: 'All' },
-    { label: `Waiting (${statusCounts.waiting})`, value: 'Waiting' },
     { label: `Forwarded to doctor (${statusCounts.forwarded})`, value: 'Forwarded to doctor' },
     { label: `In consultation (${statusCounts.consultation})`, value: 'In consultation' },
-    { label: `Returned to health attendant (${statusCounts.returned})`, value: 'Returned to health attendant' },
     { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
   ];
 
