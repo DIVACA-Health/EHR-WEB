@@ -9,16 +9,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata = {
   title: "DIVACA HEALTH",
-  description: "Your Trusted Platform for Digital Health Records",
-  icons: {
-    icon: [
-      { url: "/LOGO1.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/LOGO1.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
-  
+  description: "Your Trusted Platform for Digital Health Records",  
 };
 
 export default function RootLayout({ children }) {
