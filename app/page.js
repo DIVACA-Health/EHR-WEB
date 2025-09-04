@@ -300,15 +300,15 @@ const plans = [
                     </div>
                     <h1 className='text-[clamp(1.5rem,0.7683rem+3.122vw,3.5rem)] font-bold text-center  sm:text-left  '>Healthcare Innovation Starts Here </h1>
                     <h3 className=' text-[clamp(0.75rem,0.6128rem+0.5854vw,1.125rem)] w-full font-normal text-center  sm:text-left'>DIVACA Health empowers schools, Institutions and hospitals with digital records, reliable infrastructure, and better health for all.</h3>
-                    <div className='w-full flex gap-2 flex-wrap justify-center sm:justify-start bg-red'>
+                    <div className='w-full flex gap-2 md:flex-wrap justify-center sm:justify-start bg-red'>
                         <Link href='/contact' className='w-fit'>
                         <button className='bg-[#3B6FED] border-[1px] border-[#3B6FED] rounded-[8px] w-full h-fit py-3 px-2 cursor-pointer'>
-                            <h1 className='text-white text-[16px] sm:text-lg'>Explore Campus Care</h1>
+                            <h1 className='text-white  text-[clamp(0.75rem,0.6585rem+0.3902vw,1rem)]'>Explore Campus Care</h1>
                         </button>
                         </Link>
                         <Link href='/contact' className='w-fit'>
                         <button className='bg-white border-[1px] border-[#3B6FED] rounded-[8px] w-full  h-fit py-3 px-2 cursor-pointer'>
-                            <h1 className='text-[#3B6FED] text-[16px] sm:text-lg'>Request early access</h1>
+                            <h1 className='text-[#3B6FED] text-[clamp(0.75rem,0.6585rem+0.3902vw,1rem)]'>Request early access</h1>
                         </button>
                         </Link>
                     </div>
