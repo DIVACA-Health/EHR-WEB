@@ -12,10 +12,11 @@ export const metadata = {
   description: "Your Trusted Platform for Digital Health Records",
   icons: {
     icon: [
-      { url: "/LOGO1.png", sizes: "16x16", type: "image/png" },
       { url: "/LOGO1.png", sizes: "32x32", type: "image/png" },
     ],
-    apple: [{ url: "/LOGO1.png.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/LOGO1.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   
 };
