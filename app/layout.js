@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const metadata = {
   title: "DIVACA HEALTH",
   description: "Your Trusted Platform for Digital Health Records",
-  icons: "/LOGO.png"
+  icons: "/LOGO1.png"
   
 };
 
