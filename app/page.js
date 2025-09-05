@@ -656,7 +656,7 @@ const plans = [
           <Link href="https://www.linkedin.com/company/divaca-health/">
             <h3 className="font-extralight">LinkedIn</h3>
           </Link>
-          <Link href="">
+          <Link href="https://x.com/DIVACAHealth?t=_5jXUdZz7roOc0cNaq8JPA&s=31">
             <h3 className="font-extralight">X (formerly Twitter)</h3>
           </Link>
         </div>
