@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import StudentDashboard from '../comp/nursedashboard'
 
 const page = () => {
   return (
-    <StudentDashboard />
+    <Suspense fallback={<div>Loading...</div>}>
+      <StudentDashboard />
+    </Suspense>
+
   )
 }
 
