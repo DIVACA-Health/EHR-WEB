@@ -5,25 +5,40 @@ import Studentrecords from './studentrecords';
 import QueueManagement from './queuemanagement';
 import Dashboard from './dashboard';
 import Settings from './settings';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const StudentDashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get('tab') || 'dashboard';
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef(null);
-  const router = useRouter();
 
-  // ✅ Access token protection
+  // Access token protection
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-
-    // If token is missing, redirect to login page
     if (!token) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
+
+  // Update tab in URL and route when tab changes
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    router.push(`/studentdashboard?tab=${tab}`);
+  };
+
+  // Listen for URL changes (e.g. browser navigation)
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && tab !== activeTab) {
+      setActiveTab(tab);
+    }
+    // eslint-disable-next-line
+  }, [searchParams]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -34,9 +49,7 @@ const StudentDashboard = () => {
       case 'queue':
         return <QueueManagement searchTerm={searchTerm} />;
       case 'settings':
-        return (
-          <Settings/>
-        );
+        return <Settings />;
       default:
         return null;
     }
@@ -62,71 +75,71 @@ const StudentDashboard = () => {
         </div>
         <div className='min-h-[75%] flex justify-center'>
           <div className='w-[85%] min-h-full'>
-          <nav className='flex flex-col gap-3 text-white'>
-            <div
-              onClick={() => setActiveTab('dashboard')}
-              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                activeTab === 'dashboard' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-              }`}
-            >
-              <img
-                src={activeTab === 'dashboard' ? '/image/Category(blue).png' : '/image/Category.png'}
-                alt='dashboard'
-                className='h-[22px] w-[20px]'
-              />
-              <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                Dashboard
-              </h2>
-            </div>
+            <nav className='flex flex-col gap-3 text-white'>
+              <div
+                onClick={activeTab === 'dashboard' ? undefined : () => handleTabChange('dashboard')}
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'dashboard' ? 'bg-[#D8E2FB] pointer-events-none opacity-70' : 'hover:bg-[#D8E2FB]'
+                }`}
+              >
+                <img
+                  src={activeTab === 'dashboard' ? '/image/Category(blue).png' : '/image/Category.png'}
+                  alt='dashboard'
+                  className='h-[22px] w-[20px]'
+                />
+                <h2 className={`w-[80%] h-full ${activeTab === 'dashboard' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                  Dashboard
+                </h2>
+              </div>
 
-            <div
-              onClick={() => setActiveTab('students')}
-              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                activeTab === 'students' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-              }`}
-            >
-              <img
-                src={activeTab === 'students' ? '/image/Document(blue).png' : '/image/Document.png'}
-                alt='student records'
-                className='h-[22px] w-[20px]'
-              />
-              <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                Student records
-              </h2>
-            </div>
+              <div
+                onClick={activeTab === 'students' ? undefined : () => handleTabChange('students')}
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'students' ? 'bg-[#D8E2FB] pointer-events-none opacity-70' : 'hover:bg-[#D8E2FB]'
+                }`}
+              >
+                <img
+                  src={activeTab === 'students' ? '/image/Document(blue).png' : '/image/Document.png'}
+                  alt='student records'
+                  className='h-[22px] w-[20px]'
+                />
+                <h2 className={`w-[80%] h-full ${activeTab === 'students' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                  Student records
+                </h2>
+              </div>
 
-            <div
-              onClick={() => setActiveTab('queue')}
-              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                activeTab === 'queue' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-              }`}
-            >
-              <img
-                src={activeTab === 'queue' ? '/image/Users(blue).png' : '/image/Users.png'}
-                alt='queue'
-                className='h-[22px] w-[20px]'
-              />
-              <h2 className={`w-[80%] h-full  ${activeTab === 'queue' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                Queue management
-              </h2>
-            </div>
+              <div
+                onClick={activeTab === 'queue' ? undefined : () => handleTabChange('queue')}
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'queue' ? 'bg-[#D8E2FB] pointer-events-none opacity-70' : 'hover:bg-[#D8E2FB]'
+                }`}
+              >
+                <img
+                  src={activeTab === 'queue' ? '/image/Users(blue).png' : '/image/Users.png'}
+                  alt='queue'
+                  className='h-[22px] w-[20px]'
+                />
+                <h2 className={`w-[80%] h-full  ${activeTab === 'queue' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                  Queue management
+                </h2>
+              </div>
 
-            <div
-              onClick={() => setActiveTab('settings')}
-              className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
-                activeTab === 'settings' ? 'bg-[#D8E2FB]' : 'hover:bg-[#D8E2FB]'
-              }`}
-            >
-              <img
-                src={activeTab === 'settings' ? '/image/Settings(blue).png' : '/image/Settings.png'}
-                alt='settings'
-                className='h-[22px] w-[20px]'
-              />
-              <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
-                Settings
-              </h2>
-            </div>
-          </nav>
+              <div
+                onClick={activeTab === 'settings' ? undefined : () => handleTabChange('settings')}
+                className={`flex gap-2 items-center rounded-[8px] p-3 cursor-pointer transition-colors duration-200 ${
+                  activeTab === 'settings' ? 'bg-[#D8E2FB] pointer-events-none opacity-70' : 'hover:bg-[#D8E2FB]'
+                }`}
+              >
+                <img
+                  src={activeTab === 'settings' ? '/image/Settings(blue).png' : '/image/Settings.png'}
+                  alt='settings'
+                  className='h-[22px] w-[20px]'
+                />
+                <h2 className={`w-[80%] h-full ${activeTab === 'settings' ? 'text-blue-600 font-semibold' : 'text-sm'}`}>
+                  Settings
+                </h2>
+              </div>
+            </nav>
           </div>
         </div>
       </div>
