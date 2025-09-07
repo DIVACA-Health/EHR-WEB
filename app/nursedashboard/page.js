@@ -1,9 +1,9 @@
 import React from 'react'
-import Nursedashboard from '../comp/nursedashboard'
+import StudentDashboard from '../comp/nursedashboard'
 
 const page = () => {
   return (
-    <Nursedashboard/>
+    <StudentDashboard />
   )
 }
 

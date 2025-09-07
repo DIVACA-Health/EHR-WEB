@@ -6,20 +6,37 @@ import Topbar from './topbar';
 import Studentrecords from './studentrecords';
 import Nursequeuemanagement from './nursequeuemanagement';
 import Dashboard from './dashboardnurse';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Settings  from './settings';
 
 const StudentDashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get('tab') || 'dashboard';
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (!token) {
       router.push('/login');
     }
-  }, []);
+  }, [router]);
+
+  // Update tab in URL and route when tab changes
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    router.push(`/nursedashboard?tab=${tab}`); // <-- always go to dashboard route
+  };
+
+  useEffect(() => {
+    // Listen for URL changes (e.g. browser navigation)
+    const tab = searchParams.get('tab');
+    if (tab && tab !== activeTab) {
+      setActiveTab(tab);
+    }
+    // eslint-disable-next-line
+  }, [searchParams]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -30,8 +47,7 @@ const StudentDashboard = () => {
       case 'queue':
         return <Nursequeuemanagement />;
       case 'settings':
-        return (<Settings/>
-        );
+        return <Settings />;
       default:
         return null;
     }
@@ -39,7 +55,7 @@ const StudentDashboard = () => {
 
   return (
     <div className='flex text-black h-screen'>
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
       <div className='bg-[#FBFBFB] w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center'>
         <Topbar showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
         <div className='w-full h-[92%]'>{renderContent()}</div>

@@ -22,6 +22,12 @@ const queueDetailPage = () => {
     }
   }, []);
 
+  // This handler will navigate to doctorsdashboard with the correct tab
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    router.push(`/doctorsdashboard?tab=${tab}`);
+  };
+
   const renderContent = () => {
     if (!activeTab) {
       return (
@@ -46,7 +52,7 @@ const queueDetailPage = () => {
 
   return (
     <div className='flex text-black h-screen'>
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
       <div className='bg-white w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center'>
         <Topbar showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
         <div className='w-full h-[92%]'>{renderContent()}</div>

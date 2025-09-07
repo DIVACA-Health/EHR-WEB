@@ -306,7 +306,7 @@ const handleMenuButtonClick = (e, user) => {
       </div>
 
       <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-8 relative border border-[#E5E7EB]" ref={tableContainerRef}>
-        <table className="w-full text-sm text-left border-collapse">
+        <table className="w-full text-sm text-center border-collapse">
           <thead className="bg-white border-b border-[#E5E7EB]">
             <tr>
               <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>

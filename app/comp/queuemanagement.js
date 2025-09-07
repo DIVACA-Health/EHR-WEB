@@ -173,7 +173,7 @@ useEffect(() => {
     try {
       const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
         method: 'PUT',
-        body: JSON.stringify({ status: "forwarded to doctor" }),
+        body: JSON.stringify({ status: "Forwarded to doctor" }),
       });
 
       if (!res.ok) {
