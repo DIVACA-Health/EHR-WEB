@@ -147,45 +147,6 @@ useEffect(() => {
     { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
   ];
 
-  const handleRemoveFromQueue = async (id) => {
-    const toastId = toast.loading('Removing from queue...');
-    try {
-      const res = await fetchWithAuth(`/api/v1/queue/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!res.ok) throw new Error('Failed to remove from queue');
-
-      toast.success('Removed from queue', { id: toastId });
-      setMenuUser(null);
-      // Optionally refetch data here
-    } catch (err) {
-      console.error('Failed to remove from queue:', err);
-      toast.error('An error occurred while removing from queue.', { id: toastId });
-    }
-  };
-
-  const handleForwardFiles = async (id) => {
-    try {
-      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
-        method: 'PUT',
-        body: JSON.stringify({ status: "Forwarded to doctor" }),
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        toast.error(`Failed to forward files: ${errorText}`);
-        return;
-      }
-
-      toast.success('Files forwarded successfully');
-      setMenuUser(null);
-      // Optionally refetch data here
-    } catch (err) {
-      console.error('Failed to forward files:', err);
-      toast.error('An error occurred while forwarding files.');
-    }
-  };
 
     const handlestartconsultation = async (id) => {
     try {
@@ -204,8 +165,7 @@ useEffect(() => {
       setMenuUser(null);
 
       
-      router.push(`/queue/${menuUser.studentId}?section=notes`);
-      // Optionally refetch data here
+      router.push(`/queue1/${menuUser.studentId}?section=notes`);
     } catch (err) {
       console.error('Failed to start consultation:', err);
       toast.error('An error occurred while forwarding files.');
@@ -234,30 +194,17 @@ useEffect(() => {
     }
   };
 
-     const handleemergency = async (id) => {
-    try {
-      const res = await fetchWithAuth(`/api/v1/queue/${id}/status`, {
-        method: 'PUT',
-        body: JSON.stringify({ status: "Emergency" }),
-      });
+  const sortedRows = [...filteredData].sort((a, b) => {
+  // Emergency status always on top
+  if (a.status === 'Emergency' && b.status !== 'Emergency') return -1;
+  if (b.status === 'Emergency' && a.status !== 'Emergency') return 1;
+  // Otherwise, sort by lastVisit (descending)
+  const aTime = new Date(a.lastVisit).getTime();
+  const bTime = new Date(b.lastVisit).getTime();
+  return bTime - aTime;
+});
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        toast.error(`Failed to forward files: ${errorText}`);
-        return;
-      }
 
-      toast.success('Files forwarded successfully');
-      setMenuUser(null);
-      // Optionally refetch data here
-    } catch (err) {
-      console.error('Failed to forward files:', err);
-      toast.error('An error occurred while forwarding files.');
-    }
-  };
-
-  // --- Floating menu positioning fix ---
-  // Use fixed positioning relative to viewport, not table container
 const handleMenuButtonClick = (e, user) => {
   const btnRect = e.currentTarget.getBoundingClientRect();
   const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
@@ -322,8 +269,8 @@ const handleMenuButtonClick = (e, user) => {
               <tr>
                 <td colSpan="7" className="px-4 py-6 text-center">Loading...</td>
               </tr>
-            ) : filteredData.length > 0 ? (
-              filteredData.map((user, idx) => (
+            ) : sortedRows.length > 0 ? (
+              sortedRows.map((user, idx) => (
                 <tr
                   key={user.divacaId}
                   className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
