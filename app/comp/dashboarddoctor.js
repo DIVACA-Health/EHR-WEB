@@ -54,6 +54,7 @@ const dashboard = () => {
   });
 
   useEffect(() => {
+    let intervalId;
     const fetchDashboardData = async () => {
       try {
         const res = await fetchWithAuth('/api/v1/dashboard/medical-staff');
@@ -66,6 +67,10 @@ const dashboard = () => {
       }
     };
     fetchDashboardData();
+
+    intervalId = setInterval(fetchQueueData, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
     const [menuUser, setMenuUser] = useState(null);
@@ -96,6 +101,8 @@ const dashboard = () => {
       };
 
     useEffect(() => {
+      let intervalId;
+      
         const fetchQueueData = async () => {
           try {
             const res = await fetchWithAuth('/api/v1/queue/medical-overview');
@@ -122,6 +129,11 @@ const dashboard = () => {
           }
         };
         fetchQueueData();
+
+        
+        intervalId = setInterval(fetchQueueData, 5000); // Refresh every 5 seconds
+
+        return () => clearInterval(intervalId); 
     }, []);
 
     const waitingData = data.filter(item => item.status === 'Waiting');

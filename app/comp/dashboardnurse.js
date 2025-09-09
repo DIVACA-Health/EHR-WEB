@@ -45,6 +45,8 @@ const dashboard = () => {
   });
 
   useEffect(() => {
+    let intervalId;
+
     const fetchOverview = async () => {
       try {
         const res = await fetchWithAuth('/api/v1/dashboard/nurse-overview-stats');
@@ -56,6 +58,9 @@ const dashboard = () => {
       }
     };
     fetchOverview();
+      intervalId = setInterval(fetchQueueData, 5000); // Refresh every 5 seconds
+
+      return () => clearInterval(intervalId); 
   }, []);
 
     const handleRowClick = async (userId) => {
@@ -84,6 +89,7 @@ const dashboard = () => {
     };
 
     useEffect(() => {
+      let intervalId;
         const fetchQueueData = async () => {
           try {
             const res = await fetchWithAuth('/api/v1/queue/medical-overview');
@@ -110,6 +116,9 @@ const dashboard = () => {
           }
         };
         fetchQueueData();
+        intervalId = setInterval(fetchQueueData, 5000); // Refresh every 5 seconds
+
+        return () => clearInterval(intervalId); 
     }, []);
 
     // Table filters
