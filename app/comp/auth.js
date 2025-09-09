@@ -11,7 +11,7 @@ export default function AuthGuard({ children }) {
     const token = localStorage.getItem('access_token');
 
     // Don't check auth on login or signup routes
-    if (!token && pathname !== '/login' && pathname !== '/createpage' && pathname !== '/authentication' && pathname !== '/changepassword' && pathname !== '/forgotpassword' && pathname !== '/forgotpasswordauthentication' && pathname !== '/') {
+    if (!token && pathname !== '/login' && pathname !== '/createpage' && pathname !== '/authentication' && pathname !== '/contact' && pathname !== '/about' && pathname !== '/changepassword' && pathname !== '/forgotpassword' && pathname !== '/forgotpasswordauthentication' && pathname !== '/') {
       toast.error('Session expired. Please log in again.');
       router.push('/login');
     }
