@@ -132,8 +132,8 @@ const ForgotPasswordAuthentication = () => {
             </div>
           </div>
 
-          <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border cursor-pointer mt-3">
-            <button type="submit" onClick={handleOtpSubmit} disabled={loading}>
+          <div onClick={handleOtpSubmit} className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border cursor-pointer mt-3">
+            <button type="submit"  disabled={loading}>
               {loading ? "Verifying..." : "Confirm OTP"}
             </button>
           </div>

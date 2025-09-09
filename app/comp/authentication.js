@@ -107,10 +107,9 @@ const Authentication = () => {
             </div>
           </div>
 
-          <div className="w-full h-[45px]">
+          <div onClick={handleSubmit} className="w-full h-[45px]">
             <button
               type="submit"
-              onClick={handleSubmit}
               className="h-full w-full bg-blue-600 text-white font-normal text-center border-2 border-white rounded-2xl cursor-pointer"
             >
               Verify email address

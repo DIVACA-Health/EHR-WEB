@@ -58,7 +58,7 @@ const dashboard = () => {
       }
     };
     fetchOverview();
-      intervalId = setInterval(fetchQueueData, 5000); // Refresh every 5 seconds
+      intervalId = setInterval(fetchOverview, 5000); // Refresh every 5 seconds
 
       return () => clearInterval(intervalId); 
   }, []);

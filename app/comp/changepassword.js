@@ -123,10 +123,9 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <div className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
+          <div onClick={handleResetPassword} className="w-full h-12 text-white text-sm bg-blue-600 flex items-center justify-center rounded-xl shadow-2xl border-1 cursor-pointer mt-3">
             <button
               type="submit"
-              onClick={handleResetPassword}
               disabled={loading}
             >
               {loading ? "Resetting..." : "Reset password"}

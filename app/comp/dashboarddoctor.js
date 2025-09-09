@@ -68,7 +68,7 @@ const dashboard = () => {
     };
     fetchDashboardData();
 
-    intervalId = setInterval(fetchQueueData, 5000);
+    intervalId = setInterval(fetchDashboardData, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
