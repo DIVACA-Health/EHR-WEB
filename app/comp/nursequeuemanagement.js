@@ -72,15 +72,23 @@ export default function NurseQueueManagement() {
     }
   };
 
-  useEffect(() => {
+  
+ useEffect(() => {
+    // Initial fetch
     fetchQueueData();
+
+    // Refresh every 5 seconds
+    const interval = setInterval(fetchQueueData, 5000);
+
+    // Cleanup
+    return () => clearInterval(interval);
   }, []);
 
 useEffect(() => {
   if (selectedStatus.toLowerCase() === 'all') {
     setFilteredData(
       data.filter(item =>
-        ['Forwarded to doctor', 'In consultation', 'Emergency' , 'Waiting'].includes(item.status)
+        ['Forwarded to doctor', 'In consultation', 'Emergency', 'Waiting'].includes(item.status)
       )
     );
   } else {
@@ -89,6 +97,17 @@ useEffect(() => {
     );
   }
 }, [selectedStatus, data]);
+
+  const sortedRows = [...filteredData].sort((a, b) => {
+  // Emergency status always on top
+  if (a.status === 'Emergency' && b.status !== 'Emergency') return -1;
+  if (b.status === 'Emergency' && a.status !== 'Emergency') return 1;
+  // Otherwise, sort by lastVisit (descending)
+  const aTime = new Date(a.lastVisit).getTime();
+  const bTime = new Date(b.lastVisit).getTime();
+  return bTime - aTime;
+});
+
 
 
   // Close floating menu on click outside
@@ -214,7 +233,6 @@ useEffect(() => {
   };
 
   // --- Floating menu positioning fix ---
-  // Use fixed positioning relative to viewport, not table container
   const handleMenuButtonClick = (e, user) => {
     const btnRect = e.currentTarget.getBoundingClientRect();
     const menuHeight = 220; // Approximate height of your menu in px (adjust if needed)
@@ -278,8 +296,8 @@ useEffect(() => {
               <tr>
                 <td colSpan="7" className="px-4 py-6 text-center">Loading...</td>
               </tr>
-            ) : filteredData.length > 0 ? (
-              filteredData.map((user, idx) => (
+            )  : sortedRows.length > 0 ? (
+              sortedRows.map((user, idx) => (
                 <tr
                   key={user.divacaId}
                   className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}

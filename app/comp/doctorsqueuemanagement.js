@@ -32,7 +32,7 @@ const fetchWithAuth = async (url, options = {}) => {
 };
 
 export default function NurseQueueManagement() {
-   const [selectedStatus, setSelectedStatus] = useState('All');
+  const [selectedStatus, setSelectedStatus] = useState('All');
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,37 +69,41 @@ export default function NurseQueueManagement() {
     }
   };
 
-  useEffect(() => {
-    const fetchQueueData = async () => {
-      try {
-        const res = await fetchWithAuth('/api/v1/queue/medical-overview');
-        if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
+useEffect(() => {
+  let intervalId;
 
-        const result = await res.json();
-        const transformed = result.data.map((item) => ({
-          firstname: item.personalInfo.firstName,
-          lastname: item.personalInfo.lastName,
-          divacaId: item.queueInfo.id,
-          matricNumber: item.student.matricNumber || 'N/A',
-          status: item.queueInfo.status,
-          studentId: item.student.id || "N/A",
-          lastVisit: item.queueInfo.timeAdded
-            ? item.queueInfo.timeAdded
-            : '',
-          avatar: '/image/profileimg.png',
-        }));
+  const fetchQueueData = async () => {
+    try {
+      const res = await fetchWithAuth('/api/v1/queue/medical-overview');
+      if (!res.ok) throw new Error("Failed to fetch medical overview queue data");
 
-        setData(transformed);
-        setLoading(false);
-      } catch (err) {
-        if (process.env.NODE_ENV === 'development') console.error(err);
-        toast.error('Failed to fetch medical overview data');
-        setLoading(false);
-      }
-    };
+      const result = await res.json();
+      const transformed = result.data.map((item) => ({
+        firstname: item.personalInfo.firstName,
+        lastname: item.personalInfo.lastName,
+        divacaId: item.queueInfo.id,
+        matricNumber: item.student.matricNumber || 'N/A',
+        status: item.queueInfo.status,
+        studentId: item.student.id || "N/A",
+        lastVisit: item.queueInfo.timeAdded ? item.queueInfo.timeAdded : '',
+        avatar: '/image/profileimg.png',
+      }));
 
-    fetchQueueData();
-  }, []);
+      setData(transformed);
+      setLoading(false);
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error(err);
+      toast.error('Failed to fetch medical overview data');
+      setLoading(false);
+    }
+  };
+
+  fetchQueueData(); // Initial fetch
+
+  intervalId = setInterval(fetchQueueData, 5000); // Refresh every 5 seconds
+
+  return () => clearInterval(intervalId); // Cleanup on unmount
+}, []);
 
 useEffect(() => {
   if (selectedStatus.toLowerCase() === 'all') {

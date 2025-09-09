@@ -73,7 +73,14 @@ export default function QueueManagement() {
   };
 
   useEffect(() => {
+    // Initial fetch
     fetchQueueData();
+
+    // Refresh every 5 seconds
+    const interval = setInterval(fetchQueueData, 5000);
+
+    // Cleanup
+    return () => clearInterval(interval);
   }, []);
 
 useEffect(() => {
