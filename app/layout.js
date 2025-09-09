@@ -3,6 +3,7 @@ import "./globals.css";
 import { icons } from "lucide-react";
 import 'typeface-inter';
 import { Toaster } from "react-hot-toast";
+import AuthGuard from './comp/AuthGuard'
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -18,8 +19,10 @@ export default function RootLayout({ children }) {
       <body
         className={inter.variable}
       >
-         <Toaster position="top-center" reverseOrder={false} />
-        {children}
+        <Toaster position="top-center" reverseOrder={false} />
+        <AuthGuard>
+          {children}
+        </AuthGuard>
       </body>
     </html>
   );
