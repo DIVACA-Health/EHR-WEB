@@ -3,7 +3,7 @@ import "./globals.css";
 import { icons } from "lucide-react";
 import 'typeface-inter';
 import { Toaster } from "react-hot-toast";
-import AuthGuard from './comp/AuthGuard'
+import AuthGuard from "./comp/auth"
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
