@@ -1,18 +1,21 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    if (!token) {
+
+    // Don't check auth on login or signup routes
+    if (!token && pathname !== '/login' && pathname !== '/signup' && pathname !== '/') {
       toast.error('Session expired. Please log in again.');
       router.push('/login');
     }
-  }, [router]);
+  }, [router, pathname]);
 
   return children;
 }
