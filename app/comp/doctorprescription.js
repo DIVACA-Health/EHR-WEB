@@ -157,7 +157,7 @@ const DoctorPrescription = ({ studentId }) => {
                 <td colSpan={7} className="py-10 text-center text-gray-500">
                   <div className="flex flex-col items-center justify-center">
                     <img src="/image/empty-state.png" alt="No data" className="w-20 h-20 mb-2 opacity-60" />
-                    <span className="text-lg font-medium">No health history available</span>
+                    <span className="text-lg font-medium">No Prescription History available</span>
                     <span className="text-sm text-gray-400">There are no prescriptions or health records for this student yet.</span>
                   </div>
                 </td>
