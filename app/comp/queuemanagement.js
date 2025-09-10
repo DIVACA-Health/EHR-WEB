@@ -135,30 +135,30 @@ useEffect(() => {
     { label: `Returned to health attendant (${statusCounts.returned})`, value: 'Returned to health attendant' },
   ];
 
-  const handleRowClick = async (studentId) => {
-    if (!studentId) {
-      toast.error('Invalid user ID. Cannot navigate to the page.');
-      return;
-    }
+  // const handleRowClick = async (studentId) => {
+  //   if (!studentId) {
+  //     toast.error('Invalid user ID. Cannot navigate to the page.');
+  //     return;
+  //   }
 
-    const checkUrl = `/api/v1/queue/${studentId}/current`;
-    const navigateUrl = `/queue/${studentId}`;
+  //   const checkUrl = `/api/v1/queue/${studentId}/current`;
+  //   const navigateUrl = `/queue/${studentId}`;
 
-    try {
-      const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
+  //   try {
+  //     const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
 
-      if (res.ok) {
-        router.push(navigateUrl);
-      } else if (res.status === 401) {
-        toast.error('Unauthorized: Please log in again.');
-        router.push('/login');
-      } else {
-        toast.error('The requested page does not exist.');
-      }
-    } catch (error) {
-      toast.error('Failed to validate the page. Please try again.');
-    }
-  };
+  //     if (res.ok) {
+  //       router.push(navigateUrl);
+  //     } else if (res.status === 401) {
+  //       toast.error('Unauthorized: Please log in again.');
+  //       router.push('/login');
+  //     } else {
+  //       toast.error('The requested page does not exist.');
+  //     }
+  //   } catch (error) {
+  //     toast.error('Failed to validate the page. Please try again.');
+  //   }
+  // };
 
   const handleRemoveFromQueue = async (id) => {
     const toastId = toast.loading('Removing from queue...');
@@ -290,7 +290,7 @@ useEffect(() => {
               filteredData.map((user, idx) => (
                 <tr
                   key={user.divacaId}
-                  className={idx % 2 === 0 ? "bg-[#FAFAFA] cursor-pointer" : "bg-white cursor-pointer"}
+                  className={idx % 2 === 0 ? "bg-[#FAFAFA] " : "bg-white "}
                   style={{ borderBottom: '1px solid #E5E7EB' }}
                   onClick={e => {
                     // Prevent row click if the action button (menu) is clicked
@@ -298,7 +298,7 @@ useEffect(() => {
                       e.target.closest('.action-menu-btn') ||
                       e.target.closest('.floating-menu')
                     ) return;
-                    handleRowClick(user.studentId);
+                    // handleRowClick(user.studentId);
                   }}
                 >
                   <td className="px-4 py-3">{idx + 1}</td>
