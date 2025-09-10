@@ -87,7 +87,7 @@ useEffect(() => {
   if (selectedStatus.toLowerCase() === 'all') {
     setFilteredData(
       data.filter(item =>
-        ['Forwarded to doctor', 'In consultation', 'Emergency' , 'Waiting'].includes(item.status)
+        ['Forwarded to doctor', 'In consultation', 'Emergency' , 'Waiting' , 'Returned to health attendant'].includes(item.status)
       )
     );
   } else {
@@ -120,10 +120,11 @@ useEffect(() => {
     forwarded: data.filter((item) => item.status === 'Forwarded to doctor').length,
     consultation: data.filter((item) => item.status === 'In consultation').length,
     emergency: data.filter((item) => item.status === 'Emergency').length,
+    returned: data.filter((item) => item.status === 'Returned to health attendant').length,
   };
 
   statusCounts.all =
-  statusCounts.forwarded + statusCounts.consultation + statusCounts.emergency + statusCounts.waiting;
+  statusCounts.forwarded + statusCounts.consultation + statusCounts.emergency + statusCounts.waiting + statusCounts.returned ;
 
   const statusOptions = [
     { label: `All (${statusCounts.all})`, value: 'All' },
@@ -131,6 +132,7 @@ useEffect(() => {
     { label: `Forwarded to doctor (${statusCounts.forwarded})`, value: 'Forwarded to doctor' },
     { label: `In consultation (${statusCounts.consultation})`, value: 'In consultation' },
     { label: `Emergency (${statusCounts.emergency})`, value: 'Emergency' },
+    { label: `Returned to health attendant (${statusCounts.returned})`, value: 'Returned to health attendant' },
   ];
 
   const handleRowClick = async (studentId) => {
