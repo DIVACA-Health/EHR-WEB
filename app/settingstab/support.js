@@ -101,8 +101,8 @@ const Support = () => {
       <label>
         <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Attachments (optional)</h1>
       </label>
-        <div className="w-full  rounded-[12px]  h-[132px]">
-          <div className=" border-[1px]  border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
+        <div className="w-fullrounded-[12px]  h-[132px]">
+          <div className=" border-[2px] border-dotted border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
             <div 
               className={`flex flex-col items-center justify-center h-[132px] rounded-[12px] ${
                 isDragging ? 'bg-blue-50' : 'bg-white'
@@ -111,7 +111,7 @@ const Support = () => {
               onDragLeave={onDragLeave}
               onDrop={onDrop}
             >
-              <Upload className="h-10 w-10 text-blue-500 mb-2 rounded-[12px]" />
+              <img src='/image/Cloud.png' className="h-10 w-10 text-blue-500 mb-2 rounded-[12px]" />
               <p className="text-sm text-gray-600 mb-1">
                 Drag & drop files here or{' '}
                 <button 

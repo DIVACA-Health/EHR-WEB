@@ -247,12 +247,8 @@ const handleActionClick = async (user) => {
         </div>
 
         {/* Search */}
-        <div
-          className="flex gap-2 h-full items-center border-[rgba(240,242,245,1)] 
-                    rounded-[10px] w-full border-[2px]
-                    focus-within:ring-5 focus-within:ring-[#004AFF29] focus-within:border-[#3B6FED]"
-        >
-          <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full">
+        <div className="flex gap-2 h-full items-center border-[rgba(240,242,245,1)] rounded-[10px] w-full border-[2px] focus-within:ring-5 focus-within:ring-[#004AFF29] focus-within:border-[#3B6FED]">
+          <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full relative">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px]" />
             <input
               type="search"
@@ -261,8 +257,19 @@ const handleActionClick = async (user) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="h-[80%] w-full p-2 rounded-r-xl text-black outline-none"
             />
+
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3"
+              >
+                <img src="/image/Close.png" alt="clear" className="h-[24px] w-[24px]" />
+              </button>
+            )}
           </div>
         </div>
+
 
       </div>
 
