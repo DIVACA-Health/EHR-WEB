@@ -1,8 +1,38 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
+import { toast } from "react-hot-toast";
 
 const PersonalSettings = () => {
   const [user, setUser] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+    const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    try {
+      const res = await fetch("/api/v1/users/upload/profile-picture", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        toast.success("Profile picture uploaded successfully!");
+      } else {
+        toast.error("Upload failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while uploading.");
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -26,9 +56,22 @@ const PersonalSettings = () => {
             height={96}
             width={96}
           />
-          <button className="h-[40px] ml-[20px] w-[171px] rounded-[8px] border-[1px] border-[#3B6FED] text-[#3B6FED] flex items-center justify-center shadow-xs shadow-[#1018280D] cursor-pointer">
-            <h1 className="font-medium text-[14px]">Upload new picture</h1>
-          </button>
+          <div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+            />
+
+            <button
+              onClick={handleButtonClick}
+              className="h-[40px] ml-[20px] w-[171px] rounded-[8px] border border-[#3B6FED] text-[#3B6FED] flex items-center justify-center shadow-xs shadow-[#1018280D] cursor-pointer"
+            >
+              <span className="font-medium text-[14px]">Upload new picture</span>
+            </button>
+          </div>
         </div>
         <div className="w-[95%] m-auto h-fit flex gap-5 mb-5">
           <div className="w-1/2 h-fit flex flex-col gap-2">
