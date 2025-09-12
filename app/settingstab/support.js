@@ -44,9 +44,9 @@ const Support = () => {
   if (!user) return <p>Loading user data...</p>;
 
   return (
-    <div className='w-full h-fit mb-20 border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A] '>
+    <div className='w-full bg-[#FFFFFF] h-fit mb-20 border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A] '>
     <div className='h-[60px] flex items-center pl-5 border-b-[0.8px] border-[#EBEBEB] rounded-t-[12px]'>
-      <h1>Contact support</h1>
+      <h1 className="text-16px font-semibold">Contact support</h1>
     </div>
     <div className='w-[95%] m-auto h-fit flex gap-5 mb-5 mt-5'>
                     <div className='w-1/2 h-fit flex flex-col gap-2 '>
@@ -78,9 +78,11 @@ const Support = () => {
       <label>
         <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Issue category</h1>
       </label>
-      <div  className="p-2  rounded-[12px]  bg-[#FBFBFB] border-[1px] border-[rgba(208,213,221,1)] cursor-default h-[45px] shadow-xs">
-        <select className='w-full h-full pl-1 outline-none curseor-pointer'>
-          <option>Select Category</option>
+      <div className="relative w-full">
+        <select
+          className="w-full h-[45px] pl-3 pr-8 text-gray-700 bg-[#FBFBFB] border border-[#D0D5DD] rounded-[12px] shadow-xs cursor-pointer appearance-none focus:outline-none focus:ring-4 focus:ring-[#004AFF29] focus:border-[#3B6FED]"
+        >
+          <option value="">Select category</option>
           <option>Account access</option>
           <option>Student records</option>
           <option>Queue management</option>
@@ -89,6 +91,11 @@ const Support = () => {
           <option>Feedback & suggestions</option>
           <option>Other</option>
         </select>
+
+        {/* Dropdown arrow */}
+        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+          ▼
+        </div>
       </div>
     </div>
     <div className='w-[95%] m-auto h-fit flex flex-col gap-2 mb-5 '>
@@ -102,7 +109,7 @@ const Support = () => {
         <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Attachments (optional)</h1>
       </label>
         <div className="w-fullrounded-[12px]  h-[132px]">
-          <div className=" border-[2px] border-dotted border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
+          <div className=" border-[3px] border-dotted border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
             <div 
               className={`flex flex-col items-center justify-center h-[132px] rounded-[12px] ${
                 isDragging ? 'bg-blue-50' : 'bg-white'

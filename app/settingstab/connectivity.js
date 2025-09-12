@@ -16,9 +16,9 @@ const connectivity = () => {
 
 
   return (
-    <div className='w-full h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]'>
+    <div className='w-full h-fit bg-[#FFFFFF] border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]'>
     <div className='h-[60px] flex items-center pl-5 border-b-[0.8px] border-[#EBEBEB] rounded-t-[12px]'>
-      <h1>Connectivity settings</h1>
+      <h1 className="text-16px font-semibold">Connectivity settings</h1>
     </div>
 
     <div className='flex flex-col items-center justify-center'>

@@ -35,11 +35,11 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
             className='h-full w-[90%] pl-3 rounded-r-xl text-black outline-none'
           />
         </div>
-        <div className='w-[15%] h-full flex items-center relative' ref={dropdownRef}>
-          <div className='border-r border-black w-1/2 h-[80%] flex items-center justify-center cursor-pointer'>
+        <div className='w-[123px] h-full flex items-center relative ' ref={dropdownRef} >
+          <div className='border-r border-black w-[40%] h-[80%] flex items-center justify-center cursor-pointer'>
             <img src='/image/Bell.png' alt='notification' className='h-[20px] w-[16px]' />
           </div>
-              <div className='h-[90%] w-1/2 flex gap-3 px-1 items-center justify-end relative'>
+              <div className='h-[90%] w-[60%] flex gap-2 px-2  items-center justify-end relative '>
                 <img
                   src='/image/profileimg.png'
                   alt='profile'

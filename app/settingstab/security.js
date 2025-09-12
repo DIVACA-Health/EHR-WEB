@@ -16,17 +16,17 @@ const security = () => {
 
   return (
     <div className='flex flex-col gap-7 h-fit w-95% items-center justify-center'>
-          <div className='w-full h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]'>
+    <div className='w-full bg-[#FFFFFF] h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]'>
     <div className='h-[60px] flex items-center pl-5 border-b-[0.8px] border-[#EBEBEB] rounded-t-[12px]'>
-      <h1>Two-factor authentication</h1>
+      <h1 className="text-16px font-semibold">Two-factor authentication</h1>
     </div>
 
     <div className='flex flex-col items-center justify-center'>
       {/* Toggle Section */}
-      <div className='h-[75px] w-[95%] flex justify-between items-center '>
+      <div className='h-[75px]  w-[95%] flex justify-between items-center '>
         <div className='flex flex-col gap-2'>
-          <h1 className='text-sm text-[#141414] font-normal'>Two-factor authentication</h1>
-          <h1 className='text-[#898989] text-xs'>Add an extra layer of security to your account by requiring a verification code during login.</h1>
+          <h1 className='text-[16px] text-[#141414] font-normal'>Two-factor authentication</h1>
+          <h1 className='text-[#898989] font-light text-[14px]'>Add an extra layer of security to your account by requiring a verification code during login.</h1>
         </div>
         <div className='flex items-center space-x-2'>
           <span className='text-sm'>{isOn ? 'On' : 'Off'}</span>
@@ -42,15 +42,15 @@ const security = () => {
       </div>
     </div>
     </div>
-    <div className='w-full h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A] mb-[30px]'>
+    <div className='w-full bg-[#FFFFFF] h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A] mb-[30px]'>
     <div className='h-[60px] flex items-center pl-5 border-b-[0.8px] border-[#EBEBEB] rounded-t-[12px]'>
-      <h1>Password</h1>
+      <h1 className="text-16px font-semibold">Password</h1>
     </div>
     <div className='flex flex-col items-center justify-center'>
       <div className='h-[75px] w-[95%] flex justify-between items-center'>
         <div className='flex flex-col gap-2'>
           <h1 className='text-sm text-[#141414] font-normal'>Change password</h1>
-          <h1 className='text-[#898989] text-xs'>Easily update your password here to keep your account secure.</h1>
+          <h1 className='text-[#898989] text-[14px]'>Easily update your password here to keep your account secure.</h1>
         </div>
       </div>
       <div className="flex flex-col gap-1 mb-[10px] w-[95%] m-auto">

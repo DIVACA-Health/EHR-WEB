@@ -14,9 +14,9 @@ const PersonalSettings = () => {
   if (!user) return <p>Loading user data...</p>;
 
   return (
-    <div className="w-full h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]">
-      <div className="h-[60px] flex items-center pl-5 border-b-[0.8px] border-[#EBEBEB] radius-t-[12px]">
-        <h1>Personal Details</h1>
+    <div className="w-full bg-[#FFFFFF] h-fit border-[1px] border-[#EBEBEB] rounded-[12px] shadow-xs shadow-[#C6C6C61A]">
+      <div className="h-[60px] flex items-center font-semibold pl-5 border-b-[0.8px] border-[#EBEBEB] radius-t-[12px]">
+        <h1 className="text-16px font-semibold">Personal Details</h1>
       </div>
       <div>
         <div className="h-[100px] mb-5 flex items-center pl-5 mt-[30px]">
@@ -26,9 +26,9 @@ const PersonalSettings = () => {
             height={96}
             width={96}
           />
-          <div className="h-[40px] ml-[20px] w-[171px] rounded-[8px] border-[0.8px] border-[#3B6FED] text-[#3B6FED] flex items-center justify-center">
-            <h1>Upload new picture</h1>
-          </div>
+          <button className="h-[40px] ml-[20px] w-[171px] rounded-[8px] border-[1px] border-[#3B6FED] text-[#3B6FED] flex items-center justify-center shadow-xs shadow-[#1018280D] cursor-pointer">
+            <h1 className="font-medium text-[14px]">Upload new picture</h1>
+          </button>
         </div>
         <div className="w-[95%] m-auto h-fit flex gap-5 mb-5">
           <div className="w-1/2 h-fit flex flex-col gap-2">

@@ -55,8 +55,8 @@ const SettingsPage = () => {
   return (
     <div className="pt-5">
       <h1 className="text-xl font-medium mb-5 pl-7">Settings</h1>
-      <div className="h-[40px] border-b border-gray-300 flex items-center pl-7 pr-7">
-        <div className="flex text-xs text-[#898989] font-light w-[95%] h-full gap-5">
+      <div className="h-fit border-b border-gray-300 flex flex-wrap items-center pl-7 pr-7">
+        <div className="flex flex-wrap text-[14px] text-[#898989] font-lighter w-[95%] h-full gap-2 ">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -64,7 +64,7 @@ const SettingsPage = () => {
               className={`w-fit h-full p-1 border-b-2 transition-colors duration-200
                 ${
                   activeTab === tab.key
-                    ? "text-blue-500 border-blue-500"
+                    ? "text-[#3B6FED] border-[#3B6FED] font-bold"
                     : "text-gray-700 border-transparent hover:text-blue-500 hover:border-blue-500"
                 }`}
             >
