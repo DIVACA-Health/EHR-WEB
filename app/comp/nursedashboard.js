@@ -15,6 +15,7 @@ const StudentDashboard = () => {
   const initialTab = searchParams.get('tab') || 'dashboard';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); 
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -54,11 +55,23 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className='flex text-black h-screen'>
-      <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
-      <div className='bg-[#FBFBFB] w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center'>
+    <div className="flex text-black h-screen">
+      {/* Sidebar receives collapsed + toggle */}
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={handleTabChange}
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+      />
+
+      {/* Main content adjusts margin based on collapsed */}
+      <div
+        className={`bg-[#FBFBFB] w-full h-screen overflow-y-auto flex flex-col items-center transition-all duration-300 ${
+          collapsed ? 'ml-[80px]' : 'ml-[280px]'
+        }`}
+      >
         <Topbar showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
-        <div className='w-full h-[92%]'>{renderContent()}</div>
+        <div className="w-full h-[92%]">{renderContent()}</div>
       </div>
     </div>
   );

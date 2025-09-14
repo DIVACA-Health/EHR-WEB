@@ -161,7 +161,7 @@ const getTodayDate = () => {
       </div>
 
       {/* Content Section */}
-      <div className='bg-white   text-sm'>
+      <div className=' text-sm'>
         {!user ? (
           <div>Loading user...</div>
         ) : (

@@ -108,18 +108,18 @@ const Support = () => {
       <label>
         <h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Attachments (optional)</h1>
       </label>
-        <div className="w-fullrounded-[12px]  h-[132px]">
-          <div className=" border-[3px] border-dotted border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
+        <div className="w-full rounded-[12px]  h-[132px]  ">
+          <div className="  border-[2px] border-dashed border-[#D0D5DD]  shadow-xs shadow-[#1018280D] rounded-[12px] w-full">
             <div 
-              className={`flex flex-col items-center justify-center h-[132px] rounded-[12px] ${
-                isDragging ? 'bg-blue-50' : 'bg-white'
+              className={` flex flex-col items-center justify-center h-[132px] rounded-[12px]  ${
+                isDragging ? 'bg-blue-50' : 'bg-[#FBFBFB]'
               }`}
               onDragOver={onDragOver}
               onDragLeave={onDragLeave}
               onDrop={onDrop}
             >
               <img src='/image/Cloud.png' className="h-10 w-10 text-blue-500 mb-2 rounded-[12px]" />
-              <p className="text-sm text-gray-600 mb-1">
+              <p className="text-[14px] font-normal text-[#626262] mb-1">
                 Drag & drop files here or{' '}
                 <button 
                   className="text-blue-500 hover:text-blue-700 font-medium"
@@ -139,7 +139,7 @@ const Support = () => {
           </div>
         
           {files.length > 0 && (
-            <div className="mt-4">
+            <div className="mt-4 ">
               <p className="text-sm font-medium text-gray-700 mb-2">Selected files:</p>
               <div className="space-y-2">
                 {files.map((file, index) => (

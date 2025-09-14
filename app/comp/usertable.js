@@ -17,11 +17,7 @@ const fetchWithAuth = async (url, options = {}) => {
     };
   
     try {
-      console.log('Request URL:', url);
-      console.log('Request Headers:', headers);
       const res = await fetch(url, { ...options, headers });
-      console.log('Response Status:', res.status);
-      console.log('Response Body:', await res.clone().text()); // Clone to log response body
       if (res.status === 401) {
         console.error('Unauthorized: Invalid or expired token.');
         throw new Error('Unauthorized: Invalid or expired token.');
@@ -152,7 +148,6 @@ useEffect(() => {
 
   // Action handler for adding to queue
 const handleActionClick = async (user) => {
-  console.log("Button clicked for user:", user);
 
   // Prevent action if already in queue OR being processed
   if (queuedStudentIds.has(user.studentId)) {
@@ -186,8 +181,6 @@ const handleActionClick = async (user) => {
     });
 
     if (response.ok) {
-      const result = await response.json();
-      console.log("Success response:", result);
       toast.success(`${user.name} has been added to the patient queue.`);
 
       // ✅ Add to queued

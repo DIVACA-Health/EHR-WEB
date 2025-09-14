@@ -3,6 +3,38 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
 
+const fetchWithAuth = async (url, options = {}) => {
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    console.error('Authorization token is missing.');
+    throw new Error('Authorization token is missing.');
+  }
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    ...options.headers,
+  };
+
+  // Only set JSON content-type if body is not FormData
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  try {
+    const res = await fetch(url, { ...options, headers });
+    if (res.status === 401) {
+      console.error('Unauthorized: Invalid or expired token.');
+      throw new Error('Unauthorized: Invalid or expired token.');
+    }
+    return res;
+  } catch (error) {
+    console.error('Error in fetchWithAuth:', error);
+    throw error;
+  }
+};
+
+
+
 const PersonalSettings = () => {
   const [user, setUser] = useState(null);
   const fileInputRef = useRef(null);
@@ -16,10 +48,10 @@ const PersonalSettings = () => {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("profilePicture", file);
+    formData.append("file", file);
 
     try {
-      const res = await fetch("/api/v1/users/upload/profile-picture", {
+      const res = await fetchWithAuth("/api/v1/users/upload/profile-picture", {
         method: "POST",
         body: formData,
       });
@@ -34,12 +66,15 @@ const PersonalSettings = () => {
     }
   };
 
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  console.log(user)
 
   if (!user) return <p>Loading user data...</p>;
 
@@ -51,7 +86,7 @@ const PersonalSettings = () => {
       <div>
         <div className="h-[100px] mb-5 flex items-center pl-5 mt-[30px]">
           <img
-            src="/image/confident-business-woman-portrait-smiling-face.png"
+            src={user.profileImage ||  "/image/confident-business-woman-portrait-smiling-face.png"}
             alt="img"
             height={96}
             width={96}
