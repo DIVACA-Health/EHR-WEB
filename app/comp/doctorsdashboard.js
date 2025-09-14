@@ -56,7 +56,7 @@ const StudentDashboard = () => {
   return (
     <div className='flex text-black h-screen'>
       <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
-      <div className='w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center bg-[#FBFBFB]'>
+      <div className=' bg-[#FBFBFB] w-full ml-[280px] h-screen overflow-y-auto flex flex-col items-center '>
         <Topbar showDropdown={showDropdown} setShowDropdown={setShowDropdown} />
         <div className='w-full h-[92%]'>{renderContent()}</div>
       </div>

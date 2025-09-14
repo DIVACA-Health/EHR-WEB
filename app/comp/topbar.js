@@ -25,7 +25,7 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
   };
 
   return (
-    <div className='w-full h-[8%] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-xs shadow-gray-100'>
+    <div className='w-full h-[8%] bg-[#FFFFFF] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-xs shadow-gray-100'>
       <div className='h-[70%] w-[95%] flex items-center justify-between'>
         <div className='border border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center'>
           <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px]' />
