@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('access_token');
+  console.log(token)
   if (!token) {
     console.error('Authorization token is missing.');
     throw new Error('Authorization token is missing.');
@@ -135,30 +136,6 @@ useEffect(() => {
     { label: `Returned to health attendant (${statusCounts.returned})`, value: 'Returned to health attendant' },
   ];
 
-  // const handleRowClick = async (studentId) => {
-  //   if (!studentId) {
-  //     toast.error('Invalid user ID. Cannot navigate to the page.');
-  //     return;
-  //   }
-
-  //   const checkUrl = `/api/v1/queue/${studentId}/current`;
-  //   const navigateUrl = `/queue/${studentId}`;
-
-  //   try {
-  //     const res = await fetchWithAuth(checkUrl, { method: 'HEAD' });
-
-  //     if (res.ok) {
-  //       router.push(navigateUrl);
-  //     } else if (res.status === 401) {
-  //       toast.error('Unauthorized: Please log in again.');
-  //       router.push('/login');
-  //     } else {
-  //       toast.error('The requested page does not exist.');
-  //     }
-  //   } catch (error) {
-  //     toast.error('Failed to validate the page. Please try again.');
-  //   }
-  // };
 
   const handleRemoveFromQueue = async (id) => {
     const toastId = toast.loading('Removing from queue...');
@@ -222,7 +199,6 @@ useEffect(() => {
     }
   };
 
-  // --- Floating menu positioning fix ---
   // Use fixed positioning relative to viewport, not table container
   const handleMenuButtonClick = (e, user) => {
     const btnRect = e.currentTarget.getBoundingClientRect();
@@ -247,6 +223,7 @@ useEffect(() => {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
   };
+
 
   return (
     <div className="p-4">

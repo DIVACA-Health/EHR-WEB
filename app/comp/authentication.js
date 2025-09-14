@@ -69,7 +69,7 @@ const Authentication = () => {
       <Logopicture />
       <div className="w-[55%] h-[100vh] m-auto flex flex-col items-center justify-center">
         <div className="w-[70%] h-[70%] flex flex-col">
-          <Link href="/">
+          <Link href="/createpage">
             <div className="mb-25 flex gap-1 items-center cursor-pointer">
               <img src="/image/back.png" className="h-[20] w-[20px]" />
               <button>Back</button>
