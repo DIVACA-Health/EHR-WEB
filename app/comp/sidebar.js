@@ -6,7 +6,7 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
 
   return (
     <div
-      className={`bg-[rgba(12,22,47,1)] h-screen fixed top-0 left-0 flex flex-col justify-between transition-all duration-300 ${
+      className={`bg-[rgba(12,22,47,1)] h-screen fixed top-0 left-0 flex flex-col justify-between transition-[width] duration-300 ${
         collapsed ? 'w-[80px]' : 'w-[280px]'
       }`}
     >
@@ -41,33 +41,41 @@ const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
             { id: 'students', label: 'Student records', icon: '/image/Document.png', iconBlue: '/image/Document(blue).png' , w: 20, h: 20 },
             { id: 'queue', label: 'Queue management', icon: '/image/Users.png', iconBlue: '/image/Users(blue).png', w: 20, h: 20  },
             { id: 'settings', label: 'Settings', icon: '/image/Settings.png', iconBlue: '/image/Settings(blue).png' , w: 20, h: 20 },
-          ].map((tab) => (
-            <div
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 
-                ${activeTab === tab.id ? 'bg-blue-100' : 'hover:bg-blue-100'} 
-                ${collapsed ? 'justify-center gap-0' : 'justify-start gap-2'}
-              `}
-            >
-              <img
-                src={activeTab === tab.id ? tab.iconBlue : tab.icon}
-                alt={tab.label}
-                style={{ width: `${tab.w}px`, height: `${tab.h}px` }} 
-              />
+            ].map((tab) => (
+              <div
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center rounded-xl p-3 cursor-pointer transition-colors duration-200 
+                  ${activeTab === tab.id ? 'bg-blue-100' : 'hover:bg-blue-100'} 
+                  ${collapsed ? 'justify-center gap-0' : 'justify-start gap-2'}
+                `}
+              >
+                {/* Both icons in DOM, just toggle visibility */}
+                <img
+                  src={tab.icon}
+                  alt={tab.label}
+                  style={{ width: `${tab.w}px`, height: `${tab.h}px` }}
+                  className={`${activeTab === tab.id ? 'hidden' : 'block'}`}
+                />
+                <img
+                  src={tab.iconBlue}
+                  alt={tab.label}
+                  style={{ width: `${tab.w}px`, height: `${tab.h}px` }}
+                  className={`${activeTab === tab.id ? 'block' : 'hidden'}`}
+                />
 
-              {/* Hide label if collapsed */}
-              {!collapsed && (
-                <h2
-                  className={`w-[80%] h-full  ${
-                    activeTab === tab.id ? 'text-blue-600 font-semibold' : 'text-sm'
-                  }`}
-                >
-                  {tab.label}
-                </h2>
-              )}
-            </div>
-          ))}
+                {/* Hide label if collapsed */}
+                {!collapsed && (
+                  <h2
+                    className={`w-[80%] h-full ${
+                      activeTab === tab.id ? 'text-blue-600 font-semibold' : 'text-sm'
+                    }`}
+                  >
+                    {tab.label}
+                  </h2>
+                )}
+              </div>
+            ))}
         </nav>
       </div>
 
