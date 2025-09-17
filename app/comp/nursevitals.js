@@ -118,7 +118,6 @@ const NurseVitals = ({ studentId }) => {
       });
 
       if (response.ok) {
-        console.log('Vitals saved successfully!');
         await fetchVitals(); // Refresh the cards
         setTableKey(prev => prev + 1); // Refresh the table
         setShowSidebar(false); // Close sidebar after success

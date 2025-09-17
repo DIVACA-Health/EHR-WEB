@@ -16,6 +16,7 @@ const queueDetailPage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false); 
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -29,6 +30,13 @@ const queueDetailPage = () => {
     setActiveTab(tab);
     router.push(`/doctorsdashboard?tab=${tab}`);
   };
+
+      useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      }, []);
 
   const renderContent = () => {
     if (!activeTab) {

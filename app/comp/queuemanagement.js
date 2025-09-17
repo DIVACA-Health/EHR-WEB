@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 
 const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('access_token');
-  console.log(token)
   if (!token) {
     console.error('Authorization token is missing.');
     throw new Error('Authorization token is missing.');

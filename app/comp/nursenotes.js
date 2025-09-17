@@ -230,7 +230,6 @@ const handleForwardFiles = async (id) => {
 
   useEffect(() => {
     if (user) {
-      console.log('User role:', user.role);
     }
   }, [user]);
 

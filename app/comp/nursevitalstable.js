@@ -23,7 +23,6 @@ export default function VitalsTable({ studentId }) {
         });
 
         const result = await res.json();
-        console.log('Vitals API response:', result);
 
         if (Array.isArray(result)) {
           setVitals(result);

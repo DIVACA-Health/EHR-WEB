@@ -84,7 +84,6 @@ const contact = () => {
       }
 
       const data = await res.json();
-      console.log("Ticket submitted:", data);
 
       toast.success("Your support ticket has been submitted!");
       setFormData({

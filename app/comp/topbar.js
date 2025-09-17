@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect , useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Topbar = ({ showDropdown, setShowDropdown }) => {
   const dropdownRef = useRef(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -17,6 +18,13 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [setShowDropdown]);
+
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
 
   const handleSignOut = () => {
     localStorage.removeItem('access_token');
@@ -41,10 +49,9 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
           </div>
               <div className='h-[90%] w-[60%] flex gap-2 px-2  items-center justify-end relative '>
                 <img
-                  src='/image/profileimg.png'
-                  alt='profile'
-                  className='cursor-pointer h-[41px] w-[41px]'
-                  onClick={() => setShowDropdown((prev) => !prev)}
+                  src={user?.profileImage || "/image/confident-business-woman-portrait-smiling-face.png"}
+                  alt="img"
+                  className="rounded-full w-[41px] h-[41px] cursor-pointer"
                 />
                 <img
                   src='/image/dropdownprofile.png'

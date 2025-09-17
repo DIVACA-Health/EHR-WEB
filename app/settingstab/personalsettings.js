@@ -57,7 +57,7 @@ const PersonalSettings = () => {
       });
 
       if (res.ok) {
-        toast.success("Profile picture uploaded successfully!");
+        toast.success("Profile picture uploaded successfully! Changes will be Visible by Next Update");
       } else {
         toast.error("Upload failed. Please try again.");
       }
@@ -90,6 +90,7 @@ const PersonalSettings = () => {
             alt="img"
             height={96}
             width={96}
+            className="rounded-full"
           />
           <div>
             <input

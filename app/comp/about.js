@@ -119,7 +119,6 @@ const [email, setEmail] = useState("");
       }
 
       const data = await res.json();
-      console.log("Subscribed:", data);
 
       toast.success(" Successfully subscribed!");
       setEmail(""); // clear input
