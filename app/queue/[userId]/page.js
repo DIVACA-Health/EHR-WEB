@@ -9,9 +9,9 @@ import Dashboard from '@/app/comp/dashboardnurse';
 import { useRouter } from 'next/navigation';
 import Nurseuserinfo from '@/app/comp/nurseuserinfo';
 import Settings from '@/app/comp/settings';
-const [collapsed, setCollapsed] = useState(false); 
 
-const queueDetailPage = () => {
+const QueueDetailPage = () => {
+  const [collapsed, setCollapsed] = useState(false);  // ✅ moved inside component
   const [activeTab, setActiveTab] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
@@ -21,21 +21,16 @@ const queueDetailPage = () => {
     if (!token) {
       router.push('/login');
     }
-  }, []);
+  }, [router]);
 
-  // This handler will navigate to nursedashboard with the correct tab
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     router.push(`/nursedashboard?tab=${tab}`);
   };
 
   const renderContent = () => {
-    if (!activeTab) {
-      return (
-        <Nurseuserinfo/>
-      );
-    }
-  
+    if (!activeTab) return <Nurseuserinfo />;
+    
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
@@ -44,16 +39,14 @@ const queueDetailPage = () => {
       case 'queue':
         return <Nursequeuemanagement />;
       case 'settings':
-        return <Settings/>;
+        return <Settings />;
       default:
         return null;
     }
   };
-  
 
   return (
     <div className="flex text-black h-screen">
-      {/* Sidebar receives collapsed + toggle */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={handleTabChange}
@@ -61,7 +54,6 @@ const queueDetailPage = () => {
         setCollapsed={setCollapsed}
       />
 
-      {/* Main content adjusts margin based on collapsed */}
       <div
         className={`bg-[#FBFBFB] w-full h-screen overflow-y-auto flex flex-col items-center transition-all duration-300 ${
           collapsed ? 'ml-[80px]' : 'ml-[280px]'
@@ -74,4 +66,4 @@ const queueDetailPage = () => {
   );
 };
 
-export default queueDetailPage;
+export default QueueDetailPage;

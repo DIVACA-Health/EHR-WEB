@@ -46,7 +46,7 @@ const Login = () => {
       
       // Redirect based on role
       switch (user.role) {
-        case "health_attendant":
+        case "record_keeper":
           window.location.href = "/studentdashboard";
           break;
         case "nurse":
