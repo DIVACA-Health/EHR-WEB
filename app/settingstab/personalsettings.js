@@ -74,7 +74,6 @@ const PersonalSettings = () => {
     }
   }, []);
 
-  console.log(user)
 
   if (!user) return <p>Loading user data...</p>;
 

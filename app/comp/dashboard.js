@@ -2,6 +2,32 @@ import React, { useEffect, useState } from 'react'
 import StudentVisitsChart from './studentvisitchart'
 import HealthComplaintChart from './healthcomplaintchart'
 
+const fetchWithAuth = async (url, options = {}) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      console.error('Authorization token is missing.');
+      throw new Error('Authorization token is missing.');
+    }
+  
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    };
+  
+    try {
+      const res = await fetch(url, { ...options, headers });
+      if (res.status === 401) {
+        console.error('Unauthorized: Invalid or expired token.');
+        throw new Error('Unauthorized: Invalid or expired token.');
+      }
+      return res;
+    } catch (error) {
+      console.error('Error in fetchWithAuth:', error);
+      throw error;
+    }
+  };
+
 const dashboard = () => {
   const [summary, setSummary] = useState({
     totalVisits: 0,
@@ -11,7 +37,7 @@ const dashboard = () => {
   });
 
   useEffect(() => {
-    fetch('/api/v1/dashboard/analytics')
+    fetchWithAuth('/api/v1/dashboard/analytics')
       .then(res => res.json())
       .then(data => {
         if (data?.data?.summary) {
