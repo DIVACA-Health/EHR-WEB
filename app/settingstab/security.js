@@ -47,7 +47,7 @@ const security = () => {
       <h1 className="text-16px font-semibold">Password</h1>
     </div>
     <div className='flex flex-col items-center justify-center'>
-      <div className='h-[75px] w-[95%] flex justify-between items-center'>
+      <div className='h-[75px] w-[95%] mb-4 flex justify-between items-center'>
         <div className='flex flex-col gap-2'>
           <h1 className='text-sm text-[#141414] font-normal'>Change password</h1>
           <h1 className='text-[#898989] text-[14px]'>Easily update your password here to keep your account secure.</h1>

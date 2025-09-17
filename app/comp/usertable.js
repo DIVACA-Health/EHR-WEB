@@ -240,7 +240,7 @@ const handleActionClick = async (user) => {
         </div>
 
         {/* Search */}
-        <div className="flex gap-2 h-full items-center border-[rgba(240,242,245,1)] rounded-[10px] w-full border-[2px] focus-within:ring-5 focus-within:ring-[#004AFF29] focus-within:border-[#3B6FED]">
+        <div className="flex gap-2 h-full items-center border-[rgba(240,242,245,1)] rounded-[10px] w-full border-[2px] focus-within:ring-4 focus-within:ring-[#004AFF29] focus-within:border-[#3B6FED]">
           <div className="p-2 border border-[rgba(240,242,245,1)] rounded-[7px] h-full flex items-center gap-1 w-full relative">
             <img src="/image/Search.png" alt="search" className="h-[20px] w-[20px]" />
             <input

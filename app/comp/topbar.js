@@ -34,7 +34,7 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
 
   return (
     <div className='w-full h-[8%] bg-[#FFFFFF] flex items-center justify-center border border-[rgba(240,242,245,1)] shadow-xs shadow-gray-100'>
-      <div className='h-[70%] w-[95%] flex items-center justify-between'>
+      <div className='h-[70%] w-[95%]  flex items-center justify-between'>
         <div className='border border-[rgba(240,242,245,1)] rounded-[7px] h-[40px] w-[45%] pl-2 flex items-center'>
           <img src='/image/Search.png' alt='search' className='h-[17px] w-[17px]' />
           <input
@@ -43,11 +43,11 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
             className='h-full w-[90%] pl-3 rounded-r-xl text-black outline-none'
           />
         </div>
-        <div className='w-[123px] h-full flex items-center relative ' ref={dropdownRef} >
-          <div className='border-r border-black w-[40%] h-[80%] flex items-center justify-center cursor-pointer'>
+        <div className='w-[140px]  h-full flex items-center justify-end relative ' ref={dropdownRef} >
+          <div className='border-r-[1px] border-[#EAEBED]  w-[30%] h-[85%] flex items-center justify-center cursor-pointer'>
             <img src='/image/Bell.png' alt='notification' className='h-[20px] w-[16px]' />
           </div>
-              <div className='h-[90%] w-[60%] flex gap-2 px-2  items-center justify-end relative '>
+              <div className='h-[90%] w-[60%] flex gap-3.5 px-2  items-center justify-center relative '>
                 <img
                   src={user?.profileImage || "/image/confident-business-woman-portrait-smiling-face.png"}
                   alt="img"
@@ -56,7 +56,7 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
                 <img
                   src='/image/dropdownprofile.png'
                   alt='profile'
-                  className='cursor-pointer h-[4px] w-[9px]'
+                  className='cursor-pointer h-[5px] w-[10px] '
                   onClick={() => setShowDropdown((prev) => !prev)}
                 />
                 {showDropdown && (

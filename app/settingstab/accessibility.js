@@ -13,11 +13,11 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[89px]'>
-              <h1>Tab / Shift</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Tab / Shift</h1>
             </div>
             +
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[45px]'>
-              <h1>Tab</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Tab</h1>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[56px]'>
-              <h1>Enter</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Enter</h1>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[45px]'>
-              <h1>Esc</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Esc</h1>
             </div>
           </div>
         </div>
@@ -71,11 +71,11 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[53px]'>
-              <h1>Cntrl</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Cntrl</h1>
             </div>
             +
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[35px]'>
-              <h1>P</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>P</h1>
             </div>
           </div>
         </div>
@@ -85,11 +85,11 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[53px]'>
-              <h1>Cntrl</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>Cntrl</h1>
             </div>
             +
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[35px]'>
-              <h1>D</h1>
+              <h1 className='text-[#3B3B3B] font-medium'>D</h1>
             </div>
           </div>
         </div>
@@ -99,12 +99,12 @@ const accessibility = () => {
           </div>
           <div className='flex items-center gap-2'>
           <div className='flex items-center gap-2'>
-            <div className=' border-[#3B3B3B] border-[2px] rounded-[2px] flex items-center justify-center h-[36px] w-[53px]'>
-            <h1>Cntrl</h1>
+            <div className=' border-[#3B3B3B] border-[1px] rounded-[2px] flex items-center justify-center h-[36px] w-[53px]'>
+            <h1 className='text-[#3B3B3B] font-medium'>Cntrl</h1>
             </div>
             +
-            <div className=' border-[#3B3B3B] border-[2px] rounded-[2px] flex items-center justify-center h-[36px] w-[35px]'>
-              <h1>N</h1>
+            <div className=' border-[#3B3B3B] border-[1px] rounded-[2px] flex items-center justify-center h-[36px] w-[35px]'>
+              <h1 className='text-[#3B3B3B] font-medium'>N</h1>
             </div>
           </div>
           </div>
