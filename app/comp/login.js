@@ -68,7 +68,8 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-[100vh] bg-white flex justify-between text-black font-normal">
+    <div className="w-full h-screen bg-white">
+      <div className="w-full hidden h-[100vh] bg-white lg:flex justify-between text-black font-normal">
       <Logopicture />
       <div className="w-[55%] h-[100vh] m-auto flex flex-col items-center justify-center">
         <div className="h-8/10 w-[60%] flex flex-col justify-center">
@@ -127,7 +128,23 @@ const Login = () => {
           </div>
         </div>
       </div>
+      </div>
+      <div className="flex flex-col gap-2  lg:hidden w-full h-full justify-center items-center bg-white text-black">
+        <img src="/image/bigger.png" alt="Image" />
+        <h2 className="text-center text-[16px] px-6 font-semibold ">
+          Bigger screen, better experience.
+        </h2>
+        <h2 className="text-center text-[14px] px-6">
+          We'd love to show you around, but you'll want a laptop or tablet for the full experience. Trust us, it's worth the switch!
+        </h2>
+        <Link href="/" className="mt-5">
+          <button className="bg-blue-600 text-white font-semibold py-2 px-2 rounded-[8px]">
+            Go Back
+          </button>
+        </Link>
+      </div>
     </div>
+
   );
 };
 

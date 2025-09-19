@@ -229,13 +229,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-10  lg:hidden w-full h-full justify-center items-center bg-[#0C162F] text-white">
+      <div className="flex flex-col gap-10  lg:hidden w-full h-full justify-center items-center bg-white text-black">
+        <img src="/image/bigger.png" alt="Image" />
         <h2 className="text-center text-lg px-6">
-          🚫  Please view this page on a larger screen (desktop or laptop).
+          Bigger screen, better experience.
+        </h2>
+        <h2 className="text-center text-lg px-6">
+          We'd love to show you around, but you'll want a laptop or tablet for the full experience. Trust us, it's worth the switch!
         </h2>
         <Link href="/">
-          <button className="bg-white text-blue-500 font-semibold p-3 rounded-xl">
-            Home-page
+          <button className="bg-blue-600 text-white font-semibold py-2 px-2 rounded-[8px]">
+            Home
           </button>
         </Link>
       </div>
