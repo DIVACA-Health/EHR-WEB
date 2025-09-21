@@ -369,7 +369,7 @@ const createNotePairs = () => {
         case 'doctor':
           return (
             <div className=' h-full'>
-              <div className='p-6 h-[70%]'>
+              <div className='pt-6 pb-0 pl-6 r-6 h-[65%]'>
                 <div className='w-full h-[72px] mb-3'>
                 <label className='text-sm font-medium block mb-1'>Note Title</label>
                 <input
@@ -446,8 +446,8 @@ const createNotePairs = () => {
                   </div>
                 )}
               </div>
-              <div className='h-[90%] mt-5 pl-3 pr-3 w-full '>
-                <div className="w-full h-[80%] bg-white relative border-none text-[14px] leading-5">
+              <div className='h-fit mt-5 pl-3 pr-3 w-full '>
+                <div className="w-full h-[30vh] bg-white relative border-none text-[14px] leading-5">
                   <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
                   <div className="relative z-10 h-full border-none">
                     <textarea
@@ -460,7 +460,7 @@ const createNotePairs = () => {
                 </div>
               </div>
               </div>
-              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+              <div className='min-h-[10%]  w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
@@ -540,7 +540,7 @@ const createNotePairs = () => {
         case 'nurse':
           return (
             <div className=' h-full'>
-              <div className='p-6 h-[70%]'>
+              <div className='p-6 h-[65%]'>
                 <div className='w-full h-[72px] mb-3'>
                 <label className='text-sm font-medium block mb-1'>Nurse Note Title</label>
                 <input
@@ -617,8 +617,8 @@ const createNotePairs = () => {
                   </div>
                 )}
               </div>
-              <div className='h-[90%] mt-5 pl-3 pr-3 w-full'>
-                <div className="w-full h-[80%] bg-white relative border-none text-[14px] leading-5">
+              <div className='h-fit mt-5 pl-3 pr-3 w-full '>
+                <div className="w-full h-[30vh] relative border-none text-[14px] leading-5">
                   <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
                   <div className="relative z-10 h-full border-none">
                     <textarea
@@ -631,7 +631,7 @@ const createNotePairs = () => {
                 </div>
               </div>
               </div>
-              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
