@@ -193,13 +193,13 @@ const handleNewHealthIssueSubmit = async (e) => {
           <img src='/image/healthicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Health history</h1>
         </div>
-        <button
+        {/* <button
           className="bg-blue-600 flex gap-[8px] w-fit h-[44px] px-2 items-center justify-center text-white rounded-[8px]"
           onClick={() => setShowPrescriptionSidebar(true)}
         >
           <img src="/image/Plus.png" alt="icon" width={25} height={25} />
           <h1 className="text-[14px]">Record Health issue</h1>
-        </button>
+        </button> */}
       </div>
 
       <div className="overflow-x-auto border border-gray-200">

@@ -281,7 +281,7 @@ const fetchUserQueueData = async () => {
                         <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
-                                <h1 className='text-xs'>{user.notecontent1}</h1>
+                                <h1 className='text-xs max-h-[80%] overflow-hidden text-ellipsis'>{user.notecontent1}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
                                 <h1 className='text-sm'>{getTodayDate(user.notedate1)}</h1>
@@ -290,7 +290,7 @@ const fetchUserQueueData = async () => {
                         <div className='flex justify-between items-center mb-2'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
-                                <h1 className='text-xs'>{user.notecontent2}</h1>
+                                <h1 className='text-xs max-h-[80%] overflow-hidden text-ellipsis'>{user.notecontent2}</h1>
                             </div>
                             <div className='w-[50%] flex justify-end'>
                                 <h1 className='text-sm'>{getTodayDate(user.notedate2)}</h1>

@@ -128,7 +128,7 @@ const DoctorPrescription = ({ studentId }) => {
           <img src='/image/Frame 1261158734.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Prescription history</h1>
         </div>
-        <button
+        {/* <button
           className="bg-blue-600 flex gap-[8px] w-fit h-[44px] px-2 items-center justify-center text-white rounded-[8px]"
           onClick={() => {
             setShowSidebar(true);
@@ -137,7 +137,7 @@ const DoctorPrescription = ({ studentId }) => {
         >
           <img src="/image/Plus.png" alt="icon" width={25} height={25} />
           <h1 className="text-[14px]">Record New Prescription</h1>
-        </button>
+        </button> */}
       </div>
       <div className="overflow-x-auto  border border-gray-200 ">
         <table className="min-w-full text-sm text-left">

@@ -100,34 +100,35 @@ export default function NoteManager({ studentId }) {
         body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
-        const fetchNotes = async () => {
-          try {
-            const res = await fetch(`/api/v1/notes/${studentId}`, {
-              headers: {
-                'Content-Type': 'application/json',
-                ...(token ? { Authorization: `Bearer ${token}` } : {}),
-              },
-            });
-            if (res.ok) {
-              const data = await res.json();
-              setNotes(Array.isArray(data) ? data : (data.data || []));
-            }
-          } catch {}
-        };
-        await fetchNotes();
-        setNoteTitle('');
-        setNoteBody('');
-        setTags([]);
-        setSelectedTags([]);
-        setShowSidebar(false);
-        setShowTagSelector(false);
-        setSelectedTag('');
-        setCustomTag('');
-        setSelectedNoteType('nurse');
-      } else {
-        toast.error('Failed to save note');
-      }
+    if (res.ok) {
+      const fetchNotes = async () => {
+        try {
+          const res = await fetch(`/api/v1/notes/${studentId}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setNotes(Array.isArray(data) ? data : (data.data || []));
+          }
+        } catch {}
+      };
+      await fetchNotes();
+      toast.success('Note saved successfully!'); // Add this line
+      setNoteTitle('');
+      setNoteBody('');
+      setTags([]);
+      setSelectedTags([]);
+      setShowSidebar(false);
+      setShowTagSelector(false);
+      setSelectedTag('');
+      setCustomTag('');
+      setSelectedNoteType('nurse');
+    } else {
+      toast.error('Failed to save note');
+    }
     } catch (err) {
       toast.error('Error saving note');
     } finally {
@@ -219,6 +220,72 @@ const handleForwardFiles = async (id) => {
 
   const nurseNotes = notes.filter(n => n.creator && n.creator.role === 'nurse');
   const doctorNotes = notes.filter(n => n.creator && n.creator.role === 'doctor');
+
+// Create proper note pairs - each nurse note should have a corresponding doctor note slot
+const createNotePairs = () => {
+  const pairs = [];
+  const usedDoctorNotes = new Set(); // Track which doctor notes have been used
+  
+  // For each nurse note, try to find the CLOSEST doctor note that was created AFTER it
+  nurseNotes.forEach(nurseNote => {
+    let bestMatch = null;
+    let smallestTimeDiff = Infinity;
+    
+    // Find the doctor note with the smallest time difference that came AFTER the nurse note
+    doctorNotes.forEach(doctorNote => {
+      // Skip if this doctor note is already paired
+      if (usedDoctorNotes.has(doctorNote.id)) return;
+      
+      // Match by same student
+      if (doctorNote.studentId !== nurseNote.studentId) return;
+      
+      const nurseTime = new Date(nurseNote.createdAt);
+      const doctorTime = new Date(doctorNote.createdAt);
+      
+      // Only consider doctor notes created AFTER the nurse note (doctor responding to nurse)
+      if (doctorTime <= nurseTime) return;
+      
+      const timeDifference = doctorTime - nurseTime; // Positive value since doctor note is after
+      
+      // Only consider notes within 24 hours AND find the closest one
+      if (timeDifference <= (24 * 60 * 60 * 1000) && timeDifference < smallestTimeDiff) {
+        bestMatch = doctorNote;
+        smallestTimeDiff = timeDifference;
+      }
+    });
+    
+    // If we found a matching doctor note, mark it as used
+    if (bestMatch) {
+      usedDoctorNotes.add(bestMatch.id);
+    }
+    
+    pairs.push({
+      nurse: nurseNote,
+      doctor: bestMatch || null // null if no doctor note exists yet
+    });
+  });
+  
+  // Handle orphaned doctor notes (doctor notes without corresponding nurse notes)
+  doctorNotes.forEach(doctorNote => {
+    if (!usedDoctorNotes.has(doctorNote.id)) {
+      pairs.push({
+        nurse: null,
+        doctor: doctorNote
+      });
+    }
+  });
+  
+  // Sort pairs by nurse note creation time (newest first) to show latest notes first
+  pairs.sort((a, b) => {
+    if (!a.nurse) return 1; // orphaned doctor notes go to end
+    if (!b.nurse) return -1;
+    return new Date(b.nurse.createdAt) - new Date(a.nurse.createdAt);
+  });
+  
+  return pairs;
+};
+
+  const notePairs = createNotePairs();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -379,7 +446,7 @@ const handleForwardFiles = async (id) => {
                   </div>
                 )}
               </div>
-              <div className='h-[90%] mt-5 pl-3 pr-3 w-full'>
+              <div className='h-[90%] mt-5 pl-3 pr-3 w-full '>
                 <div className="w-full h-[80%] bg-white relative border-none text-[14px] leading-5">
                   <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
                   <div className="relative z-10 h-full border-none">
@@ -657,7 +724,7 @@ const handleForwardFiles = async (id) => {
                           >
                             {tag}
                           </span>
-                        ))
+                                                  ))
                       ) : (
                         <span className="text-gray-400">--</span>
                       )}
@@ -668,8 +735,8 @@ const handleForwardFiles = async (id) => {
                         : (
                           <div className="flex flex-col items-center justify-center py-6 h-full">
                             <img src="/image/notes-empty.png" alt="No Doctor's note" className="mx-auto mb-2" style={{ width: 40, height: 40 }} />
-                            <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
-                            <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
+                            <div className="font-semibold text-gray-700 text-base mb-1">No Doctor's note yet</div>
+                            <div className="text-xs text-gray-500 text-center">No doctor's notes have been recorded.</div>
                           </div>
                         )
                       }
@@ -686,7 +753,6 @@ const handleForwardFiles = async (id) => {
                 )}
               </div>
             </div>
-
           );
           case 'health':
           return (
@@ -748,10 +814,20 @@ const handleForwardFiles = async (id) => {
           <img src='/image/notesicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Notes</h1>
         </div>
+        {/* Add Note button in header */}
+        {user && (
+          <button
+            className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
+            onClick={() => setShowSidebar(true)}
+          >
+            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+            <h1 className='text-[14px]'>Add Note</h1>
+          </button>
+        )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-10 p-3 items-stretch">
           {/* Show template if both nurse and doctor notes are empty */}
-          {nurseNotes.length === 0 && doctorNotes.length === 0 && (
+          {notePairs.length === 0 && (
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-3 h-full w-1/2 col-span-2">
               {/* Nurse Note Empty Template */}
               <div className="rounded-xl border border-gray-200 bg-white flex flex-col h-full  mb-4">
@@ -769,19 +845,8 @@ const handleForwardFiles = async (id) => {
                 </div>
                 <div className="px-5 pt-3 pb-4 flex-1 flex flex-col items-center justify-center">
                   <img src="/image/nodoctors.png" alt="No Nurse's note" className="mx-auto mb-2" height={55} width={55} />
-                  <div className="font-semibold text-gray-700 text-base mb-1">No Nurse’s note yet</div>
-                  <div className="text-xs text-gray-500 text-center">No nurse’s notes have been recorded.</div>
-                  {user?.role === 'nurse' && (
-                    <div className='h-10 w-full flex items-center justify-center mt-3'>
-                      <button
-                        className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
-                        onClick={() => setShowSidebar(true)}
-                      >
-                        <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
-                        <h1 className='text-[16px]'>Add Note</h1>
-                      </button>
-                    </div>
-                  )}
+                  <div className="font-semibold text-gray-700 text-base mb-1">No Nurse's note yet</div>
+                  <div className="text-xs text-gray-500 text-center">No nurse's notes have been recorded.</div>
                 </div>
               </div>
               {/* Doctor Note Empty Template */}
@@ -800,25 +865,18 @@ const handleForwardFiles = async (id) => {
                 </div>
                 <div className="px-5 pt-3 pb-4 flex-1 flex flex-col items-center justify-center">
                   <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
-                  <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
-                  <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
-                  {user?.role === 'doctor' && (
-                    <div className='h-10 w-full flex items-center justify-center mt-3'>
-                      <button
-                        className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
-                        onClick={() => setShowSidebar(true)}
-                      >
-                        <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
-                        <h1 className='text-[16px]'>Add Note</h1>
-                      </button>
-                    </div>
-                  )}
+                  <div className="font-semibold text-gray-700 text-base mb-1">No Doctor's note yet</div>
+                  <div className="text-xs text-gray-500 text-center">No doctor's notes have been recorded.</div>
                 </div>
               </div>
             </div>
           )}
-        {nurseNotes.map((nurseNote, index) => {
-          const doctorNoteForCard = doctorNotes[index];
+          {notePairs.map((pair, index) => {
+            // Skip pairs that don't have a nurse note (orphaned doctor notes)
+            if (!pair.nurse) return null;
+            
+            const nurseNote = pair.nurse;
+            const doctorNoteForCard = pair.doctor;
           return (
             <div
               key={index}
@@ -954,19 +1012,8 @@ const handleForwardFiles = async (id) => {
                     {doctorNoteForCard ? doctorNoteForCard.content : (
                       <div className="flex flex-col items-center justify-center py-6 h-full">
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
-                        <div className="font-semibold text-gray-700 text-base mb-1">No Doctor’s note yet</div>
-                        <div className="text-xs text-gray-500 text-center">No doctor’s notes have been recorded.</div>
-                        {user?.role !== 'nurse' && (
-                          <div className=' h-10 w-full flex items-center justify-center mt-3'>
-                            <button
-                              className='bg-blue-600 flex gap-[8px] w-[128px] h-full items-center justify-center text-white rounded-[8px]'
-                              onClick={() => setShowSidebar(true)}
-                            >
-                              <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
-                              <h1 className='text-[16px]'>Add Note</h1>
-                            </button>
-                          </div>
-                        )}
+                        <div className="font-semibold text-gray-700 text-base mb-1">No Doctor's note yet</div>
+                        <div className="text-xs text-gray-500 text-center">No doctor's notes have been recorded.</div>
                       </div>
                     )}
                   </div>
@@ -976,6 +1023,8 @@ const handleForwardFiles = async (id) => {
           );
         })}
       </div>
+
+      {/* Regular Add Note Sidebar */}
       {showSidebar && (
         <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowSidebar(false)}>
           <div 
@@ -1018,6 +1067,38 @@ const handleForwardFiles = async (id) => {
           </div>
         </div>
       )}
+
+      {/* Expanded Note Sidebar */}
+      {showExpandedSidebar && (
+        <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowExpandedSidebar(false)}>
+          <div 
+            className="absolute right-0 top-0 h-full w-[60%] bg-white shadow-lg z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm">
+              <h2 className="text-xl font-semibold">View Notes</h2>
+              <button onClick={() => setShowExpandedSidebar(false)} className="text-xl">×</button>
+            </div>
+            <div className=' h-[56px] mt-5 mb-5 rounded-[12px] w-[95%] m-auto bg-[#FAFAFC] border-1px border-[#EBEBEB] flex items-center justify-between gap-1 p-2'>
+              <div
+                className={`w-1/2 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'nurse' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                onClick={() => setSelectedNoteType('nurse')}
+              >
+                <h3>Nurse's note</h3>
+              </div>
+              <div
+                className={`w-1/2 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'doctor' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                onClick={() => setSelectedNoteType('doctor')}
+              >
+                <h3>Doctor's note</h3>
+              </div>
+            </div>
+            <div className=' h-full'>
+              {renderNoteTypeContent()}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+}                

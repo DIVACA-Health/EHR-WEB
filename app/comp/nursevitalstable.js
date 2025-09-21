@@ -60,8 +60,8 @@ export default function VitalsTable({ studentId }) {
               <td className="px-6 py-4 text-center">{vital.heartRate}</td>
               <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
               <td className="px-6 py-4 text-center">{vital.temperature}</td>
-              <td className="px-5 py-4 text-center">{vital.respiration}</td>
-              <td className="px-5 py-4 text-center">{vital.oxygen}</td>
+              <td className="px-5 py-4 text-center">{vital.respiratoryRate}</td>
+              <td className="px-5 py-4 text-center">{vital.oxygenSaturation}</td>
               <td className="px-6 py-4 text-center">
                 Nurse {vital.recorder?.firstName} {vital.recorder?.lastName}
               </td>

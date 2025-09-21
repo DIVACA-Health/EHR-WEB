@@ -46,6 +46,8 @@ const NurseVitals = ({ studentId }) => {
           bloodPressure: vitals.bloodPressure,
           temperature: vitals.temperature,
           weight: vitals.weight,
+          respiratoryRate: vitals.respiratoryRate,
+          oxygenSaturation: vitals.oxygenSaturation,
           recorder: vitals.recorder || { firstName: '', lastName: '' }, // Set recorder from API
         });
       } else {
@@ -53,6 +55,8 @@ const NurseVitals = ({ studentId }) => {
           heartRate: '',
           bloodPressure: '',
           temperature: '',
+          respiratoryRate: '',
+          oxygenSaturation: '',
           weight: '',
           recorder: { firstName: '', lastName: '' },
         });
@@ -82,6 +86,8 @@ const NurseVitals = ({ studentId }) => {
       bloodPressure: '',
       temperature: '',
       weight: '',
+      respiratoryRate: '',
+      oxygenSaturation: '',
       recorder: { firstName: '', lastName: '' },
     });
   };
@@ -101,12 +107,15 @@ const NurseVitals = ({ studentId }) => {
     try {
       const payload = {
         studentId: Number(studentId),
-        heartRate: vitalsData.heartRate !== '' ? Number(vitalsData.heartRate) : null,
-        bloodPressure: vitalsData.bloodPressure,
-        temperature: vitalsData.temperature !== '' ? Number(vitalsData.temperature) : null,
-        oxygen: vitalsData.oxygen !== '' ? Number(vitalsData.weight) : null,
-        respiration: vitalsData.respiration !== '' ? Number(vitalsData.weight) : null,
+        heartRate: vitalsData.heartRate ? Number(vitalsData.heartRate) : null,
+        bloodPressure: vitalsData.bloodPressure || null, 
+        temperature: vitalsData.temperature ? Number(vitalsData.temperature) : null,
+        oxygenSaturation: vitalsData.oxygenSaturation ? Number(vitalsData.oxygenSaturation) : null,
+        respiratoryRate: vitalsData.respiratoryRate ? Number(vitalsData.respiratoryRate) : null,
+        weight: vitalsData.weight ? Number(vitalsData.weight) : 78,
       };
+      console.log("Payload being sent:", JSON.stringify(payload, null, 2));
+
 
       const response = await fetch('/api/v1/vitals', {
         method: 'POST',
@@ -227,22 +236,22 @@ const getoxygenStatus = (weight) => {
             <img src="/image/respiratoryicon.png" alt="weight" width={32} height={32} />
             <h2 className="text-[14px]">Respiratory rate</h2>
             <h2 className="text-[25px] font-medium">
-              {vitalsData.respiration || '--'}
+              {vitalsData.respiratoryRate || '--'}
               <span className="text-[14px] font-extralight">b/pm</span>
             </h2>
             <h2 className="text-[14px] font-extralight">
-              Respiratory rate is {getrespirationStatus(vitalsData.weight)}
+              Respiratory rate is {getrespirationStatus(vitalsData.respiratoryRate)}
             </h2>
           </div>
           <div className="h-[175px] w-1/5 bg-white border-[0.8px] border-[rgba(235,235,235,1)] rounded-[12px] flex flex-col pl-3 items-start justify-center gap-2">
             <img src="/image/oxygenicon.png" alt="weight" width={32} height={32} />
             <h2 className="text-[14px]">Oxygen saturation</h2>
             <h2 className="text-[25px] font-medium">
-              {vitalsData.oxygen || '--'}
+              {vitalsData.oxygenSaturation || '--'}
               <span className="text-[14px] font-extralight">%</span>
             </h2>
             <h2 className="text-[14px] font-extralight">
-              Oxygen sat. is {getoxygenStatus(vitalsData.weight)}
+              Oxygen sat. is {getoxygenStatus(vitalsData.oxygenSaturation)}
             </h2>
           </div>
 
@@ -313,21 +322,21 @@ const getoxygenStatus = (weight) => {
                 <label className="text-[13px] text-[rgba(137,137,137,1)]">Respiratory rate (c/min)</label>
                 <input
                   type="text"
-                  name="weight"
-                  value={vitalsData.weight}
+                  name="respiratoryRate"
+                  value={vitalsData.respiratoryRate}
                   onChange={handleInputChange}
-                  placeholder="70"
+                  placeholder="70.5"
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
-                            <div className="flex h-[75px] flex-col justify-between">
+              <div className="flex h-[75px] flex-col justify-between">
                 <label className="text-[13px] text-[rgba(137,137,137,1)]">oxygen saturation (%)</label>
                 <input
                   type="text"
-                  name="weight"
-                  value={vitalsData.weight}
+                  name="oxygenSaturation"
+                  value={vitalsData.oxygenSaturation}
                   onChange={handleInputChange}
-                  placeholder="70"
+                  placeholder="16"
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
