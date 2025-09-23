@@ -622,7 +622,7 @@ const createNotePairs = () => {
                   <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
                   <div className="relative z-10 h-full border-none">
                     <textarea
-                      className="w-full h-full resize-none bg-transparent outline-none border-none"
+                      className="w-full h-full resize-none bg-transparent text-[18px] leading-6.5 outline-none border-none "
                       placeholder="Write your note here..."
                       value={noteBody}
                       onChange={(e) => setNoteBody(e.target.value)}
@@ -937,7 +937,7 @@ const createNotePairs = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="text-sm text-gray-700 flex-1">{nurseNote.content || nurseNote.body}</div>
+                  <div className="text-sm text-gray-700 flex-1 break-words   ">{nurseNote.content || nurseNote.body}</div>
                 </div>
               </div>
               <div className="rounded-xl border border-gray-200 bg-white flex flex-col h-full">
@@ -1008,7 +1008,7 @@ const createNotePairs = () => {
                       <span className="text-gray-400">--</span>
                     )}
                   </div>
-                  <div className="text-sm text-gray-700 flex-1">
+                  <div className="text-sm text-gray-700 flex-1 break-words">
                     {doctorNoteForCard ? doctorNoteForCard.content : (
                       <div className="flex flex-col items-center justify-center py-6 h-full">
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />

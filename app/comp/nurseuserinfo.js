@@ -168,7 +168,7 @@ const getTodayDate = () => {
                 {/* Grid */}
                 <div className="grid grid-cols-3 gap-6">
                   {/* Box 1 - Vitals */}
-                  <div className="bg-[#FFFFFF] pt-4 pb-4 pl-4 pr-8 rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-[300px]">
+                  <div className="bg-[#FFFFFF] pt-4 pb-4 pl-4 pr-8 rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-[300px] xl:h-fit">
                     <div className=' min-h-[84px] w-[90%] flex gap-4 items-center'>
                         <div className='w-[30%] h-full'>
                         <img src={user.avatar} alt={user.name} className="w-full h-full rounded-full"/>
