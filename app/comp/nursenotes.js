@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { downloadNotePDF } from '../utils/downloadhelper';
 
 const sampleTags = [
   'Follow-up', 'Malaria', 'Medications', 'Typhoid', 'Admitted', 'Discharged',
@@ -356,7 +357,7 @@ const createNotePairs = () => {
                     {expandedPair?.nurse?.content || expandedPair?.nurse?.body}
                   </div>
                   <div className="flex justify-end mt-4 mb-1 border-t-[0.8px] border-t-gray-300 w-fullrounded-b-xl ">
-                    <button className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
+                    <button onClick={() => downloadNotePDF(expandedPair?.nurse, 'nurse', formatDate, formatTime)} className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
                       <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
                       Download note
                     </button>
@@ -743,7 +744,7 @@ const createNotePairs = () => {
                     </div>
                     <div className="flex justify-end mt-4 w-full rounded-b-xl border-t-[0.8px] border-t-gray-300">
                       <div className="flex justify-end  mb-1  w-full rounded-b-xl">
-                        <button className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
+                        <button onClick={() => downloadNotePDF(expandedPair?.doctor, 'doctor', formatDate, formatTime)} className="flex items-center gap-2 px-4 py-2 mr-5 mt-2 rounded bg-[#E5EFFF] text-[#1E40AF] font-medium text-sm">
                           <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
                           Download note
                         </button>
@@ -903,7 +904,7 @@ const createNotePairs = () => {
                     </div>
                   </div>
                   <div className="flex gap-2 mt-1">
-                    <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
+                    <button onClick={() => downloadNotePDF(nurseNote, 'nurse', formatDate, formatTime)} className="p-1 hover:bg-gray-200 rounded" title="Copy">
                       <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
                     </button>
                     <button
@@ -970,7 +971,7 @@ const createNotePairs = () => {
                     </div>
                   </div>
                   <div className="flex gap-2 mt-1">
-                    <button className="p-1 hover:bg-gray-200 rounded" title="Copy">
+                    <button onClick={() => downloadNotePDF(doctorNoteForCard, 'doctor', formatDate, formatTime)} className="p-1 hover:bg-gray-200 rounded" title="Copy">
                       <img src="/image/Downloadnote.png" alt="download" className="w-5 h-5" />
                     </button>
                     <button
