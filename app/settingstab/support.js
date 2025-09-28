@@ -135,24 +135,24 @@ const handleSubmit = async () => {
       <div className='w-[95%] m-auto h-fit flex gap-5 mb-5 mt-5'>
         <div className='w-1/2 h-fit flex flex-col gap-2 '>
           <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>First Name</h1></label>
-          <input type="text" value={user.firstName || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border h-[45px] shadow-xs"/>
+          <input type="text" value={user.firstName || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border border-[#D0D5DD] h-[45px] shadow-xs shadow-[#1018280D]"/>
         </div>
         <div className='w-1/2 h-fit flex flex-col gap-2 '>
           <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Last Name</h1></label>
-          <input type="text" value={user.lastName || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border h-[45px] shadow-xs"/>
+          <input type="text" value={user.lastName || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border border-[#D0D5DD] h-[45px] shadow-xs shadow-[#1018280D]"/>
         </div>
       </div>
 
       {/* Email */}
       <div className='w-[95%] m-auto flex flex-col gap-2 mb-5'>
         <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Email address</h1></label>
-        <input type="email" value={user.email || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border h-[45px] shadow-xs"/>
+        <input type="email" value={user.email || ""} readOnly className="p-2 rounded-[12px] bg-[#FBFBFB] border border-[#D0D5DD] h-[45px] shadow-xs shadow-[#1018280D]"/>
       </div>
 
       {/* Subject */}
       <div className='w-[95%] m-auto flex flex-col gap-2 mb-5'>
         <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Subject</h1></label>
-        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder='Brief title of your issue' className="p-2 outline-none rounded-[12px] bg-[#FBFBFB] border h-[45px] shadow-xs"/>
+        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder='Brief title of your issue' className="p-2 outline-none rounded-[12px] bg-[#FBFBFB] border border-[#D0D5DD] h-[45px] shadow-xs shadow-[#1018280D]"/>
       </div>
 
       {/* Category */}
@@ -160,7 +160,7 @@ const handleSubmit = async () => {
         <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Issue category</h1></label>
         <div className="relative w-full">
           <select value={category} onChange={(e) => setCategory(e.target.value)}
-            className="w-full h-[45px] pl-3 pr-8 text-gray-700 bg-[#FBFBFB] border rounded-[12px] shadow-xs cursor-pointer focus:outline-none focus:ring-4 focus:ring-[#004AFF29] focus:border-[#3B6FED]"
+            className="w-full h-[45px] pl-3 pr-8 text-gray-700 bg-[#FBFBFB] border rounded-[12px] border-[#D0D5DD]  shadow-xs shadow-[#1018280D] cursor-pointer focus:outline-none focus:ring-4 focus:ring-[#004AFF29] focus:border-[#3B6FED]"
           >
             <option value="">Select category</option>
             <option>Account access</option>
@@ -178,7 +178,7 @@ const handleSubmit = async () => {
       {/* Description */}
       <div className='w-[95%] m-auto flex flex-col gap-2 mb-5'>
         <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Detailed description</h1></label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please provide as much detail as possible" className="p-2 rounded-[12px] bg-[#FBFBFB] border h-[120px] shadow-xs outline-none"/>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please provide as much detail as possible" className="p-2 rounded-[12px] bg-[#FBFBFB] border h-[120px] border-[#D0D5DD]  shadow-xs shadow-[#1018280D] outline-none"/>
       </div>
 
       {/* File upload */}

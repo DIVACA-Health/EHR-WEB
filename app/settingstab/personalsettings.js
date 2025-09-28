@@ -111,7 +111,7 @@ const PersonalSettings = () => {
         <div className="w-[95%] m-auto h-fit flex gap-5 mb-5">
           <div className="w-1/2 h-fit flex flex-col gap-2">
             <label>
-              <h1 className="text-[14px] text-[rgba(137,137,137,1)]">First Name</h1>
+              <h1 className="text-[14px] text-[rgba(137,137,137,1)]">First name</h1>
             </label>
             <input
               type="text"
@@ -122,7 +122,7 @@ const PersonalSettings = () => {
           </div>
           <div className="w-1/2 h-fit flex flex-col gap-2">
             <label>
-              <h1 className="text-[14px] text-[rgba(137,137,137,1)]">Last Name</h1>
+              <h1 className="text-[14px] text-[rgba(137,137,137,1)]">Last name</h1>
             </label>
             <input
               type="text"

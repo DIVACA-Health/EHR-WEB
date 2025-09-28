@@ -138,8 +138,8 @@ const getTodayDate = () => {
 
   return (
     <div className='w-[95%] m-auto mt-6'>
-    <h1 className=' mb-4 text-[12px] font-light'> Queue management - Student Health Record </h1>
-      <h1 className='text-xl font-medium mb-5'>Student Health Record</h1>
+    <h1 className=' mb-4 text-[12px] font-light'> Queue management {">"}  <span className='font-semibold'>Health Record </span> </h1>
+      <h1 className='text-xl font-medium mb-5'>Health Record</h1>
       {/* Tabs */}
       <div className='flex space-x-6 border-b border-gray-300 mb-4 text-sm font-extralight'>
         {tabs.map(tab => (
@@ -206,7 +206,7 @@ const getTodayDate = () => {
                         </div>
                         <div className=' w-[55%] flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Email</h1>
-                            <h1 className='text-xs text-[#141414] font-semibold'>{user.email}</h1>
+                            <h1 className='text-xs text-[#141414] font-semibold break-words'>{user.email}</h1>
                         </div>
                     </div>
                     <div className='flex justify-between items-center mb-4 mt-3 '>
@@ -223,7 +223,7 @@ const getTodayDate = () => {
                   </div>
 
                   {/* Box 2 - Vitals */}
-                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit  ">
+                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit mb-10 ">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14 '>
                             <div className='flex gap-3 items-center'>
@@ -260,7 +260,7 @@ const getTodayDate = () => {
                   </div>
 
                   {/* Box 3 - Health History */}
-                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit">
+                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit mb-10">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>
@@ -273,21 +273,21 @@ const getTodayDate = () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
-                            <div className='flex flex-col gap-1'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.6px] border-[#E6E6E6] h-14'>
+                            <div className=' w-[65%] flex flex-col gap-1 '>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
-                                <h1 className='text-xs max-h-[80%]  overflow-hidden text-ellipsis'>{user.notecontent1}</h1>
+                                <h1 className='text-xs text-ellipsis truncate'>{user.notecontent1}</h1>
                             </div>
-                            <div className='w-[50%] flex justify-end'>
+                            <div className='w-[35%] flex justify-end'>
                                 <h1 className='text-sm'>{getTodayDate(user.notedate1)}</h1>
                             </div>
                         </div>
                         <div className='flex justify-between items-center mb-2'>
-                            <div className='flex flex-col gap-1'>
+                            <div className=' w-[65%] flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note2}</h1>
-                                <h1 className='text-xs max-h-[80%] overflow-hidden text-ellipsis'>{user.notecontent2}</h1>
+                                <h1 className='text-xs text-ellipsis truncate'>{user.notecontent2}</h1>
                             </div>
-                            <div className='w-[50%] flex justify-end'>
+                            <div className='w-[35%] flex justify-end'>
                                 <h1 className='text-sm'>{getTodayDate(user.notedate2)}</h1>
                             </div>
                         </div>
@@ -305,7 +305,7 @@ const getTodayDate = () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-10'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.6px] border-[#E6E6E6] h-10'>
                             <div>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                             </div>
@@ -325,7 +325,7 @@ const getTodayDate = () => {
                   </div>
 
                   {/* Box 5 - Allergies */}
-                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit -mt-[120px]">
+                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit -mt-[115px]">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>
@@ -338,7 +338,7 @@ const getTodayDate = () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.6px] border-[#E6E6E6] h-14'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                                 <h1 className='text-xs'>Treatment note</h1>
@@ -373,7 +373,7 @@ const getTodayDate = () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                        <div className='flex justify-between items-center w-full  h-10 border-b-[0.6px] border-[#E6E6E6]'>
                             <div className='text-xs text-[#919191] font-extralight'>{user.allergyname}</div>
                             <div className='w-[30%] flex justify-end'>
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
@@ -386,7 +386,7 @@ const getTodayDate = () => {
                             </span>
                             </div>
                         </div>
-                            <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                            <div className='flex justify-between items-center w-full  h-10 border-b-[0.6px] border-[#E6E6E6]'>
                             <div className='text-xs text-[#919191] font-extralight'>{user.allergyname1}</div>
                             <div className='w-[30%] flex justify-end'>
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
@@ -419,7 +419,7 @@ const getTodayDate = () => {
             )}
 
             {activeSection === 'personal' && (
-              <div className=' w-full flex flex-col h-fit rounded-[12px] border-[1px] border-[rgba(235,235,235,1)] shadow-sm shadow-[rgba(198,198,198,0.1)] '>
+              <div className=' w-full flex flex-col  h-fit rounded-[12px] border-[1px] border-[rgba(235,235,235,1)] shadow-sm shadow-[rgba(198,198,198,0.1)] '>
                 <div className='h-[70px]  w-full rounded-t-[12px] flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-b-[rgba(235,235,235,1)] mb-4 shadow-b shadow-xs'>
                     <div className='flex gap-3 items-center'>
                         <div>

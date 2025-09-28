@@ -112,7 +112,7 @@ const NurseVitals = ({ studentId }) => {
         temperature: vitalsData.temperature ? Number(vitalsData.temperature) : null,
         oxygenSaturation: vitalsData.oxygenSaturation ? Number(vitalsData.oxygenSaturation) : null,
         respiratoryRate: vitalsData.respiratoryRate ? Number(vitalsData.respiratoryRate) : null,
-        weight: vitalsData.weight ? Number(vitalsData.weight) : 78,
+        // weight: vitalsData.weight ? Number(vitalsData.weight) : 78,
       };
       console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
@@ -195,7 +195,7 @@ const getoxygenStatus = (weight) => {
             className="bg-blue-600 flex gap-[8px] w-[175px] h-[44px] items-center justify-center text-white rounded-[8px]"
             onClick={() => setShowSidebar(true)}
           >
-            <img src="/image/Plus.png" alt="icon" width={25} height={25} />
+            <img src="/image/whitePlus1.png" alt="icon" width={25} height={25} />
             <h1 className="text-[14px]">Record New Vitals</h1>
           </button>
         </div>
@@ -288,7 +288,7 @@ const getoxygenStatus = (weight) => {
                 <input
                   type="text"
                   name="heartRate"
-                  value={vitalsData.heartRate}
+                  value={vitalsData.heartRate || ""}
                   onChange={handleInputChange}
                   placeholder="89"
                   className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none mb-2"
@@ -300,9 +300,9 @@ const getoxygenStatus = (weight) => {
                 <input
                   type="text"
                   name="bloodPressure"
-                  value={vitalsData.bloodPressure}
+                  value={vitalsData.bloodPressure || ""}
                   onChange={handleInputChange}
-                  placeholder="120/80"
+                  placeholder="Enter blood pressure"
                   className="h-[45px] mb-2 w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -312,9 +312,9 @@ const getoxygenStatus = (weight) => {
                 <input
                   type="text"
                   name="temperature"
-                  value={vitalsData.temperature}
+                  value={vitalsData.temperature || ""}
                   onChange={handleInputChange}
-                  placeholder="37.5"
+                  placeholder="Enter temperature"
                   className="h-[45px] w-full mb-2 pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -323,9 +323,9 @@ const getoxygenStatus = (weight) => {
                 <input
                   type="text"
                   name="respiratoryRate"
-                  value={vitalsData.respiratoryRate}
+                  value={vitalsData.respiratoryRate || ""}
                   onChange={handleInputChange}
-                  placeholder="70.5"
+                  placeholder="Enter respiratory rate"
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -334,9 +334,9 @@ const getoxygenStatus = (weight) => {
                 <input
                   type="text"
                   name="oxygenSaturation"
-                  value={vitalsData.oxygenSaturation}
+                  value={vitalsData.oxygenSaturation || ""}
                   onChange={handleInputChange}
-                  placeholder="16"
+                  placeholder="Enter oxygen saturation"
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
