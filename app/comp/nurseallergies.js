@@ -174,8 +174,8 @@ const nurseallergies = ({ studentId }) => {
           className='bg-blue-600 flex gap-[8px] w-[195px] h-[44px] items-center justify-center text-white rounded-[8px]'
           onClick={() => setShowSidebar(true)}
         >
-          <img src='/image/Plus.png' alt='icon' width={25} height={25} />
-          <h1 className='text-[14px]'>Record New Allergy</h1>
+          <img src='/image/whitePlus1.png' alt='icon' width={25} height={25} />
+          <h1 className='text-[14px]'>Record new allergy</h1>
         </button>
       </div>
       <div className='flex flex-col p-4 gap-4 '>
@@ -209,12 +209,14 @@ const nurseallergies = ({ studentId }) => {
       {showSidebar && (
         <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowSidebar(false)}>
           <div
-            className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50"
+            className="absolute right-0 top-0 h-full w-[55%] bg-[#FBFBFB] shadow-lg z-50"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-8 border-gray-200 shadow-sm">
-              <h2 className="text-xl font-semibold">Record New Allergies</h2>
-              <button onClick={() => setShowSidebar(false)} className="text-xl">×</button>
+            <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] bg-white mb-8 border-[#FFFFFF] shadow-xs">
+              <h2 className="text-xl font-semibold">Record new allergy</h2>
+              <button onClick={() => setShowSidebar(false)} className="w-[28px] h-[28px]">
+                <img src='/image/exiticon.png' alt='exit'></img>
+              </button>
             </div>
             <form
               ref={formRef}
@@ -230,7 +232,7 @@ const nurseallergies = ({ studentId }) => {
                     className="flex items-center justify-between w-full bg-white border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#898989] focus:outline-none"
                     onClick={() => setShowTypeDropdown((prev) => !prev)}
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2 ">
                       {allergyType && allergyType !== 'Other'
                         ? <>
                             <img
@@ -238,9 +240,9 @@ const nurseallergies = ({ studentId }) => {
                               alt={allergyType}
                               width={20}
                               height={20}
-                              className="object-contain"
+                              className="object-contain "
                             />
-                            <span>
+                            <span >
                               {allergyTypes.find(t => t.value === allergyType)?.label || allergyType}
                             </span>
                           </>
@@ -268,7 +270,7 @@ const nurseallergies = ({ studentId }) => {
                       {allergyTypes.map(type => (
                         <div
                           key={type.value}
-                          className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#EEF4FF] ${allergyType === type.value && !isAddingCustom ? 'bg-[#EEF4FF]' : ''}`}
+                          className={`flex items-center gap-2 px-4 py-2  cursor-pointer rounded-[12px] hover:bg-[#EEF4FF] ${allergyType === type.value && !isAddingCustom ? 'bg-[#EEF4FF]' : ''}`}
                           onClick={() => handleTypeSelect(type)}
                         >
                           <img src={type.img} alt={type.label} width={20} height={20} className="object-contain" />
@@ -281,23 +283,27 @@ const nurseallergies = ({ studentId }) => {
                         </div>
                       ))}
                       {(allergyType === 'Other' || isAddingCustom) && (
-                        <div className="flex items-center gap-2 px-4 py-2 border-t border-[#D0D5DD]">
-                          <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
-                          <input
-                            type="text"
-                            placeholder="Enter allergy type"
-                            className="flex-1 border rounded px-2 py-1"
-                            value={customAllergyType}
-                            onChange={e => setCustomAllergyType(e.target.value)}
-                          />
-                          <button
-                            type="button"
-                            className="bg-blue-600 text-white px-3 py-1 rounded"
-                            disabled={!customAllergyType.trim()}
-                            onClick={handleAddCustomAllergy}
-                          >
-                            Add custom allergy
-                          </button>
+                        <div className="flex flex-col items-center gap-2 px-4 py-2 border-t border-[#D0D5DD]">
+                          <div className='flex w-full gap-2'>
+                            <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
+                            <input
+                              type="text"
+                              placeholder="Enter allergy type"
+                              className="flex-1 border rounded px-2 py-1"
+                              value={customAllergyType}
+                              onChange={e => setCustomAllergyType(e.target.value)}
+                            />
+                          </div>
+                          <div className='w-full  flex items-center justify-end'>
+                            <button
+                              type="button"
+                              className="bg-blue-600 text-white px-3 py-1 rounded"
+                              disabled={!customAllergyType.trim()}
+                              onClick={handleAddCustomAllergy}
+                            >
+                              Add custom allergy
+                            </button>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -322,7 +328,7 @@ const nurseallergies = ({ studentId }) => {
                 <input
                   type='text'
                   placeholder='Enter allergy name'
-                  className='w-[90%] bg-[#FFFFFF] outline-none border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#cdbebe]'
+                  className='w-[90%] bg-[#FFFFFF] outline-none border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-black'
                   value={allergyName}
                   onChange={e => setAllergyName(e.target.value)}
                   required
@@ -376,7 +382,7 @@ const nurseallergies = ({ studentId }) => {
                         {['Mild', 'Moderate', 'Severe'].map(level => (
                         <div
                             key={level}
-                            className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#EEF4FF]"
+                            className="flex items-center gap-2 rounded-[12px] px-4 py-2 cursor-pointer hover:bg-[#EEF4FF]"
                             onClick={() => {
                             setSeverityLevel(level);
                             setShowSeverityDropdown(false);
