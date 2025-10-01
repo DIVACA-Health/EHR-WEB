@@ -8,10 +8,11 @@ const accessibility = () => {
           <h1 className='text-16px font-semibold '>Keyboard Functions</h1>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Navigate through clickable elements</h1>
           </div>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 '>
             <div className=' border-[#3B3B3B] border-[1px] rounded-[3px] flex items-center justify-center h-[36px] w-[89px]'>
               <h1 className='text-[#3B3B3B] font-medium'>Tab / Shift</h1>
             </div>
@@ -22,7 +23,8 @@ const accessibility = () => {
           </div>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Select or activate a focused element</h1>
           </div>
           <div className='flex items-center gap-2'>
@@ -32,7 +34,8 @@ const accessibility = () => {
           </div>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Close modals or dropdowns</h1>
           </div>
           <div className='flex items-center gap-2'>
@@ -42,7 +45,8 @@ const accessibility = () => {
           </div>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center  m-auto '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Navigate within menus, tables, or dropdown lists</h1>
           </div>
           <div className='flex items-center gap-2'>
@@ -66,7 +70,8 @@ const accessibility = () => {
           <h1 className='text-16px font-semibold '>Shortcut Keys</h1>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Open patient search</h1>
           </div>
           <div className='flex items-center gap-2'>
@@ -80,7 +85,8 @@ const accessibility = () => {
           </div>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>Dashboard</h1>
           </div>
           <div className='flex items-center gap-2'>
@@ -94,7 +100,8 @@ const accessibility = () => {
           </div>
         </div>
         <div className='h-[75px] w-[95%] flex justify-between items-center border-b-[1px] border-[#F0F2F5] m-auto  '>
-          <div className='flex flex-col gap-2'>
+          <div className='flex  gap-2 items-center justify-center'>
+            <img src="/image/bullet.png" alt='bullet' className='w-[8px] h-[8px]'/>
             <h1 className='text-sm text-[#141414] font-normal'>New record</h1>
           </div>
           <div className='flex items-center gap-2'>

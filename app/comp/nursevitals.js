@@ -85,7 +85,7 @@ const NurseVitals = ({ studentId }) => {
       heartRate: '',
       bloodPressure: '',
       temperature: '',
-      weight: '',
+      weight: 0,
       respiratoryRate: '',
       oxygenSaturation: '',
       recorder: { firstName: '', lastName: '' },
@@ -112,7 +112,7 @@ const NurseVitals = ({ studentId }) => {
         temperature: vitalsData.temperature ? Number(vitalsData.temperature) : null,
         oxygenSaturation: vitalsData.oxygenSaturation ? Number(vitalsData.oxygenSaturation) : null,
         respiratoryRate: vitalsData.respiratoryRate ? Number(vitalsData.respiratoryRate) : null,
-        // weight: vitalsData.weight ? Number(vitalsData.weight) : 78,
+        weight: vitalsData.weight ? Number(vitalsData.weight) : 0,
       };
       console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
