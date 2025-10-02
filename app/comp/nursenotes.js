@@ -764,6 +764,101 @@ const createNotePairs = () => {
             </div>
             </div>
           );
+          case 'prescriptionexpanded':
+          return (
+              <div className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] py-5">
+                {loading ? (
+                  <div className="flex justify-center items-center h-full">
+                    <span className="text-gray-500">Loading prescriptions...</span>
+                  </div>
+                ) : prescriptions.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <img src="/image/nodoctors.png" alt="No prescriptions" className="mx-auto mb-2 h-[110px] w-[110px]" />
+                    <div className="font-semibold text-gray-800 text-lg mb-1">No Prescriptions</div>
+                    <div className="text-xs text-gray-500 text-center">No prescriptions have been recorded for this student.</div>
+                  </div>
+                ) : (
+                  prescriptions.map((prescription, idx) => (
+                    <div key={idx} className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                      <div
+                        className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
+                        onClick={() => setIsOpen1(isOpen1 === idx ? null : idx)}
+                      >
+                        <span className="font-medium text-sm">Prescription details {idx + 1} </span>
+                        <span className="text-lg transform transition-transform duration-300">
+                          {isOpen1 === idx ? '▾' : '▸'}
+                        </span>
+                      </div>
+
+                      {isOpen1 === idx && (
+                        <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
+                          <div className="border-b last:border-b-0">
+                            <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                              <span className="text-gray-700">Medication</span>
+                              <span className="font-medium text-gray-900">
+                                {prescription.medication || 'N/A'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                              <span className="text-gray-700">Dosage</span>
+                              <span className="font-medium text-gray-900">
+                                {prescription.dosage || 'N/A'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center py-3 ">
+                              <span className="text-gray-700">Instructions</span>
+                              {prescription.instructions ? (
+                                <button
+                                  className="text-blue-600 font-medium hover:underline"
+                                  type="button"
+                                  onClick={() => {
+                                    setInstructionsText(prescription.instructions);
+                                    setShowInstructionsModal(true);
+                                  }}
+                                >
+                                  View
+                                </button>
+                              ) : (
+                                <span className="text-gray-400">N/A</span>
+                              )}
+                            </div>
+                            <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                              <span className="text-gray-700">Medication 2</span>
+                              <span className="font-medium text-gray-900">
+                                {prescription.medication || 'N/A'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                              <span className="text-gray-700">Dosage</span>
+                              <span className="font-medium text-gray-900">
+                                {prescription.dosage || 'N/A'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center py-3 ">
+                              <span className="text-gray-700">Instructions</span>
+                              {prescription.instructions ? (
+                                <button
+                                  className="text-blue-600 font-medium hover:underline"
+                                  type="button"
+                                  onClick={() => {
+                                    setInstructionsText(prescription.instructions);
+                                    setShowInstructionsModal(true);
+                                  }}
+                                >
+                                  View
+                                </button>
+                              ) : (
+                                <span className="text-gray-400">N/A</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+          );
         default:
           return null;
       }
@@ -1184,7 +1279,6 @@ const createNotePairs = () => {
               </div>
             </div>
           );
-
           case 'prescription':
           return (
             <div className='h-full' >
