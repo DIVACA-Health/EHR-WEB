@@ -270,18 +270,6 @@ const NursePrescription = ({ studentId }) => {
                             <span className="text-gray-400">N/A</span>
                           )}
                         </div>
-                        <div className="flex justify-between items-center py-3">
-                          <span className="text-gray-700">Status</span>
-                          <span
-                            className={`font-medium px-3 py-1 rounded-full text-xs ${
-                              selectedPrescription.status === 'ACTIVE'
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-gray-100 text-gray-700'
-                            }`}
-                          >
-                            {selectedPrescription.status || 'N/A'}
-                          </span>
-                        </div>
                       </div>
                     </div>
                   )}
