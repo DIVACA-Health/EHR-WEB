@@ -293,36 +293,25 @@ const NursePrescription = ({ studentId }) => {
         )}
 
         {/* Instructions Modal */}
-        {showInstructionsModal && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#0C162F99]"
-            onClick={() => setShowInstructionsModal(false)}
-          >
-            <div
-              className="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                className="absolute top-3 right-4 text-2xl text-gray-400 hover:text-gray-700"
-                onClick={() => setShowInstructionsModal(false)}
-              >
-                ×
-              </button>
-              <h2 className="text-lg font-semibold mb-4 text-center">Instructions</h2>
-              <div className="mb-6 whitespace-pre-line text-gray-700 text-center">
-                {instructionsText}
-              </div>
-              <div className="flex justify-center">
-                <button
-                  className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-                  onClick={() => setShowInstructionsModal(false)}
-                >
-                  Close
-                </button>
+          {showInstructionsModal && (
+            <div className="fixed inset-0 z-50 bg-[#0C162F99] bg-opacity-50 flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
+              <div className="bg-white rounded-[12px]  max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+                <div className='border-[1px] rounded-t-[12px]  border-[#F0F2F5]  flex items-center justify-center p-4'>
+                  <h3 className="text-lg font-semibold ">Instructions</h3>
+                </div>
+                <p className="text-gray-700 mb-4 py-5 px-3 ">{instructionsText}</p>
+                <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                  <button 
+                    onClick={() => setShowInstructionsModal(false)}
+                    className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                  >
+                    Close
+                  </button>
+                </div>
+
               </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );
