@@ -285,11 +285,14 @@ const nurseallergies = ({ studentId }) => {
                       {(allergyType === 'Other' || isAddingCustom) && (
                         <div className="flex flex-col items-center gap-2 px-4 py-2 border-t border-[#D0D5DD]">
                           <div className='flex w-full gap-2'>
-                            <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
+                            <div className='flex items-center gap-2 justify-center'>
+                              <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
+                              <h2>Other</h2>
+                            </div>
                             <input
                               type="text"
                               placeholder="Enter allergy type"
-                              className="flex-1 border rounded px-2 py-1"
+                              className="flex-1 border-[1px] border-gray-300 rounded-[12px] px-2 py-1"
                               value={customAllergyType}
                               onChange={e => setCustomAllergyType(e.target.value)}
                             />
