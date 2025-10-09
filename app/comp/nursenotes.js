@@ -51,6 +51,12 @@ export default function NoteManager({ studentId }) {
   const [medication, setMedication] = useState("");
   const [dosage, setDosage] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
+  const [description, setDescription] = useState("");
+  const [possibleCause, setPossibleCause] = useState("");
+  const [healthRecords, setHealthRecords] = useState(null);
+  const [healthRecordsLoading, setHealthRecordsLoading] = useState(true);
+  const [isHealthOpen, setIsHealthOpen] = useState(null);
 
   const [expandedPair, setExpandedPair] = useState(null);
   const [showExpandedSidebar, setShowExpandedSidebar] = useState(false);
@@ -63,6 +69,8 @@ export default function NoteManager({ studentId }) {
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [instructionsText, setInstructionsText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showDescriptionModal, setShowDescriptionModal] = useState(false);
+  const [descriptionText, setDescriptionText] = useState('');
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -174,6 +182,43 @@ export default function NoteManager({ studentId }) {
       setInstructions("");
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  
+  const handleSaveHealthRecord = async (e) => {
+    e.preventDefault(); // prevent form reload
+    setIsSaving(true);
+
+    const payload = {
+      studentId: studentId, // make sure you pass this prop
+      diagnosis,
+      description,
+      possibleCause,
+    };
+
+    try {
+      const res = await fetchWithAuth("/api/v1/health-records", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Failed to save health record");
+
+      const data = await res.json();
+      console.log("Saved successfully:", data);
+      toast.success('Health record saved successfully!');
+      
+      // Reset form
+      setDiagnosis("");
+      setDescription("");
+      setPossibleCause("");
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to save health record');
     } finally {
       setIsSaving(false);
     }
@@ -358,6 +403,26 @@ const createNotePairs = () => {
       };
       fetchPrescriptions();
     }, [studentId]);
+
+
+      useEffect(() => {
+    const fetchHealthRecords = async () => {
+      try {
+        setHealthRecordsLoading(true);
+        const res = await fetchWithAuth(`/api/v1/health-records/student/${studentId}/summary`);
+        const data = await res.json();
+        setHealthRecords(data.data);
+      } catch (err) {
+        console.error('Error fetching health records:', err);
+        setHealthRecords(null);
+      } finally {
+        setHealthRecordsLoading(false);
+      }
+    };
+    if (studentId) {
+      fetchHealthRecords();
+    }
+  }, [studentId]);
 
   const renderNoteTypeContent = () => {
     if (!user) return null;
@@ -595,10 +660,23 @@ const createNotePairs = () => {
         case 'doctorexpand':
           if (!expandedPair?.doctor) {
             return (
-              <div className="flex flex-col items-center justify-center h-[70%] p-8">
-                <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2 h-[110px] w-[110px]"  />
+              <div className="flex flex-col gap-2 items-center justify-center h-[70%] p-8">
+                <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2 h-[80px] w-[80px]"  />
                 <div className="font-semibold text-gray-800 text-lg mb-1">No Doctor's note yet</div>
                 <div className="text-xs text-gray-500 text-center mb-6">No doctor's notes have been recorded.</div>
+                        {user && (
+                          <button
+                            className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
+                            onClick={() => {
+                              setShowSidebar(true);
+                              setShowExpandedSidebar(false);
+                              setSelectedNoteType(user.role === 'doctor' ? 'doctor' : 'nurse');
+                            }}
+                          >
+                            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                            <h1 className='text-[14px]'>Add Note</h1>
+                          </button>
+                        )}
                 {/* <button
                   className="bg-blue-600 hover:bg-blue-700 text-white h-[48px] w-[316px] font-medium rounded-[8px] py-1 px-3 flex items-center justify-center gap-2 cursor-pointer"
                   onClick={() => handleForwardFiles(studentId)}
@@ -618,7 +696,7 @@ const createNotePairs = () => {
                 </button> */}
               </div>
             );
-          }
+          }               
           return (
             <div className='h-[70%] p-6'>
               <div className="rounded-xl border border-gray-200 bg-[#F3F6FF] ">
@@ -708,24 +786,24 @@ const createNotePairs = () => {
           return (
             <div className='h-full '>
               <div className='h-[70%] p-6 '>
-                <form method='post' className='flex flex-col gap-3'>
+                <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                   <div className='flex flex-col gap-2 '>
-                    <label>Diagnosis</label>
-                    <input type='text' placeholder='Enter diagnosis' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                    <label className='text-[#898989]'>Diagnosis</label>
+                    <input type='text' placeholder='Enter diagnosis' value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                   </div>
                   <div className='flex flex-col gap-2 '>
-                    <label>Description</label>
-                    <input type='text' placeholder='Enter diagnosis description' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                    <label className='text-[#898989]'>Description</label>
+                    <input type='text' placeholder='Enter diagnosis description'  value={description}  onChange={(e) => setDescription(e.target.value)}  className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                   </div>
                   <div className='flex flex-col gap-2 '>
-                    <label>Possible cause</label>
-                    <input type='text' placeholder='Enter possible cause' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                    <label className='text-[#898989]'>Possible cause</label>
+                    <input type='text' placeholder='Enter possible cause' value={possibleCause} onChange={(e) => setPossibleCause(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                   </div>
                 </form>
               </div>
               <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
                 <button
-                  onClick={handleSaveNote}
+                  onClick={handleSaveHealthRecord}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
@@ -734,22 +812,102 @@ const createNotePairs = () => {
               </div>
             </div>
           );
+          case 'healthexpanded':
+            return (
+              <div className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] py-5">
+                {healthRecordsLoading ? (
+                  <div className="flex justify-center items-center h-full">
+                    <span className="text-gray-500">Loading health records...</span>
+                  </div>
+                ) : !healthRecords || healthRecords.recentActivity.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <img src="/image/nodoctors.png" alt="No health records" className="mx-auto mb-2 h-[110px] w-[110px]" />
+                    <div className="font-semibold text-gray-800 text-lg mb-1">No Health Records</div>
+                    <div className="text-xs text-gray-500 text-center">No health records have been recorded for this student.</div>
+                  </div>
+                ) : (
+                  <>
+                    {/* Recent Activity */}
+                    {healthRecords.recentActivity.map((record, idx) => (
+                      <div key={idx} className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                        <div
+                          className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
+                          onClick={() => setIsHealthOpen(isHealthOpen === idx ? null : idx)}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-medium text-sm">{record.diagnosis}</span>
+                            <span className="text-xs text-gray-500">
+                              {formatDate(record.date)} • {record.recordedBy.name}
+                            </span>
+                          </div>
+                          <span className="text-lg transform transition-transform duration-300">
+                            {isHealthOpen === idx ? '▾' : '▸'}
+                          </span>
+                        </div>
+
+                        {isHealthOpen === idx && (
+                          <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
+                            <div className="border-b last:border-b-0">
+                              <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                                <span className="text-gray-700">Diagnosis</span>
+                                <span className="font-medium text-gray-900">
+                                  {record.diagnosis || 'N/A'}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                                <span className="text-gray-700">Description</span>
+                                {record.description ? (
+                                  <button
+                                    className="text-blue-600 font-medium hover:underline"
+                                    type="button"
+                                    onClick={() => {
+                                      setDescriptionText(record.description);
+                                      setShowDescriptionModal(true);
+                                    }}
+                                  >
+                                    View
+                                  </button>
+                                ) : (
+                                  <span className="text-gray-400">N/A</span>
+                                )}
+                              </div>
+                              <div className="flex flex-col py-3 ">
+                                <span className="text-gray-700 mb-2">Possible Cause</span>
+                                <span className="font-medium text-gray-900 text-sm">
+                                  {record.possibleCause || 'N/A'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            );
           case 'prescription':
           return (
             <div className='h-full' >
               <div className='h-[70%] p-6'>
-              <form method='post' className='flex flex-col gap-3'>
+              <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                 <div className='flex flex-col gap-2 '>
-                  <label>Medication</label>
-                  <input type='text' placeholder='Enter medication' value={medication} onChange={(e) => setMedication(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                  <div className='flex items-center justify-between'>
+                    <label className='text-[#898989]' >Medication</label>
+                    <button className='flex gap-1 items-center justify-center cursor-pointer'>
+                      <img src="/image/Plus{BLUE}.png" alt='plus' className='h-[24px] w-[24px]'/>
+                      <h2 className='text-[#3B6FED]'>Add medication</h2>
+                    </button>
+                  </div>
+                  <input type='text' placeholder='Enter medication' value={medication} onChange={(e) => setMedication(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                 </div>
                 <div className='flex flex-col gap-2 '>
-                  <label>Dosage</label>
-                  <input type='text' placeholder='Enter medication dosage' value={dosage} onChange={(e) => setDosage(e.target.value)}  className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                  <label className='text-[#898989]'>Dosage</label>
+                  <input type='text' placeholder='Enter medication dosage' value={dosage} onChange={(e) => setDosage(e.target.value)}  className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                 </div>
                 <div className='flex flex-col gap-2 '>
-                  <label>Instructions</label>
-                  <input type='text' placeholder='Give instructions for medication' value={instructions} onChange={(e) => setInstructions(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px]'></input>
+                  <label className='text-[#898989]'>Instructions</label>
+                  <input type='text' placeholder='Give instructions for medication' value={instructions} onChange={(e) => setInstructions(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                 </div>
               </form>
             </div>
@@ -1151,7 +1309,7 @@ const createNotePairs = () => {
                 <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2 h-[110px] w-[110px]"  />
                 <div className="font-semibold text-gray-800 text-lg mb-1">No Doctor's note yet</div>
                 <div className="text-xs text-gray-500 text-center mb-6">No doctor's notes have been recorded.</div>
-                <button
+                {/* <button
                   className="bg-blue-600 hover:bg-blue-700 text-white h-[48px] w-[316px] font-medium rounded-[8px] py-1 px-3 flex items-center justify-center gap-2 cursor-pointer"
                   onClick={() => handleForwardFiles(studentId)}
                   disabled={isForwarding}
@@ -1167,7 +1325,7 @@ const createNotePairs = () => {
                       Forward patient to Doctor
                     </>
                   )}
-                </button>
+                </button> */}
               </div>
             );
           }
@@ -1260,17 +1418,17 @@ const createNotePairs = () => {
           return (
              <div className='h-full '>
               <div className='h-[70%] p-6 '>
-                <form method='post' className='flex flex-col gap-3'>
+                <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                   <div className='flex flex-col gap-2 '>
-                    <label>Diagnosis</label>
+                    <label className='text-[#898989]'>Diagnosis</label>
                     <input type='text' disabled placeholder='Enter diagnosis' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                   </div>
                   <div className='flex flex-col gap-2 '>
-                    <label>Description</label>
+                    <label className='text-[#898989]'>Description</label>
                     <input type='text' disabled placeholder='Enter diagnosis description' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                   </div>
                   <div className='flex flex-col gap-2 '>
-                    <label>Possible cause</label>
+                    <label className='text-[#898989]'>Possible cause</label>
                     <input type='text' disabled placeholder='Enter possible cause' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                   </div>
                 </form>
@@ -1279,21 +1437,128 @@ const createNotePairs = () => {
               </div>
             </div>
           );
+          case 'healthexpanded':
+  return (
+    <div className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] py-5">
+      {healthRecordsLoading ? (
+        <div className="flex justify-center items-center h-full">
+          <span className="text-gray-500">Loading health records...</span>
+        </div>
+      ) : !healthRecords || healthRecords.recentActivity.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-full">
+          <img src="/image/nodoctors.png" alt="No health records" className="mx-auto mb-2 h-[110px] w-[110px]" />
+          <div className="font-semibold text-gray-800 text-lg mb-1">No Health Records</div>
+          <div className="text-xs text-gray-500 text-center">No health records have been recorded for this student.</div>
+        </div>
+      ) : (
+        <>
+          {/* Summary Stats */}
+          <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px] bg-white p-4 mb-2">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="text-gray-500 text-xs">Total Records</span>
+                <p className="font-semibold text-lg">{healthRecords.totalRecords}</p>
+              </div>
+              <div>
+                <span className="text-gray-500 text-xs">Last Consultation</span>
+                <p className="font-semibold text-sm">
+                  {healthRecords.lastConsultation 
+                    ? formatDate(healthRecords.lastConsultation.date)
+                    : 'N/A'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Activity */}
+          {healthRecords.recentActivity.map((record, idx) => (
+            <div key={idx} className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+              <div
+                className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
+                onClick={() => setIsHealthOpen(isHealthOpen === idx ? null : idx)}
+              >
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">{record.diagnosis}</span>
+                  <span className="text-xs text-gray-500">
+                    {formatDate(record.date)} • {record.recordedBy.name}
+                  </span>
+                </div>
+                <span className="text-lg transform transition-transform duration-300">
+                  {isHealthOpen === idx ? '▾' : '▸'}
+                </span>
+              </div>
+
+              {isHealthOpen === idx && (
+                <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
+                  <div className="border-b last:border-b-0">
+                    <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                      <span className="text-gray-700">Diagnosis</span>
+                      <span className="font-medium text-gray-900">
+                        {record.diagnosis || 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex flex-col py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                      <span className="text-gray-700 mb-2">Description</span>
+                      <span className="font-medium text-gray-900 text-sm">
+                        {record.description || 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex flex-col py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                      <span className="text-gray-700 mb-2">Possible Cause</span>
+                      <span className="font-medium text-gray-900 text-sm">
+                        {record.possibleCause || 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                      <span className="text-gray-700">Status</span>
+                      <span
+                        className={`font-medium px-3 py-1 rounded-full text-xs ${
+                          record.status === 'RESOLVED'
+                            ? 'bg-green-100 text-green-700'
+                            : record.status === 'PENDING'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-gray-100 text-gray-700'
+                        }`}
+                      >
+                        {record.status || 'N/A'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-3">
+                      <span className="text-gray-700">Recorded By</span>
+                      <span className="font-medium text-gray-900">
+                        {record.recordedBy.name} ({record.recordedBy.role})
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
           case 'prescription':
           return (
             <div className='h-full' >
               <div className='h-[70%] p-6'>
-              <form method='post' className='flex flex-col gap-3'>
+              <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                 <div className='flex flex-col gap-2 '>
-                  <label>Medication</label>
+                  <div className='flex items-center justify-between'>
+                    <label className='text-[#898989]'>Medication</label>
+                    <button className='flex gap-1 items-center justify-center cursor-pointer'>
+                      <img src="/image/Plus{BLUE}.png" alt='plus' className='h-[24px] w-[24px]'/>
+                      <h2 className='text-[#3B6FED]'>Add medication</h2>
+                    </button>
+                  </div>
                   <input type='text' disabled placeholder='Enter medication' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                 </div>
                 <div className='flex flex-col gap-2 '>
-                  <label>Dosage</label>
+                  <label className='text-[#898989]'>Dosage</label>
                   <input type='text' disabled placeholder='Enter medication dosage' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                 </div>
                 <div className='flex flex-col gap-2 '>
-                  <label>Instructions</label>
+                  <label className='text-[#898989]'>Instructions</label>
                   <input type='text' disabled placeholder='Give instructions for medication' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]'></input>
                 </div>
               </form>
@@ -1414,15 +1679,18 @@ const createNotePairs = () => {
           <h1 className='font-medium text-lg'>Notes</h1>
         </div>
         {/* Add Note button in header */}
-        {user && (
-          <button
-            className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
-            onClick={() => {setShowSidebar(true) ,setSelectedNoteType('nurse'); }}
-          >
-            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
-            <h1 className='text-[14px]'>Add Note</h1>
-          </button>
-        )}
+          {user && (
+            <button
+              className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
+              onClick={() => {
+                setShowSidebar(true);
+                setSelectedNoteType(user.role === 'doctor' ? 'doctor' : 'nurse');
+              }}
+            >
+              <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+              <h1 className='text-[14px]'>Add Note</h1>
+            </button>
+          )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-10 p-3 items-stretch">
           {/* Show template if both nurse and doctor notes are empty */}
@@ -1611,11 +1879,24 @@ const createNotePairs = () => {
                   </div>
                   <div className="text-sm text-gray-700 flex-1 break-words">
                     {doctorNoteForCard ? doctorNoteForCard.content : (
-                      <div className="flex flex-col items-center justify-center py-6 h-full">
+                      <div className="flex flex-col gap-2 items-center justify-center py-6 h-full">
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
                         <div className="font-semibold text-gray-700 text-base mb-1">No Doctor's note yet</div>
                         <div className="text-xs text-gray-500 text-center">No doctor's notes have been recorded.</div>
+                        {user && (
+                          <button
+                            className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
+                            onClick={() => {
+                              setShowSidebar(true);
+                              setSelectedNoteType(user.role === 'doctor' ? 'doctor' : 'nurse');
+                            }}
+                          >
+                            <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
+                            <h1 className='text-[14px]'>Add Note</h1>
+                          </button>
+                        )}
                       </div>
+                      
                     )}
                   </div>
                 </div>
@@ -1634,7 +1915,9 @@ const createNotePairs = () => {
           >
             <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm">
               <h2 className="text-xl font-semibold">Add new note</h2>
-              <button onClick={() => setShowSidebar(false)} className="text-xl">×</button>
+              <button onClick={() => setShowSidebar(false)} className="text-xl">
+                <img src='/image/exiticon.png' alt='exit' className='w-[28px] h-[28px]'/>
+              </button>
             </div>
             <div className=' h-[56px] mt-5 mb-5 rounded-[12px] w-[95%] m-auto bg-[#FAFAFC] border-1px border-[#EBEBEB] flex items-center justify-between gap-1 p-2'>
               <div
@@ -1678,7 +1961,9 @@ const createNotePairs = () => {
           >
             <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm">
               <h2 className="text-xl font-semibold">View Notes</h2>
-              <button onClick={() => setShowExpandedSidebar(false)} className="text-xl">×</button>
+              <button onClick={() => setShowExpandedSidebar(false)} className="text-xl">
+                <img src='/image/exiticon.png' alt='exit' className='w-[28px] h-[28px]'/>
+              </button>
             </div>
             <div className=' h-[56px] mt-5 mb-5 rounded-[12px] w-[95%] m-auto bg-[#FAFAFC] border-1px border-[#EBEBEB] flex items-center justify-between gap-1 p-2'>
               <div
@@ -1694,8 +1979,8 @@ const createNotePairs = () => {
                 <h3>Doctor's note</h3>
               </div>
               <div
-                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'health' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
-                onClick={() => setSelectedNoteType('health')}
+                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'healthexpanded' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                onClick={() => setSelectedNoteType('healthexpanded')}
               >
                 <h3>Health issue</h3>
               </div>
@@ -1720,6 +2005,27 @@ const createNotePairs = () => {
                 <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
                   <button 
                     onClick={() => setShowInstructionsModal(false)}
+                    className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                  >
+                    Close
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          )}
+          
+          {/* Description Modal */}
+          {showDescriptionModal && (
+            <div className="fixed inset-0 z-50 bg-[#0C162F99] bg-opacity-50 flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
+              <div className="bg-white rounded-[12px]  max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+                <div className='border-[1px] rounded-t-[12px]  border-[#F0F2F5]  flex items-center justify-center p-4'>
+                  <h3 className="text-lg font-semibold ">Description</h3>
+                </div>
+                <p className="text-gray-700 mb-4 py-5 px-3 ">{descriptionText}</p>
+                <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                  <button 
+                    onClick={() => setShowDescriptionModal(false)}
                     className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
                   >
                     Close

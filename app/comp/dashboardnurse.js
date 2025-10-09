@@ -311,7 +311,7 @@ const handleMenuButtonClick = (e, user) => {
             </div>
             <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-4 relative border border-[#E5E7EB]">
               <table className="w-full text-sm text-left border-collapse">
-                <thead className="bg-white border-b border-[#E5E7EB]">
+                <thead className="bg-white border-dashed border-b-[2px] border-[#E5E7EB]">
                   <tr>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>
@@ -391,7 +391,7 @@ const handleMenuButtonClick = (e, user) => {
             </div>
             <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-4 relative border border-[#E5E7EB]">
               <table className="w-full text-sm text-left border-collapse">
-                <thead className="bg-white border-b border-[#E5E7EB]">
+                <thead className="bg-white border-dashed border-b-[2px] border-[#E5E7EB]">
                   <tr>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>
@@ -471,7 +471,7 @@ const handleMenuButtonClick = (e, user) => {
             </div>
             <div className="overflow-x-auto bg-white shadow rounded-[16px] mt-4 relative border border-[#E5E7EB]">
               <table className="w-full text-sm text-left border-collapse">
-                <thead className="bg-white border-b border-[#E5E7EB]">
+                <thead className="bg-white border-dashed border-b-[2px] border-[#E5E7EB]">
                   <tr>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">S/N</th>
                     <th className="px-4 py-3 font-bold text-[#6B7280]">First name</th>

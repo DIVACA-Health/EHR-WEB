@@ -268,7 +268,7 @@ const handleActionClick = async (user) => {
 
       {/* Table */}
       <table className="w-full border border-[rgba(228,228,228,1)] rounded-xl overflow-hidden text-sm shadow-sm shadow-[rgba(228,228,228,1)]">
-        <thead className="bg-[#FFFFFF]">
+        <thead className="bg-[#FFFFFF] border-dashed border-b-[2px] border-gray-200">
           <tr className="text-left text-[#626262]">
             <th className="p-4 font-medium text-[13px] pl-8">Full name</th>
             <th className="p-4 font-medium text-[13px]">DIVACA ID</th>
