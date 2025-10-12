@@ -554,99 +554,119 @@ const createNotePairs = () => {
           );
         case 'doctor':
           return (
-            <div className=' h-full'>
-              <div className='pt-6 pb-0 pl-6 r-6 h-[65%]'>
-                <div className='w-full h-[72px] mb-3'>
-                <label className='text-sm font-medium block mb-1'>Note Title</label>
-                <input
-                  type='text'
-                  placeholder="Enter note title"
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
-                  className='h-[44px] border w-full rounded-[10px] bg-white outline-none border-gray-300 pl-3 text-[15px] text-medium'
-                />
-              </div>
-              <div className='mb-3'>
-                <h1 className='text-sm font-medium mb-2'>Tags:</h1>
-                <div className='flex flex-wrap gap-2 mb-2'>
-                  {selectedTags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 h-[30px] rounded-full text-xs flex items-center gap-1"
-                      style={{ backgroundColor: tagColors[i % tagColors.length], color: '#fff' }}
-                    >
-                      {tag}
-                      <button onClick={() => removeTag(tag)} className="ml-1 text-white">×</button>
-                    </span>
-                  ))}
-                  <button
-                    className="flex items-center px-2 py-1 border rounded-full text-xs text-gray-700 bg-gray-100"
-                    onClick={() => setShowTagSelector(!showTagSelector)}
-                    type="button"
-                  >
-                    <span className="mr-1">＋</span> Add tag
-                  </button>
+            <div className='h-full flex flex-col'>
+              {/* Scrollable content area */}
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
+                {/* Note Title */}
+                <div className='w-full mb-5'>
+                  <label className='text-sm font-medium block mb-1'>Note Title</label>
+                  <input
+                    type='text'
+                    placeholder="Enter note title"
+                    value={noteTitle}
+                    onChange={(e) => setNoteTitle(e.target.value)}
+                    className='h-[44px] border w-full rounded-[10px] bg-white outline-none border-gray-300 pl-3 text-[15px] text-medium'
+                  />
                 </div>
-                {showTagSelector && (
-                  <div className="p-4 border rounded max-w-md bg-white shadow">
-                    <label className="block mb-2 font-medium">Tags:</label>
-                    <input
-                      type="text"
-                      value={customTag}
-                      onChange={(e) => setCustomTag(e.target.value)}
-                      placeholder="Enter a health / patient tag (eg. Malaria)"
-                      className="w-full border border-gray-300 px-3 py-1 rounded outline-blue-600 mb-2"
-                    />
-                    <div className="flex gap-2 mb-2">
-                      {tagColors.map(color => (
-                        <button
-                          key={color}
-                          type="button"
-                          className={`w-5 h-5 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-white'}`}
-                          style={{ backgroundColor: color }}
-                          onClick={() => setSelectedColor(color)}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleAddCustomTag}
-                      className="mb-2 px-2 py-1 border rounded text-sm"
-                    >
-                      Add tag
-                    </button>
-                    <div>
-                      {sampleTags.map((tag) => (
-                        <div
-                          key={tag}
-                          onClick={() => toggleTag(tag)}
-                          className={`cursor-pointer px-3 py-2 border-b flex items-center ${
-                            selectedTags.includes(tag) ? 'bg-blue-100' : ''
-                          }`}
+
+                {/* Tags Section */}
+                <div className='mb-0'>
+                  <div className='flex items-center gap-3 justify-start'>
+                    <h1 className='text-sm font-medium mb-2'>Tags :</h1>
+                    <div className='flex flex-wrap gap-2 mb-2'>
+                      {selectedTags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 h-[30px] rounded-full text-xs flex items-center gap-1"
+                          style={{ backgroundColor: tagColors[i % tagColors.length], color: '#fff' }}
                         >
                           {tag}
-                          {selectedTags.includes(tag) && <span className="ml-2 text-blue-600">✔</span>}
-                        </div>
+                          <button onClick={() => removeTag(tag)} className="ml-1 text-white">×</button>
+                        </span>
                       ))}
+                      <button
+                        className="flex items-center px-3 py-2 border rounded-full text-xs text-gray-700 bg-[#EBEBEB]"
+                        onClick={() => setShowTagSelector(!showTagSelector)}
+                        type="button"
+                      >
+                        <span className="mr-1">＋</span> Add tag
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
-              <div className='h-fit mt-5 pl-3 pr-3 w-full '>
-                <div className="w-full h-[30vh] bg-white relative border-none text-[14px] leading-5">
-                  <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
-                  <div className="relative z-10 h-full border-none">
-                    <textarea
-                      className="w-full h-full resize-none bg-transparent outline-none border-none"
-                      placeholder="Write your note here..."
-                      value={noteBody}
-                      onChange={(e) => setNoteBody(e.target.value)}
+
+                  {/* Tag Selector */}
+                  {showTagSelector && (
+                    <div className="p-4 bg-[#FFFFFF] border rounded max-w-md shadow mb-3">
+                      <label className="block mb-2 font-medium">Tags:</label>
+                      <input
+                        type="text"
+                        value={customTag}
+                        onChange={(e) => setCustomTag(e.target.value)}
+                        placeholder="Enter a health / patient tag (eg. Malaria)"
+                        className="w-full border border-gray-300 px-3 py-1 rounded outline-blue-600 mb-2"
+                      />
+                      <div className="flex gap-2 mb-2">
+                        {tagColors.map(color => (
+                          <button
+                            key={color}
+                            type="button"
+                            className={`w-5 h-5 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-white'}`}
+                            style={{ backgroundColor: color }}
+                            onClick={() => setSelectedColor(color)}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleAddCustomTag}
+                        className="mb-2 px-2 py-1 border rounded-[12px] text-sm border-[#EBEBEB]"
+                      >
+                        Choose tag color
+                      </button>
+                      <div>
+                        {sampleTags.map((tag) => (
+                          <div
+                            key={tag}
+                            onClick={() => toggleTag(tag)}
+                            className={`cursor-pointer px-3 py-2 border-b-[0.6px] border-[#EBEBEB] flex items-center ${
+                              selectedTags.includes(tag) ? 'bg-blue-100' : ''
+                            }`}
+                          >
+                            {tag}
+                            {selectedTags.includes(tag) && <span className="ml-2 text-blue-600">✔</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Textarea with lined background */}
+                <div className='w-full min-h-[40vh]'>
+                  <div className="w-full min-h-[40vh] bg-white relative border-none">
+                    {/* Lined background */}
+                    <div 
+                      className="absolute inset-0 border-none pointer-events-none" 
+                      style={{ 
+                        backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 24px, #d1d5db 24px, #d1d5db 25px)",
+                        backgroundSize: "100% 25px"
+                      }} 
                     />
+                    {/* Textarea */}
+                    <div className="relative z-10 w-full min-h-[40vh]">
+                      <textarea
+                        className="w-full min-h-[40vh] resize-none bg-transparent outline-none border-none px-2 py-1 leading-[25px] text-[15px]"
+                        value={noteBody}
+                        onChange={(e) => setNoteBody(e.target.value)}
+                        style={{ lineHeight: '25px' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
-              <div className='min-h-[10%]  w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
+
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
@@ -784,8 +804,8 @@ const createNotePairs = () => {
           );
           case 'health':
           return (
-            <div className='h-full '>
-              <div className='h-[70%] p-6 '>
+            <div className='h-full flex flex-col '>
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                 <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                   <div className='flex flex-col gap-2 '>
                     <label className='text-[#898989]'>Diagnosis</label>
@@ -801,13 +821,14 @@ const createNotePairs = () => {
                   </div>
                 </form>
               </div>
-              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveHealthRecord}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Saving...' : 'Save Issue'}
+                  {isSaving ? 'Saving...' : 'Save note'}
                 </button>
               </div>
             </div>
@@ -871,7 +892,7 @@ const createNotePairs = () => {
                                   <span className="text-gray-400">N/A</span>
                                 )}
                               </div>
-                              <div className="flex flex-col py-3 ">
+                              <div className="flex justify-between  py-3 ">
                                 <span className="text-gray-700 mb-2">Possible Cause</span>
                                 <span className="font-medium text-gray-900 text-sm">
                                   {record.possibleCause || 'N/A'}
@@ -888,8 +909,8 @@ const createNotePairs = () => {
             );
           case 'prescription':
           return (
-            <div className='h-full' >
-              <div className='h-[70%] p-6'>
+            <div className='h-full flex flex-col' >
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
               <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                 <div className='flex flex-col gap-2 '>
                   <div className='flex items-center justify-between'>
@@ -910,16 +931,17 @@ const createNotePairs = () => {
                   <input type='text' placeholder='Give instructions for medication' value={instructions} onChange={(e) => setInstructions(e.target.value)} className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'></input>
                 </div>
               </form>
-            </div>
-            <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+              </div>
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveprescription}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Saving...' : 'Save Prescription'}
+                  {isSaving ? 'Saving...' : 'Save note'}
                 </button>
-            </div>
+              </div>
             </div>
           );
           case 'prescriptionexpanded':
@@ -1025,99 +1047,119 @@ const createNotePairs = () => {
       switch (selectedNoteType) {
         case 'nurse':
           return (
-            <div className=' h-full'>
-              <div className='p-6 h-[65%]'>
-                <div className='w-full h-[72px] mb-3'>
-                <label className='text-sm font-medium block mb-1'>Nurse Note Title</label>
-                <input
-                  type='text'
-                  placeholder="Enter note title"
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
-                  className='h-[44px] border w-full rounded-[10px] bg-white outline-none border-gray-300 pl-3 text-[15px] text-medium'
-                />
-              </div>
-              <div className='mb-3'>
-                <h1 className='text-sm font-medium mb-2'>Tags:</h1>
-                <div className='flex flex-wrap gap-2 mb-2'>
-                  {selectedTags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 h-[30px] rounded-full text-xs flex items-center gap-1"
-                      style={{ backgroundColor: tagColors[i % tagColors.length], color: '#fff' }}
-                    >
-                      {tag}
-                      <button onClick={() => removeTag(tag)} className="ml-1 text-white">×</button>
-                    </span>
-                  ))}
-                  <button
-                    className="flex items-center px-2 py-1 border rounded-full text-xs text-gray-700 bg-gray-100"
-                    onClick={() => setShowTagSelector(!showTagSelector)}
-                    type="button"
-                  >
-                    <span className="mr-1">＋</span> Add tag
-                  </button>
+            <div className='h-full flex flex-col'>
+              {/* Scrollable content area */}
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
+                {/* Note Title */}
+                <div className='w-full mb-5'>
+                  <label className='text-sm font-medium block mb-1'>Note Title</label>
+                  <input
+                    type='text'
+                    placeholder="Enter note title"
+                    value={noteTitle}
+                    onChange={(e) => setNoteTitle(e.target.value)}
+                    className='h-[44px] border w-full rounded-[10px] bg-white outline-none border-gray-300 pl-3 text-[15px] text-medium'
+                  />
                 </div>
-                {showTagSelector && (
-                  <div className="p-4 border rounded max-w-md bg-white shadow">
-                    <label className="block mb-2 font-medium">Tags:</label>
-                    <input
-                      type="text"
-                      value={customTag}
-                      onChange={(e) => setCustomTag(e.target.value)}
-                      placeholder="Enter a health / patient tag (eg. Malaria)"
-                      className="w-full border border-gray-300 px-3 py-1 rounded outline-blue-600 mb-2"
-                    />
-                    <div className="flex gap-2 mb-2">
-                      {tagColors.map(color => (
-                        <button
-                          key={color}
-                          type="button"
-                          className={`w-5 h-5 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-white'}`}
-                          style={{ backgroundColor: color }}
-                          onClick={() => setSelectedColor(color)}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleAddCustomTag}
-                      className="mb-2 px-2 py-1 border rounded text-sm"
-                    >
-                      Add tag
-                    </button>
-                    <div>
-                      {sampleTags.map((tag) => (
-                        <div
-                          key={tag}
-                          onClick={() => toggleTag(tag)}
-                          className={`cursor-pointer px-3 py-2 border-b flex items-center ${
-                            selectedTags.includes(tag) ? 'bg-blue-100' : ''
-                          }`}
+
+                {/* Tags Section */}
+                <div className='mb-0'>
+                  <div className='flex items-center gap-3 justify-start'>
+                    <h1 className='text-sm font-medium mb-2'>Tags :</h1>
+                    <div className='flex flex-wrap gap-2 mb-2'>
+                      {selectedTags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 h-[30px] rounded-full text-xs flex items-center gap-1"
+                          style={{ backgroundColor: tagColors[i % tagColors.length], color: '#fff' }}
                         >
                           {tag}
-                          {selectedTags.includes(tag) && <span className="ml-2 text-blue-600">✔</span>}
-                        </div>
+                          <button onClick={() => removeTag(tag)} className="ml-1 text-white">×</button>
+                        </span>
                       ))}
+                      <button
+                        className="flex items-center px-3 py-2 border rounded-full text-xs text-gray-700 bg-[#EBEBEB]"
+                        onClick={() => setShowTagSelector(!showTagSelector)}
+                        type="button"
+                      >
+                        <span className="mr-1">＋</span> Add tag
+                      </button>
                     </div>
                   </div>
-                )}
-              </div>
-              <div className='h-fit mt-5 pl-3 pr-3 w-full '>
-                <div className="w-full h-[30vh] relative border-none text-[14px] leading-5">
-                  <div className="absolute inset-0 border-none" style={{ backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 23px, #d1d5db 25px)" }} />
-                  <div className="relative z-10 h-full border-none">
-                    <textarea
-                      className="w-full h-full resize-none bg-transparent text-[18px] leading-6.5 outline-none border-none "
-                      placeholder="Write your note here..."
-                      value={noteBody}
-                      onChange={(e) => setNoteBody(e.target.value)}
+
+                  {/* Tag Selector */}
+                  {showTagSelector && (
+                    <div className="p-4 bg-[#FFFFFF] border rounded max-w-md shadow mb-3">
+                      <label className="block mb-2 font-medium">Tags:</label>
+                      <input
+                        type="text"
+                        value={customTag}
+                        onChange={(e) => setCustomTag(e.target.value)}
+                        placeholder="Enter a health / patient tag (eg. Malaria)"
+                        className="w-full border border-gray-300 px-3 py-1 rounded outline-blue-600 mb-2"
+                      />
+                      <div className="flex gap-2 mb-2">
+                        {tagColors.map(color => (
+                          <button
+                            key={color}
+                            type="button"
+                            className={`w-5 h-5 rounded-full border-2 ${selectedColor === color ? 'border-black' : 'border-white'}`}
+                            style={{ backgroundColor: color }}
+                            onClick={() => setSelectedColor(color)}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleAddCustomTag}
+                        className="mb-2 px-2 py-1 border rounded-[12px] text-sm border-[#EBEBEB]"
+                      >
+                        Choose tag color
+                      </button>
+                      <div>
+                        {sampleTags.map((tag) => (
+                          <div
+                            key={tag}
+                            onClick={() => toggleTag(tag)}
+                            className={`cursor-pointer px-3 py-2 border-b-[0.6px] border-[#EBEBEB] flex items-center ${
+                              selectedTags.includes(tag) ? 'bg-blue-100' : ''
+                            }`}
+                          >
+                            {tag}
+                            {selectedTags.includes(tag) && <span className="ml-2 text-blue-600">✔</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Textarea with lined background */}
+                <div className='w-full min-h-[40vh]'>
+                  <div className="w-full min-h-[40vh] bg-white relative border-none">
+                    {/* Lined background */}
+                    <div 
+                      className="absolute inset-0 border-none pointer-events-none" 
+                      style={{ 
+                        backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 24px, #d1d5db 24px, #d1d5db 25px)",
+                        backgroundSize: "100% 25px"
+                      }} 
                     />
+                    {/* Textarea */}
+                    <div className="relative z-10 w-full min-h-[40vh]">
+                      <textarea
+                        className="w-full min-h-[40vh] resize-none bg-transparent outline-none border-none px-2 py-1 leading-[25px] text-[15px]"
+                        value={noteBody}
+                        onChange={(e) => setNoteBody(e.target.value)}
+                        style={{ lineHeight: '25px' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
-              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
+
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
                   onClick={handleSaveNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
@@ -1416,8 +1458,8 @@ const createNotePairs = () => {
           ); 
           case 'health':
           return (
-             <div className='h-full '>
-              <div className='h-[70%] p-6 '>
+             <div className='h-full flex flex-col '>
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                 <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                   <div className='flex flex-col gap-2 '>
                     <label className='text-[#898989]'>Diagnosis</label>
@@ -1433,115 +1475,96 @@ const createNotePairs = () => {
                   </div>
                 </form>
               </div>
-              <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
+                {/* <button
+                  onClick={handleSaveHealthRecord}
+                  className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Saving...' : 'Save note'}
+                </button> */}
               </div>
             </div>
           );
           case 'healthexpanded':
-  return (
-    <div className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] py-5">
-      {healthRecordsLoading ? (
-        <div className="flex justify-center items-center h-full">
-          <span className="text-gray-500">Loading health records...</span>
-        </div>
-      ) : !healthRecords || healthRecords.recentActivity.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-full">
-          <img src="/image/nodoctors.png" alt="No health records" className="mx-auto mb-2 h-[110px] w-[110px]" />
-          <div className="font-semibold text-gray-800 text-lg mb-1">No Health Records</div>
-          <div className="text-xs text-gray-500 text-center">No health records have been recorded for this student.</div>
-        </div>
-      ) : (
-        <>
-          {/* Summary Stats */}
-          <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px] bg-white p-4 mb-2">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="text-gray-500 text-xs">Total Records</span>
-                <p className="font-semibold text-lg">{healthRecords.totalRecords}</p>
-              </div>
-              <div>
-                <span className="text-gray-500 text-xs">Last Consultation</span>
-                <p className="font-semibold text-sm">
-                  {healthRecords.lastConsultation 
-                    ? formatDate(healthRecords.lastConsultation.date)
-                    : 'N/A'}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          {healthRecords.recentActivity.map((record, idx) => (
-            <div key={idx} className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
-              <div
-                className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
-                onClick={() => setIsHealthOpen(isHealthOpen === idx ? null : idx)}
-              >
-                <div className="flex flex-col">
-                  <span className="font-medium text-sm">{record.diagnosis}</span>
-                  <span className="text-xs text-gray-500">
-                    {formatDate(record.date)} • {record.recordedBy.name}
-                  </span>
-                </div>
-                <span className="text-lg transform transition-transform duration-300">
-                  {isHealthOpen === idx ? '▾' : '▸'}
-                </span>
-              </div>
-
-              {isHealthOpen === idx && (
-                <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
-                  <div className="border-b last:border-b-0">
-                    <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
-                      <span className="text-gray-700">Diagnosis</span>
-                      <span className="font-medium text-gray-900">
-                        {record.diagnosis || 'N/A'}
-                      </span>
-                    </div>
-                    <div className="flex flex-col py-3 border-b-[#EBEBEB] border-b-[0.8px]">
-                      <span className="text-gray-700 mb-2">Description</span>
-                      <span className="font-medium text-gray-900 text-sm">
-                        {record.description || 'N/A'}
-                      </span>
-                    </div>
-                    <div className="flex flex-col py-3 border-b-[#EBEBEB] border-b-[0.8px]">
-                      <span className="text-gray-700 mb-2">Possible Cause</span>
-                      <span className="font-medium text-gray-900 text-sm">
-                        {record.possibleCause || 'N/A'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
-                      <span className="text-gray-700">Status</span>
-                      <span
-                        className={`font-medium px-3 py-1 rounded-full text-xs ${
-                          record.status === 'RESOLVED'
-                            ? 'bg-green-100 text-green-700'
-                            : record.status === 'PENDING'
-                            ? 'bg-yellow-100 text-yellow-700'
-                            : 'bg-gray-100 text-gray-700'
-                        }`}
-                      >
-                        {record.status || 'N/A'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center py-3">
-                      <span className="text-gray-700">Recorded By</span>
-                      <span className="font-medium text-gray-900">
-                        {record.recordedBy.name} ({record.recordedBy.role})
-                      </span>
-                    </div>
+            return (
+              <div className="min-h-[81%] flex flex-col pl-7 pr-7 gap-[14px] py-5">
+                {healthRecordsLoading ? (
+                  <div className="flex justify-center items-center h-full">
+                    <span className="text-gray-500">Loading health records...</span>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </>
-      )}
-    </div>
-  );
+                ) : !healthRecords || healthRecords.recentActivity.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <img src="/image/nodoctors.png" alt="No health records" className="mx-auto mb-2 h-[110px] w-[110px]" />
+                    <div className="font-semibold text-gray-800 text-lg mb-1">No Health Records</div>
+                    <div className="text-xs text-gray-500 text-center">No health records have been recorded for this student.</div>
+                  </div>
+                ) : (
+                  <>
+                    {/* Recent Activity */}
+                    {healthRecords.recentActivity.map((record, idx) => (
+                      <div key={idx} className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                        <div
+                          className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
+                          onClick={() => setIsHealthOpen(isHealthOpen === idx ? null : idx)}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-medium text-sm">{record.diagnosis}</span>
+                            <span className="text-xs text-gray-500">
+                              {formatDate(record.date)} • {record.recordedBy.name}
+                            </span>
+                          </div>
+                          <span className="text-lg transform transition-transform duration-300">
+                            {isHealthOpen === idx ? '▾' : '▸'}
+                          </span>
+                        </div>
+
+                        {isHealthOpen === idx && (
+                          <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
+                            <div className="border-b last:border-b-0">
+                              <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                                <span className="text-gray-700">Diagnosis</span>
+                                <span className="font-medium text-gray-900">
+                                  {record.diagnosis || 'N/A'}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center py-3 border-b-[#EBEBEB] border-b-[0.8px]">
+                                <span className="text-gray-700">Description</span>
+                                {record.description ? (
+                                  <button
+                                    className="text-blue-600 font-medium hover:underline"
+                                    type="button"
+                                    onClick={() => {
+                                      setDescriptionText(record.description);
+                                      setShowDescriptionModal(true);
+                                    }}
+                                  >
+                                    View
+                                  </button>
+                                ) : (
+                                  <span className="text-gray-400">N/A</span>
+                                )}
+                              </div>
+                              <div className="flex justify-between py-3 ">
+                                <span className="text-gray-700 mb-2">Possible Cause</span>
+                                <span className="font-medium text-gray-900 text-sm">
+                                  {record.possibleCause || 'N/A'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            );
           case 'prescription':
           return (
-            <div className='h-full' >
-              <div className='h-[70%] p-6'>
+            <div className='h-full flex flex-col' >
+              <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
               <form method='post' className='flex flex-col gap-3 text-[#898989]'>
                 <div className='flex flex-col gap-2 '>
                   <div className='flex items-center justify-between'>
@@ -1563,8 +1586,16 @@ const createNotePairs = () => {
                 </div>
               </form>
             </div>
-            <div className='min-h-[10%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-sm'>
-            </div>
+              {/* Fixed footer button */}
+              <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
+                {/* <button
+                  onClick={handleSaveprescription}
+                  className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Saving...' : 'Save note'}
+                </button> */}
+              </div>
             </div>
           );
           case 'prescriptionexpanded':
@@ -1883,12 +1914,12 @@ const createNotePairs = () => {
                         <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2" height={55} width={55} />
                         <div className="font-semibold text-gray-700 text-base mb-1">No Doctor's note yet</div>
                         <div className="text-xs text-gray-500 text-center">No doctor's notes have been recorded.</div>
-                        {user && (
+                        {user && user.role === 'doctor' && (
                           <button
                             className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
                             onClick={() => {
                               setShowSidebar(true);
-                              setSelectedNoteType(user.role === 'doctor' ? 'doctor' : 'nurse');
+                              setSelectedNoteType('doctor');
                             }}
                           >
                             <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />
@@ -1921,31 +1952,31 @@ const createNotePairs = () => {
             </div>
             <div className=' h-[56px] mt-5 mb-5 rounded-[12px] w-[95%] m-auto bg-[#FAFAFC] border-1px border-[#EBEBEB] flex items-center justify-between gap-1 p-2'>
               <div
-                className={`w-1/4  h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'nurse' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4  h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'nurse' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('nurse')}
               >
                 <h3>Nurse's note</h3>
               </div>
               <div
-                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'doctor' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'doctor' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('doctor')}
               >
                 <h3>Doctor's note</h3>
               </div>
               <div
-                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'health' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'health' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('health')}
               >
                 <h3>Health issue</h3>
               </div>
               <div
-                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'prescription' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'prescription' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('prescription')}
               >
                 <h3>Prescription</h3>
               </div>
             </div>
-            <div className=' h-full'>
+            <div className=' h-[70%]'>
               {renderNoteTypeContent()}
             </div>
           </div>
@@ -1967,25 +1998,25 @@ const createNotePairs = () => {
             </div>
             <div className=' h-[56px] mt-5 mb-5 rounded-[12px] w-[95%] m-auto bg-[#FAFAFC] border-1px border-[#EBEBEB] flex items-center justify-between gap-1 p-2'>
               <div
-                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'nurseexpand' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'nurseexpand' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('nurseexpand')}
               >
                 <h3>Nurse's note</h3>
               </div>
               <div
-                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'doctorexpand' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'doctorexpand' ? 'bg-white rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('doctorexpand')}
               >
                 <h3>Doctor's note</h3>
               </div>
               <div
-                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'healthexpanded' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full  flex items-center justify-center cursor-pointer ${selectedNoteType === 'healthexpanded' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('healthexpanded')}
               >
                 <h3>Health issue</h3>
               </div>
               <div
-                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'prescriptionexpanded' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB]' : ''}`}
+                className={`w-1/4 h-full flex items-center justify-center cursor-pointer ${selectedNoteType === 'prescriptionexpanded' ? ' rounded-[8px] shadow-xs shadow-[#B4B4B41F] border-1 border-[#EBEBEB] text-[#0072C3]' : ''}`}
                 onClick={() => setSelectedNoteType('prescriptionexpanded')}
               >
                 <h3>Prescription</h3>

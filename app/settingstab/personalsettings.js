@@ -10,6 +10,9 @@ const fetchWithAuth = async (url, options = {}) => {
     throw new Error('Authorization token is missing.');
   }
 
+  const fullUrl = url.startsWith('http') ? url : `${window.location.origin}${url}`;
+  console.log('🌐 API Call:', options.method || 'GET', fullUrl);
+
   const headers = {
     Authorization: `Bearer ${token}`,
     ...options.headers,

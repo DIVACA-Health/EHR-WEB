@@ -10,13 +10,18 @@ const fetchWithAuth = async (url, options = {}) => {
     throw new Error('Authorization token is missing.');
   }
 
-  const isFormData = options.body instanceof FormData;
+  const fullUrl = url.startsWith('http') ? url : `${window.location.origin}${url}`;
+  console.log('🌐 API Call:', options.method || 'GET', fullUrl);
 
   const headers = {
     Authorization: `Bearer ${token}`,
-    ...(!isFormData && { 'Content-Type': 'application/json' }),
     ...options.headers,
   };
+
+  // Only set JSON content-type if body is not FormData
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   try {
     const res = await fetch(url, { ...options, headers });
@@ -89,26 +94,45 @@ const handleSubmit = async () => {
     formData.append("category", category);
     formData.append("detailedDescription", description);
 
-    // Try both: attachments and attachments[]
+    // Append files
     files.forEach((file) => {
       formData.append("attachments", file);      
-      // formData.append("attachments[]", file);  
     });
 
-    // 🔍 Debug: log FormData contents
+    // Debug: log FormData contents
+    console.log("📤 Sending FormData:");
     for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+      if (value instanceof File) {
+        console.log(`${key}: [File] ${value.name} (${value.size} bytes, ${value.type})`);
+      } else {
+        console.log(`${key}:`, value);
+      }
     }
-
+    
+    // ✅ Changed from 'res' to 'response' to match the rest of the code
     const response = await fetchWithAuth("/api/v1/medsupport/tickets", {
       method: "POST",
       body: formData,
     });
 
     if (!response.ok) {
-      const err = await response.text();
-      throw new Error(err || "Failed to submit support request");
+      let errorMessage;
+      const contentType = response.headers.get("content-type");
+      
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        errorMessage = errorData.message || JSON.stringify(errorData);
+        console.error("❌ Server error details:", errorData);
+      } else {
+        errorMessage = await response.text();
+        console.error("❌ Server error (text):", errorMessage);
+      }
+      
+      throw new Error(errorMessage || `Server error: ${response.status}`);
     }
+
+    const result = await response.json();
+    console.log("✅ Success:", result);
 
     toast.success("Support request submitted successfully!");
     setFiles([]);
@@ -117,7 +141,7 @@ const handleSubmit = async () => {
     setDescription("");
 
   } catch (error) {
-    console.error("Submit error:", error);
+    console.error("❌ Submit error:", error);
     toast.error(error.message || "Something went wrong");
   }
 };

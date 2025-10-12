@@ -141,7 +141,7 @@ const getTodayDate = () => {
     <h1 className=' mb-4 text-[12px] font-light'> Queue management {">"}  <span className='font-semibold'>Health Record </span> </h1>
       <h1 className='text-xl font-medium mb-5'>Health Record</h1>
       {/* Tabs */}
-      <div className='flex space-x-6 border-b border-gray-300 mb-4 text-sm font-extralight'>
+      <div className='flex flex-wrap space-x-6 border-b border-gray-300 mb-4 text-sm font-extralight'>
         {tabs.map(tab => (
           <div
             key={tab.key}
@@ -189,7 +189,7 @@ const getTodayDate = () => {
                             </span>
                         </div>
                     </div>
-                    <div className='flex justify-between items-center mb-5 mt-4 '>
+                    <div className='flex justify-between items-center mb-1 xl:mb-5 xl:mt-4 mt-1'>
                         <div className='flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Matric Number</h1>
                             <h1 className='text-xs text-[#141414] font-semibold' >{user.matricNumber}</h1>
@@ -199,7 +199,7 @@ const getTodayDate = () => {
                             <h1 className='text-xs text-[#141414] font-semibold'>{user.phoneNumber}</h1>
                         </div>
                     </div>
-                    <div className='flex justify-between items-center mb-5 mt-5 '>
+                    <div className='flex justify-between items-center mb-1 xl:mb-5 xl:mt-5 mt-1'>
                         <div className='flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Date of birth</h1>
                             <h1 className='text-xs text-[#141414] font-semibold'>{user.DOB}</h1>
@@ -209,7 +209,7 @@ const getTodayDate = () => {
                             <h1 className='text-xs text-[#141414] font-semibold break-words'>{user.email}</h1>
                         </div>
                     </div>
-                    <div className='flex justify-between items-center mb-4 mt-3 '>
+                    <div className='flex justify-between items-center mb-1 xl:mb-4 xl:mt-3 mt-1'>
                         <div className='flex flex-col gap-1'>
                             <h1 className='text-xs text-[#919191] font-extralight'>Age</h1>
                             <h1 className='text-xs text-[#141414] font-semibold'>{user.age}</h1>
@@ -219,7 +219,6 @@ const getTodayDate = () => {
                             <h1 className='text-xs text-[#141414] font-semibold'>{user.address}</h1>
                         </div>
                     </div>
-
                   </div>
 
                   {/* Box 2 - Vitals */}
@@ -325,7 +324,7 @@ const getTodayDate = () => {
                   </div>
 
                   {/* Box 5 - Allergies */}
-                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit -mt-[115px]">
+                  <div className="bg-[#FFFFFF] rounded-xl border border-[#EBEBEB] shadow shadow-[#C6C6C61A] h-fit xl:-mt-[115px] -mt-[80px]">
                     <div className=' rounded-t-xl border-b-[1px] border-b-[rgba(240,242,245,1)] shadow shadow-gray-200 flex items-center'>
                         <div className='flex pl-2 pr-2 justify-between items-center w-full h-14'>
                             <div className='flex gap-3 items-center'>

@@ -220,11 +220,11 @@ const nurseallergies = ({ studentId }) => {
             </div>
             <form
               ref={formRef}
-              className='min-h-[78%] flex flex-col pl-7 pr-7 gap-[14px]'
+              className='min-h-[75%] flex flex-col pl-7 pr-7 gap-[14px]'
               onSubmit={handleSubmit}
             >
-              <div className='flex flex-col gap-2'>
-                <label>Allergy type</label>
+              <div className='flex flex-col gap-2 font-light text-[#898989]'>
+                <label >Allergy type</label>
                 {/* Custom dropdown */}
                 <div className="relative w-[90%]">
                   <button
@@ -326,7 +326,7 @@ const nurseallergies = ({ studentId }) => {
                   </div>
                 )}
               </div>
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 font-light text-[#898989]'>
                 <label>Allergy name</label>
                 <input
                   type='text'
@@ -337,7 +337,7 @@ const nurseallergies = ({ studentId }) => {
                   required
                 />
               </div>
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 font-light text-[#898989]'>
                 <label>Severity level</label>
                 {/* Custom severity dropdown */}
                 <div className="relative w-[90%] severity-dropdown">
@@ -410,7 +410,7 @@ const nurseallergies = ({ studentId }) => {
             <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm'>
               <button
                 type='button'
-                className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
+                className="bg-blue-600 text-white py-2 px-4 rounded w-fit"
                 disabled={isSaving}
                 onClick={handleExternalSubmit}
               >
