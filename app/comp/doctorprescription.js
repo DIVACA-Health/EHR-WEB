@@ -160,22 +160,10 @@ const DoctorPrescription = ({ studentId }) => {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <button
-                            onClick={() => {
-                              console.log('Forward files for prescription:', item.id);
-                              setActiveActionIndex(null);
-                            }}
-                            className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-t-lg"
+                            onClick={() => handleRowClick(item)}
+                            className="w-full text-left px-4 py-3  hover:bg-red-50 rounded-b-lg"
                           >
-                            Forward patient files
-                          </button>
-                          <button
-                            onClick={() => {
-                              console.log('Remove from queue:', item.id);
-                              setActiveActionIndex(null);
-                            }}
-                            className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-b-lg"
-                          >
-                            Remove from queue
+                            View Prescription
                           </button>
                         </div>
                       )}

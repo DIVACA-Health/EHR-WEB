@@ -131,10 +131,13 @@ const NurseVitals = ({ studentId }) => {
         setTableKey(prev => prev + 1); // Refresh the table
         setShowSidebar(false); // Close sidebar after success
         resetForm(); // Reset form fields
+        toast("Vitals Saved Succesfully")
       } else {
+        toast("Error saving Notes")
         console.error('Failed to save vitals');
       }
     } catch (error) {
+      toast("Error saving Notes")
       console.error('Error saving vitals:', error);
     } finally {
       setIsLoading(false);
@@ -291,6 +294,7 @@ const getoxygenStatus = (weight) => {
                   value={vitalsData.heartRate || ""}
                   onChange={handleInputChange}
                   placeholder="89"
+                  required
                   className="h-[45px] w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none mb-2"
                 />
               </div>
@@ -303,6 +307,7 @@ const getoxygenStatus = (weight) => {
                   value={vitalsData.bloodPressure || ""}
                   onChange={handleInputChange}
                   placeholder="Enter blood pressure"
+                  required
                   className="h-[45px] mb-2 w-full pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -315,6 +320,7 @@ const getoxygenStatus = (weight) => {
                   value={vitalsData.temperature || ""}
                   onChange={handleInputChange}
                   placeholder="Enter temperature"
+                  required
                   className="h-[45px] w-full mb-2 pl-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -326,6 +332,7 @@ const getoxygenStatus = (weight) => {
                   value={vitalsData.respiratoryRate || ""}
                   onChange={handleInputChange}
                   placeholder="Enter respiratory rate"
+                  required
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />
               </div>
@@ -336,6 +343,7 @@ const getoxygenStatus = (weight) => {
                   name="oxygenSaturation"
                   value={vitalsData.oxygenSaturation || ""}
                   onChange={handleInputChange}
+                  required
                   placeholder="Enter oxygen saturation"
                   className="h-[45px] w-full pl-2 mb-2 rounded-[12px] bg-[rgba(255,255,255,1)] border-[1px] border-[rgba(208,213,221,1)] shadow-xs shadow-[rgba(16,24,40,0.05)] outline-none"
                 />

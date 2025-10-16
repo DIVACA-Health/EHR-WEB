@@ -183,16 +183,15 @@ const NurseHealthHistory = ({ studentId }) => {
                       {activeActionIndex === index && (
                         <div
                           ref={(el) => (dropdownRefs.current[index] = el)}
-                          className='absolute top-0 right-0 bg-white shadow-lg rounded-[12px] w-40 z-10 text-left'
-                          onClick={e => e.stopPropagation()}
+                          className="absolute top-full right-4 mt-1 bg-white shadow-lg rounded-lg w-48 z-10 text-left border border-gray-200"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <button
                             onClick={() => handleRowClick(activity)}
-                            className='w-full text-left px-4 py-2 hover:bg-gray-100'
+                            className="w-full text-left px-4 py-3  hover:bg-red-50 rounded-b-lg"
                           >
-                            View Health issue
+                            View Health Issue
                           </button>
-
                         </div>
                       )}
                     </td>
@@ -229,7 +228,7 @@ const NurseHealthHistory = ({ studentId }) => {
               className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center min-h-[10%] py-4 pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm sticky top-0 bg-[#FFFFFF] z-10">
+              <div className="flex justify-between items-center min-h-[10%] py-4 pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-xs sticky top-0 bg-[#FFFFFF] z-10">
                 <div className='flex flex-col '>
                   <div className="text-sm text-gray-600 gap-2 flex flex-col">
                     <p>Date of visit: {formatDate(selectedDiagnosis.date)}</p>

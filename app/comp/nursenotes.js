@@ -95,7 +95,7 @@ export default function NoteManager({ studentId }) {
     if (studentId) fetchNotes();
   }, [studentId]);
 
-  const handleSaveNote = async () => {
+  const handleSavenurseNote = async () => {
     if (!noteTitle.trim() || !noteBody.trim()) return;
 
     setIsSaving(true);
@@ -105,6 +105,68 @@ export default function NoteManager({ studentId }) {
       content: noteBody.trim(),
       tags: selectedTags.map(t => t.toLowerCase()),
       studentId: Number(studentId),
+      noteType: "NURSE_NOTE"
+    };
+
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`/api/v1/notes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+    if (res.ok) {
+      const fetchNotes = async () => {
+        try {
+          const res = await fetch(`/api/v1/notes/${studentId}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setNotes(Array.isArray(data) ? data : (data.data || []));
+          }
+        } catch {}
+      };
+      await fetchNotes();
+      toast.success('Note saved successfully!'); // Add this line
+      setNoteTitle('');
+      setNoteBody('');
+      setTags([]);
+      setSelectedTags([]);
+      setShowSidebar(false);
+      setShowTagSelector(false);
+      setSelectedTag('');
+      setCustomTag('');
+      setSelectedNoteType('nurse');
+    } else {
+      toast.error('Failed to save note');
+    }
+    } catch (err) {
+      toast.error('Error saving note');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+    const handleSavedoctorNote = async () => {
+    if (!noteTitle.trim() || !noteBody.trim()) return;
+
+    setIsSaving(true);
+
+    const payload = {
+      title: noteTitle.trim(),
+      content: noteBody.trim(),
+      tags: selectedTags.map(t => t.toLowerCase()),
+      studentId: Number(studentId),
+      noteType: "DOCTOR_NOTE",
+      nurseNoteId: 1
     };
 
     try {
@@ -163,6 +225,7 @@ export default function NoteManager({ studentId }) {
       medication,
       dosage,
       instructions,
+      nurseNoteId: 1
     };
 
     try {
@@ -180,8 +243,10 @@ export default function NoteManager({ studentId }) {
       setMedication("");
       setDosage("");
       setInstructions("");
+      toast.success('Prescription saved Succesfully!');
     } catch (err) {
       console.error(err);
+      toast.success('Failed to save prescription!');
     } finally {
       setIsSaving(false);
     }
@@ -197,6 +262,7 @@ export default function NoteManager({ studentId }) {
       diagnosis,
       description,
       possibleCause,
+      nurseNoteId: 1
     };
 
     try {
@@ -559,7 +625,7 @@ const createNotePairs = () => {
               <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                 {/* Note Title */}
                 <div className='w-full mb-5'>
-                  <label className='text-sm font-medium block mb-1'>Note Title</label>
+                  <label className='text-sm text-[#898989] font-light block mb-1'>Title</label>
                   <input
                     type='text'
                     placeholder="Enter note title"
@@ -572,7 +638,7 @@ const createNotePairs = () => {
                 {/* Tags Section */}
                 <div className='mb-0'>
                   <div className='flex items-center gap-3 justify-start'>
-                    <h1 className='text-sm font-medium mb-2'>Tags :</h1>
+                    <h1 className='text-sm font-light text-[#898989] mb-2'>Tags :</h1>
                     <div className='flex flex-wrap gap-2 mb-2'>
                       {selectedTags.map((tag, i) => (
                         <span
@@ -585,11 +651,11 @@ const createNotePairs = () => {
                         </span>
                       ))}
                       <button
-                        className="flex items-center px-3 py-2 border rounded-full text-xs text-gray-700 bg-[#EBEBEB]"
+                        className="flex gap-1 items-center px-3 py-1 border-[0.8px] border-[#626262] rounded-[24px] text-xs text-gray-700 bg-[#EBEBEB]"
                         onClick={() => setShowTagSelector(!showTagSelector)}
                         type="button"
                       >
-                        <span className="mr-1">＋</span> Add tag
+                        <img src="/image/smallPlus.png" className='w-[16px] h-[18px]'/> Add tag
                       </button>
                     </div>
                   </div>
@@ -668,7 +734,7 @@ const createNotePairs = () => {
               {/* Fixed footer button */}
               <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
-                  onClick={handleSaveNote}
+                  onClick={handleSavedoctorNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
@@ -828,7 +894,7 @@ const createNotePairs = () => {
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Saving...' : 'Save note'}
+                  {isSaving ? 'Saving...' : 'Save Health Issue'}
                 </button>
               </div>
             </div>
@@ -939,7 +1005,7 @@ const createNotePairs = () => {
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Saving...' : 'Save note'}
+                  {isSaving ? 'Saving...' : 'Save Prescription'}
                 </button>
               </div>
             </div>
@@ -1052,7 +1118,7 @@ const createNotePairs = () => {
               <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                 {/* Note Title */}
                 <div className='w-full mb-5'>
-                  <label className='text-sm font-medium block mb-1'>Note Title</label>
+                  <label className='text-sm font-light text-[#898989] block mb-1'>Title</label>
                   <input
                     type='text'
                     placeholder="Enter note title"
@@ -1065,7 +1131,7 @@ const createNotePairs = () => {
                 {/* Tags Section */}
                 <div className='mb-0'>
                   <div className='flex items-center gap-3 justify-start'>
-                    <h1 className='text-sm font-medium mb-2'>Tags :</h1>
+                    <h1 className='text-sm font-light text-[#898989] mb-2'>Tags :</h1>
                     <div className='flex flex-wrap gap-2 mb-2'>
                       {selectedTags.map((tag, i) => (
                         <span
@@ -1078,11 +1144,11 @@ const createNotePairs = () => {
                         </span>
                       ))}
                       <button
-                        className="flex items-center px-3 py-2 border rounded-full text-xs text-gray-700 bg-[#EBEBEB]"
+                        className="flex gap-1 items-center px-3 py-1 border-[0.8px] border-[#626262] rounded-[24px] text-xs text-gray-700 bg-[#EBEBEB]"
                         onClick={() => setShowTagSelector(!showTagSelector)}
                         type="button"
                       >
-                        <span className="mr-1">＋</span> Add tag
+                        <img src="/image/smallPlus.png" className='w-[16px] h-[18px]'/> Add tag
                       </button>
                     </div>
                   </div>
@@ -1161,7 +1227,7 @@ const createNotePairs = () => {
               {/* Fixed footer button */}
               <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
-                  onClick={handleSaveNote}
+                  onClick={handleSavenurseNote}
                   className="bg-blue-600 text-white py-2 px-4 rounded w-2/10"
                   disabled={isSaving}
                 >
@@ -1239,7 +1305,7 @@ const createNotePairs = () => {
                 <img src="/image/nodoctors.png" alt="No Doctor's note" className="mx-auto mb-2 h-[110px] w-[110px]"  />
                 <div className="font-semibold text-gray-800 text-lg mb-1">No Doctor's note yet</div>
                 <div className="text-xs text-gray-500 text-center mb-6">No doctor's notes have been recorded.</div>
-                <button
+                {/* <button
                   className="bg-blue-600 hover:bg-blue-700 text-white h-[48px] w-[316px] font-medium rounded-[8px] py-1 px-3 flex items-center justify-center gap-2 cursor-pointer"
                   onClick={() => handleForwardFiles(studentId)}
                   disabled={isForwarding}
@@ -1255,7 +1321,7 @@ const createNotePairs = () => {
                       Forward patient to Doctor
                     </>
                   )}
-                </button>
+                </button> */}
               </div>
             );
           }
@@ -1710,12 +1776,12 @@ const createNotePairs = () => {
           <h1 className='font-medium text-lg'>Notes</h1>
         </div>
         {/* Add Note button in header */}
-          {user && (
+          {user && user.role === 'nurse' && (
             <button
               className='bg-blue-600 flex gap-[8px] h-[40px] px-4 items-center justify-center text-white rounded-[8px] hover:bg-blue-700'
               onClick={() => {
                 setShowSidebar(true);
-                setSelectedNoteType(user.role === 'doctor' ? 'doctor' : 'nurse');
+                setSelectedNoteType('nurse');
               }}
             >
               <img src='/image/Pluswhite.png' alt='icon' width={18} height={18} />

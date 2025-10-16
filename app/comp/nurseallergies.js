@@ -11,11 +11,11 @@ const allergyTypeImages = {
 };
 
 const allergyTypes = [
+  { label: 'Select allergy', value: '', img: allergyTypeImages.Medication },
   { label: 'Medication', value: 'Medication', img: allergyTypeImages.Medication },
   { label: 'Nuts', value: 'Nuts', img: allergyTypeImages.Nuts },
   { label: 'Food', value: 'Food', img: allergyTypeImages.Food },
   { label: 'Environment', value: 'Environment', img: allergyTypeImages.Environment },
-  { label: 'Other', value: 'Other', img: allergyTypeImages.Other },
 ];
 
 const nurseallergies = ({ studentId }) => {
@@ -165,7 +165,7 @@ const nurseallergies = ({ studentId }) => {
 
   return (
     <div className='border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-sm rounded-[12px]'>
-      <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[rgba(235,235,235,1)] shadow-xs mb-4 rounded-t-[12px] '>
+      <div className='h-[70px] w-full flex justify-between pl-5 pr-5 items-center border-b-[0.8px] border-[#F0F2F5] shadow-sm mb-4 rounded-t-[12px] '>
         <div className='flex gap-3 items-center'>
           <img src='/image/allergiesicon.png' alt='icon' height={36} width={36} />
           <h1 className='font-medium text-lg'>Allergies</h1>
@@ -224,7 +224,7 @@ const nurseallergies = ({ studentId }) => {
               onSubmit={handleSubmit}
             >
               <div className='flex flex-col gap-2 font-light text-[#898989]'>
-                <label >Allergy type</label>
+                <label>Allergy type</label>
                 {/* Custom dropdown */}
                 <div className="relative w-[90%]">
                   <button
@@ -232,7 +232,7 @@ const nurseallergies = ({ studentId }) => {
                     className="flex items-center justify-between w-full bg-white border-[1px] border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 shadow-xs text-[#898989] focus:outline-none"
                     onClick={() => setShowTypeDropdown((prev) => !prev)}
                   >
-                    <span className="flex items-center gap-2 ">
+                    <span className="flex items-center gap-2">
                       {allergyType && allergyType !== 'Other'
                         ? <>
                             <img
@@ -240,13 +240,13 @@ const nurseallergies = ({ studentId }) => {
                               alt={allergyType}
                               width={20}
                               height={20}
-                              className="object-contain "
+                              className="object-contain"
                             />
-                            <span >
+                            <span>
                               {allergyTypes.find(t => t.value === allergyType)?.label || allergyType}
                             </span>
                           </>
-                        : allergyType === 'Other'
+                        : allergyType === 'Other' && customAllergyType
                           ? <>
                               <img
                                 src={getAllergyTypeImage('Other')}
@@ -255,9 +255,7 @@ const nurseallergies = ({ studentId }) => {
                                 height={20}
                                 className="object-contain"
                               />
-                              <span>
-                                {customAllergyType ? customAllergyType : 'Other'}
-                              </span>
+                              <span>{customAllergyType}</span>
                             </>
                           : 'Select allergy type'}
                     </span>
@@ -265,53 +263,60 @@ const nurseallergies = ({ studentId }) => {
                       <path d="M7 10l5 5 5-5" stroke="#898989" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </button>
+                  
                   {showTypeDropdown && (
-                    <div className="absolute z-50 mt-1 w-full bg-white border border-[#D0D5DD] rounded-[12px] shadow-lg">
+                    <div className="absolute z-50 mt-1 w-full bg-white border border-[#D0D5DD] rounded-[12px] shadow-lg max-h-64 overflow-y-auto">
                       {allergyTypes.map(type => (
                         <div
                           key={type.value}
-                          className={`flex items-center gap-2 px-4 py-2  cursor-pointer rounded-[12px] hover:bg-[#EEF4FF] ${allergyType === type.value && !isAddingCustom ? 'bg-[#EEF4FF]' : ''}`}
+                          className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#E5EDFF] ${allergyType === type.value && type.value !== 'Other' ? 'bg-[#EEF4FF]' : ''}`}
                           onClick={() => handleTypeSelect(type)}
                         >
                           <img src={type.img} alt={type.label} width={20} height={20} className="object-contain" />
                           <span>{type.label}</span>
-                          {allergyType === type.value && !isAddingCustom && (
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                          {allergyType === type.value && type.value !== 'Other' && (
+                            <svg className="ml-auto" width="18" height="18" fill="none" viewBox="0 0 24 24">
                               <path d="M5 13l4 4L19 7" stroke="#3B6FED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                           )}
                         </div>
                       ))}
-                      {(allergyType === 'Other' || isAddingCustom) && (
-                        <div className="flex flex-col items-center gap-2 px-4 py-2 border-t border-[#D0D5DD]">
-                          <div className='flex w-full gap-2'>
-                            <div className='flex items-center gap-2 justify-center'>
-                              <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
-                              <h2>Other</h2>
-                            </div>
-                            <input
-                              type="text"
-                              placeholder="Enter allergy type"
-                              className="flex-1 border-[1px] border-gray-300 rounded-[12px] px-2 py-1"
-                              value={customAllergyType}
-                              onChange={e => setCustomAllergyType(e.target.value)}
-                            />
+                      
+                      {/* Custom input as a regular option */}
+                      <div className="flex flex-col gap-2 px-4 py-3 border-t border-[#D0D5DD]" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-2">
+                          <div className='flex gap-2'>
+                            <img src={getAllergyTypeImage('Other')} alt="Other" width={20} height={20} className="object-contain" />
+                            <h2>Others</h2>
                           </div>
-                          <div className='w-full  flex items-center justify-end'>
-                            <button
-                              type="button"
-                              className="bg-blue-600 text-white px-3 py-1 rounded"
-                              disabled={!customAllergyType.trim()}
-                              onClick={handleAddCustomAllergy}
-                            >
-                              Add custom allergy
-                            </button>
-                          </div>
+                          <input
+                            type="text"
+                            placeholder="Enter custom allergy type"
+                            className="flex-1 border-[1px] border-gray-300 rounded-[8px] px-2 py-1 h-[36px] focus:outline-none focus:border-blue-500"
+                            value={customAllergyType}
+                            onChange={e => setCustomAllergyType(e.target.value)}
+                          />
                         </div>
-                      )}
+                        <div className='w-full flex items-end justify-end'>
+                          <button
+                            type="button"
+                            className="bg-[#3B6FED] w-fit hover:bg-[#E5EDFF] text-white px-4 py-1.5 rounded-[8px] text-sm font-medium "
+                            disabled={!customAllergyType.trim()}
+                            onClick={() => {
+                              if (customAllergyType.trim()) {
+                                setAllergyType('Other');
+                                setShowTypeDropdown(false);
+                              }
+                            }}
+                          >
+                            Add custom allergy
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
+
                 {/* Show selected type below dropdown */}
                 {allergyType && (
                   <div className="mt-2 flex items-center gap-2">
@@ -322,7 +327,9 @@ const nurseallergies = ({ studentId }) => {
                       height={24}
                       style={{ objectFit: 'contain' }}
                     />
-                    <span className="text-sm">{allergyType === 'Other' ? (customAllergyType || 'Other') : allergyType}</span>
+                    <span className="text-sm">
+                      {allergyType === 'Other' ? (customAllergyType || 'Other') : allergyTypes.find(t => t.value === allergyType)?.label || allergyType}
+                    </span>
                   </div>
                 )}
               </div>
@@ -407,14 +414,14 @@ const nurseallergies = ({ studentId }) => {
                 </div>
                 </div>
             </form>
-            <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-gray-200 shadow-t-sm'>
+            <div className='min-h-[8%] w-full flex justify-end items-center border-t-[1px] pr-6 border-[#F0F2F5] shadow-t-xs'>
               <button
                 type='button'
                 className="bg-blue-600 text-white py-2 px-4 rounded w-fit"
                 disabled={isSaving}
                 onClick={handleExternalSubmit}
               >
-                {isSaving ? 'Saving...' : 'Save Allergy'}
+                {isSaving ? 'Saving...' : 'Save new allergy'}
               </button>
             </div>
           </div>
