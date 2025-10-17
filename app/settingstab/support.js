@@ -180,11 +180,16 @@ const handleSubmit = async () => {
       </div>
 
       {/* Category */}
-      <div className='w-[95%] m-auto flex flex-col gap-2 mb-5'>
-        <label><h1 className='text-[14px] text-[rgba(137,137,137,1)]'>Issue category</h1></label>
+      <div className="w-[95%] m-auto flex flex-col gap-2 mb-5">
+        <label>
+          <h1 className="text-[14px] text-[rgba(137,137,137,1)]">Issue category</h1>
+        </label>
+
         <div className="relative w-full">
-          <select value={category} onChange={(e) => setCategory(e.target.value)}
-            className="w-full h-[45px] pl-3 pr-8 text-gray-700 bg-[#FBFBFB] border rounded-[12px] border-[#D0D5DD]  shadow-xs shadow-[#1018280D] cursor-pointer focus:outline-none focus:ring-4 focus:ring-[#004AFF29] focus:border-[#3B6FED]"
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="appearance-none w-full h-[45px] pl-3 pr-10 text-gray-700 bg-[#FBFBFB] border border-[#D0D5DD] rounded-[12px] shadow-sm cursor-pointer focus:outline-none focus:ring-4 focus:ring-[#004AFF29] focus:border-[#3B6FED] transition-all"
           >
             <option value="">Select category</option>
             <option>Account access</option>
@@ -195,9 +200,26 @@ const handleSubmit = async () => {
             <option>Feedback & suggestions</option>
             <option>Other</option>
           </select>
-          {/* <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">▼</div> */}
+
+          {/* Custom dropdown arrow */}
+          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+            <svg
+              className="h-5 w-5 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
         </div>
       </div>
+
+
 
       {/* Description */}
       <div className='w-[95%] m-auto flex flex-col gap-2 mb-5'>
