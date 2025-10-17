@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { toast } from 'react-hot-toast';
 
 // Map allergy types to image URLs or imports
 const allergyTypeImages = {
@@ -25,6 +26,12 @@ const nurseallergies = ({ studentId }) => {
   const [allergyName, setAllergyName] = useState('');
   const [severityLevel, setSeverityLevel] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    allergyType: '',
+    allergyName: '',
+    severityLevel: '',
+  });
 
   // For custom allergy type
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
@@ -178,32 +185,42 @@ const nurseallergies = ({ studentId }) => {
           <h1 className='text-[14px]'>Record new allergy</h1>
         </button>
       </div>
-      <div className='flex flex-col p-4 gap-4 '>
+      <div className='flex flex-col p-4 gap-4'>
         <div className='w-[95%] m-auto flex flex-wrap justify-between gap-5'>
-        {allergies.map((allergy, idx) => (
-            <div
-            key={allergy.id || idx}
-            className={`flex items-center justify-between pl-4 pr-4 h-[65px] w-[45%] border-[1.5px] rounded-[12px] bg-white ${getSeverityClass(allergy.severityLevel)}`}
-            onClick={() => handleRowClick(allergy)}
-            style={{ cursor: 'pointer' }}
-            >
-            <div className='flex items-center gap-2'>
-                <img
-                src={getAllergyTypeImage(allergy.allergyType)}
-                alt={allergy.allergyType}
-                width={24}
-                height={24}
-                style={{ objectFit: 'contain' }}
-                />
-                <h1 className="font-medium">{allergy.allergyName}</h1>
+          {allergies.length > 0 ? (
+            allergies.map((allergy, idx) => (
+              <div
+                key={allergy.id || idx}
+                className={`flex items-center justify-between pl-4 pr-4 h-[65px] w-[45%] border-[1.5px] rounded-[12px] bg-white ${getSeverityClass(allergy.severityLevel)}`}
+                onClick={() => handleRowClick(allergy)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className='flex items-center gap-2'>
+                  <img
+                    src={getAllergyTypeImage(allergy.allergyType)}
+                    alt={allergy.allergyType}
+                    width={24}
+                    height={24}
+                    style={{ objectFit: 'contain' }}
+                  />
+                  <h1 className='font-medium'>{allergy.allergyName}</h1>
+                </div>
+                <div>
+                  <span
+                    className={`px-3 py-1 border-[1.5px] rounded-[12px] text-xs font-semibold ${getSeverityPillClass(
+                      allergy.severityLevel
+                    )}`}
+                  >
+                    {allergy.severityLevel}
+                  </span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className='w-full text-center py-10 text-gray-500 font-medium'>
+              No created allergies for this patient
             </div>
-            <div>
-                <span className={`px-3 py-1 border-[1.5px] rounded-[12px] text-xs font-semibold ${getSeverityPillClass(allergy.severityLevel)}`}>
-                {allergy.severityLevel}
-                </span>
-            </div>
-            </div>
-        ))}
+          )}
         </div>
       </div>
       {showSidebar && (
@@ -440,61 +457,198 @@ const nurseallergies = ({ studentId }) => {
               <button onClick={() => setShowViewSidebar(false)} className="text-xl">×</button>
             </div>
             <div className="flex-1 flex flex-col gap-6 p-8 bg-[#FAFAFA]">
-              {/* Allergy type */}
-              <div>
-                <label className="block mb-2 text-sm text-gray-600">Allergy type</label>
-                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-[12px] px-4 py-3">
-                  <img
-                    src={getAllergyTypeImage(selectedAllergy.allergyType)}
-                    alt={selectedAllergy.allergyType}
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />
-                  <span className="font-medium">{selectedAllergy.allergyType}</span>
-                </div>
-              </div>
-              {/* Allergy name */}
-              <div>
-                <label className="block mb-2 text-sm text-gray-600">Allergy name</label>
-                <input
-                  type="text"
-                  className="w-full bg-white border border-gray-200 rounded-[12px] px-4 py-3"
-                  value={selectedAllergy.allergyName}
-                  readOnly
-                />
-              </div>
-              {/* Severity level */}
-              <div>
-                <label className="block mb-2 text-sm text-gray-600">Severity level</label>
-                <div className="w-full">
-                  <span className={`inline-block px-4 py-2 border rounded-[12px] text-base font-semibold
-                    ${selectedAllergy.severityLevel === 'Mild'
-                      ? 'border-green-300 bg-green-100 text-green-600'
-                      : selectedAllergy.severityLevel === 'Moderate'
-                      ? 'border-amber-300 bg-amber-100 text-amber-600'
-                      : selectedAllergy.severityLevel === 'Severe'
-                      ? 'border-red-300 bg-red-100 text-red-600'
-                      : 'border-gray-300 bg-gray-100 text-gray-700'
-                    }`}>
-                    {selectedAllergy.severityLevel}
-                  </span>
-                </div>
-              </div>
+              {!isEditing ? (
+                <>
+                  {/* ==== View Mode ==== */}
+                  <div>
+                    <label className="block mb-2 text-sm text-gray-600">Allergy type</label>
+                    <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-[12px] px-4 py-3">
+                      <img
+                        src={getAllergyTypeImage(selectedAllergy.allergyType)}
+                        alt={selectedAllergy.allergyType}
+                        width={24}
+                        height={24}
+                        className="object-contain"
+                      />
+                      <span className="font-medium">{selectedAllergy.allergyType}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block mb-2 text-sm text-gray-600">Allergy name</label>
+                    <input
+                      type="text"
+                      className="w-full bg-white border border-gray-200 rounded-[12px] px-4 py-3"
+                      value={selectedAllergy.allergyName}
+                      readOnly
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-2 text-sm text-gray-600">Severity level</label>
+                    <span
+                      className={`inline-block px-4 py-2 border rounded-[12px] text-base font-semibold ${
+                        getSeverityPillClass(selectedAllergy.severityLevel)
+                      }`}
+                    >
+                      {selectedAllergy.severityLevel}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* ==== Edit Mode ==== */}
+                  <div className="flex flex-col gap-2 font-light text-[#898989]">
+                    <label>Allergy type</label>
+                    {/* Reuse your existing dropdown UI from add form */}
+                    <div className="relative w-full">
+                      <button
+                        type="button"
+                        className="flex items-center justify-between w-full bg-white border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 text-[#898989]"
+                        onClick={() => setShowTypeDropdown((prev) => !prev)}
+                      >
+                        <span className="flex items-center gap-2">
+                          {editData.allergyType || 'Select allergy type'}
+                        </span>
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                          <path d="M7 10l5 5 5-5" stroke="#898989" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+
+                      {showTypeDropdown && (
+                        <div className="absolute mt-1 bg-white border border-[#D0D5DD] rounded-[12px] shadow-lg w-full z-50">
+                          {allergyTypes.map(type => (
+                            <div
+                              key={type.value}
+                              className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#E5EDFF]"
+                              onClick={() => {
+                                setEditData(prev => ({ ...prev, allergyType: type.value }));
+                                setShowTypeDropdown(false);
+                              }}
+                            >
+                              <img src={type.img} alt={type.label} width={20} height={20} />
+                              <span>{type.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 font-light text-[#898989]">
+                    <label>Allergy name</label>
+                    <input
+                      type="text"
+                      className="w-full bg-white border border-gray-200 rounded-[12px] px-4 py-3"
+                      value={editData.allergyName}
+                      onChange={(e) => setEditData(prev => ({ ...prev, allergyName: e.target.value }))}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2 font-light text-[#898989]">
+                    <label>Severity level</label>
+                    <div className="relative w-full severity-dropdown">
+                      <button
+                        type="button"
+                        className="flex items-center justify-between w-full bg-white border border-[#D0D5DD] h-[40px] rounded-[12px] pl-3 pr-3 text-[#898989]"
+                        onClick={() => setShowSeverityDropdown((prev) => !prev)}
+                      >
+                        <span>{editData.severityLevel || 'Select severity level'}</span>
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+                          <path d="M7 10l5 5 5-5" stroke="#898989" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                      {showSeverityDropdown && (
+                        <div className="absolute left-0 right-0 z-50 mt-1 bg-white border border-[#D0D5DD] rounded-[12px] shadow-lg">
+                          {['Mild', 'Moderate', 'Severe'].map(level => (
+                            <div
+                              key={level}
+                              className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#EEF4FF]"
+                              onClick={() => {
+                                setEditData(prev => ({ ...prev, severityLevel: level }));
+                                setShowSeverityDropdown(false);
+                              }}
+                            >
+                              <span>{level}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className="flex justify-between items-center border-t border-gray-200 px-8 py-4 bg-white">
               <button
                 className="border border-red-500 text-red-600 px-6 py-2 rounded hover:bg-red-50"
-                // onClick={handleDeleteAllergy} // Implement this if needed
+                onClick={async () => {
+                  try {
+                    const token = localStorage.getItem('access_token');
+                    const res = await fetch(`/api/v1/allergies/${selectedAllergy.id}`, {
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                      },
+                    });
+                    if (res.ok) {
+                      toast.success('Allergy deleted successfully');
+                      setShowViewSidebar(false);
+                    } else {
+                      toast.error('Failed to delete allergy');
+                    }
+                  } catch {
+                    toast.error('Error deleting allergy');
+                  }
+                }}
               >
                 Delete allergy
               </button>
-              <button
-                className="bg-[#6C5DD3] text-white px-6 py-2 rounded"
-                // onClick={handleEditAllergy} // Implement this if needed
-              >
-                Edit allergy
-              </button>
+
+              {!isEditing ? (
+                <button
+                  className="bg-[#6C5DD3] text-white px-6 py-2 rounded"
+                  onClick={() => {
+                    setIsEditing(true);
+                    setEditData({
+                      allergyType: selectedAllergy.allergyType,
+                      allergyName: selectedAllergy.allergyName,
+                      severityLevel: selectedAllergy.severityLevel,
+                    });
+                  }}
+                >
+                  Edit allergy
+                </button>
+              ) : (
+                <button
+                  className="bg-blue-600 text-white px-6 py-2 rounded"
+                  onClick={async () => {
+                    try {
+                      const token = localStorage.getItem('access_token');
+                      const res = await fetch(`/api/v1/allergies/updateAllergy/${selectedAllergy.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                        },
+                        body: JSON.stringify(editData),
+                      });
+                      if (res.ok) {
+                        toast.success('Allergy updated successfully');
+                        setShowViewSidebar(false);
+                        setIsEditing(false);
+                      } else {
+                        toast.error('Failed to update allergy');
+                      }
+                    } catch {
+                      toast.error('Error updating allergy');
+                    }
+                  }}
+                >
+                  Save changes
+                </button>
+              )}
             </div>
           </div>
         </div>
