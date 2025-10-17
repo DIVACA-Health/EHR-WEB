@@ -63,6 +63,9 @@ export default function NoteManager({ studentId }) {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionText, setDescriptionText] = useState('');
   const [isHealthOpen, setIsHealthOpen] = useState(null);
+  const [medications, setMedications] = useState([
+  { medication: '', dosage: '', instructions: '' }
+  ]);
   
   // New state for linked records
   const [linkedRecords, setLinkedRecords] = useState({});
@@ -130,6 +133,28 @@ export default function NoteManager({ studentId }) {
     
     if (studentId) fetchNotesAndLinkedRecords();
   }, [studentId]);
+
+    // Add handler to add new medication
+  const handleAddMedication = () => {
+    setMedications([...medications, { medication: '', dosage: '', instructions: '' }]);
+  };
+
+  // Add handler to remove medication
+  const handleRemoveMedication = (index) => {
+    if (medications.length > 1) {
+      setMedications(medications.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleMedicationChange = (index, field, value) => {
+    const updatedMedications = medications.map((med, i) => {
+      if (i === index) {
+        return { ...med, [field]: value };
+      }
+      return med;
+    });
+    setMedications(updatedMedications);
+  };
 
   const handleSavenurseNote = async () => {
     if (!noteTitle.trim() || !noteBody.trim()) {
@@ -244,7 +269,6 @@ export default function NoteManager({ studentId }) {
         setSelectedTags([]);
         setShowTagSelector(false);
         setCustomTag('');
-        setCurrentNurseNoteId(null);
         setSelectedNoteType('health')
       } else {
         toast.error('Failed to save note');
@@ -264,24 +288,39 @@ export default function NoteManager({ studentId }) {
       return;
     }
     
+    // Validate at least one medication has data
+    const hasValidMedication = medications.some(
+      med => med.medication.trim() || med.dosage.trim() || med.instructions.trim()
+    );
+    
+    if (!hasValidMedication) {
+      toast.error('Please fill in at least one medication');
+      return;
+    }
+    
     setIsSaving(true);
 
-    const payload = {
-      studentId: studentId,
-      medication,
-      dosage,
-      instructions,
-      nurseNoteId: currentNurseNoteId
-    };
-
     try {
-      const res = await fetchWithAuth("/api/v1/prescriptions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      // Save each medication separately
+      for (const med of medications) {
+        if (med.medication.trim() || med.dosage.trim() || med.instructions.trim()) {
+          const payload = {
+            studentId: studentId,
+            medication: med.medication,
+            dosage: med.dosage,
+            instructions: med.instructions,
+            nurseNoteId: currentNurseNoteId
+          };
 
-      if (!res.ok) throw new Error("Failed to save prescription");
+          const res = await fetchWithAuth("/api/v1/prescriptions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Failed to save prescription");
+        }
+      }
 
       // Refresh linked records
       const linked = await fetchLinkedRecords(currentNurseNoteId);
@@ -289,11 +328,9 @@ export default function NoteManager({ studentId }) {
         setLinkedRecords(prev => ({...prev, [currentNurseNoteId]: linked}));
       }
 
-      toast.success('Prescription saved successfully!');
-      setMedication("");
-      setDosage("");
-      setInstructions("");
-      setSelectedNoteType('prescription')
+      toast.success('Prescription(s) saved successfully!');
+      setMedications([{ medication: '', dosage: '', instructions: '' }]);
+      setShowSidebar(false);
     } catch (err) {
       console.error(err);
       toast.error('Failed to save prescription!');
@@ -339,6 +376,7 @@ export default function NoteManager({ studentId }) {
       setDiagnosis("");
       setDescription("");
       setPossibleCause("");
+      setSelectedNoteType('prescription');
     } catch (err) {
       console.error(err);
       toast.error('Failed to save health record');
@@ -710,7 +748,7 @@ export default function NoteManager({ studentId }) {
           return (
             <div className="h-full flex flex-col pl-7 pr-7 gap-[14px] py-5">
               {healthRecords.length === 0 ? (
-                <div className='h-[75%] flex flex-col gap-50 '>
+                <div className='h-[75%] flex flex-col gap-10 '>
                   <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                     <form className='flex flex-col gap-3 text-[#898989]'>
                       <div className='flex flex-col gap-2'>
@@ -814,38 +852,70 @@ export default function NoteManager({ studentId }) {
           return (
             <div className='h-full flex flex-col'>
               <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
-                <form className='flex flex-col gap-3 text-[#898989]'>
-                  <div className='flex flex-col gap-2'>
-                    <label className='text-[#898989]'>Medication</label>
-                    <input 
-                      type='text' 
-                      placeholder='Enter medication' 
-                      value={medication} 
-                      onChange={(e) => setMedication(e.target.value)} 
-                      className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                    />
+              <form className='flex flex-col gap-3 text-[#898989]'>
+                {medications.map((med, index) => (
+                  <div key={index} className='border-b border-gray-200 pb-4 mb-4 last:border-b-0'>
+                    <div className='flex flex-col gap-2'>
+                      <div className='flex justify-between items-center'>
+                        <label className='text-[#898989]'>
+                          Medication {index > 0 ? index + 1 : ''}
+                        </label>
+                        <div className='flex gap-3 items-center'>
+                          {index === medications.length - 1 && (
+                            <div 
+                              className='flex gap-2 cursor-pointer' 
+                              onClick={handleAddMedication}
+                            >
+                              <img src="/image/Plus{BLUE}.png" alt='plus img' className='h-[20px] w-[20px]'/>
+                              <h2 className='text-[#3B6FED]'>Add medication</h2>
+                            </div>
+                          )}
+                          {medications.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveMedication(index)}
+                              className='text-red-500 text-xl hover:text-red-700'
+                            >
+                              ×
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      <input 
+                        type='text' 
+                        placeholder='Enter medication' 
+                        value={med.medication} 
+                        onChange={(e) => handleMedicationChange(index, 'medication', e.target.value)} 
+                        className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                      />
+                    </div>
+                    <div className='flex flex-col gap-2 mt-3'>
+                      <label className='text-[#898989]'>
+                        Dosage {index > 0 ? index + 1 : ''}
+                      </label>
+                      <input 
+                        type='text' 
+                        placeholder='Enter medication dosage' 
+                        value={med.dosage} 
+                        onChange={(e) => handleMedicationChange(index, 'dosage', e.target.value)} 
+                        className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                      />
+                    </div>
+                    <div className='flex flex-col gap-2 mt-3'>
+                      <label className='text-[#898989]'>
+                        Instructions {index > 0 ? index + 1 : ''}
+                      </label>
+                      <input 
+                        type='text' 
+                        placeholder='Give instructions for medication' 
+                        value={med.instructions} 
+                        onChange={(e) => handleMedicationChange(index, 'instructions', e.target.value)} 
+                        className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                      />
+                    </div>
                   </div>
-                  <div className='flex flex-col gap-2'>
-                    <label className='text-[#898989]'>Dosage</label>
-                    <input 
-                      type='text' 
-                      placeholder='Enter medication dosage' 
-                      value={dosage} 
-                      onChange={(e) => setDosage(e.target.value)} 
-                      className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                    />
-                  </div>
-                  <div className='flex flex-col gap-2'>
-                    <label className='text-[#898989]'>Instructions</label>
-                    <input 
-                      type='text' 
-                      placeholder='Give instructions for medication' 
-                      value={instructions} 
-                      onChange={(e) => setInstructions(e.target.value)} 
-                      className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                    />
-                  </div>
-                </form>
+                ))}
+              </form>
               </div>
               <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
                 <button
@@ -862,41 +932,73 @@ export default function NoteManager({ studentId }) {
         case 'prescriptionexpanded':
           const prescriptions = expandedPair?.prescriptions || [];
           return (
-            <div className="h-full flex flex-col pl-7 pr-7 gap-[14px] py-5">
+            <div className="h-full flex flex-col pl-7 pr-7  py-5">
               {prescriptions.length === 0 ? (
-                <div className='h-[75%] flex flex-col gap-50 '>
-                  <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
+                <div className='h-[75%]  flex flex-col gap-10 '>
+                  <div className='flex-1  overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                     <form className='flex flex-col gap-3 text-[#898989]'>
-                      <div className='flex flex-col gap-2'>
-                        <label className='text-[#898989]'>Medication</label>
-                        <input 
-                          type='text' 
-                          placeholder='Enter medication' 
-                          value={medication} 
-                          onChange={(e) => setMedication(e.target.value)} 
-                          className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                        />
-                      </div>
-                      <div className='flex flex-col gap-2'>
-                        <label className='text-[#898989]'>Dosage</label>
-                        <input 
-                          type='text' 
-                          placeholder='Enter medication dosage' 
-                          value={dosage} 
-                          onChange={(e) => setDosage(e.target.value)} 
-                          className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                        />
-                      </div>
-                      <div className='flex flex-col gap-2'>
-                        <label className='text-[#898989]'>Instructions</label>
-                        <input 
-                          type='text' 
-                          placeholder='Give instructions for medication' 
-                          value={instructions} 
-                          onChange={(e) => setInstructions(e.target.value)} 
-                          className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
-                        />
-                      </div>
+                      {medications.map((med, index) => (
+                        <div key={index} className='border-b border-gray-200 pb-4 mb-4 last:border-b-0'>
+                          <div className='flex flex-col gap-2'>
+                            <div className='flex justify-between items-center'>
+                              <label className='text-[#898989]'>
+                                Medication {index > 0 ? index + 1 : ''}
+                              </label>
+                              <div className='flex gap-3 items-center'>
+                                {index === medications.length - 1 && (
+                                  <div 
+                                    className='flex gap-2 cursor-pointer' 
+                                    onClick={handleAddMedication}
+                                  >
+                                    <img src="/image/Plus{BLUE}.png" alt='plus img' className='h-[20px] w-[20px]'/>
+                                    <h2 className='text-[#3B6FED]'>Add medication</h2>
+                                  </div>
+                                )}
+                                {medications.length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveMedication(index)}
+                                    className='text-red-500 text-xl hover:text-red-700'
+                                  >
+                                    ×
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                            <input 
+                              type='text' 
+                              placeholder='Enter medication' 
+                              value={med.medication} 
+                              onChange={(e) => handleMedicationChange(index, 'medication', e.target.value)} 
+                              className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                            />
+                          </div>
+                          <div className='flex flex-col gap-2 mt-3'>
+                            <label className='text-[#898989]'>
+                              Dosage {index > 0 ? index + 1 : ''}
+                            </label>
+                            <input 
+                              type='text' 
+                              placeholder='Enter medication dosage' 
+                              value={med.dosage} 
+                              onChange={(e) => handleMedicationChange(index, 'dosage', e.target.value)} 
+                              className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                            />
+                          </div>
+                          <div className='flex flex-col gap-2 mt-3'>
+                            <label className='text-[#898989]'>
+                              Instructions {index > 0 ? index + 1 : ''}
+                            </label>
+                            <input 
+                              type='text' 
+                              placeholder='Give instructions for medication' 
+                              value={med.instructions} 
+                              onChange={(e) => handleMedicationChange(index, 'instructions', e.target.value)} 
+                              className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#FFFFFF] rounded-[12px] outline-none'
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </form>
                   </div>
                   <div className='min-h-[10%] bg-white w-full flex justify-end items-center border-t-[1px] pr-6 border-t-gray-200 shadow-t-sm'>
@@ -1311,7 +1413,13 @@ export default function NoteManager({ studentId }) {
               <div className='flex-1 overflow-y-auto pt-6 pb-4 pl-6 pr-6'>
                 <form className='flex flex-col gap-3 text-[#898989]'>
                   <div className='flex flex-col gap-2'>
-                    <label className='text-[#898989]'>Medication</label>
+                    <div className='flex justify-between items-center'>
+                      <label className='text-[#898989]'>Medication</label>
+                      <div className='flex gap-2'>
+                        <img src="/image/Plus{BLUE}.png" alt='plus img' className='h-[20px] w-[20]'/>
+                        <h2 className='text-[#3B6FED]'>Add medication</h2>
+                      </div>
+                    </div>
                     <input type='text' disabled placeholder='Enter medication' className='pl-3 h-[52px] w-full border-[1px] border-[#D0D5DD] bg-[#EFEFEF] rounded-[12px]' />
                   </div>
                   <div className='flex flex-col gap-2'>
@@ -1740,18 +1848,23 @@ export default function NoteManager({ studentId }) {
       {/* Instructions Modal */}
       {showInstructionsModal && (
         <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
-          <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
-            <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
-              <h3 className="text-lg font-semibold">Instructions</h3>
+          <div className=' w-4/10 flex items-center flex-col'>
+            <div className=' w-full h-10 flex items-center justify-end'>
+              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
             </div>
-            <p className="text-gray-700 mb-4 py-5 px-3">{instructionsText}</p>
-            <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
-              <button 
-                onClick={() => setShowInstructionsModal(false)}
-                className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
-              >
-                Close
-              </button>
+            <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+              <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                <h3 className="text-lg font-semibold">Instructions</h3>
+              </div>
+              <p className="text-gray-700 mb-4 py-5 px-3">{instructionsText}</p>
+              <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                <button 
+                  onClick={() => setShowInstructionsModal(false)}
+                  className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1760,18 +1873,23 @@ export default function NoteManager({ studentId }) {
       {/* Description Modal */}
       {showDescriptionModal && (
         <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
-          <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
-            <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
-              <h3 className="text-lg font-semibold">Description</h3>
+          <div className=' w-4/10 flex items-center flex-col'>
+            <div className=' w-full h-10 flex items-center justify-end'>
+              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
             </div>
-            <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
-            <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
-              <button 
-                onClick={() => setShowDescriptionModal(false)}
-                className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
-              >
-                Close
-              </button>
+            <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+              <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                <h3 className="text-lg font-semibold">Description</h3>
+              </div>
+              <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
+              <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                <button 
+                  onClick={() => setShowDescriptionModal(false)}
+                  className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

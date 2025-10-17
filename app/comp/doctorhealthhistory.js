@@ -345,37 +345,30 @@ const NurseHealthHistory = ({ studentId }) => {
           </div>
         )}
 
-        {/* Description Modal */}
-        {showDescriptionModal && (
-          <div 
-            className="fixed inset-0 z-50 bg-[#0C162F99] bg-opacity-50 flex items-center justify-center p-4" 
-            onClick={() => setShowDescriptionModal(false)}
-          >
-            <div 
-              className="bg-white rounded-2xl shadow-xl max-w-md w-full relative" 
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setShowDescriptionModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600"
-              >
-                ✕
-              </button>
-              <div className="p-8">
-                <h3 className="text-xl font-semibold text-center mb-6">Description</h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-8 text-left whitespace-pre-line">
-                  {descriptionText}
-                </p>
+      {/* Description Modal */}
+      {showDescriptionModal && (
+        <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
+          <div className=' w-4/10 flex items-center flex-col'>
+            <div className=' w-full h-10 flex items-center justify-end'>
+              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
+            </div>
+            <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+              <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                <h3 className="text-lg font-semibold">Description</h3>
+              </div>
+              <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
+              <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
                 <button 
                   onClick={() => setShowDescriptionModal(false)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+                  className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
                 >
                   Close
                 </button>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
       </div>
     </div>

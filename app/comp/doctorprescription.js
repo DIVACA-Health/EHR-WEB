@@ -280,26 +280,30 @@ const DoctorPrescription = ({ studentId }) => {
           </div>
         )}
 
-        {/* Instructions Modal */}
-          {showInstructionsModal && (
-            <div className="fixed inset-0 z-50 bg-[#0C162F99] bg-opacity-50 flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
-              <div className="bg-white rounded-[12px]  max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
-                <div className='border-[1px] rounded-t-[12px]  border-[#F0F2F5]  flex items-center justify-center p-4'>
-                  <h3 className="text-lg font-semibold ">Instructions</h3>
-                </div>
-                <p className="text-gray-700 mb-4 py-5 px-3 ">{instructionsText}</p>
-                <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
-                  <button 
-                    onClick={() => setShowInstructionsModal(false)}
-                    className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
-                  >
-                    Close
-                  </button>
-                </div>
-
+      {/* Instructions Modal */}
+      {showInstructionsModal && (
+        <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
+          <div className=' w-4/10 flex items-center flex-col'>
+            <div className=' w-full h-10 flex items-center justify-end'>
+              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
+            </div>
+            <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+              <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                <h3 className="text-lg font-semibold">Instructions</h3>
+              </div>
+              <p className="text-gray-700 mb-4 py-5 px-3">{instructionsText}</p>
+              <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                <button 
+                  onClick={() => setShowInstructionsModal(false)}
+                  className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                >
+                  Close
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );
