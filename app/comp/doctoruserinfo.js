@@ -278,7 +278,7 @@ const fetchUserQueueData = async () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.8px] border-b-[#E6E6E6] h-14'>
                             <div className=' w-[65%] flex flex-col gap-1 '>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                                 <h1 className='text-xs text-ellipsis truncate'>{user.notecontent1}</h1>
@@ -310,7 +310,7 @@ const fetchUserQueueData = async () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-10'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.8px] border-b-[#E6E6E6] h-10'>
                             <div>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                             </div>
@@ -343,7 +343,7 @@ const fetchUserQueueData = async () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center mb-2 border-b-[1px] border-b-black h-14'>
+                        <div className='flex justify-between items-center mb-2 border-b-[0.8px] border-b-[#E6E6E6] h-14'>
                             <div className='flex flex-col gap-1'>
                                 <h1 className='text-xs text-[#919191] font-extralight'>Dr {user.note1}</h1>
                                 <h1 className='text-xs'>Treatment note</h1>
@@ -378,7 +378,7 @@ const fetchUserQueueData = async () => {
                         </div>
                     </div>
                     <div className='p-4 text-sm font-lighter'>
-                        <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                        <div className='flex justify-between items-center w-full  h-10 border-b-[0.8px] border-b-[#E6E6E6]'>
                             <div className='text-xs text-[#919191] font-extralight'>{user.allergyname}</div>
                             <div className='w-[30%] flex justify-end'>
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
@@ -391,7 +391,7 @@ const fetchUserQueueData = async () => {
                             </span>
                             </div>
                         </div>
-                                                <div className='flex justify-between items-center w-full  h-10 border-b-[1px] border-b-black'>
+                                                <div className='flex justify-between items-center w-full  h-10 border-b-[0.8px] border-b-[#E6E6E6]'>
                             <div className='text-xs text-[#919191] font-extralight'>{user.allergyname1}</div>
                             <div className='w-[30%] flex justify-end'>
                              <span className={`inline-block px-3 py-1 text-xs rounded-full border w-fit ${
