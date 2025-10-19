@@ -156,7 +156,7 @@ const NursePrescription = ({ studentId }) => {
                       {activeActionIndex === index && (
                         <div
                           ref={(el) => (dropdownRefs.current[index] = el)}
-                          className="absolute top-full right-4 mt-1 bg-white shadow-lg rounded-lg w-48 z-10 text-left border border-gray-200"
+                          className="absolute top-0 right-4 mt-1 bg-white shadow-lg rounded-lg w-48 z-10 text-left border border-gray-200"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <button
@@ -283,8 +283,8 @@ const NursePrescription = ({ studentId }) => {
       {/* Instructions Modal */}
       {showInstructionsModal && (
         <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
-          <div className=' w-4/10 flex items-center flex-col'>
-            <div className=' w-full h-10 flex items-center justify-end'>
+          <div className=' w-[400px] flex items-center flex-col'>
+            <div className=' w-[480px] h-10 flex items-center justify-end'>
               <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
             </div>
             <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>

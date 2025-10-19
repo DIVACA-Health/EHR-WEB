@@ -27,7 +27,6 @@ const fetchWithAuth = async (url, options = {}) => {
   }
 };
 
-
 const NurseHealthHistory = ({ studentId }) => {
   const [summary, setSummary] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -41,13 +40,19 @@ const NurseHealthHistory = ({ studentId }) => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionText, setDescriptionText] = useState('');
   const [showCauseModal, setShowCauseModal] = useState(false);
-    const [vitalsData, setVitalsData] = useState({
+  const [vitalsData, setVitalsData] = useState({
     heartRate: '',
     bloodPressure: '',
     temperature: '',
     weight: '',
-    recorder: { firstName: '', lastName: '' }, 
+    recorder: { firstName: '', lastName: '' },
+    respiratoryRate: '',
+    oxygenSaturation: '',
   });
+
+  // linked records for the selected nurse-note (nurseNote, doctorNotes, healthRecords, prescriptions, etc.)
+  const [linkedData, setLinkedData] = useState(null);
+  const [linkedLoading, setLinkedLoading] = useState(false);
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -68,9 +73,39 @@ const NurseHealthHistory = ({ studentId }) => {
     }
   }, [studentId]);
 
+  const fetchLinkedRecords = async (nurseNoteId) => {
+    if (!nurseNoteId) return;
+    setLinkedLoading(true);
+    try {
+      const res = await fetchWithAuth(`/api/v1/notes/nurse-note/${nurseNoteId}/linked-records`);
+      const json = await res.json();
+      // API shape may vary: try json.data then json
+      setLinkedData(json.data || json);
+      console.log('linked records:', json);
+    } catch (err) {
+      console.error('Error fetching linked records:', err);
+      setLinkedData(null);
+    } finally {
+      setLinkedLoading(false);
+    }
+  };
+
   const handleRowClick = (diagnosis) => {
     setSelectedDiagnosis(diagnosis);
     setShowSidebar(true);
+
+    // determine nurseNote id from the clicked item
+    const nurseNoteId =
+      diagnosis.nurseNoteId ||
+      (diagnosis.nurseNote && diagnosis.nurseNote.id) ||
+      diagnosis.nurseNote?.id ||
+      diagnosis.nurseNoteId;
+    if (nurseNoteId) {
+      fetchLinkedRecords(nurseNoteId);
+    } else {
+      // fallback: clear linkedData
+      setLinkedData(null);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -88,7 +123,7 @@ const NurseHealthHistory = ({ studentId }) => {
     return `${day}-${month}-${year}`;
   };
 
-    const fetchVitals = async () => {
+  const fetchVitals = async () => {
     const token = localStorage.getItem('access_token');
     if (!token) {
       console.error('No access token found!');
@@ -135,6 +170,24 @@ const NurseHealthHistory = ({ studentId }) => {
   useEffect(() => {
     fetchVitals();
   }, [studentId]);
+
+  // helpers to render linked fields with fallbacks
+  const linkedVitals = () => {
+    // check linkedData first (possible shapes)
+    if (!linkedData) return vitalsData;
+    if (linkedData.vitals) return { ...vitalsData, ...linkedData.vitals };
+    // sometimes vitals might be inside healthRecords[0].vitals
+    const hr = linkedData.healthRecords && linkedData.healthRecords[0];
+    if (hr && hr.vitals) return { ...vitalsData, ...hr.vitals };
+    return vitalsData;
+  };
+
+  const recordFrom = (obj) => {
+    if (!obj) return 'N/A';
+    const name = obj.firstName || obj.name || '';
+    const last = obj.lastName || '';
+    return [name, last].filter(Boolean).join(' ') || 'N/A';
+  };
 
   return (
     <div className='border-[rgba(235,235,235,1)] shadow-sm rounded-t-[12px]'>
@@ -183,7 +236,7 @@ const NurseHealthHistory = ({ studentId }) => {
                       {activeActionIndex === index && (
                         <div
                           ref={(el) => (dropdownRefs.current[index] = el)}
-                          className="absolute top-full right-4 mt-1 bg-white shadow-lg rounded-lg w-48 z-10 text-left border border-gray-200"
+                          className="absolute top-0 right-4 mt-1 bg-white shadow-lg rounded-lg w-48 z-10 text-left border border-gray-200"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <button
@@ -222,7 +275,10 @@ const NurseHealthHistory = ({ studentId }) => {
         {showSidebar && selectedDiagnosis && (
           <div
             className="fixed inset-0 z-40 bg-[#0C162F99]"
-            onClick={() => setShowSidebar(false)}
+            onClick={() => {
+              setShowSidebar(false);
+              setLinkedData(null);
+            }}
           >
             <div
               className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 overflow-y-auto"
@@ -235,7 +291,13 @@ const NurseHealthHistory = ({ studentId }) => {
                     <p>Doctor: {selectedDiagnosis.recordedBy?.name || 'N/A'}</p>
                   </div>
                 </div>
-                <button onClick={() => setShowSidebar(false)} className="text-2xl text-gray-400 hover:text-gray-600">
+                <button
+                  onClick={() => {
+                    setShowSidebar(false);
+                    setLinkedData(null);
+                  }}
+                  className="text-2xl text-gray-400 hover:text-gray-600"
+                >
                   ×
                 </button>
               </div>
@@ -255,46 +317,48 @@ const NurseHealthHistory = ({ studentId }) => {
                   </div>
                   {isOpen1 && (
                     <div className="text-sm bg-white rounded-b-[8px]">
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Heart rate</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.heartRate || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Blood pressure</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.bloodPressure || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Temperature</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.temperature || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Respiratory rate</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.respiratoryRate || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3  border-gray-200">
-                        <span className="text-gray-700">Oxygen saturation</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.oxygenSaturation || '--'}
-                        </span>
-                      </div>
+                      {linkedLoading ? (
+                        <div className="p-4 text-center">Loading vitals...</div>
+                      ) : (
+                        (() => {
+                          const lv = linkedVitals();
+                          return (
+                            <>
+                              <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                                <span className="text-gray-700">Heart rate</span>
+                                <span className="font-medium text-gray-900">{lv.heartRate || '--'}</span>
+                              </div>
+                              <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                                <span className="text-gray-700">Blood pressure</span>
+                                <span className="font-medium text-gray-900">{lv.bloodPressure || '--'}</span>
+                              </div>
+                              <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                                <span className="text-gray-700">Temperature</span>
+                                <span className="font-medium text-gray-900">{lv.temperature || '--'}</span>
+                              </div>
+                              <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                                <span className="text-gray-700">Respiratory rate</span>
+                                <span className="font-medium text-gray-900">{lv.respiratoryRate || '--'}</span>
+                              </div>
+                              <div className="flex justify-between px-4 py-3  border-gray-200">
+                                <span className="text-gray-700">Oxygen saturation</span>
+                                <span className="font-medium text-gray-900">{lv.oxygenSaturation || '--'}</span>
+                              </div>
+                            </>
+                          );
+                        })()
+                      )}
                     </div>
                   )}
                 </div>
-                {/* HEALTH ISSUE Details */}
+
+                {/* TREATMENT PLAN / HEALTH RECORD */}
                 <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
                   <div
                     className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
                     onClick={() => setIsOpen(!isOpen)}
                   >
-                    <span className="font-medium text-sm">Health issue</span>
+                    <span className="font-medium text-sm">Treatment plan</span>
                     <span className="text-lg transform transition-transform duration-300">
                       {isOpen ? '▾' : '▸'}
                     </span>
@@ -303,16 +367,18 @@ const NurseHealthHistory = ({ studentId }) => {
                     <div className="text-sm bg-white rounded-b-[8px]">
                       <div className="flex justify-between px-4 py-3 border-b border-gray-200">
                         <span className="text-gray-700">Diagnosis</span>
-                        <span className="font-medium text-gray-900">{selectedDiagnosis.diagnosis || 'N/A'}</span>
+                        <span className="font-medium text-gray-900">
+                          {linkedData?.healthRecords?.[0]?.diagnosis || selectedDiagnosis.diagnosis || 'N/A'}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200">
                         <span className="text-gray-700">Description</span>
-                        {selectedDiagnosis.description ? (
+                        {linkedData?.healthRecords?.[0]?.description || selectedDiagnosis.description ? (
                           <button
                             className="text-blue-600 font-medium hover:underline"
                             type="button"
                             onClick={() => {
-                              setDescriptionText(selectedDiagnosis.description);
+                              setDescriptionText(linkedData?.healthRecords?.[0]?.description || selectedDiagnosis.description || '');
                               setShowDescriptionModal(true);
                             }}
                           >
@@ -323,11 +389,91 @@ const NurseHealthHistory = ({ studentId }) => {
                         )}
                       </div>
                       <div className="flex justify-between items-center px-4 py-3  border-gray-200">
-                        <span className="text-gray-700">Possible Cause</span>
-                        <span className="font-medium text-gray-900">{selectedDiagnosis.possibleCause || 'N/A'}</span>
+                        <span className="text-gray-700">Possible cause</span>
+                        <span className="font-medium text-gray-900">
+                          {linkedData?.healthRecords?.[0]?.possibleCause || selectedDiagnosis.possibleCause || 'N/A'}
+                        </span>
                       </div>
                     </div>
                   )}
+                </div>
+
+                {/* NURSE NOTE */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div className="px-4 py-3 bg-[rgba(243,246,255,1)] rounded-t-[8px]">
+                    <span className="font-medium text-sm">Nurse's note</span>
+                  </div>
+                  <div className="p-6 bg-white">
+                    {linkedLoading ? (
+                      <div>Loading nurse note...</div>
+                    ) : linkedData?.nurseNote ? (
+                      <div>
+                        <div className="mb-2 text-sm text-gray-600">By: {recordFrom(linkedData.nurseNote.createdBy)}</div>
+                        <h3 className="font-semibold mb-2">{linkedData.nurseNote.title}</h3>
+                        <p className="text-gray-700 mb-4">{linkedData.nurseNote.content}</p>
+                        {Array.isArray(linkedData.nurseNote.tags) && linkedData.nurseNote.tags.length > 0 && (
+                          <div className="flex gap-2 flex-wrap">
+                            {linkedData.nurseNote.tags.map((t) => (
+                              <span key={t} className="text-xs px-2 py-1 bg-gray-100 rounded">{t}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-500">
+                        No Nurse's note yet
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* DOCTOR NOTES */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div className="px-4 py-3 bg-[rgba(243,246,255,1)] rounded-t-[8px]">
+                    <span className="font-medium text-sm">Doctor notes</span>
+                  </div>
+                  <div className="p-4 bg-white space-y-3">
+                    {linkedLoading ? (
+                      <div>Loading doctor notes...</div>
+                    ) : linkedData?.doctorNotes && linkedData.doctorNotes.length > 0 ? (
+                      linkedData.doctorNotes.map((dn) => (
+                        <div key={dn.id} className="border rounded p-3">
+                          <div className="text-sm text-gray-600 mb-1">By: {recordFrom(dn.creator)}</div>
+                          <div className="font-semibold">{dn.title}</div>
+                          <div className="text-gray-700 text-sm mt-1">{dn.content}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center text-gray-500">No doctor notes</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* PRESCRIPTIONS */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div className="px-4 py-3 bg-[rgba(243,246,255,1)] rounded-t-[8px]">
+                    <span className="font-medium text-sm">Prescription details</span>
+                  </div>
+                  <div className="p-4 bg-white space-y-3">
+                    {linkedLoading ? (
+                      <div>Loading prescriptions...</div>
+                    ) : linkedData?.prescriptions && linkedData.prescriptions.length > 0 ? (
+                      linkedData.prescriptions.map((p) => (
+                        <div key={p.id} className="border rounded p-3 flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold">{p.medication}</div>
+                            <div className="text-sm text-gray-600">{p.dosage}</div>
+                          </div>
+                          <div>
+                            <div className="text-sm text-gray-600">Prescribed by: {recordFrom(p.doctor)}</div>
+                            <div className="text-sm text-gray-500">{p.prescribedDate}</div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center text-gray-500">No prescriptions</div>
+                    )}
+                  </div>
                 </div>
 
               </div>
@@ -345,30 +491,30 @@ const NurseHealthHistory = ({ studentId }) => {
           </div>
         )}
 
-      {/* Description Modal */}
-      {showDescriptionModal && (
-        <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
-          <div className=' w-4/10 flex items-center flex-col'>
-            <div className=' w-full h-10 flex items-center justify-end'>
-              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
-            </div>
-            <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-              <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
-                <h3 className="text-lg font-semibold">Description</h3>
+        {/* Description Modal */}
+        {showDescriptionModal && (
+          <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
+            <div className=' w-[400px] flex items-center flex-col'>
+              <div className=' w-[480px] h-10 flex items-center justify-end'>
+                <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
               </div>
-              <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
-              <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
-                <button 
-                  onClick={() => setShowDescriptionModal(false)}
-                  className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
-                >
-                  Close
-                </button>
+              <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+                <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                  <h3 className="text-lg font-semibold">Description</h3>
+                </div>
+                <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
+                <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                  <button 
+                    onClick={() => setShowDescriptionModal(false)}
+                    className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
       </div>
     </div>

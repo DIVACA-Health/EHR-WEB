@@ -1848,8 +1848,8 @@ export default function NoteManager({ studentId }) {
       {/* Instructions Modal */}
       {showInstructionsModal && (
         <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
-          <div className=' w-4/10 flex items-center flex-col'>
-            <div className=' w-full h-10 flex items-center justify-end'>
+          <div className=' w-[400px] flex items-center flex-col'>
+            <div className=' w-[480px] h-10 flex items-center justify-end'>
               <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
             </div>
             <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
@@ -1873,9 +1873,9 @@ export default function NoteManager({ studentId }) {
       {/* Description Modal */}
       {showDescriptionModal && (
         <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
-          <div className=' w-4/10 flex items-center flex-col'>
-            <div className=' w-full h-10 flex items-center justify-end'>
-              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
+          <div className=' w-[400px]  flex items-center flex-col'>
+            <div className='w-[480px]  h-10 flex items-center justify-end'>
+              <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px]  w-[28px]'/>
             </div>
             <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
               <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>

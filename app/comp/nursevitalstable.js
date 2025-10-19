@@ -1,4 +1,4 @@
-// components/VitalsTable.js
+// ...existing code...
 'use client';
 import { useEffect, useState } from 'react';
 
@@ -20,6 +20,7 @@ export default function VitalsTable({ studentId }) {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
+          cache: 'no-cache',
         });
 
         const result = await res.json();
@@ -37,7 +38,12 @@ export default function VitalsTable({ studentId }) {
     };
 
     fetchVitals();
-  }, []);
+  }, [studentId]);
+
+  const formatRole = (role) => {
+    if (!role) return 'Nurse';
+    return String(role).charAt(0).toUpperCase() + String(role).slice(1);
+  };
 
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
@@ -54,21 +60,27 @@ export default function VitalsTable({ studentId }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-[14px]">
-          {vitals.map((vital, index) => (
-            <tr key={index} className="odd:bg-white even:bg-gray-50">
-              <td className="px-8 py-4 text-center">{vital.date}</td>
-              <td className="px-6 py-4 text-center">{vital.heartRate}</td>
-              <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
-              <td className="px-6 py-4 text-center">{vital.temperature}</td>
-              <td className="px-5 py-4 text-center">{vital.respiratoryRate}</td>
-              <td className="px-5 py-4 text-center">{vital.oxygenSaturation}</td>
-              <td className="px-6 py-4 text-center">
-                Nurse {vital.recorder?.firstName} {vital.recorder?.lastName}
-              </td>
-            </tr>
-          ))}
+          {vitals.map((vital, index) => {
+            const recorder = vital.recorder || {};
+            const roleLabel = formatRole(recorder.role);
+            const firstName = recorder.firstName || '';
+            const lastName = recorder.lastName || '';
+            const recorderText = [roleLabel, firstName, lastName].filter(Boolean).join(' ');
+            return (
+              <tr key={index} className="odd:bg-white even:bg-gray-50">
+                <td className="px-8 py-4 text-center">{vital.date}</td>
+                <td className="px-6 py-4 text-center">{vital.heartRate}</td>
+                <td className="px-6 py-4 text-center">{vital.bloodPressure}</td>
+                <td className="px-6 py-4 text-center">{vital.temperature}</td>
+                <td className="px-5 py-4 text-center">{vital.respiratoryRate}</td>
+                <td className="px-5 py-4 text-center">{vital.oxygenSaturation}</td>
+                <td className="px-6 py-4 text-center">{recorderText || 'Nurse'}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
+// ...existing code...

@@ -48,34 +48,49 @@ const nurseallergies = ({ studentId }) => {
   const [showViewSidebar, setShowViewSidebar] = useState(false);
   const [selectedAllergy, setSelectedAllergy] = useState(null);
 
-  // Fetch allergies from API
-  useEffect(() => {
-    const fetchAllergies = async () => {
-      try {
-        const token = localStorage.getItem('access_token');
-        const res = await fetch(`/api/v1/allergies/getAllAllergies?studentId=${studentId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        });
-        if (res.ok) {
-          const result = await res.json();
-          setAllergies(Array.isArray(result.data) ? result.data : []);
-        } else {
-          setAllergies([]);
-        }
-      } catch {
+  // Fetch allergies from API (extracted so other handlers can call it)
+  const fetchAllergies = async () => {
+    if (!studentId) return;
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`/api/v1/allergies/getAllAllergies?studentId=${studentId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        cache: 'no-cache',
+      });
+      if (res.ok) {
+        const result = await res.json();
+        setAllergies(Array.isArray(result.data) ? result.data : []);
+      } else {
         setAllergies([]);
       }
-    };
+    } catch (err) {
+      console.error('fetchAllergies error', err);
+      setAllergies([]);
+    }
+  };
+
+  useEffect(() => {
     if (studentId) fetchAllergies();
-  }, [studentId, showSidebar, showViewSidebar]);
+  }, [studentId]);
 
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!allergyType || !allergyName || !severityLevel) return;
+
+    // validation with user feedback
+    const missing = [];
+    if (!allergyType) missing.push('Allergy type');
+    if (!allergyName || !String(allergyName).trim()) missing.push('Allergy name');
+    if (!severityLevel) missing.push('Severity level');
+
+    if (missing.length > 0) {
+      toast.error(`Please provide: ${missing.join(', ')}`);
+      return;
+    }
+
     setIsSaving(true);
     const payload = {
       allergyType,
@@ -93,15 +108,27 @@ const nurseallergies = ({ studentId }) => {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
+        toast.success('Allergy saved');
         setShowSidebar(false);
         setAllergyType('');
         setAllergyName('');
         setSeverityLevel('');
+        setCustomAllergyType('');
+        setIsAddingCustom(false);
+        await fetchAllergies(); // refresh list immediately
       } else {
-        alert('Failed to save allergy');
+        const text = await res.text();
+        try {
+          const json = JSON.parse(text);
+          if (json?.message) toast.error(json.message);
+          else toast.error(text || 'Failed to save allergy');
+        } catch {
+          toast.error(text || 'Failed to save allergy');
+        }
       }
-    } catch {
-      alert('Error saving allergy');
+    } catch (err) {
+      console.error('save allergy error', err);
+      toast.error('Error saving allergy');
     } finally {
       setIsSaving(false);
     }
@@ -127,9 +154,9 @@ const nurseallergies = ({ studentId }) => {
   // Dropdown logic
   const handleTypeSelect = (type) => {
     if (type.value === 'Other') {
-      setAllergyType('Other');
       setIsAddingCustom(true);
-      // Don't close dropdown yet
+      setShowTypeDropdown(true); // keep dropdown open so user can type
+      setAllergyType(''); // don't set placeholder 'Other' as final value
     } else {
       setAllergyType(type.value);
       setShowTypeDropdown(false);
@@ -140,7 +167,7 @@ const nurseallergies = ({ studentId }) => {
 
   const handleAddCustomAllergy = () => {
     if (customAllergyType.trim()) {
-      setAllergyType(customAllergyType.trim());
+      setAllergyType(customAllergyType.trim()); // use actual custom value
       setShowTypeDropdown(false);
       setCustomAllergyType('');
       setIsAddingCustom(false);
@@ -160,12 +187,21 @@ const nurseallergies = ({ studentId }) => {
   // Handler for external submit button
   const handleExternalSubmit = () => {
     if (formRef.current) {
-      formRef.current.requestSubmit();
+      // requestSubmit is modern; fallback to submit()
+      if (typeof formRef.current.requestSubmit === 'function') formRef.current.requestSubmit();
+      else formRef.current.submit();
     }
   };
 
   // Handler for allergy row click
   const handleRowClick = (allergy) => {
+    // ensure we're in view mode when opening
+    setIsEditing(false);
+    setEditData({
+      allergyType: allergy.allergyType || '',
+      allergyName: allergy.allergyName || '',
+      severityLevel: allergy.severityLevel || '',
+    });
     setSelectedAllergy(allergy);
     setShowViewSidebar(true);
   };
@@ -179,7 +215,14 @@ const nurseallergies = ({ studentId }) => {
         </div>
         <button
           className='bg-blue-600 flex gap-[8px] w-[195px] h-[44px] items-center justify-center text-white rounded-[8px]'
-          onClick={() => setShowSidebar(true)}
+          onClick={() => {
+            setAllergyType('');
+            setAllergyName('');
+            setSeverityLevel('');
+            setCustomAllergyType('');
+            setIsAddingCustom(false);
+            setShowSidebar(true);
+          }}
         >
           <img src='/image/whitePlus1.png' alt='icon' width={25} height={25} />
           <h1 className='text-[14px]'>Record new allergy</h1>
@@ -223,6 +266,7 @@ const nurseallergies = ({ studentId }) => {
           )}
         </div>
       </div>
+
       {showSidebar && (
         <div className="fixed inset-0 z-40 bg-[#0C162F99]" onClick={() => setShowSidebar(false)}>
           <div
@@ -250,7 +294,7 @@ const nurseallergies = ({ studentId }) => {
                     onClick={() => setShowTypeDropdown((prev) => !prev)}
                   >
                     <span className="flex items-center gap-2">
-                      {allergyType && allergyType !== 'Other'
+                      {allergyType
                         ? <>
                             <img
                               src={getAllergyTypeImage(allergyType)}
@@ -259,11 +303,9 @@ const nurseallergies = ({ studentId }) => {
                               height={20}
                               className="object-contain"
                             />
-                            <span>
-                              {allergyTypes.find(t => t.value === allergyType)?.label || allergyType}
-                            </span>
+                            <span>{allergyType}</span>
                           </>
-                        : allergyType === 'Other' && customAllergyType
+                        : isAddingCustom && customAllergyType
                           ? <>
                               <img
                                 src={getAllergyTypeImage('Other')}
@@ -319,12 +361,7 @@ const nurseallergies = ({ studentId }) => {
                             type="button"
                             className="bg-[#3B6FED] w-fit hover:bg-[#E5EDFF] text-white px-4 py-1.5 rounded-[8px] text-sm font-medium "
                             disabled={!customAllergyType.trim()}
-                            onClick={() => {
-                              if (customAllergyType.trim()) {
-                                setAllergyType('Other');
-                                setShowTypeDropdown(false);
-                              }
-                            }}
+                            onClick={handleAddCustomAllergy}
                           >
                             Add custom allergy
                           </button>
@@ -345,7 +382,7 @@ const nurseallergies = ({ studentId }) => {
                       style={{ objectFit: 'contain' }}
                     />
                     <span className="text-sm">
-                      {allergyType === 'Other' ? (customAllergyType || 'Other') : allergyTypes.find(t => t.value === allergyType)?.label || allergyType}
+                      {allergyType}
                     </span>
                   </div>
                 )}
@@ -447,14 +484,14 @@ const nurseallergies = ({ studentId }) => {
 
       {/* View Allergy Sidebar */}
       {showViewSidebar && selectedAllergy && (
-        <div className="fixed inset-0 z-50 bg-[#0C162F99]" onClick={() => setShowViewSidebar(false)}>
+        <div className="fixed inset-0 z-50 bg-[#0C162F99]" onClick={() => { setShowViewSidebar(false); setIsEditing(false); setSelectedAllergy(null); }}>
           <div
             className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 flex flex-col"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex justify-between items-center min-h-[10%] pl-6 pr-6 border-b border-gray-200 shadow-sm">
               <h2 className="text-xl font-semibold">Allergy</h2>
-              <button onClick={() => setShowViewSidebar(false)} className="text-xl">×</button>
+              <button onClick={() => { setShowViewSidebar(false); setIsEditing(false); setSelectedAllergy(null); }} className="text-xl">×</button>
             </div>
             <div className="flex-1 flex flex-col gap-6 p-8 bg-[#FAFAFA]">
               {!isEditing ? (
@@ -594,11 +631,16 @@ const nurseallergies = ({ studentId }) => {
                     });
                     if (res.ok) {
                       toast.success('Allergy deleted successfully');
+                      // close and reset view/edit state
                       setShowViewSidebar(false);
+                      setIsEditing(false);
+                      setSelectedAllergy(null);
+                      await fetchAllergies();
                     } else {
                       toast.error('Failed to delete allergy');
                     }
-                  } catch {
+                  } catch (err) {
+                    console.error('delete allergy error', err);
                     toast.error('Error deleting allergy');
                   }
                 }}
@@ -638,10 +680,12 @@ const nurseallergies = ({ studentId }) => {
                         toast.success('Allergy updated successfully');
                         setShowViewSidebar(false);
                         setIsEditing(false);
+                        await fetchAllergies();
                       } else {
                         toast.error('Failed to update allergy');
                       }
-                    } catch {
+                    } catch (err) {
+                      console.error('update allergy error', err);
                       toast.error('Error updating allergy');
                     }
                   }}
