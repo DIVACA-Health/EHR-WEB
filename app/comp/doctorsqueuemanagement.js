@@ -198,13 +198,11 @@ useEffect(() => {
     }
   };
 
-  const sortedRows = [...filteredData].sort((a, b) => {
-  // Emergency status always on top
+const sortedRows = [...filteredData].sort((a, b) => {
   if (a.status === 'Emergency' && b.status !== 'Emergency') return -1;
   if (b.status === 'Emergency' && a.status !== 'Emergency') return 1;
-  // Otherwise, sort by lastVisit (descending)
-  const aTime = new Date(a.lastVisit).getTime();
-  const bTime = new Date(b.lastVisit).getTime();
+  const aTime = new Date(a.lastVisit).getTime() || 0;
+  const bTime = new Date(b.lastVisit).getTime() || 0;
   return bTime - aTime;
 });
 
