@@ -8,7 +8,7 @@ const NurseVitals = ({ studentId }) => {
     heartRate: '',
     bloodPressure: '',
     temperature: '',
-    weight: '',
+    weight: 0,
     respiratoryRate: '',
     oxygenSaturation: '',
     recorder: { firstName: '', lastName: '' },
@@ -19,7 +19,7 @@ const NurseVitals = ({ studentId }) => {
     heartRate: '',
     bloodPressure: '',
     temperature: '',
-    weight: '',
+    weight: 0,
     respiratoryRate: '',
     oxygenSaturation: '',
     recorder: { firstName: '', lastName: '' },
@@ -79,7 +79,7 @@ const NurseVitals = ({ studentId }) => {
           heartRate: vitals.heartRate ?? '',
           bloodPressure: vitals.bloodPressure ?? '',
           temperature: vitals.temperature ?? '',
-          weight: vitals.weight ?? '',
+          weight: vitals.weight ?? 0,
           respiratoryRate: vitals.respiratoryRate ?? '',
           oxygenSaturation: vitals.oxygenSaturation ?? '',
           recorder: vitals.recorder || {
@@ -94,7 +94,7 @@ const NurseVitals = ({ studentId }) => {
           temperature: '',
           respiratoryRate: '',
           oxygenSaturation: '',
-          weight: '',
+          weight: 0,
           recorder: {
             firstName: currentUser?.firstName || '',
             lastName: currentUser?.lastName || '',
@@ -126,7 +126,7 @@ const NurseVitals = ({ studentId }) => {
       heartRate: '',
       bloodPressure: '',
       temperature: '',
-      weight: '',
+      weight: 0,
       respiratoryRate: '',
       oxygenSaturation: '',
       recorder: {
@@ -193,6 +193,9 @@ const NurseVitals = ({ studentId }) => {
     setIsLoading(true);
 
     try {
+
+      const WEIGHT_TO_SEND = 0;
+
       const payload = {
         studentId: Number(studentId),
         ...(formData.heartRate ? { heartRate: Number(formData.heartRate) } : {}),
@@ -200,7 +203,7 @@ const NurseVitals = ({ studentId }) => {
         ...(formData.temperature ? { temperature: Number(formData.temperature) } : {}),
         ...(formData.oxygenSaturation ? { oxygenSaturation: Number(formData.oxygenSaturation) } : {}),
         ...(formData.respiratoryRate ? { respiratoryRate: Number(formData.respiratoryRate) } : {}),
-        ...(formData.weight ? { weight: Number(formData.weight) } : {}),
+        weight: WEIGHT_TO_SEND,
       };
 
       const response = await fetch('/api/v1/vitals', {
