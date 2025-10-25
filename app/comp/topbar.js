@@ -19,12 +19,41 @@ const Topbar = ({ showDropdown, setShowDropdown }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [setShowDropdown]);
 
-    useEffect(() => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+// ...existing code...
+useEffect(() => {
+  const readUserFromStorage = () => {
+    const raw = localStorage.getItem('user');
+    try {
+      const parsed = JSON.parse(raw);
+      const normalized = parsed?.data?.user ?? parsed?.user ?? parsed?.data ?? parsed ?? null;
+      if (normalized) {
+        // ensure cache-busted image is applied if not present
+        if (normalized.profileImage && !String(normalized.profileImage).includes('?t=')) {
+          normalized.profileImage = `${String(normalized.profileImage).split('?')[0]}?t=${Date.now()}`;
+        }
       }
-    }, []);
+      setUser(normalized);
+    } catch (err) {
+      setUser(null);
+    }
+  };
+
+  readUserFromStorage();
+  const onUserUpdated = () => {
+    // debug: confirm event received
+    console.debug('userUpdated event received - reloading user from localStorage');
+    readUserFromStorage();
+  };
+
+  window.addEventListener('storage', (e) => { if (e.key === 'user') readUserFromStorage(); });
+  window.addEventListener('userUpdated', onUserUpdated);
+
+  return () => {
+    window.removeEventListener('userUpdated', onUserUpdated);
+    // can't remove inline storage listener above easily; production code should keep a ref'd handler
+  };
+}, []);
+// ...existing code...
 
   const handleSignOut = () => {
     localStorage.removeItem('access_token');

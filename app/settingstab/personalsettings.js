@@ -46,36 +46,81 @@ const PersonalSettings = () => {
     fileInputRef.current.click();
   };
 
-    const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
 
-    try {
-      const res = await fetchWithAuth("/api/v1/users/upload/profile-picture", {
-        method: "POST",
-        body: formData,
-      });
+const handleFileChange = async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-      if (res.ok) {
-        toast.success("Profile picture uploaded successfully! Changes will be Visible by Next Update");
-      } else {
-        toast.error("Upload failed. Please try again.");
-      }
-    } catch (error) {
-      toast.error("An error occurred while uploading.");
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const res = await fetchWithAuth("/api/v1/users/upload/profile-picture", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      toast.error("Upload failed. Please try again.");
+      return;
     }
-  };
+
+    // refetch /me and normalize response
+    try {
+      const meRes = await fetchWithAuth("/api/v1/users/me");
+      if (!meRes.ok) {
+        toast.success("Profile picture uploaded. Refresh to see changes.");
+        return;
+      }
+
+      const meJson = await meRes.json();
+      // normalize shapes: { data: { user } } | { user } | { data } | user
+      let updatedUser = meJson?.data?.user ?? meJson?.user ?? meJson?.data ?? meJson;
+
+      if (updatedUser) {
+        // cache-bust image so <img> src changes
+        if (updatedUser.profileImage) {
+          updatedUser.profileImage = `${String(updatedUser.profileImage).split('?')[0]}?t=${Date.now()}`;
+        }
+
+        // save normalized user object to localStorage
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        // notify same-tab listeners (Topbar) to re-read localStorage
+        window.dispatchEvent(new Event('userUpdated'));
+
+        setUser(updatedUser);
+        toast.success("Profile picture uploaded and updated.");
+        return;
+      }
+
+      toast.success("Profile picture uploaded. Refresh to see changes.");
+    } catch (err) {
+      console.error("Failed to refetch /api/v1/users/me", err);
+      toast.success("Profile picture uploaded. Refresh to see changes.");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("An error occurred while uploading.");
+  }
+};
 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        const parsed = JSON.parse(storedUser);
+        // handle stored shapes like { user: {...} } or {...}
+        const normalized = parsed?.user ? parsed.user : parsed;
+        setUser(normalized);
+      } catch (e) {
+        console.error("Failed to parse stored user", e);
+      }
     }
   }, []);
+
 
 
   if (!user) return <p>Loading user data...</p>;
@@ -90,9 +135,7 @@ const PersonalSettings = () => {
           <img
             src={user.profileImage ||  "/image/confident-business-woman-portrait-smiling-face.png"}
             alt="img"
-            height={96}
-            width={96}
-            className="rounded-full"
+            className="rounded-full h-[96px] w-[96px]"
           />
           <div>
             <input
