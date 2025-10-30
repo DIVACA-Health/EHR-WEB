@@ -668,8 +668,8 @@ const nurseallergies = ({ studentId }) => {
                   onClick={async () => {
                     try {
                       const token = localStorage.getItem('access_token');
-                      const res = await fetch(`/api/v1/allergies/updateAllergy/${selectedAllergy.id}`, {
-                        method: 'PATCH',
+                      const res = await fetch(`/api/v1/allergies/${selectedAllergy.id}`, {
+                        method: 'PUT',
                         headers: {
                           'Content-Type': 'application/json',
                           ...(token ? { Authorization: `Bearer ${token}` } : {}),
