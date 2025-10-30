@@ -332,7 +332,9 @@ const nurseallergies = ({ studentId }) => {
                           onClick={() => handleTypeSelect(type)}
                         >
                           <img src={type.img} alt={type.label} width={20} height={20} className="object-contain" />
-                          <span>{type.label}</span>
+                          <span className={type.value === '' ? 'text-[#3B6FED]' : undefined}>
+                            {type.label}
+                          </span>
                           {allergyType === type.value && type.value !== 'Other' && (
                             <svg className="ml-auto" width="18" height="18" fill="none" viewBox="0 0 24 24">
                               <path d="M5 13l4 4L19 7" stroke="#3B6FED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -564,7 +566,9 @@ const nurseallergies = ({ studentId }) => {
                               }}
                             >
                               <img src={type.img} alt={type.label} width={20} height={20} />
-                              <span>{type.label}</span>
+                              <span className={type.value === '' ? 'text-[#3B6FED]' : undefined}>
+                                {type.label}
+                              </span>
                             </div>
                           ))}
                         </div>
