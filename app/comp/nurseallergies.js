@@ -12,7 +12,7 @@ const allergyTypeImages = {
 };
 
 const allergyTypes = [
-  { label: 'Select allergy', value: '', img: allergyTypeImages.Medication },
+  { label: 'Select allergy type', value: '', img: allergyTypeImages.Medication },
   { label: 'Medication', value: 'Medication', img: allergyTypeImages.Medication },
   { label: 'Nuts', value: 'Nuts', img: allergyTypeImages.Nuts },
   { label: 'Food', value: 'Food', img: allergyTypeImages.Food },
