@@ -311,7 +311,7 @@ const handleMenuButtonClick = (e, user) => {
             <div className='h-[114px] w-[25%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]'>
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#F7A752] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2  '>
-                    <h2 className='font-extralight text-[14px] text-[#898989]'>Patients in waiting</h2>
+                    <h2 className='font-extralight text-[14px] text-[#898989]'>Patients on queue</h2>
                     <h2 className='font-medium  text-xl'>{overview.patientsOnQueue}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
@@ -321,7 +321,7 @@ const handleMenuButtonClick = (e, user) => {
             <div className='h-[114px] w-[25%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]'>
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#3B6FED] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2 '> 
-                    <h2 className='font-extralight text-[14px] text-[#898989]'>Vitals logged today</h2>
+                    <h2 className='font-extralight text-[14px] text-[#898989]'>Pending prescriptions</h2>
                     <h2 className='font-medium  text-xl'>{overview.pendingPrescriptions}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
@@ -331,7 +331,7 @@ const handleMenuButtonClick = (e, user) => {
             <div className='h-[114px] w-[25%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]' >
                 <div className='w-[1.5%] ml-0 pl-0 h-6/10 bg-[#7C3AED] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-1' >
-                    <h2 className='font-extralight text-[14px] text-[#898989]'>Patients forwarded to doctor</h2>
+                    <h2 className='font-extralight text-[14px] text-[#898989]'>Upcoming appointments</h2>
                     <h2 className='font-medium text-xl'>{overview.upcomingAppointments}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>
@@ -341,7 +341,7 @@ const handleMenuButtonClick = (e, user) => {
             <div className='h-[114px] w-[25%] flex rounded-[8px] border  border-[rgba(240,242,245,1)] shadow-[0px_4px_0px_0px_rgba(15,15,15,0.02)]'>
                 <div className='w-[1.2%] ml-0 pl-0 h-6/10 bg-[#E63946] m-auto rounded-r-[8px]'></div>
                 <div className='h-6/10 w-[75%] flex flex-col m-auto justify-between pl-2 ' >
-                    <h2 className='font-extralight text-[14px] text-[#898989]'>Emergency alerts triggered</h2>
+                    <h2 className='font-extralight text-[14px] text-[#898989]'>Urgent cases</h2>
                     <h2 className='font-medium  text-xl'>{overview.urgentCases}</h2>
                 </div>
                 <div className='h-full w-2/10  flex items-center justify-center pr-1'>

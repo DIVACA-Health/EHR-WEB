@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Upload } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 

@@ -58,7 +58,7 @@ useEffect(() => {
         return {
           name: `${student.firstName} ${student.lastName}`,
           avatar: student.profileImage || "/image/profileimg.png",
-          divacaId: `STU-${student.id}`,
+          divacaId: student.studentDetails.divacaId || "N/A",
           studentId: (studentInfo?.id ?? student.id)?.toString() || "N/A", 
           matricNumber: studentInfo?.matricNumber || "N/A",
           status: student.isActive ? "Active" : "Inactive",
