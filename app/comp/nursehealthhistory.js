@@ -33,27 +33,24 @@ const NurseHealthHistory = ({ studentId }) => {
   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
+  const [isOpen4, setIsOpen4] = useState(false);
   const [activeActionIndex, setActiveActionIndex] = useState(null);
   const actionButtonRefs = useRef({});
   const dropdownRefs = useRef({});
   const [loading, setLoading] = useState(true);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [descriptionText, setDescriptionText] = useState('');
-  const [showCauseModal, setShowCauseModal] = useState(false);
-    const [vitalsData, setVitalsData] = useState({
-    heartRate: '',
-    bloodPressure: '',
-    temperature: '',
-    weight: '',
-    recorder: { firstName: '', lastName: '' }, 
-  });
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
+  const [instructionsText, setInstructionsText] = useState('');
 
   useEffect(() => {
     const fetchSummary = async () => {
       try {
         const res = await fetchWithAuth(`/api/v1/health-records/student/${studentId}/summary`);
         const data = await res.json();
-        console.log('API Response:', data); // Debug log
+        console.log('API Response:', data);
         setSummary(data.data || null);
       } catch (err) {
         console.error('Error fetching summary:', err);
@@ -67,8 +64,9 @@ const NurseHealthHistory = ({ studentId }) => {
     }
   }, [studentId]);
 
-  const handleRowClick = (diagnosis) => {
-    setSelectedDiagnosis(diagnosis);
+  const handleRowClick = (activity) => {
+    console.log('Selected activity:', activity);
+    setSelectedDiagnosis(activity);
     setShowSidebar(true);
   };
 
@@ -87,53 +85,18 @@ const NurseHealthHistory = ({ studentId }) => {
     return `${day}-${month}-${year}`;
   };
 
-    const fetchVitals = async () => {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      console.error('No access token found!');
-      return;
-    }
-
-    try {
-      const response = await fetch(`/api/v1/vitals/student/${studentId}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      if (data && data.length > 0) {
-        const vitals = data[0];
-        setVitalsData({
-          heartRate: vitals.heartRate,
-          bloodPressure: vitals.bloodPressure,
-          temperature: vitals.temperature,
-          weight: vitals.weight,
-          respiratoryRate: vitals.respiratoryRate,
-          oxygenSaturation: vitals.oxygenSaturation,
-          recorder: vitals.recorder || { firstName: '', lastName: '' }, // Set recorder from API
-        });
-      } else {
-        setVitalsData({
-          heartRate: '',
-          bloodPressure: '',
-          temperature: '',
-          respiratoryRate: '',
-          oxygenSaturation: '',
-          weight: '',
-          recorder: { firstName: '', lastName: '' },
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching vitals:', error);
-    }
+  const recordFrom = (obj) => {
+    if (!obj) return 'N/A';
+    const name = obj.firstName || obj.name || '';
+    const last = obj.lastName || '';
+    return [name, last].filter(Boolean).join(' ') || 'N/A';
   };
 
-  useEffect(() => {
-    fetchVitals();
-  }, [studentId]);
+    const formatTime = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  };
 
   return (
     <div className='border-[rgba(235,235,235,1)] shadow-sm rounded-t-[12px]'>
@@ -167,7 +130,7 @@ const NurseHealthHistory = ({ studentId }) => {
                     <td className="px-6 py-4 text-center">{getTodayDate(activity.date)}</td>
                     <td className="px-6 py-4 text-center">{activity.recordedBy?.name || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">{activity.diagnosis || 'N/A'}</td>
-                    <td className="px-6 py-4 text-center text-ellipsis truncate max-w-[250px] ">{activity.description || 'N/A'}</td>
+                    <td className="px-6 py-4 text-center text-ellipsis truncate max-w-[250px]">{activity.description || 'N/A'}</td>
                     <td className='p-4 relative flex justify-center items-center'>
                       <button
                         onClick={e => {
@@ -187,7 +150,7 @@ const NurseHealthHistory = ({ studentId }) => {
                         >
                           <button
                             onClick={() => handleRowClick(activity)}
-                            className="w-full text-left px-4 py-3  hover:bg-red-50 rounded-b-lg"
+                            className="w-full text-left px-4 py-3 hover:bg-red-50 rounded-b-lg"
                           >
                             View Health Issue
                           </button>
@@ -227,14 +190,17 @@ const NurseHealthHistory = ({ studentId }) => {
               className="absolute right-0 top-0 h-full w-[55%] bg-white shadow-lg z-50 overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center min-h-[10%] py-4 pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-sm sticky top-0 bg-[#FFFFFF] z-10">
-                <div className='flex flex-col '>
+              <div className="flex justify-between items-center min-h-[10%] py-4 pl-6 pr-6 border-b-[1px] mb-2 border-gray-200 shadow-xs sticky top-0 bg-[#FFFFFF] z-10">
+                <div className='flex flex-col'>
                   <div className="text-sm text-gray-600 gap-2 flex flex-col">
-                    <p>Date of visit: {formatDate(selectedDiagnosis.date)}</p>
-                    <p>Doctor: {selectedDiagnosis.recordedBy?.name || 'N/A'}</p>
+                    <p>Date of visit: {formatDate(selectedDiagnosis?.date)}</p>
+                    <p>Doctor: {selectedDiagnosis?.recordedBy?.name || 'N/A'}</p>
                   </div>
                 </div>
-                <button onClick={() => setShowSidebar(false)} className="text-2xl text-gray-400 hover:text-gray-600">
+                <button
+                  onClick={() => setShowSidebar(false)}
+                  className="text-2xl text-gray-400 hover:text-gray-600"
+                >
                   ×
                 </button>
               </div>
@@ -254,46 +220,43 @@ const NurseHealthHistory = ({ studentId }) => {
                   </div>
                   {isOpen1 && (
                     <div className="text-sm bg-white rounded-b-[8px]">
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Heart rate</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.heartRate || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Blood pressure</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.bloodPressure || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Temperature</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.temperature || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3 border-b border-gray-200">
-                        <span className="text-gray-700">Respiratory rate</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.respiratoryRate || '--'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between px-4 py-3  border-gray-200">
-                        <span className="text-gray-700">Oxygen saturation</span>
-                        <span className="font-medium text-gray-900">
-                          {vitalsData.oxygenSaturation || '--'}
-                        </span>
-                      </div>
+                      {selectedDiagnosis.vitals ? (
+                        <>
+                          <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                            <span className="text-gray-700">Heart rate</span>
+                            <span className="font-medium text-gray-900">{selectedDiagnosis.vitals.heartRate || '--'}</span>
+                          </div>
+                          <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                            <span className="text-gray-700">Blood pressure</span>
+                            <span className="font-medium text-gray-900">{selectedDiagnosis.vitals.bloodPressure || '--'}</span>
+                          </div>
+                          <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                            <span className="text-gray-700">Temperature</span>
+                            <span className="font-medium text-gray-900">{selectedDiagnosis.vitals.temperature || '--'}</span>
+                          </div>
+                          <div className="flex justify-between px-4 py-3 border-b border-gray-200">
+                            <span className="text-gray-700">Respiratory rate</span>
+                            <span className="font-medium text-gray-900">{selectedDiagnosis.vitals.respiratoryRate || '--'}</span>
+                          </div>
+                          <div className="flex justify-between px-4 py-3 border-gray-200">
+                            <span className="text-gray-700">Oxygen saturation</span>
+                            <span className="font-medium text-gray-900">{selectedDiagnosis.vitals.oxygenSaturation || '--'}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="p-4 text-center text-gray-500">No vitals available</div>
+                      )}
                     </div>
                   )}
                 </div>
-                {/* HEALTH ISSUE Details */}
+
+                {/* TREATMENT PLAN / HEALTH RECORD */}
                 <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
                   <div
                     className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
                     onClick={() => setIsOpen(!isOpen)}
                   >
-                    <span className="font-medium text-sm">Health issue</span>
+                    <span className="font-medium text-sm">Treatment plan</span>
                     <span className="text-lg transform transition-transform duration-300">
                       {isOpen ? '▾' : '▸'}
                     </span>
@@ -302,16 +265,16 @@ const NurseHealthHistory = ({ studentId }) => {
                     <div className="text-sm bg-white rounded-b-[8px]">
                       <div className="flex justify-between px-4 py-3 border-b border-gray-200">
                         <span className="text-gray-700">Diagnosis</span>
-                        <span className="font-medium text-gray-900">{selectedDiagnosis.diagnosis || 'N/A'}</span>
+                        <span className="font-medium text-gray-900">{selectedDiagnosis?.diagnosis || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-center px-4 py-3 border-b border-gray-200">
                         <span className="text-gray-700">Description</span>
-                        {selectedDiagnosis.description ? (
+                        {selectedDiagnosis?.description ? (
                           <button
                             className="text-blue-600 font-medium hover:underline"
                             type="button"
                             onClick={() => {
-                              setDescriptionText(selectedDiagnosis.description);
+                              setDescriptionText(selectedDiagnosis?.description);
                               setShowDescriptionModal(true);
                             }}
                           >
@@ -321,14 +284,165 @@ const NurseHealthHistory = ({ studentId }) => {
                           <span className="text-gray-400">N/A</span>
                         )}
                       </div>
-                      <div className="flex justify-between items-center px-4 py-3  border-gray-200">
-                        <span className="text-gray-700">Possible Cause</span>
-                        <span className="font-medium text-gray-900">{selectedDiagnosis.possibleCause || 'N/A'}</span>
+                      <div className="flex justify-between items-center px-4 py-3 border-gray-200">
+                        <span className="text-gray-700">Possible cause</span>
+                        <span className="font-medium text-gray-900">{selectedDiagnosis?.possibleCause || 'N/A'}</span>
                       </div>
                     </div>
                   )}
                 </div>
 
+                {/* NURSE NOTE */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div
+                    className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[#E5FFEA]"
+                    onClick={() => setIsOpen2(!isOpen2)}
+                  >
+                  <div>
+                    <h3 className="font-medium text-[15px]  mb-1">{selectedDiagnosis?.nurseNote?.title || 'N/A'}</h3>
+                    <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                      <span>
+                        Nurse {selectedDiagnosis?.nurseNote?.createdBy?.name}
+                      </span>
+                        <>
+                          <span className="mx-1">•</span>
+                          <span>{formatDate(selectedDiagnosis?.nurseNote?.createdAt)}</span>
+                          <span className="mx-1">•</span>
+                          <span>{formatTime(selectedDiagnosis?.nurseNote?.createdAt)}</span>
+                        </>
+                    </div>
+                  </div>
+                    <span className="text-lg transform transition-transform duration-300">
+                      {isOpen2 ? '▾' : '▸'}
+                    </span>
+                  </div>
+                  {isOpen2 &&(
+                    <div className="p-2 bg-white rounded-b-[8px]">
+                    {selectedDiagnosis?.nurseNote ? (
+                      <div>
+                        <div className="flex flex-wrap gap-2 mb-2 items-center px-5">
+                          <span className="font-medium text-xs text-gray-500">Tags:</span>
+                          {Array.isArray(selectedDiagnosis?.nurseNote?.tags) && selectedDiagnosis.nurseNote.tags.length > 0 && (
+                            <div className="flex gap-2 flex-wrap">
+                              {selectedDiagnosis?.nurseNote?.tags.map((t, idx) => (
+                                <span key={idx} className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{t}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-sm text-gray-700 whitespace-pre-line mt-4 px-5">
+                          <p className="text-gray-700 mb-4 whitespace-pre-wrap">{selectedDiagnosis?.nurseNote?.content}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-500 py-4">
+                        <p>No Nurse's note available</p>
+                      </div>
+                    )}
+                  </div>
+                  )}
+
+                </div>
+
+                {/* DOCTOR NOTE */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div
+                    className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[#F3F6FF]"
+                    onClick={() => setIsOpen3(!isOpen3)}
+                  >
+                  <div>
+                    <h3 className="font-medium text-[15px]  mb-1">{selectedDiagnosis?.doctorNote?.title || 'N/A' }</h3>
+                    <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                      <span>
+                        Dr {selectedDiagnosis?.doctorNote?.createdBy?.name}
+                      </span>
+                        <>
+                          <span className="mx-1">•</span>
+                          <span>{formatDate(selectedDiagnosis?.doctorNote?.createdAt)}</span>
+                          <span className="mx-1">•</span>
+                          <span>{formatTime(selectedDiagnosis?.doctorNote?.createdAt)}</span>
+                        </>
+                    </div>
+                  </div>
+                    <span className="text-lg transform transition-transform duration-300">
+                      {isOpen3 ? '▾' : '▸'}
+                    </span>
+                  </div>
+                  {isOpen3 &&(
+                    <div className="p-2 bg-white rounded-b-[8px]">
+                    {selectedDiagnosis?.doctorNote ? (
+                      <div>
+                        <div className="flex flex-wrap gap-2 mb-2 items-center px-5">
+                          <span className="font-medium text-xs text-gray-500">Tags:</span>
+                          {Array.isArray(selectedDiagnosis?.doctorNote?.tags) && selectedDiagnosis.doctorNote.tags.length > 0 && (
+                            <div className="flex gap-2 flex-wrap">
+                              {selectedDiagnosis?.doctorNote?.tags.map((t, idx) => (
+                                <span key={idx} className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{t}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-sm text-gray-700 whitespace-pre-line mt-4 px-5">
+                          <p className="text-gray-700 mb-4 whitespace-pre-wrap">{selectedDiagnosis?.doctorNote?.content}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-500 py-4">
+                        <p>No Doctors's note available</p>
+                      </div>
+                    )}
+                  </div>
+                  )}
+
+                </div>
+
+                {/* PRESCRIPTIONS */}
+                <div className="w-full border-[0.8px] border-[rgba(235,235,235,1)] rounded-[8px]">
+                  <div
+                    className="px-4 py-3 cursor-pointer flex justify-between rounded-t-[8px] items-center bg-[rgba(243,246,255,1)]"
+                    onClick={() => setIsOpen4(!isOpen4)}
+                  >
+                    <span className="font-medium text-sm">Prescription details</span>
+                    <span className="text-lg transform transition-transform duration-300">
+                      {isOpen4 ? '▾' : '▸'}
+                    </span>
+                  </div>
+                  {isOpen4 && (
+                    <div className="text-sm pl-4 pr-4 pt-2 pb-2 rounded-b-[8px] bg-white">
+                      <div className="border-b last:border-b-0">
+                        <div className="flex justify-between items-center py-3">
+                          <span className="text-gray-700">Medication</span>
+                          <span className="font-medium text-gray-900">
+                            {selectedDiagnosis?.prescription?.medication || 'N/A'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center py-3">
+                          <span className="text-gray-700">Dosage</span>
+                          <span className="font-medium text-gray-900">
+                            {selectedDiagnosis?.prescription?.dosage || 'N/A'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center py-3">
+                          <span className="text-gray-700">Instructions</span>
+                          {selectedDiagnosis?.prescription?.instructions ? (
+                            <button
+                              className="text-blue-600 font-medium hover:underline"
+                              type="button"
+                              onClick={() => {
+                                setInstructionsText(selectedDiagnosis?.prescription?.instructions);
+                                setShowInstructionsModal(true);
+                              }}
+                            >
+                              View
+                            </button>
+                          ) : (
+                            <span className="text-gray-400">N/A</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Footer */}
@@ -344,21 +458,46 @@ const NurseHealthHistory = ({ studentId }) => {
           </div>
         )}
 
-      {/* Description Modal */}
-      {showDescriptionModal && (
-        <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
+        {/* Description Modal */}
+        {showDescriptionModal && (
+          <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowDescriptionModal(false)}>
+            <div className='w-[400px] flex items-center flex-col'>
+              <div className='w-[480px] h-10 flex items-center justify-end'>
+                <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px] cursor-pointer'/>
+              </div>
+              <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+                <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
+                  <h3 className="text-lg font-semibold">Description</h3>
+                </div>
+                <p className="text-gray-700 mb-4 py-5 px-3 whitespace-pre-wrap">{descriptionText}</p>
+                <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
+                  <button 
+                    onClick={() => setShowDescriptionModal(false)}
+                    className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+              {/* Instructions Modal */}
+      {showInstructionsModal && (
+        <div className="fixed inset-0 z-50 bg-[#0C162F99] flex items-center justify-center" onClick={() => setShowInstructionsModal(false)}>
           <div className=' w-[400px] flex items-center flex-col'>
             <div className=' w-[480px] h-10 flex items-center justify-end'>
               <img src='/image/exiticon.png' alt='Exiticon' className='h-[28px] w-[28px]'/>
             </div>
-            <div className="bg-white rounded-[12px] max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-[12px] max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
               <div className='border-[1px] rounded-t-[12px] border-[#F0F2F5] flex items-center justify-center p-4'>
-                <h3 className="text-lg font-semibold">Description</h3>
+                <h3 className="text-lg font-semibold">Instructions</h3>
               </div>
-              <p className="text-gray-700 mb-4 py-5 px-3">{descriptionText}</p>
+              <p className="text-gray-700 mb-4 py-5 px-3">{instructionsText}</p>
               <div className='border-[1px] rounded-b-[12px] border-[#F0F2F5] bg-white flex items-center justify-end p-4'>
                 <button 
-                  onClick={() => setShowDescriptionModal(false)}
+                  onClick={() => setShowInstructionsModal(false)}
                   className="bg-blue-600 text-white px-10 py-2 rounded-[8px] hover:bg-blue-700"
                 >
                   Close
@@ -368,10 +507,9 @@ const NurseHealthHistory = ({ studentId }) => {
           </div>
         </div>
       )}
-
       </div>
     </div>
   );
 };
 
-export default NurseHealthHistory;
+export default NurseHealthHistory
